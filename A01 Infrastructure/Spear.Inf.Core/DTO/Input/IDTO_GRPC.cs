@@ -1,0 +1,22 @@
+﻿using MessagePack;
+
+namespace Spear.Inf.Core.DTO
+{
+    [MessagePackObject(true)]
+    public class IDTO_GRPC
+    {
+        public IDTO_GRPCContext GRPCContext { get; set; }
+    }
+
+    [MessagePackObject(true)]
+    public class IDTO_GRPC<T> : IDTO_GRPC
+    {
+        public T Param { get; set; }
+    }
+
+    [MessagePackObject(true)]
+    public class IDTO_GRPCContext
+    {
+        public string Token { get; set; }
+    }
+}

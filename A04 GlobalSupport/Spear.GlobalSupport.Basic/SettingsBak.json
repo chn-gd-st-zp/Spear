@@ -1,0 +1,77 @@
+{
+  "AutoFacSettings": {
+    "DefaultPattern": "Spear.*",
+    "Dlls": [ "" ]
+  },
+
+  "SwaggerSettings": {
+    "Code": "",
+    "Title": "",
+    "Version": "",
+    "DefaultPattern": "Spear.*",
+    "Xmls": [ "" ]
+  },
+
+  "AESSettings": {
+    "Secret": "",
+    "IV": "",
+    "ECipherMode": "",
+    "EPaddingMode": ""
+  },
+
+  "DESSettings": {
+    "Secret": "",
+    "IV": ""
+  },
+
+  "MicServRunSettings": {
+    "HostPublic": "127.0.0.1",
+    "HostInternal": "localhost",
+    "WebApiPort": 80,
+    "GRPCPort": 81
+  },
+
+  "MicServClientSettings": {
+    "MSType": "",
+    "ReqMode": "",
+    "Address": "http://0.0.0.0:0000"
+  },
+
+  "MicServServerSettings": {
+    "ConsulAddress": "http://0.0.0.0:0000",
+    "NodeName": "",
+    "WebApiProto": "http",
+    "WebApiReqMode": "",
+    "GRPCProto": "http",
+    "GRPCReqMode": "",
+    "HealthCheckRoute": "/health/check"
+  },
+
+  "RedisSettings": {
+    "Connection": "0.0.0.0:0000,password=123",
+    "InstanceName": "Prefix_",
+    "DefaultDatabase": "0",
+    "DefaultTimeOutMinutes": 30
+  },
+
+  "RabbitMQSettings": {
+    "HostName": "0.0.0.0",
+    "UserName": "abc",
+    "Password": "123",
+    "VirtualHost": "/",
+    "Heartbeat": 60
+  },
+
+  "SessionNAuthSettings": {
+    "TokenKey": "Authorization",
+    "CachePrefix": "UserToken:",
+    "ValidDuration": 30
+  },
+
+  "PayChannelSettings": {
+    "PayChannelDIPattern": "Spear.Pay.PayChannel.*",
+    "TheDomainForThirdPartyToCallBack": "http://localhost:2000",
+    "TheActionForThirdPartyToCallBack_Get": "callback/execbyget",
+    "TheActionForThirdPartyToCallBack_Post": "callback/execbypost"
+  }
+}

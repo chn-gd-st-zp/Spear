@@ -1,0 +1,9 @@
+obj
+bin
+packages
+.vs
+*.suo
+*.pdb
+*.user
+*.pubxml
+*.publish.xml
