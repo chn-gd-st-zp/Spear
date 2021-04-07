@@ -14,8 +14,11 @@ namespace Spear.Inf.Core.Tool
     /// </summary>
     public class NET
     {
-        public static string GetSimplifyOrigin => GetOrigin?.Replace("http://", "").Replace("https://", "");
+        public static string GetSimplifyOrigin => Origin?.Replace("http://", "").Replace("https://", "");
 
+        /// <summary>
+        /// 获取IP
+        /// </summary>
         public static string IP
         {
             get
@@ -66,10 +69,14 @@ namespace Spear.Inf.Core.Tool
                     if (result.IsEmptyString())
                         result = httpContext.HttpContext.Request.Host.Host;
                 }
+
                 return result;
             }
         }
 
+        /// <summary>
+        /// 获取IP
+        /// </summary>
         public static string IP_LW
         {
             get
@@ -80,6 +87,84 @@ namespace Spear.Inf.Core.Tool
                     .SelectMany(p => p.UnicastAddresses)
                     .Where(p => p.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && !IPAddress.IsLoopback(p.Address))
                     .FirstOrDefault()?.Address.ToString();
+            }
+        }
+
+        /// <summary>
+        /// 获取客户UserAgent
+        /// </summary>
+        public static string UserAgnet
+        {
+            get
+            {
+                HttpContext httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>().HttpContext;
+                return httpContext.Request.Headers["User-Agent"].FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// 获取客户请求地址
+        /// </summary>
+        public static string UserRequestDomain
+        {
+            get
+            {
+                HttpContext httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>().HttpContext;
+
+                return new StringBuilder()
+                 .Append(httpContext.Request.Scheme)
+                 .Append("://")
+                 .Append(httpContext.Request.Host)
+                 .Append(httpContext.Request.PathBase).ToString();
+            }
+        }
+
+        /// <summary>
+        /// 获取浏览器信息
+        /// </summary>
+        public static string Browser
+        {
+            get
+            {
+                var httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>();
+                if (httpContext == null)
+                    return string.Empty;
+                var browser = httpContext.HttpContext.Request.Headers["User-Agent"];
+                return browser;
+            }
+        }
+
+        /// <summary>
+        /// 获取 请求域名
+        /// </summary>
+        public static string Host
+        {
+            get
+            {
+                var httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>();
+                if (httpContext != null)
+                {
+                    return httpContext.HttpContext.Request.Host.Host;
+                }
+
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 获取 请求域名
+        /// </summary>
+        public static string Origin
+        {
+            get
+            {
+                var httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>();
+                if (httpContext != null)
+                {
+                    return httpContext.HttpContext.Request.Headers["Origin"];
+                }
+
+                return string.Empty;
             }
         }
 
@@ -115,32 +200,6 @@ namespace Spear.Inf.Core.Tool
             {
                 return "0.0.0.0";
             }
-        }
-
-        /// <summary>
-        /// 获取客户UserAgent
-        /// </summary>
-        /// <returns></returns>
-        public static string GetUserAgnet()
-        {
-            HttpContext httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>().HttpContext;
-
-            return httpContext.Request.Headers["User-Agent"].FirstOrDefault();
-        }
-
-        /// <summary>
-        /// 获取客户请求地址
-        /// </summary>
-        /// <returns></returns>
-        public static string GetUserRequestDomain()
-        {
-            HttpContext httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>().HttpContext;
-
-            return new StringBuilder()
-             .Append(httpContext.Request.Scheme)
-             .Append("://")
-             .Append(httpContext.Request.Host)
-             .Append(httpContext.Request.PathBase).ToString();
         }
 
         /// <summary>
@@ -187,56 +246,6 @@ namespace Spear.Inf.Core.Tool
             }
 
             return res;
-        }
-
-        /// <summary>
-        /// 获取浏览器信息
-        /// </summary>
-        public static string Browser
-        {
-            get
-            {
-                var httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>();
-                if (httpContext == null)
-                    return string.Empty;
-                var browser = httpContext.HttpContext.Request.Headers["User-Agent"];
-                return browser;
-            }
-        }
-
-        /// <summary>
-        /// 获取 请求域名
-        /// </summary>
-        public static string GetWww
-        {
-            get
-            {
-                var httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>();
-                if (httpContext != null)
-                {
-                    return httpContext.HttpContext.Request.Host.Host;
-                }
-
-                return string.Empty;
-            }
-
-        }
-
-        /// <summary>
-        /// 获取 请求域名
-        /// </summary>
-        public static string GetOrigin
-        {
-            get
-            {
-                var httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>();
-                if (httpContext != null)
-                {
-                    return httpContext.HttpContext.Request.Headers["Origin"];
-                }
-
-                return string.Empty;
-            }
         }
     }
 
