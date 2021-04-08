@@ -85,7 +85,6 @@ namespace Spear.Inf.Core.AppEntrance
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory)
         {
             Extend_Configure(app, env, lifetime, loggerFactory);
-            Extend_Configure(app.ApplicationServices, env, lifetime, loggerFactory);
         }
 
         #endregion
@@ -118,17 +117,7 @@ namespace Spear.Inf.Core.AppEntrance
         /// <param name="env"></param>
         /// <param name="lifetime"></param>
         /// <param name="loggerFactory"></param>
-        public virtual void Extend_Configure(IApplicationBuilder app, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory) { }
-
-        /// <summary>
-        /// ÍØÕ¹ Configure
-        /// ¸øWinform¼Ì³ÐµÄ
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <param name="env"></param>
-        /// <param name="lifetime"></param>
-        /// <param name="loggerFactory"></param>
-        public virtual void Extend_Configure(IServiceProvider serviceProvider, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory) { }
+        protected abstract void Extend_Configure(IApplicationBuilder app, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory);
 
         #endregion
     }
