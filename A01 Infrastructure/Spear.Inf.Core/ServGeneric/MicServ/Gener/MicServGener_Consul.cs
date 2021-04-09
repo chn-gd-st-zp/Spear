@@ -14,7 +14,7 @@ namespace Spear.Inf.Core.ServGeneric.MicServ
 
         public MicServGener_Consul()
         {
-            micServClientSettings = ServiceContext.ResolveServ<MicServClientSettings>();
+            micServClientSettings = ServiceContext.Resolve<MicServClientSettings>();
         }
 
         public T GetServ<T>(params object[] paramArray) where T : IMicServ<T>

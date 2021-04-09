@@ -22,7 +22,7 @@ namespace Spear.Inf.Core.Attr
     {
         protected readonly ILogger Logger;
 
-        public CtrlerFilterItemBasic() { Logger = ServiceContext.ResolveServ<ILogger>(); }
+        public CtrlerFilterItemBasic() { Logger = ServiceContext.Resolve<ILogger>(); }
 
         public string Entrance { get; set; }
         public string Action { get; set; }

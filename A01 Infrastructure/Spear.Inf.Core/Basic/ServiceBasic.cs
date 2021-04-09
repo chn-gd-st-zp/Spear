@@ -20,7 +20,7 @@ namespace Spear.Inf.Core.Basic
 
         protected TTarget Resolve<TTarget>()
         {
-            return ServiceContext.ResolveServ<TTarget>();
+            return ServiceContext.Resolve<TTarget>();
         }
     }
 }

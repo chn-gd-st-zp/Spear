@@ -10,22 +10,11 @@ namespace Spear.Inf.Core.ServGeneric
 {
     public class ServiceContext
     {
+        public static bool IsDoneLoad { get { return ServiceProvider == null; } }
+
         private static IServiceProvider ServiceProvider;
 
-        public static bool IsDoneLoad()
-        {
-            return ServiceProvider == null;
-        }
-
-        #region 服务 - 程序
-
-        public static void InitServiceProvider(IServiceProvider serviceProvider)
-        {
-            ServiceProvider = serviceProvider;
-        }
-
-
-        public static object Resolve(Type type)
+        private static object GetService(Type type)
         {
             try
             {
@@ -44,7 +33,7 @@ namespace Spear.Inf.Core.ServGeneric
             }
         }
 
-        public static T Resolve<T>()
+        private static T GetService<T>()
         {
             try
             {
@@ -63,12 +52,19 @@ namespace Spear.Inf.Core.ServGeneric
             }
         }
 
+        #region 服务 - 程序
 
-        public static object ResolveServ(Type type)
+        public static void InitServiceProvider(IServiceProvider serviceProvider)
+        {
+            ServiceProvider = serviceProvider;
+        }
+
+
+        public static object Resolve(Type type)
         {
             try
             {
-                var context = Resolve<IComponentContext>();
+                var context = GetService<IComponentContext>();
                 if (context == null)
                     return default;
 
@@ -80,11 +76,11 @@ namespace Spear.Inf.Core.ServGeneric
             }
         }
 
-        public static T ResolveServ<T>()
+        public static T Resolve<T>()
         {
             try
             {
-                var context = Resolve<IComponentContext>();
+                var context = GetService<IComponentContext>();
                 if (context == null)
                     return default;
 
@@ -96,11 +92,11 @@ namespace Spear.Inf.Core.ServGeneric
             }
         }
 
-        public static T ResolveServ<T>(params Parameter[] parameters)
+        public static T Resolve<T>(params Parameter[] parameters)
         {
             try
             {
-                var context = Resolve<IComponentContext>();
+                var context = GetService<IComponentContext>();
                 if (context == null)
                     return default;
 
@@ -112,11 +108,11 @@ namespace Spear.Inf.Core.ServGeneric
             }
         }
 
-        public static T ResolveServ<T>(IEnumerable<Parameter> parameters)
+        public static T Resolve<T>(IEnumerable<Parameter> parameters)
         {
             try
             {
-                var context = Resolve<IComponentContext>();
+                var context = GetService<IComponentContext>();
                 if (context == null)
                     return default;
 
@@ -129,11 +125,11 @@ namespace Spear.Inf.Core.ServGeneric
         }
 
 
-        public static object ResolveServByNamed(Type type, string named)
+        public static object ResolveByNamed(Type type, string named)
         {
             try
             {
-                var context = Resolve<IComponentContext>();
+                var context = GetService<IComponentContext>();
                 if (context == null)
                     return default;
 
@@ -145,11 +141,11 @@ namespace Spear.Inf.Core.ServGeneric
             }
         }
 
-        public static T ResolveServByNamed<T>(string named)
+        public static T ResolveByNamed<T>(string named)
         {
             try
             {
-                var context = Resolve<IComponentContext>();
+                var context = GetService<IComponentContext>();
                 if (context == null)
                     return default;
 
@@ -161,11 +157,11 @@ namespace Spear.Inf.Core.ServGeneric
             }
         }
 
-        public static T ResolveServByNamed<T>(string named, params Parameter[] parameters)
+        public static T ResolveByNamed<T>(string named, params Parameter[] parameters)
         {
             try
             {
-                var context = Resolve<IComponentContext>();
+                var context = GetService<IComponentContext>();
                 if (context == null)
                     return default;
 
@@ -177,11 +173,11 @@ namespace Spear.Inf.Core.ServGeneric
             }
         }
 
-        public static T ResolveServByNamed<T>(string named, IEnumerable<Parameter> parameters)
+        public static T ResolveByNamed<T>(string named, IEnumerable<Parameter> parameters)
         {
             try
             {
-                var context = Resolve<IComponentContext>();
+                var context = GetService<IComponentContext>();
                 if (context == null)
                     return default;
 
@@ -194,11 +190,11 @@ namespace Spear.Inf.Core.ServGeneric
         }
 
 
-        public static object ResolveServByKeyed(Type type, string named)
+        public static object ResolveByKeyed(Type type, string named)
         {
             try
             {
-                var context = Resolve<IComponentContext>();
+                var context = GetService<IComponentContext>();
                 if (context == null)
                     return default;
 
@@ -210,11 +206,11 @@ namespace Spear.Inf.Core.ServGeneric
             }
         }
 
-        public static T ResolveServByKeyed<T>(object keyed)
+        public static T ResolveByKeyed<T>(object keyed)
         {
             try
             {
-                var context = Resolve<IComponentContext>();
+                var context = GetService<IComponentContext>();
                 if (context == null)
                     return default;
 
@@ -226,11 +222,11 @@ namespace Spear.Inf.Core.ServGeneric
             }
         }
 
-        public static T ResolveServByKeyed<T>(object keyed, params Parameter[] parameters)
+        public static T ResolveByKeyed<T>(object keyed, params Parameter[] parameters)
         {
             try
             {
-                var context = Resolve<IComponentContext>();
+                var context = GetService<IComponentContext>();
                 if (context == null)
                     return default;
 
@@ -242,11 +238,11 @@ namespace Spear.Inf.Core.ServGeneric
             }
         }
 
-        public static T ResolveServByKeyed<T>(object keyed, IEnumerable<Parameter> parameters)
+        public static T ResolveByKeyed<T>(object keyed, IEnumerable<Parameter> parameters)
         {
             try
             {
-                var context = Resolve<IComponentContext>();
+                var context = GetService<IComponentContext>();
                 if (context == null)
                     return default;
 
@@ -267,9 +263,9 @@ namespace Spear.Inf.Core.ServGeneric
             AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
         }
 
-        public static T GetServ<T>(params object[] paramArray) where T : IMicServ<T>
+        public static T ResolveMicServ<T>(params object[] paramArray) where T : IMicServ<T>
         {
-            var micServGener = ResolveServ<IMicServGener>();
+            var micServGener = Resolve<IMicServGener>();
             if (micServGener == null)
                 return default;
 

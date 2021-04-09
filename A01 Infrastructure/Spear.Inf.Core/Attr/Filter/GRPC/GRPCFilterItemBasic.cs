@@ -18,7 +18,7 @@ namespace Spear.Inf.Core.Attr
     {
         protected readonly ILogger Logger;
 
-        public GRPCFilterItemBasic() { Logger = ServiceContext.ResolveServ<ILogger>(); }
+        public GRPCFilterItemBasic() { Logger = ServiceContext.Resolve<ILogger>(); }
 
         public string Entrance { get; set; }
         public string Action { get; set; }

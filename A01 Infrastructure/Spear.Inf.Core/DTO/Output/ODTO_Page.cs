@@ -64,7 +64,7 @@ namespace Spear.Inf.Core.DTO
 
         public static ODTO_Page<TTarget> ToODTOPage<TSource, TTarget>(this Tuple<List<TSource>, int> pageData, IDTO_Page pageParam)
         {
-            var mapper = ServiceContext.ResolveServ<IMapper>();
+            var mapper = ServiceContext.Resolve<IMapper>();
             var dataList = pageData.Item1.Select(o => mapper.Map<TTarget>(o)).ToList();
 
             var result = dataList.ToODTOPage(pageData.Item2, pageParam);

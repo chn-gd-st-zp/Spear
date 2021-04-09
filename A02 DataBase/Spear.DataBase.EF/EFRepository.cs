@@ -9,7 +9,7 @@ namespace Spear.Inf.EF
     {
         protected override IDBContext GetDBContext()
         {
-            return ServiceContext.ResolveServByKeyed<IDBContext>(Enum_DBType.EF);
+            return ServiceContext.ResolveByKeyed<IDBContext>(Enum_DBType.EF);
         }
     }
 
@@ -18,7 +18,7 @@ namespace Spear.Inf.EF
     {
         protected override IDBContext GetDBContext()
         {
-            return ServiceContext.ResolveServByKeyed<IDBContext>(Enum_DBType.EF);
+            return ServiceContext.ResolveByKeyed<IDBContext>(Enum_DBType.EF);
         }
     }
 
@@ -27,7 +27,7 @@ namespace Spear.Inf.EF
     {
         protected override IDBContext GetDBContext()
         {
-            return ServiceContext.ResolveServByKeyed<IDBContext>(Enum_DBType.EF);
+            return ServiceContext.ResolveByKeyed<IDBContext>(Enum_DBType.EF);
         }
     }
 
@@ -37,7 +37,7 @@ namespace Spear.Inf.EF
     {
         protected override IDBContext GetDBContext()
         {
-            return ServiceContext.ResolveServByKeyed<TDBContext>(Enum_DBType.EF);
+            return ServiceContext.ResolveByKeyed<TDBContext>(Enum_DBType.EF);
         }
     }
 }

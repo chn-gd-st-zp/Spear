@@ -24,7 +24,7 @@ namespace Spear.Inf.Core.Tool
             get
             {
                 string result = String.Empty;
-                var httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>();
+                var httpContext = ServiceContext.Resolve<IHttpContextAccessor>();
                 if (httpContext != null)
                 {
                     result = httpContext.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
@@ -97,7 +97,7 @@ namespace Spear.Inf.Core.Tool
         {
             get
             {
-                HttpContext httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>().HttpContext;
+                HttpContext httpContext = ServiceContext.Resolve<IHttpContextAccessor>().HttpContext;
                 return httpContext.Request.Headers["User-Agent"].FirstOrDefault();
             }
         }
@@ -109,7 +109,7 @@ namespace Spear.Inf.Core.Tool
         {
             get
             {
-                HttpContext httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>().HttpContext;
+                HttpContext httpContext = ServiceContext.Resolve<IHttpContextAccessor>().HttpContext;
 
                 return new StringBuilder()
                  .Append(httpContext.Request.Scheme)
@@ -126,7 +126,7 @@ namespace Spear.Inf.Core.Tool
         {
             get
             {
-                var httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>();
+                var httpContext = ServiceContext.Resolve<IHttpContextAccessor>();
                 if (httpContext == null)
                     return string.Empty;
                 var browser = httpContext.HttpContext.Request.Headers["User-Agent"];
@@ -141,7 +141,7 @@ namespace Spear.Inf.Core.Tool
         {
             get
             {
-                var httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>();
+                var httpContext = ServiceContext.Resolve<IHttpContextAccessor>();
                 if (httpContext != null)
                 {
                     return httpContext.HttpContext.Request.Host.Host;
@@ -158,7 +158,7 @@ namespace Spear.Inf.Core.Tool
         {
             get
             {
-                var httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>();
+                var httpContext = ServiceContext.Resolve<IHttpContextAccessor>();
                 if (httpContext != null)
                 {
                     return httpContext.HttpContext.Request.Headers["Origin"];
@@ -174,7 +174,7 @@ namespace Spear.Inf.Core.Tool
         /// <returns></returns>  
         public static string GetIP()
         {
-            HttpContext httpContext = ServiceContext.ResolveServ<IHttpContextAccessor>().HttpContext;
+            HttpContext httpContext = ServiceContext.Resolve<IHttpContextAccessor>().HttpContext;
 
             if (httpContext.Request.Headers.ContainsKey("$http_X-Real-IP"))
             {

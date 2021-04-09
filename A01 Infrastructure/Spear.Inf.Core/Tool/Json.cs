@@ -13,7 +13,7 @@ namespace Spear.Inf.Core.Tool
     {
         public static string ToJson(this object obj)
         {
-            var serializerSettings = ServiceContext.ResolveServ<JsonSerializerSettings>();
+            var serializerSettings = ServiceContext.Resolve<JsonSerializerSettings>();
 
             return obj.ToJson(serializerSettings);
         }
@@ -25,7 +25,7 @@ namespace Spear.Inf.Core.Tool
 
         public static T ToObject<T>(this string jsonStr)
         {
-            var serializerSettings = ServiceContext.ResolveServ<JsonSerializerSettings>();
+            var serializerSettings = ServiceContext.Resolve<JsonSerializerSettings>();
 
             return jsonStr.ToObject<T>(serializerSettings);
         }
@@ -40,7 +40,7 @@ namespace Spear.Inf.Core.Tool
 
         public static object ToObject(this string jsonStr, Type type)
         {
-            var serializerSettings = ServiceContext.ResolveServ<JsonSerializerSettings>();
+            var serializerSettings = ServiceContext.Resolve<JsonSerializerSettings>();
 
             return jsonStr.ToObject(type, serializerSettings);
         }

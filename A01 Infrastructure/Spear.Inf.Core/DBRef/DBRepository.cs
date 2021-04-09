@@ -19,7 +19,7 @@ namespace Spear.Inf.Core.DBRef
 
         protected virtual IDBContext GetDBContext()
         {
-            return ServiceContext.ResolveServ<IDBContext>();
+            return ServiceContext.Resolve<IDBContext>();
         }
 
         #region 查 - 列表
@@ -179,7 +179,7 @@ namespace Spear.Inf.Core.DBRef
 
         protected override IDBContext GetDBContext()
         {
-            return ServiceContext.ResolveServ<TDBContext>();
+            return ServiceContext.Resolve<TDBContext>();
         }
     }
 }

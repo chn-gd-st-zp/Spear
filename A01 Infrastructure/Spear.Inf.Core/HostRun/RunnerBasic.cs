@@ -58,11 +58,11 @@ namespace Spear.Inf.Core
             string runnerName = typeof(TRunner).Name;
 
             Info($"[{runnerName}]管道初始化...");
-            while (ServiceContext.IsDoneLoad()) Thread.Sleep(1000);
+            while (ServiceContext.IsDoneLoad) Thread.Sleep(1000);
             Info($"[{runnerName}]管道初始化完成...");
 
             Info($"[{runnerName}]程序初始化...");
-            Logger = ServiceContext.ResolveServ<ILogger<TRunner>>();
+            Logger = ServiceContext.Resolve<ILogger<TRunner>>();
             RunningStatus = Enum_Process.Waiting;
             Init();
             Info($"[{runnerName}]程序初始化完成...");

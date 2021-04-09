@@ -9,7 +9,7 @@ namespace Spear.Inf.SqlSugar
     {
         protected override IDBContext GetDBContext()
         {
-            return ServiceContext.ResolveServByKeyed<IDBContext>(Enum_DBType.SqlSugar);
+            return ServiceContext.ResolveByKeyed<IDBContext>(Enum_DBType.SqlSugar);
         }
     }
 
@@ -18,7 +18,7 @@ namespace Spear.Inf.SqlSugar
     {
         protected override IDBContext GetDBContext()
         {
-            return ServiceContext.ResolveServByKeyed<IDBContext>(Enum_DBType.SqlSugar);
+            return ServiceContext.ResolveByKeyed<IDBContext>(Enum_DBType.SqlSugar);
         }
     }
 
@@ -27,7 +27,7 @@ namespace Spear.Inf.SqlSugar
     {
         protected override IDBContext GetDBContext()
         {
-            return ServiceContext.ResolveServByKeyed<IDBContext>(Enum_DBType.SqlSugar);
+            return ServiceContext.ResolveByKeyed<IDBContext>(Enum_DBType.SqlSugar);
         }
     }
 
@@ -37,7 +37,7 @@ namespace Spear.Inf.SqlSugar
     {
         protected override IDBContext GetDBContext()
         {
-            return ServiceContext.ResolveServByKeyed<TDBContext>(Enum_DBType.SqlSugar);
+            return ServiceContext.ResolveByKeyed<TDBContext>(Enum_DBType.SqlSugar);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace Spear.Inf.Core.SettingsGeneric
             if (!objType.IsImplementedType<ISettings>())
                 return;
 
-            var optionsMonitor = ServiceContext.ResolveServ<IOptionsMonitor<T>>();
+            var optionsMonitor = ServiceContext.Resolve<IOptionsMonitor<T>>();
             optionsMonitor.OnChange((T, listener) =>
             {
                 var attrList = objType.GetCustomAttributes<DIModeForSettingsAttribute>();
@@ -72,7 +72,7 @@ namespace Spear.Inf.Core.SettingsGeneric
                     return;
 
                 var piArray = objType.GetProperties();
-                var configuration = ServiceContext.ResolveServ<IConfiguration>();
+                var configuration = ServiceContext.Resolve<IConfiguration>();
 
                 T obj_target = null;
                 T obj_source = null;
@@ -84,7 +84,7 @@ namespace Spear.Inf.Core.SettingsGeneric
                     switch (attr.EDIType)
                     {
                         case Enum_DIType.AsSelf:
-                            obj_target = ServiceContext.ResolveServ<T>();
+                            obj_target = ServiceContext.Resolve<T>();
                             break;
                         case Enum_DIType.AsImpl:
 
@@ -101,16 +101,16 @@ namespace Spear.Inf.Core.SettingsGeneric
                             if (interfaceType == null)
                                 continue;
 
-                            obj_target = ServiceContext.ResolveServ(interfaceType) as T;
+                            obj_target = ServiceContext.Resolve(interfaceType) as T;
                             break;
                         case Enum_DIType.Specific:
-                            obj_target = ServiceContext.ResolveServ(attr.Type) as T;
+                            obj_target = ServiceContext.Resolve(attr.Type) as T;
                             break;
                         case Enum_DIType.SpecificByNamed:
-                            obj_target = ServiceContext.ResolveServByNamed(attr.Type, attr.Key.ToString()) as T;
+                            obj_target = ServiceContext.ResolveByNamed(attr.Type, attr.Key.ToString()) as T;
                             break;
                         case Enum_DIType.SpecificByKeyed:
-                            obj_target = ServiceContext.ResolveServByKeyed(attr.Type, attr.Key.ToString()) as T;
+                            obj_target = ServiceContext.ResolveByKeyed(attr.Type, attr.Key.ToString()) as T;
                             break;
                     }
 

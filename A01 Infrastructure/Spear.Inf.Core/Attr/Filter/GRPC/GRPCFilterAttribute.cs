@@ -30,7 +30,7 @@ namespace Spear.Inf.Core.Attr
         {
             _context = context;
             _next = next;
-            _filters = ServiceContext.ResolveServByKeyed<IRequestFilterHandle>(Enum_FilterType.GRPC);
+            _filters = ServiceContext.ResolveByKeyed<IRequestFilterHandle>(Enum_FilterType.GRPC);
         }
 
         public async Task<bool> Run()

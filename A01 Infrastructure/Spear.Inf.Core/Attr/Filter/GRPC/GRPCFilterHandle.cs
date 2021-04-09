@@ -12,7 +12,7 @@ namespace Spear.Inf.Core.Attr
 
         public GRPCFilterHandle()
         {
-            _filterItems = ServiceContext.ResolveServByKeyed<IRequestFilterItems>(Enum_FilterType.GRPC);
+            _filterItems = ServiceContext.ResolveByKeyed<IRequestFilterItems>(Enum_FilterType.GRPC);
         }
     }
 }

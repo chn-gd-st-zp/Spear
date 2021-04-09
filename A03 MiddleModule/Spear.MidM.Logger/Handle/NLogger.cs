@@ -62,7 +62,7 @@ namespace Spear.MidM.Logger
 
         public NLogger()
         {
-            _logger = ServiceContext.ResolveServ<ILogger<T>>();
+            _logger = ServiceContext.Resolve<ILogger<T>>();
         }
 
         public void Info(string msg)

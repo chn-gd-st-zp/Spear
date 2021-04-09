@@ -41,7 +41,7 @@ namespace Spear.MidM.RabbitMQ
         /// </summary>
         public RabbitMQHandle()
         {
-            config = ServiceContext.ResolveServ<RabbitMQSettings>();
+            config = ServiceContext.Resolve<RabbitMQSettings>();
 
             Init();
 

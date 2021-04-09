@@ -16,7 +16,7 @@ namespace Spear.MidM.SessionNAuth
         public SessionNAuth(SessionNAuthSettings sessionNAuthSettings)
         {
             _sessionNAuthSettings = sessionNAuthSettings;
-            _cache = ServiceContext.ResolveServ<ICache>();
+            _cache = ServiceContext.Resolve<ICache>();
         }
 
         public string CurToken
@@ -27,7 +27,7 @@ namespace Spear.MidM.SessionNAuth
                 {
                     if (_curToken.IsEmptyString())
                     {
-                        var token1 = ServiceContext.ResolveServ<T>().CurToken;
+                        var token1 = ServiceContext.Resolve<T>().CurToken;
                         var token2 = token1.IsEmptyString() ? "" : token1.ToString();
                         var token = token2 == "null" ? "" : token2;
                         _curToken = token;

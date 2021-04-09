@@ -41,7 +41,7 @@ namespace Spear.Inf.Core.Attr
                 if (attr != null)
                 {
                     var realAttr = attr as KeywordResetAttribute;
-                    var kr = ServiceContext.ResolveServ<IKeywordProcessing>();
+                    var kr = ServiceContext.Resolve<IKeywordProcessing>();
                     if (kr != null)
                     {
                         //actionResult = actionResult.ToString().Replace(realAttr.Pattern, kr.GetValue<string>(realAttr.Pattern));

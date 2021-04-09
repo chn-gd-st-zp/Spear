@@ -12,7 +12,7 @@ namespace Spear.Inf.Core.Attr
 
         public CtrlerFilterHandle()
         {
-            _filterItems = ServiceContext.ResolveServByKeyed<IRequestFilterItems>(Enum_FilterType.Ctrler);
+            _filterItems = ServiceContext.ResolveByKeyed<IRequestFilterItems>(Enum_FilterType.Ctrler);
         }
     }
 }

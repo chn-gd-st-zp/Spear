@@ -13,7 +13,7 @@ namespace Spear.MidM.Defend.EncryptionNDecrypt
         public BasicHandle(string secretPrefix) : base()
         {
             SecretPrefix = secretPrefix.IsEmptyString() ? "" : secretPrefix;
-            Settings = ServiceContext.ResolveServ<TSettings>();
+            Settings = ServiceContext.Resolve<TSettings>();
         }
 
         public abstract string Decrypt(string text);

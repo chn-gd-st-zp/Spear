@@ -18,7 +18,7 @@ namespace Spear.MidM.SessionNAuth
         {
             get
             {
-                var iContext = ServiceContext.ResolveServ<IHttpContextAccessor>();
+                var iContext = ServiceContext.Resolve<IHttpContextAccessor>();
                 if (iContext == null)
                     return "";
 
