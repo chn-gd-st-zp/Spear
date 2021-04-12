@@ -36,7 +36,7 @@ namespace Spear.Inf.Core.Attr
 
         public virtual void OnExecuting(object context)
         {
-            ActionExecutingContext realContext = context as ActionExecutingContext;
+            var realContext = context as ActionExecutingContext;
 
             RequestTime = DateTime.Now;
 
@@ -71,7 +71,7 @@ namespace Spear.Inf.Core.Attr
 
         public virtual void OnExecuted(object context)
         {
-            ActionExecutedContext realContext = context as ActionExecutedContext;
+            var realContext = context as ActionExecutedContext;
 
             ResponseTime = DateTime.Now;
 
@@ -81,9 +81,13 @@ namespace Spear.Inf.Core.Attr
                 //如果标记[LogIgnore]，则不做日志记录
                 if (((ControllerActionDescriptor)realContext.ActionDescriptor).MethodInfo.GetCustomAttribute<LogIgnoreAttribute>() == null)
                 {
-                    var result_obj = realContext.Result as ObjectResult;
+                    Result = realContext.Result;
 
-                    Result = result_obj == null ? null : result_obj.Value;
+                    if (realContext.Result is FileResult)
+                    {
+                        var result_tmp = realContext.Result as FileResult;
+                        Result = new ContentResult() { Content = result_tmp.GetType().FullName, ContentType = result_tmp.ContentType };
+                    }
 
                     //记录每次请求的往返内容
                     Logger.Info(new
@@ -103,12 +107,24 @@ namespace Spear.Inf.Core.Attr
 
         public virtual void OnExit(object context)
         {
-            //
+            if (context is ResultExecutingContext)
+            {
+                var realContext = context as ResultExecutingContext;
+                realContext.Result = Result as IActionResult;
+                return;
+            }
+
+            if (context is ExceptionContext)
+            {
+                var realContext = context as ExceptionContext;
+                realContext.Result = Result.ToJsonResult();
+                return;
+            }
         }
 
         public virtual void OnException(object context, Exception exception)
         {
-            ExceptionContext realContext = context as ExceptionContext;
+            var realContext = context as ExceptionContext;
 
             //获取最底层的错误
             Exception = exception;
@@ -136,7 +152,6 @@ namespace Spear.Inf.Core.Attr
                 }, Exception);
             }
 
-            realContext.Result = Result.ToJsonResult();
             realContext.ExceptionHandled = true;
         }
     }

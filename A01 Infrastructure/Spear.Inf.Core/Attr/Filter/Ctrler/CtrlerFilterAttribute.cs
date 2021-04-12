@@ -73,6 +73,9 @@ namespace Spear.Inf.Core.Attr
         public override void OnResultExecuting(ResultExecutingContext context)
         {
             base.OnResultExecuting(context);
+
+            foreach (var filter in _filters.FilterItems)
+                filter.OnExit(context);
         }
 
         /// <summary>
@@ -94,6 +97,9 @@ namespace Spear.Inf.Core.Attr
             foreach (var filter in _filters.FilterItems)
                 filter.OnException(context, context.Exception);
 
+            foreach (var filter in _filters.FilterItems)
+                filter.OnExit(context);
+
             return Task.CompletedTask;
         }
 
@@ -105,6 +111,9 @@ namespace Spear.Inf.Core.Attr
         {
             foreach (var filter in _filters.FilterItems)
                 filter.OnException(context, context.Exception);
+
+            foreach (var filter in _filters.FilterItems)
+                filter.OnExit(context);
         }
     }
 }
