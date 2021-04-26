@@ -66,8 +66,10 @@ namespace Spear.Inf.Core.AppEntrance
             List<string> typeIgnore = new List<string>();
             List<string> typeRegis = new List<string>();
 
-            containerBuilder.Register(this.GetRunningType(), Configuration, typeIgnore, typeRegis);
-            containerBuilder.Register(this.GetRunningType(), typeIgnore, typeRegis);
+            var runningType = this.GetRunningType();
+
+            containerBuilder.Register(runningType, Configuration, typeIgnore, typeRegis);
+            containerBuilder.Register(runningType, typeIgnore, typeRegis);
 
             containerBuilder.Register(o => Configuration).As<IConfiguration>().SingleInstance();
             containerBuilder.Register(o => JsonSerializerSettings).AsSelf().SingleInstance();
