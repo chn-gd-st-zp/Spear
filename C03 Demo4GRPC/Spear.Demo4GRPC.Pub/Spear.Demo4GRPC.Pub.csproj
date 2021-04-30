@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\A01 Infrastructure\Spear.Inf.Core\Spear.Inf.Core.csproj" />
+		<ProjectReference Include="..\..\A01 Infrastructure\Spear.Inf.DataFile\Spear.Inf.DataFile.csproj" />
+		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Logger\Spear.MidM.Logger.csproj" />
+		<ProjectReference Include="..\..\A04 GlobalSupport\Spear.GlobalSupport.Basic\Spear.GlobalSupport.Basic.csproj" />
+	</ItemGroup>
+
+</Project>

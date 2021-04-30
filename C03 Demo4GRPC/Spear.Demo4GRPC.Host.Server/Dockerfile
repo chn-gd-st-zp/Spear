@@ -3,4 +3,4 @@ WORKDIR /app
 COPY . .  
 EXPOSE 80
 EXPOSE 81
-ENTRYPOINT ["dotnet", "Spear.Demo4WinApp.Host.dll"]
+ENTRYPOINT ["dotnet", "Spear.Demo4GRPC.Host.Server.dll"]
