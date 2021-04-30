@@ -13,10 +13,9 @@
 #ENV ASPNETCORE_ENVIRONMENT Development »ò Staging »ò Production
 #EXPOSE 80
 #EXPOSE 81
-#ENTRYPOINT ["dotnet", "Spear.DataProvider.Host.????.dll"]
+#ENTRYPOINT ["dotnet", "Spear.???.Host.???.dll"]
 
 #$Env:ASPNETCORE_ENVIRONMENT = "Staging"
-#export ASPNETCORE_ENVIRONMENT=Staging »ò Production
 
 #docker exec ???? ls /app/logs/
 #docker exec ???? cat /app/logs/???/???.log
@@ -26,6 +25,3 @@
 
 #docker build -t testdemo .
 #docker run -d -p 7000:80 -p 7001:81 --env ASPNETCORE_ENVIRONMENT=Staging --name=testdemo_0 testdemo hostpublic=119.8.46.181 hostinternal=192.168.0.173 webapiport=7000 grpcport=7001
-
-#$Env:ASPNETCORE_ENVIRONMENT = "Development"
-#dotnet Spear.DispatchCenter.Host.Distribution.Actuator.dll teamflag=common5566 ispublic=true

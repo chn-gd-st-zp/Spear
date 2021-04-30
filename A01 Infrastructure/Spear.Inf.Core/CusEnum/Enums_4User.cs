@@ -20,18 +20,6 @@ namespace Spear.Inf.Core.CusEnum
         NormalUser,
     }
 
-    public enum Enum_UserType
-    {
-        [Remark("默认、无")]
-        None = 0,
-
-        [Remark("前端用户")]
-        FrontendUser = 1,
-
-        [Remark("后端用户")]
-        BackendUser = 2
-    }
-
     public enum Enum_Gender
     {
         [Remark("默认、无")]

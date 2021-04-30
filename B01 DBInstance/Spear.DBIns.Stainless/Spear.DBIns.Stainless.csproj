@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\A01 Infrastructure\Spear.Inf.Core\Spear.Inf.Core.csproj" />
+		<ProjectReference Include="..\..\A02 DataBase\Spear.DataBase.EF\Spear.DataBase.EF.csproj" />
+	</ItemGroup>
+
+</Project>

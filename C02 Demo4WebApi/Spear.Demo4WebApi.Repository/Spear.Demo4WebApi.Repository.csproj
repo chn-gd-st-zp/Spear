@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\B01 DBInstance\Spear.DBIns.Stainless\Spear.DBIns.Stainless.csproj" />
+		<ProjectReference Include="..\Spear.Demo4WebApi.Basic\Spear.Demo4WebApi.Basic.csproj" />
+	</ItemGroup>
+
+</Project>

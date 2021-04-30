@@ -10,14 +10,14 @@ namespace Spear.Inf.Core.CusEnum
         [Remark("天")]
         Day,
 
-        //[Remark("周")]
-        //Week,
+        [Remark("周")]
+        Week,
 
         [Remark("月")]
         Month,
 
-        //[Remark("季")]
-        //Season,
+        [Remark("季")]
+        Season,
 
         [Remark("年")]
         Year,
