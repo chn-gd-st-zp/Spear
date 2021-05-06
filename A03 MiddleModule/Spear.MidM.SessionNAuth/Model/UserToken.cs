@@ -20,11 +20,6 @@ namespace Spear.MidM.SessionNAuth
         public string UserName { get; set; }
 
         /// <summary>
-        /// 用户类型（1前端用户2后端用户）
-        /// </summary>
-        public Enum_UserType UserType { get; set; }
-
-        /// <summary>
         /// 角色类型
         /// </summary>
         public Enum_Role RoleType { get; set; }

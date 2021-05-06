@@ -13,11 +13,8 @@ namespace Spear.Inf.Core.CusEnum
         [Remark("普通管理员")]
         NormalAdmin,
 
-        [Remark("代理管理员")]
-        AgentAdmin,
-
         [Remark("普通用户")]
-        NormalUser,
+        User,
     }
 
     public enum Enum_Gender
