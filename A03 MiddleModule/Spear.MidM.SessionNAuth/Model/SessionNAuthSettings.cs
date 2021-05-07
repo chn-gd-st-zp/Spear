@@ -8,9 +8,14 @@ namespace Spear.MidM.SessionNAuth
     public class SessionNAuthSettings : ISettings
     {
         /// <summary>
-        /// 在Header中的标识
+        /// AccessToken在Header中的标识
         /// </summary>
-        public string TokenKey { get; set; }
+        public string AccessTokenKey { get; set; }
+
+        /// <summary>
+        /// 缓存DBIndex
+        /// </summary>
+        public int CacheDBIndex { get; set; }
 
         /// <summary>
         /// 缓存前缀

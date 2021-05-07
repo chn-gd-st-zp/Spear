@@ -9,13 +9,13 @@ namespace Spear.Inf.Core.Basic
     public class ControllerBasic : ControllerBase
     {
         protected new HttpContext HttpContext { get; private set; }
-        protected ICache4Redis Cache { get; private set; }
+        protected ICache Cache { get; private set; }
         protected ILogger Logger { get; private set; }
 
         public ControllerBasic()
         {
             HttpContext = Resolve<IHttpContextAccessor>().HttpContext;
-            Cache = Resolve<ICache4Redis>();
+            Cache = Resolve<ICache>();
             Logger = Resolve<ILogger>();
         }
 

@@ -14,6 +14,16 @@ namespace Spear.Inf.Core.Interface
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
+        /// <param name="ts"></param>
+        /// <returns></returns>
+        bool Set<T>(string key, T value, TimeSpan ts);
+
+        /// <summary>
+        /// 添加缓存
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
         bool Set<T>(string key, T value);
 
@@ -36,16 +46,6 @@ namespace Spear.Inf.Core.Interface
         /// <param name="endTime"></param>
         /// <returns></returns>
         bool Set<T>(string key, T value, DateTime endTime);
-
-        /// <summary>
-        /// 添加缓存
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <param name="ts"></param>
-        /// <returns></returns>
-        bool Set<T>(string key, T value, TimeSpan ts);
 
         /// <summary>
         /// 删除缓存

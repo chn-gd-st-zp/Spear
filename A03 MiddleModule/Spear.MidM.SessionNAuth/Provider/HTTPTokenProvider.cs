@@ -26,7 +26,7 @@ namespace Spear.MidM.SessionNAuth
                 if (context == null)
                     return "";
 
-                var token1 = context.Request.Headers[_sessionNAuthSettings.TokenKey];
+                var token1 = context.Request.Headers[_sessionNAuthSettings.AccessTokenKey];
                 if (token1.IsEmptyString())
                     return "";
 

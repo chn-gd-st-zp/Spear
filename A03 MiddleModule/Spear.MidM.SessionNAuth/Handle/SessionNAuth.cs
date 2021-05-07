@@ -1,22 +1,27 @@
 ﻿using System;
 
+using Autofac.Core;
+
 using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.CusException;
 using Spear.Inf.Core.EncryptionNDecrypt;
 using Spear.Inf.Core.Tool;
+using Spear.MidM.Redis;
 
 namespace Spear.MidM.SessionNAuth
 {
     public class SessionNAuth<T> : ISessionNAuth<T> where T : ITokenProvider
     {
         private readonly SessionNAuthSettings _sessionNAuthSettings;
-        private readonly ICache _cache;
+        private readonly ICache4Redis _cache;
 
-        public SessionNAuth(SessionNAuthSettings sessionNAuthSettings)
+        public SessionNAuth()
         {
-            _sessionNAuthSettings = sessionNAuthSettings;
-            _cache = ServiceContext.Resolve<ICache>();
+            var redisSettings = ServiceContext.Resolve<RedisSettings>();
+
+            _sessionNAuthSettings = ServiceContext.Resolve<SessionNAuthSettings>();
+            _cache = ServiceContext.Resolve<ICache4Redis>(new NamedPropertyParameter("redisSettings", redisSettings), new NamedPropertyParameter("defaultDatabase", _sessionNAuthSettings.CacheDBIndex));
         }
 
         public string CurToken
@@ -94,7 +99,7 @@ namespace Spear.MidM.SessionNAuth
             }
             catch (Exception ex)
             {
-                throw new Exception("加载菜单与权限失败", ex);
+                throw new Exception("运行出错[加载菜单与权限]", ex);
             }
         }
 
@@ -109,7 +114,7 @@ namespace Spear.MidM.SessionNAuth
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("运行出错[权限验证]", ex);
             }
         }
 
@@ -127,7 +132,7 @@ namespace Spear.MidM.SessionNAuth
             if (accessToken.IsEmptyString())
                 return null;
 
-            accessToken = MD5.Encrypt(accessToken, 32);
+            accessToken = MD5.Encrypt(accessToken);
 
             return _cache.Get<UserTokenCache>(_sessionNAuthSettings.CachePrefix + accessToken);
         }
@@ -144,7 +149,7 @@ namespace Spear.MidM.SessionNAuth
 
             var time = TimeSpan.FromMinutes(_sessionNAuthSettings.ValidDuration);
 
-            var accessToken = MD5.Encrypt(userToken.AccessToken, 32);
+            var accessToken = MD5.Encrypt(userToken.AccessToken);
 
             _cache.Set(_sessionNAuthSettings.ValidDuration + accessToken, userToken, time);
             _curToken = userToken.AccessToken;

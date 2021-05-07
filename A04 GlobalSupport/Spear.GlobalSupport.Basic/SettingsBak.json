@@ -64,6 +64,7 @@
 
   "SessionNAuthSettings": {
     "TokenKey": "Authorization",
+    "CacheDBIndex": 0,
     "CachePrefix": "UserToken:",
     "ValidDuration": 30
   },

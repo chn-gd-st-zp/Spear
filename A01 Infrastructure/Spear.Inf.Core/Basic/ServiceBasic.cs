@@ -8,13 +8,13 @@ namespace Spear.Inf.Core.Basic
     public class ServiceBasic
     {
         protected HttpContext HttpContext { get; private set; }
-        protected ICache4Redis Cache { get; private set; }
+        protected ICache Cache { get; private set; }
         protected ILogger Logger { get; private set; }
 
         public ServiceBasic()
         {
             HttpContext = Resolve<IHttpContextAccessor>().HttpContext;
-            Cache = Resolve<ICache4Redis>();
+            Cache = Resolve<ICache>();
             Logger = Resolve<ILogger>();
         }
 

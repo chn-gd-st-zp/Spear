@@ -4,11 +4,28 @@ using Spear.Inf.Core.CusEnum;
 
 namespace Spear.MidM.SessionNAuth
 {
-    /// <summary>
-    /// UserToken
-    /// </summary>
     public class UserToken
     {
+        /// <summary>
+        /// AccessToken
+        /// </summary>
+        public string AccessToken { get; set; }
+
+        /// <summary>
+        /// 登录设备
+        /// </summary>
+        public Enum_Entry EFacility { get; set; }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateTime { get; set; }
+
+        /// <summary>
+        /// 刷新时间
+        /// </summary>
+        public DateTime RefreshTime { get; set; }
+
         /// <summary>
         /// 用户ID
         /// </summary>
@@ -28,31 +45,6 @@ namespace Spear.MidM.SessionNAuth
         /// 角色代码
         /// </summary>
         public string[] RoleCodes { get; set; }
-
-        /// <summary>
-        /// 访问Token
-        /// </summary>
-        public string AccessToken { get; set; }
-
-        /// <summary>
-        /// 刷新Token
-        /// </summary>
-        public string RefreshToken { get; set; }
-
-        /// <summary>
-        /// 刷新时间
-        /// </summary>
-        public DateTime RefreshTime { get; set; }
-
-        /// <summary>
-        /// 应用代码
-        /// </summary>
-        public string Application { get; set; }
-
-        /// <summary>
-        /// 登录设备
-        /// </summary>
-        public Enum_Entry EFacility { get; set; }
     }
 
     public class UserTokenCache : UserToken
