@@ -2,7 +2,6 @@
 
 using Autofac.Core;
 
-using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.CusException;
 using Spear.Inf.Core.EncryptionNDecrypt;
