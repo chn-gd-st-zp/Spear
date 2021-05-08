@@ -63,10 +63,10 @@
   },
 
   "SessionNAuthSettings": {
-    "TokenKey": "Authorization",
+    "AccessTokenKeyInHeader": "Authorization",
     "CacheDBIndex": 0,
     "CachePrefix": "UserToken:",
-    "ValidDuration": 30
+    "CacheValidDuration": 30
   },
 
   "PayChannelSettings": {

@@ -146,11 +146,11 @@ namespace Spear.MidM.SessionNAuth
             if (userToken == null)
                 return;
 
-            var time = TimeSpan.FromMinutes(_sessionNAuthSettings.ValidDuration);
+            var time = TimeSpan.FromMinutes(_sessionNAuthSettings.CacheValidDuration);
 
             var accessToken = MD5.Encrypt(userToken.AccessToken);
 
-            _cache.Set(_sessionNAuthSettings.ValidDuration + accessToken, userToken, time);
+            _cache.Set(_sessionNAuthSettings.CacheValidDuration + accessToken, userToken, time);
             _curToken = userToken.AccessToken;
         }
 

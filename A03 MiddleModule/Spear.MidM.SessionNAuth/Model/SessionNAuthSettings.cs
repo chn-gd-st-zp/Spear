@@ -10,7 +10,7 @@ namespace Spear.MidM.SessionNAuth
         /// <summary>
         /// AccessToken在Header中的标识
         /// </summary>
-        public string AccessTokenKey { get; set; }
+        public string AccessTokenKeyInHeader { get; set; }
 
         /// <summary>
         /// 缓存DBIndex
@@ -23,8 +23,8 @@ namespace Spear.MidM.SessionNAuth
         public string CachePrefix { get; set; }
 
         /// <summary>
-        /// 有效持续时间（分钟）
+        /// 缓存有效持续时间（分钟）
         /// </summary>
-        public int ValidDuration { get; set; }
+        public int CacheValidDuration { get; set; }
     }
 }
