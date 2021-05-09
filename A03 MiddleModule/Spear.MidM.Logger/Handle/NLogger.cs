@@ -34,24 +34,18 @@ namespace Spear.MidM.Logger
             Info(obj.ToJson());
         }
 
-        public void Error(string msg)
+        public void Error(string msg, Exception exception = null)
         {
-            _logger.Error(msg);
+            exception = exception != null ? exception : new Exception();
+            var errorObj = new { ErrorMsg = msg, ErrorInfo = exception.Message, ErrorTrace = exception.StackTrace };
+            _logger.Error(exception, errorObj.ToJson());
         }
 
-        public void Error(object obj)
+        public void Error(object obj, Exception exception = null)
         {
-            Error(obj.ToJson());
-        }
-
-        public void Error(string msg, Exception exception)
-        {
-            _logger.Error(exception, msg);
-        }
-
-        public void Error(object obj, Exception exception)
-        {
-            Error(obj.ToJson(), exception);
+            exception = exception != null ? exception : new Exception();
+            var errorObj = new { ErrorObj = obj, ErrorInfo = exception.Message, ErrorTrace = exception.StackTrace };
+            _logger.Error(exception, errorObj.ToJson());
         }
     }
 
@@ -75,24 +69,18 @@ namespace Spear.MidM.Logger
             Info(obj.ToJson());
         }
 
-        public void Error(string msg)
+        public void Error(string msg, Exception exception = null)
         {
-            _logger.LogError(msg);
+            exception = exception != null ? exception : new Exception();
+            var errorObj = new { ErrorMsg = msg, ErrorInfo = exception.Message, ErrorTrace = exception.StackTrace };
+            _logger.LogError(exception, errorObj.ToJson());
         }
 
-        public void Error(object obj)
+        public void Error(object obj, Exception exception = null)
         {
-            Error(obj.ToJson());
-        }
-
-        public void Error(string msg, Exception exception)
-        {
-            _logger.LogError(exception, msg);
-        }
-
-        public void Error(object obj, Exception exception)
-        {
-            Error(obj.ToJson(), exception);
+            exception = exception != null ? exception : new Exception();
+            var errorObj = new { ErrorObj = obj, ErrorInfo = exception.Message, ErrorTrace = exception.StackTrace };
+            _logger.LogError(exception, errorObj.ToJson());
         }
     }
 }

@@ -147,8 +147,6 @@ namespace Spear.Inf.Core.Attr
                     Result,
                     RequestTime,
                     ResponseTime,
-                    ErrMsg = Exception.Message,
-                    ErrStackTrace = Exception.StackTrace,
                 }, Exception);
             }
 

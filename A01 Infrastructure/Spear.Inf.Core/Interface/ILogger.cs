@@ -8,13 +8,9 @@ namespace Spear.Inf.Core.Interface
 
         void Info(object obj);
 
-        void Error(string msg);
+        void Error(string msg, Exception exception = null);
 
-        void Error(object obj);
-
-        void Error(string msg, Exception exception);
-
-        void Error(object obj, Exception exception);
+        void Error(object obj, Exception exception = null);
     }
 
     public interface ILogger<T> : ILogger

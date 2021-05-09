@@ -123,10 +123,8 @@ namespace Spear.Inf.Core.Attr
                     FuncParams,
                     Result,
                     RequestTime,
-                    ResponseTime,
-                    ErrMsg = Exception.Message,
-                    ErrStackTrace = Exception.StackTrace,
-                }.ToJson(), Exception);
+                    ResponseTime
+                }, Exception);
             }
         }
     }
