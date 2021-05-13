@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.MidM.Quartz", "..\A03
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "C01 Demo4WinApp", "C01 Demo4WinApp", "{D90E0C51-CBDE-4AC1-A6DC-14A0D4E843EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spear.Demo4WinApp.Host", "Spear.Demo4WinApp.Host\Spear.Demo4WinApp.Host.csproj", "{49579921-028B-4B39-AF4F-41C5C8A1501D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.Demo4WinApp.Host", "Spear.Demo4WinApp.Host\Spear.Demo4WinApp.Host.csproj", "{49579921-028B-4B39-AF4F-41C5C8A1501D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.MidM.Apollo", "..\A03 MiddleModule\Spear.MidM.Apollo\Spear.MidM.Apollo.csproj", "{52E209AB-B6D4-4938-95E0-78036005925F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{49579921-028B-4B39-AF4F-41C5C8A1501D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49579921-028B-4B39-AF4F-41C5C8A1501D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49579921-028B-4B39-AF4F-41C5C8A1501D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52E209AB-B6D4-4938-95E0-78036005925F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52E209AB-B6D4-4938-95E0-78036005925F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52E209AB-B6D4-4938-95E0-78036005925F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52E209AB-B6D4-4938-95E0-78036005925F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{EA6F79B9-E7F5-41AD-98D3-3674B02461CD} = {536817D4-3E26-43AB-973E-AD9E8251862D}
 		{50AFB168-3542-437D-9D05-9FB54313FA23} = {31755D1F-8C95-4121-B0DD-992B21B7FC42}
 		{49579921-028B-4B39-AF4F-41C5C8A1501D} = {D90E0C51-CBDE-4AC1-A6DC-14A0D4E843EE}
+		{52E209AB-B6D4-4938-95E0-78036005925F} = {31755D1F-8C95-4121-B0DD-992B21B7FC42}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {52F03DC4-7DA5-4246-B09C-30789C0FBEE6}

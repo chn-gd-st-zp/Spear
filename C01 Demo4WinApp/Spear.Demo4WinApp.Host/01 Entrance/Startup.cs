@@ -12,6 +12,7 @@ using Newtonsoft.Json.Converters;
 
 using Spear.Inf.Core;
 using Spear.Inf.Core.AppEntrance;
+using Spear.Inf.Core.SettingsGeneric;
 using Spear.MidM.Logger;
 using Spear.MidM.Quartz;
 
@@ -38,6 +39,8 @@ namespace Spear.Demo4WinApp.Host
         {
             //services.AddHostedService<HostedService>();
             services.AddHostedService<HostedService<QuartzRunner>>();
+
+            services.Monitor<AutoDelSettings>(Configuration);
         }
 
         protected override void Extend_ConfigureContainer(ContainerBuilder containerBuilder)
@@ -53,6 +56,8 @@ namespace Spear.Demo4WinApp.Host
         protected override void Extend_Configure(IApplicationBuilder app, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory)
         {
             ServiceContext.InitServiceProvider(app.ApplicationServices);
+
+            app.MonitorSettings(this.GetRunningType());
         }
     }
 }

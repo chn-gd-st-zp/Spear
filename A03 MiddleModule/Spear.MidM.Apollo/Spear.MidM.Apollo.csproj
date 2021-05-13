@@ -5,6 +5,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="Com.Ctrip.Framework.Apollo" Version="2.4.4" />
+	  <PackageReference Include="Com.Ctrip.Framework.Apollo.Configuration" Version="2.4.1" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\..\A01 Infrastructure\Spear.Inf.Core\Spear.Inf.Core.csproj" />
 	</ItemGroup>
 

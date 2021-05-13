@@ -8,7 +8,7 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.MidM.Apollo
 {
-    public class ApolloSettingGeneric : RegularSettingsGeneric
+    public class ApolloSettingsGeneric : RegularSettingsGeneric
     {
         public override T GetSetting<T>(IConfiguration config)
         {
