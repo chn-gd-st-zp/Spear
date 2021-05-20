@@ -11,7 +11,7 @@ namespace Spear.GlobalSupport.Basic.Filter
     {
         public CtrlerFilterItems()
         {
-            Add(new CtrlerFilterItemProcedure());
+            Add(new CtrlerFilterItemForAuth());
         }
     }
 }

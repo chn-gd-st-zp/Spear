@@ -11,7 +11,7 @@ namespace Spear.GlobalSupport.Basic.Filter
     {
         public GRPCFilterItems()
         {
-            Add(new GRPCFilterItemProcedure());
+            Add(new GRPCFilterItemForAuth());
         }
     }
 }

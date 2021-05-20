@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Linq;
 
 using Autofac;
 using Autofac.Core;
 
-using Spear.Inf.Core.ServGeneric;
+using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusException;
 using Spear.Inf.Core.EncryptionNDecrypt;
+using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.Tool;
 using Spear.MidM.Redis;
 
@@ -67,9 +69,6 @@ namespace Spear.MidM.SessionNAuth
 
                         _curUserToken = userTokenCache.MapTo<UserTokenCache, UserTokenRunTime>();
 
-                        LoadPermission();
-                        VerifyPermission();
-
                         _curUserToken.RefreshTime = DateTime.Now;
                     }
 
@@ -86,42 +85,6 @@ namespace Spear.MidM.SessionNAuth
             }
         }
         private UserTokenRunTime _curUserToken;
-
-        #region 鉴权初始化
-
-        /// <summary>
-        /// 加载菜单与权限
-        /// </summary>
-        private void LoadPermission()
-        {
-            try
-            {
-                //
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("运行出错[加载菜单与权限]", ex);
-            }
-        }
-
-        /// <summary>
-        /// 权限验证
-        /// </summary>
-        private void VerifyPermission()
-        {
-            try
-            {
-                //
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("运行出错[权限验证]", ex);
-            }
-        }
-
-        #endregion
-
-        #region 会话辅助
 
         /// <summary>
         /// 获取Token
@@ -171,6 +134,25 @@ namespace Spear.MidM.SessionNAuth
             _cache.Del(_sessionNAuthSettings.CachePrefix + accessToken);
         }
 
-        #endregion
+        /// <summary>
+        /// 权限认证
+        /// </summary>
+        public void PermissionAuth(string permissionCode)
+        {
+            try
+            {
+                if (CurUserToken.ERoleType == Enum_Role.SuperAdmin)
+                    return;
+
+                if (CurUserToken.PermissionCodes.Contains(permissionCode))
+                    return;
+
+                throw new Exception_NoAuth();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("运行出错[权限认证]", ex);
+            }
+        }
     }
 }

@@ -45,19 +45,20 @@ namespace Spear.MidM.SessionNAuth
         /// 角色代码
         /// </summary>
         public string[] RoleCodes { get; set; }
+
+        /// <summary>
+        /// 权限代码
+        /// </summary>
+        public string[] PermissionCodes { get; set; }
     }
 
     public class UserTokenCache : UserToken
     {
-        public string MenuCodes { get; set; }
+        //
     }
 
     public class UserTokenRunTime : UserTokenCache
     {
-        //public List<string> MenuCodeList { get; set; }
-
-        //public List<Permission> Menus { get; set; }
-
-        //public List<Permission_Role> RolePermissions { get; set; }
+        //
     }
 }
