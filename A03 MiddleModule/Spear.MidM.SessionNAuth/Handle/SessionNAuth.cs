@@ -1,5 +1,6 @@
 ﻿using System;
 
+using Autofac;
 using Autofac.Core;
 
 using Spear.Inf.Core.ServGeneric;
@@ -20,7 +21,8 @@ namespace Spear.MidM.SessionNAuth
             var redisSettings = ServiceContext.Resolve<RedisSettings>();
 
             _sessionNAuthSettings = ServiceContext.Resolve<SessionNAuthSettings>();
-            _cache = ServiceContext.Resolve<ICache4Redis>(new NamedPropertyParameter("redisSettings", redisSettings), new NamedPropertyParameter("defaultDatabase", _sessionNAuthSettings.CacheDBIndex));
+            //_cache = ServiceContext.Resolve<ICache4Redis>(new NamedPropertyParameter("redisSettings", redisSettings), new NamedPropertyParameter("defaultDatabase", _sessionNAuthSettings.CacheDBIndex));
+            _cache = ServiceContext.Resolve<ICache4Redis>(new TypedParameter(typeof(RedisSettings), redisSettings), new TypedParameter(typeof(int), _sessionNAuthSettings.CacheDBIndex));
         }
 
         public string CurToken
@@ -126,7 +128,7 @@ namespace Spear.MidM.SessionNAuth
         /// </summary>
         /// <param name="accessToken">Token</param>
         /// <returns></returns>
-        private UserTokenCache GetUserToken(string accessToken)
+        public UserTokenCache GetUserToken(string accessToken)
         {
             if (accessToken.IsEmptyString())
                 return null;
@@ -141,7 +143,7 @@ namespace Spear.MidM.SessionNAuth
         /// </summary>
         /// <param name="userToken"></param>
         /// <returns></returns>
-        private void SetUserToken(UserTokenCache userToken)
+        public void SetUserToken(UserTokenCache userToken)
         {
             if (userToken == null)
                 return;
@@ -150,7 +152,7 @@ namespace Spear.MidM.SessionNAuth
 
             var accessToken = MD5.Encrypt(userToken.AccessToken);
 
-            _cache.Set(_sessionNAuthSettings.CacheValidDuration + accessToken, userToken, time);
+            _cache.Set(_sessionNAuthSettings.CachePrefix + accessToken, userToken, time);
             _curToken = userToken.AccessToken;
         }
 
@@ -159,7 +161,7 @@ namespace Spear.MidM.SessionNAuth
         /// </summary>
         /// <param name="accessToken">Token</param>
         /// <returns></returns>
-        private void RemoveUserToken(string accessToken)
+        public void RemoveUserToken(string accessToken)
         {
             if (accessToken.IsEmptyString())
                 return;

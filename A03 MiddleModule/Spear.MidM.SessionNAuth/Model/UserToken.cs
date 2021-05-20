@@ -29,7 +29,7 @@ namespace Spear.MidM.SessionNAuth
         /// <summary>
         /// 用户ID
         /// </summary>
-        public int UserID { get; set; }
+        public string UserID { get; set; }
 
         /// <summary>
         /// 用户ID
@@ -39,7 +39,7 @@ namespace Spear.MidM.SessionNAuth
         /// <summary>
         /// 角色类型
         /// </summary>
-        public Enum_Role RoleType { get; set; }
+        public Enum_Role ERoleType { get; set; }
 
         /// <summary>
         /// 角色代码

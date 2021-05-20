@@ -15,7 +15,7 @@ namespace Spear.Inf.Core.CusResult
 
         public ResultBasic() { }
 
-        public ResultBasic(TData data, string msg)
+        public ResultBasic(TData data, string msg = "")
         {
             IsSuccess = true;
             Msg = msg;

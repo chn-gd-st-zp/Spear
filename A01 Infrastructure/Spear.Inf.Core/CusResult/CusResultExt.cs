@@ -8,7 +8,7 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core.CusResult
 {
-    public static class CusResultExt
+    public static class CusResultExtend
     {
         #region ResultBasic
 

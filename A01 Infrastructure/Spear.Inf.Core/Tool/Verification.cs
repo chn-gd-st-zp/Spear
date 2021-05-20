@@ -259,7 +259,7 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static bool IsNum(string data)
+        public static bool IsNum(this string data)
         {
             string expression = @"^[-]?\d+[.]?\d*$";
 
@@ -271,7 +271,7 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static bool IsInt(string data)
+        public static bool IsInt(this string data)
         {
             string expression = "^[0-9]*$";
 
@@ -283,7 +283,7 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static bool IsEmail(string data)
+        public static bool IsEmail(this string data)
         {
             string expression = @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
 
@@ -295,7 +295,7 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static bool IsMobile(string data)
+        public static bool IsMobile(this string data)
         {
             string expression = @"^[1]([3-9])[0-9]{9}$";
 
@@ -307,7 +307,7 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static bool IsPhone(string data)
+        public static bool IsPhone(this string data)
         {
             string expression = @"\d{3,4}-\d{7,8}";
 
@@ -319,7 +319,7 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static bool IsFax(string data)
+        public static bool IsFax(this string data)
         {
             string expression = @"86-\d{2,3}-\d{7,8}";
 
@@ -331,7 +331,7 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static bool IsIP(string data)
+        public static bool IsIP(this string data)
         {
             string expression = @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$";
 
@@ -343,7 +343,7 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static bool CheckPassword(string data)
+        public static bool CheckPassword(this string data)
         {
             string expression = @"^[A-Za-z_0-9]{6,18}$";
 
@@ -355,7 +355,7 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static bool IsUserName(string data)
+        public static bool IsUserName(this string data)
         {
             string expression = "^[\u4e00-\u9fa5]{2,20}$";
 
@@ -367,7 +367,7 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static bool IsQQ(string data)
+        public static bool IsQQ(this string data)
         {
             string expression = "^[1-9][0-9]{4,12}$";
 
@@ -379,7 +379,7 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static bool IsWeChat(string data)
+        public static bool IsWeChat(this string data)
         {
             string expression = "^[a-zA-Z0-9_-]{6,20}$";
 
@@ -391,7 +391,7 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static bool IsNickName(string data)
+        public static bool IsNickName(this string data)
         {
             string expression = "^[a-zA-Z0-9\u4e00-\u9fa5]{2,8}$";
 

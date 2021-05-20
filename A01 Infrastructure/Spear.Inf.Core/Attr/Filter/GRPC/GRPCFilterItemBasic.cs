@@ -103,7 +103,7 @@ namespace Spear.Inf.Core.Attr
             Type resultBasicType = typeof(ResultBasic<>);
             Type resultMicServType = realContext.MethodInfo.ReturnParameter.ParameterType.GenericTypeArguments[0];
             Type dataType = resultMicServType.GenericTypeArguments[0];
-            Type funcClassType = typeof(CusResultExt);
+            Type funcClassType = typeof(CusResultExtend);
             MethodInfo func_ResultBasic_Exception = funcClassType.GetMethod("ResultBasic_Exception").MakeGenericMethod(dataType);
             MethodInfo func_ToResultMicServ = funcClassType.GetMethod("ToResultMicServ").MakeGenericMethod(dataType);
 
