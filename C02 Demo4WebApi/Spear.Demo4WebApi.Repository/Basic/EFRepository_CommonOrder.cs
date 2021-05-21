@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using Spear.Inf.Core.DBRef;
 using Spear.Inf.Core.DTO;
 using Spear.Inf.Core.ServGeneric.IOC;
 using Spear.DBIns.Stainless;
@@ -14,7 +15,7 @@ namespace Spear.Demo4WebApi.Repository
     }
 
     public abstract class EFRepository_CommonOrder<TEntity, TKey> : EFRepository_Stainless<TEntity, TKey>, EFRepository_CommonOrder
-        where TEntity : CommonData, new()
+        where TEntity : CommonData, IDBField_ID<TKey>, new()
     {
 
         private IQueryable<TEntity> GenericQuery(DateTime? beginTime, DateTime? endTime)
