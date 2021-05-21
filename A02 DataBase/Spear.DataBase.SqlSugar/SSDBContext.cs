@@ -38,7 +38,7 @@ namespace Spear.Inf.SqlSugar
 
         #region 删
 
-        public bool Delete<TEntity, TKey>(TKey key) where TEntity : DBEntity_Basic, new()
+        public bool Delete<TEntity, TKey>(TKey key) where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new()
         {
             return GetSimpleClient<TEntity>().DeleteById(key);
         }
@@ -76,7 +76,7 @@ namespace Spear.Inf.SqlSugar
 
         #region 查 - 单个
 
-        public TEntity Single<TEntity, TKey>(TKey key) where TEntity : DBEntity_Basic, new()
+        public TEntity Single<TEntity, TKey>(TKey key) where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new()
         {
             return GetSimpleClient<TEntity>().GetById(key);
         }
@@ -89,6 +89,16 @@ namespace Spear.Inf.SqlSugar
         #endregion
 
         #region 查 - 列表
+
+        public List<TEntity> List<TEntity, TKey>(params TKey[] keys) where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new()
+        {
+            var query = GetSimpleClient<TEntity>().AsQueryable();
+
+            if (keys != null && keys.Length != 0)
+                query = query.Where(o => keys.Contains(o.ID));
+
+            return query.ToList();
+        }
 
         public List<TEntity> List<TEntity>(Expression<Func<TEntity, bool>> expression = null, IDTO_List param = null) where TEntity : DBEntity_Basic, new()
         {

@@ -7,7 +7,7 @@ namespace Spear.Inf.Core.DBRef
         string CurSequence { get; set; }
     }
 
-    public static class IDBField_Sequence_Ext
+    public static class IDBField_Sequence_Extend
     {
         public static readonly int MaxLength = 10;
         public static readonly int MaxLength_Full = 255;

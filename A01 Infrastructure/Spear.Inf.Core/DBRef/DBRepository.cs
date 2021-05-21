@@ -17,10 +17,12 @@ namespace Spear.Inf.Core.DBRef
             DBContext = GetDBContext();
         }
 
-        protected virtual IDBContext GetDBContext()
-        {
-            return ServiceContext.Resolve<IDBContext>();
-        }
+        protected virtual IDBContext GetDBContext() { return ServiceContext.Resolve<IDBContext>(); }
+
+        public virtual TQueryable DataFilter<TQueryable, TEntityWithStatus>(TQueryable queryObj)
+            where TQueryable : class
+            where TEntityWithStatus : IDBField_Status
+        { return queryObj; }
 
         #region 查 - 列表
 
@@ -68,6 +70,7 @@ namespace Spear.Inf.Core.DBRef
     public class DBRepository<TEntity> : DBRepository, IDBRepository<TEntity>
         where TEntity : DBEntity_Basic, new()
     {
+
         #region 增
 
         public virtual bool Create(TEntity obj)
@@ -154,7 +157,7 @@ namespace Spear.Inf.Core.DBRef
     }
 
     public class DBRepository<TEntity, TKey> : DBRepository<TEntity>, IDBRepository<TEntity, TKey>
-        where TEntity : DBEntity_Basic, new()
+        where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new()
     {
         #region 删
 
@@ -173,23 +176,26 @@ namespace Spear.Inf.Core.DBRef
         }
 
         #endregion
+
+        #region 查 - 列表
+
+        public virtual List<TEntity> List(params TKey[] keys)
+        {
+            return DBContext.List<TEntity, TKey>(keys);
+        }
+
+        #endregion
     }
 
     public class DBRepository<TDBContext, TEntity, TKey> : DBRepository<TEntity, TKey>, IDBRepository<TDBContext, TEntity, TKey>
         where TDBContext : IDBContext
-        where TEntity : DBEntity_Basic, new()
+        where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new()
     {
         private TDBContext _dbContext;
         public new TDBContext DBContext { get { return _dbContext; } set { _dbContext = value; base.DBContext = value; } }
 
-        public DBRepository()
-        {
-            DBContext = (TDBContext)GetDBContext();
-        }
+        public DBRepository() { DBContext = (TDBContext)GetDBContext(); }
 
-        protected override IDBContext GetDBContext()
-        {
-            return ServiceContext.Resolve<TDBContext>();
-        }
+        protected override IDBContext GetDBContext() { return ServiceContext.Resolve<TDBContext>(); }
     }
 }
