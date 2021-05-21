@@ -78,7 +78,7 @@ namespace Spear.Inf.Core.Interface
     {
         #region 查 - 列表
 
-        List<T> List<T>(object queryObj, IDTO_List param = null) where T : DBEntity_Basic, new();
+        List<T> ListByQueryable<T>(object queryObj, IDTO_List param = null) where T : DBEntity_Basic, new();
 
         #endregion
 
@@ -137,11 +137,15 @@ namespace Spear.Inf.Core.Interface
 
         #region 查 - 列表
 
+        List<TEntity> List(IDTO_List param = null);
+
         List<TEntity> List(Expression<Func<TEntity, bool>> expression, IDTO_List param = null);
 
         #endregion
 
         #region 查 - 分页
+
+        Tuple<List<TEntity>, int> Page(IDTO_Page param = null);
 
         Tuple<List<TEntity>, int> Page(Expression<Func<TEntity, bool>> expression, IDTO_Page param = null);
 

@@ -24,7 +24,7 @@ namespace Spear.Inf.Core.DBRef
 
         #region 查 - 列表
 
-        public List<T> List<T>(object queryObj, IDTO_List param = null) where T : DBEntity_Basic, new()
+        public virtual List<T> ListByQueryable<T>(object queryObj, IDTO_List param = null) where T : DBEntity_Basic, new()
         {
             return DBContext.ListByQueryable<T>(queryObj, param);
         }
@@ -33,7 +33,7 @@ namespace Spear.Inf.Core.DBRef
 
         #region 查 - 分页
 
-        public Tuple<List<T>, int> PageByQueryable<T>(object queryObj, IDTO_Page param = null) where T : DBEntity_Basic, new()
+        public virtual Tuple<List<T>, int> PageByQueryable<T>(object queryObj, IDTO_Page param = null) where T : DBEntity_Basic, new()
         {
             return DBContext.PageByQueryable<T>(queryObj, param);
         }
@@ -42,22 +42,22 @@ namespace Spear.Inf.Core.DBRef
 
         #region 执行 SQL
 
-        public int ExecuteSql(string sql, params DBParameter[] paramArray)
+        public virtual int ExecuteSql(string sql, params DBParameter[] paramArray)
         {
             return DBContext.ExecuteSql(sql, paramArray);
         }
 
-        public List<T> SelectFromSql<T>(string sql, params DBParameter[] paramArray) where T : DBEntity_Basic, new()
+        public virtual List<T> SelectFromSql<T>(string sql, params DBParameter[] paramArray) where T : DBEntity_Basic, new()
         {
             return DBContext.SelectFromSql<T>(sql, paramArray);
         }
 
-        public int ExecuteStoredProcedure(string sql, params DBParameter[] paramArray)
+        public virtual int ExecuteStoredProcedure(string sql, params DBParameter[] paramArray)
         {
             return DBContext.ExecuteStoredProcedure(sql, paramArray);
         }
 
-        public List<T> SelectFromStoredProcedure<T>(string sql, params DBParameter[] paramArray) where T : DBEntity_Basic, new()
+        public virtual List<T> SelectFromStoredProcedure<T>(string sql, params DBParameter[] paramArray) where T : DBEntity_Basic, new()
         {
             return DBContext.SelectFromStoredProcedure<T>(sql, paramArray);
         }
@@ -70,12 +70,12 @@ namespace Spear.Inf.Core.DBRef
     {
         #region 增
 
-        public bool Create(TEntity obj)
+        public virtual bool Create(TEntity obj)
         {
             return DBContext.Create(obj);
         }
 
-        public bool Create(IEnumerable<TEntity> objs)
+        public virtual bool Create(IEnumerable<TEntity> objs)
         {
             return DBContext.Create(objs);
         }
@@ -84,17 +84,17 @@ namespace Spear.Inf.Core.DBRef
 
         #region 删
 
-        public bool Delete(TEntity obj)
+        public virtual bool Delete(TEntity obj)
         {
             return DBContext.Delete(obj);
         }
 
-        public bool Delete(IEnumerable<TEntity> objs)
+        public virtual bool Delete(IEnumerable<TEntity> objs)
         {
             return DBContext.Delete(objs);
         }
 
-        public bool Delete(Expression<Func<TEntity, bool>> expression)
+        public virtual bool Delete(Expression<Func<TEntity, bool>> expression)
         {
             return DBContext.Delete(expression);
         }
@@ -103,12 +103,12 @@ namespace Spear.Inf.Core.DBRef
 
         #region 改
 
-        public bool Update(TEntity obj)
+        public virtual bool Update(TEntity obj)
         {
             return DBContext.Update(obj);
         }
 
-        public bool Update(IEnumerable<TEntity> objs)
+        public virtual bool Update(IEnumerable<TEntity> objs)
         {
             return DBContext.Update(objs);
         }
@@ -117,7 +117,7 @@ namespace Spear.Inf.Core.DBRef
 
         #region 查 - 单个
 
-        public TEntity Single(Expression<Func<TEntity, bool>> expression)
+        public virtual TEntity Single(Expression<Func<TEntity, bool>> expression)
         {
             return DBContext.Single(expression);
         }
@@ -126,7 +126,12 @@ namespace Spear.Inf.Core.DBRef
 
         #region 查 - 列表
 
-        public List<TEntity> List(Expression<Func<TEntity, bool>> expression, IDTO_List param = null)
+        public virtual List<TEntity> List(IDTO_List param = null)
+        {
+            return DBContext.List<TEntity>(null, param);
+        }
+
+        public virtual List<TEntity> List(Expression<Func<TEntity, bool>> expression, IDTO_List param = null)
         {
             return DBContext.List(expression, param);
         }
@@ -135,7 +140,12 @@ namespace Spear.Inf.Core.DBRef
 
         #region 查 - 分页
 
-        public Tuple<List<TEntity>, int> Page(Expression<Func<TEntity, bool>> expression, IDTO_Page param = null)
+        public virtual Tuple<List<TEntity>, int> Page(IDTO_Page param = null)
+        {
+            return DBContext.Page<TEntity>(null, param);
+        }
+
+        public virtual Tuple<List<TEntity>, int> Page(Expression<Func<TEntity, bool>> expression, IDTO_Page param = null)
         {
             return DBContext.Page(expression, param);
         }
@@ -148,7 +158,7 @@ namespace Spear.Inf.Core.DBRef
     {
         #region 删
 
-        public bool Delete(TKey key)
+        public virtual bool Delete(TKey key)
         {
             return DBContext.Delete<TEntity, TKey>(key);
         }
@@ -157,7 +167,7 @@ namespace Spear.Inf.Core.DBRef
 
         #region 查 - 单个
 
-        public TEntity Single(TKey key)
+        public virtual TEntity Single(TKey key)
         {
             return DBContext.Single<TEntity, TKey>(key);
         }
