@@ -16,8 +16,11 @@ namespace Spear.Demo4WinApp.Host.Job
 
         public override void Execute()
         {
-            var autoDelSettings = ServiceContext.Resolve<AutoDelSettings>();
+            var a = ServiceContext.Resolve<HAHAHAHA_DB>();
+            var b = ServiceContext.Resolve<HAHAHAHA_List>();
+            var c = ServiceContext.ResolveByKeyed<HAHAHAHA_Item>("2");
 
+            var autoDelSettings = ServiceContext.Resolve<AutoDelSettings>();
 
             foreach (var autoDelSetting in autoDelSettings)
             {

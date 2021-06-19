@@ -51,6 +51,8 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                             var pi = type.GetProperty(attr.Key.ToString());
                             var key = pi.GetValue(obj);
 
+                            if (key == null) continue;
+
                             attr_tmp = new DIModeForServiceAttribute(attr.EDIType, attr.Type, key);
                         }
 

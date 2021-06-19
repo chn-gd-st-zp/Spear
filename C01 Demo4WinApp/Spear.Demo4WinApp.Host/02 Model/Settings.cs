@@ -31,4 +31,24 @@ namespace Spear.Demo4WinApp.Host
         public Enum_DateCycle EType { get; set; }
         public int NumericValue { get; set; }
     }
+
+    [DIModeForSettings("DBSettings", Enum_DIType.Specific, typeof(HAHAHAHA_DB))]
+    public class HAHAHAHA_DB : ISettings
+    {
+        [Decrypt(Enum_EncryptionNDecrypt.AES)]
+        public string Name { get; set; }
+    }
+
+    [DIModeForSettings("TestSettings", Enum_DIType.Specific, typeof(HAHAHAHA_List))]
+    [DIModeForArrayItem]
+    public class HAHAHAHA_List : List<HAHAHAHA_Item>, ISettings
+    {
+        //
+    }
+
+    [DIModeForSettings("TestSettings", Enum_DIType.SpecificByKeyed, typeof(HAHAHAHA_Item), "Name", Enum_DIKeyedNamedFrom.FromProperty)]
+    public class HAHAHAHA_Item : ISettings
+    {
+        public string Name { get; set; }
+    }
 }

@@ -12,6 +12,7 @@ using AutoMapper;
 
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Tool;
+using Microsoft.Extensions.DependencyModel;
 
 namespace Spear.Inf.Core.AppEntrance
 {
@@ -118,29 +119,18 @@ namespace Spear.Inf.Core.AppEntrance
         /// <returns></returns>
         public static List<Assembly> GetAllAssemblies()
         {
-            var returnAssemblies = new List<Assembly>();
-            var loadedAssemblies = new Dictionary<string, Assembly>();
-            var assembliesToCheck = new Queue<Assembly>();
+            List<Assembly> result = new List<Assembly>();
 
-            assembliesToCheck.Enqueue(Assembly.GetEntryAssembly());
-
-            while (assembliesToCheck.Any())
+            var assemblyNameList = DependencyContext.Default.RuntimeLibraries.Select(o => o.Name).ToList();
+            foreach (var assemblyName in assemblyNameList)
             {
-                var assemblyToCheck = assembliesToCheck.Dequeue();
+                if (!File.Exists(RootPath + assemblyName + ".dll"))
+                    continue;
 
-                foreach (var reference in assemblyToCheck.GetReferencedAssemblies())
-                {
-                    if (!loadedAssemblies.ContainsKey(reference.FullName))
-                    {
-                        var assembly = Assembly.Load(reference);
-                        assembliesToCheck.Enqueue(assembly);
-                        loadedAssemblies.Add(reference.FullName, assembly);
-                        returnAssemblies.Add(assembly);
-                    }
-                }
+                result.Add(Assembly.Load(new AssemblyName(assemblyName)));
             }
 
-            return returnAssemblies.OrderByDescending(o => o.FullName).ToList();
+            return result;
         }
 
         /// <summary>
@@ -163,62 +153,6 @@ namespace Spear.Inf.Core.AppEntrance
         }
 
         /// <summary>
-        /// 获取运行类库
-        /// </summary>
-        /// <param name="diPattern"></param>
-        /// <returns></returns>
-        public static List<Assembly> GetRunningAssemblies()
-        {
-            IQueryable<Assembly> assembliesQuery = null;
-
-            assembliesQuery = AppDomain.CurrentDomain.GetAssemblies().AsQueryable();
-            //assembliesQuery = Assembly.GetEntryAssembly().GetReferencedAssemblies().AsQueryable();
-
-            var result = assembliesQuery.OrderByDescending(o => o.FullName).ToList();
-            return result;
-        }
-
-        /// <summary>
-        /// 获取运行类型
-        /// </summary>
-        /// <returns></returns>
-        public static List<Type> GetRunningType()
-        {
-            List<Type> result = new List<Type>();
-
-            GetRunningAssemblies()
-                .ForEach(assembly =>
-                {
-                    var types = assembly.GetTypes();
-                    result.AddRange(types);
-                });
-
-            return result;
-        }
-
-        /// <summary>
-        /// 获取运行类型
-        /// </summary>
-        /// <param name="diPattern"></param>
-        /// <returns></returns>
-        public static List<Type> GetRunningType(this string diPattern)
-        {
-            List<Type> result = new List<Type>();
-
-            GetRunningAssemblies()
-                .Where(oo => oo.GetName().Name.StartsWith(diPattern.Replace("*", "")))
-                .OrderBy(o => o.FullName)
-                .ToList()
-                .ForEach(assembly =>
-                {
-                    var types = assembly.GetTypes();
-                    result.AddRange(types);
-                });
-
-            return result;
-        }
-
-        /// <summary>
         /// 获取运行类型
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -228,24 +162,28 @@ namespace Spear.Inf.Core.AppEntrance
         {
             List<Type> result = new List<Type>();
 
-            var runningAssemblies = GetRunningAssemblies();
+            List<Assembly> assemblyList = GetAllAssemblies();
 
             if (startup.CurConfig.AutoFacSettings.Dlls == null || startup.CurConfig.AutoFacSettings.Dlls.Count() == 0)
             {
-                result.AddRange(startup.CurConfig.AutoFacSettings.DefaultPattern.GetRunningType());
+                assemblyList = assemblyList
+                    .Where(o => o.GetName().Name.StartsWith(startup.CurConfig.AutoFacSettings.DefaultPattern.Replace("*", "")))
+                    .OrderBy(o => o.FullName)
+                    .ToList();
             }
             else
             {
-                runningAssemblies
+                assemblyList = assemblyList
                     .Where(o => startup.CurConfig.AutoFacSettings.Dlls.Contains(o.GetName().Name))
                     .OrderBy(o => o.FullName)
-                    .ToList()
-                    .ForEach(assembly =>
-                    {
-                        var types = assembly.GetTypes();
-                        result.AddRange(types);
-                    });
+                    .ToList();
             }
+
+            assemblyList.ForEach(assembly =>
+            {
+                var types = assembly.GetTypes();
+                result.AddRange(types);
+            });
 
             return result;
         }
@@ -308,12 +246,12 @@ namespace Spear.Inf.Core.AppEntrance
         {
             List<Type> allTypeInApp = new List<Type>();
 
-            GetRunningAssemblies()
-                .ForEach(o =>
-                {
-                    var types = o.GetTypes().Where(o => o.IsClass && !o.IsAbstract && o.IsExtendType(typeof(Profile))).ToList();
-                    allTypeInApp.AddRange(types);
-                });
+            GetAllAssemblies()
+            .ForEach(o =>
+            {
+                var types = o.GetTypes().Where(o => o.IsClass && !o.IsAbstract && o.IsExtendType(typeof(Profile))).ToList();
+                allTypeInApp.AddRange(types);
+            });
 
             if (allTypeInApp.Count() != 0)
                 services.AddAutoMapper(allTypeInApp.ToArray());

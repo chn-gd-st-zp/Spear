@@ -18,6 +18,7 @@ using Spear.MidM.Quartz;
 
 using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
 using CUS = Spear.Inf.Core.Interface;
+using Spear.MidM.Defend;
 
 namespace Spear.Demo4WinApp.Host
 {
@@ -51,6 +52,8 @@ namespace Spear.Demo4WinApp.Host
             containerBuilder.RegisterGeneric(typeof(NLogger<>)).As(typeof(CUS.ILogger<>)).InstancePerDependency();
 
             containerBuilder.RegisQuartz(this.GetRunningType(), CurConfig.JobSettings);
+
+            containerBuilder.RegisAES("123456");
         }
 
         protected override void Extend_Configure(IApplicationBuilder app, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory)
