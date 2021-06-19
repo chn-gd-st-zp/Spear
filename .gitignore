@@ -7,3 +7,4 @@ packages
 *.user
 *.pubxml
 *.publish.xml
+*/**/logs/
