@@ -9,9 +9,9 @@ using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.ServGeneric;
 using Spear.MidM.SessionNAuth;
 
-namespace Spear.GlobalSupport.Basic.Filter
+namespace Spear.GlobalSupport.Base.Filter
 {
-    public class CtrlerFilterItemForAuth : CtrlerFilterItemBasic
+    public class CtrlerFilterItemForAuth : CtrlerFilterItemBase
     {
         private SessionNAuth<HTTPTokenProvider> _sessionNAuth { get; set; }
 

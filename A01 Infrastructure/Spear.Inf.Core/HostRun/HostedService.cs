@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Spear.Inf.Core
 {
-    public abstract class HostedServiceBasic : IHostedService
+    public abstract class HostedServiceBase : IHostedService
     {
         protected IRunner Runner;
         protected BackgroundWorker BackgroundWorker { get; private set; }
@@ -31,7 +31,7 @@ namespace Spear.Inf.Core
         }
     }
 
-    public class HostedService : HostedServiceBasic
+    public class HostedService : HostedServiceBase
     {
         public HostedService(IRunner runner)
         {
@@ -39,7 +39,7 @@ namespace Spear.Inf.Core
         }
     }
 
-    public class HostedService<TRunner> : HostedServiceBasic
+    public class HostedService<TRunner> : HostedServiceBase
         where TRunner : IRunner
     {
         public HostedService(TRunner runner)

@@ -2,7 +2,7 @@
 
 namespace Spear.Inf.Core.CusException
 {
-    public class Exception_NoLogin : Exception_Basic
+    public class Exception_NoLogin : Exception_Base
     {
         public Exception_NoLogin() : base("请登录")
         {

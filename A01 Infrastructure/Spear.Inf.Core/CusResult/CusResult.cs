@@ -6,16 +6,16 @@ using Newtonsoft.Json;
 
 namespace Spear.Inf.Core.CusResult
 {
-    public class ResultBasic<TData>
+    public class ResultBase<TData>
     {
         public bool IsSuccess { get; set; }
         public string Msg { get; set; }
         public TData Data { get; set; }
         public Exception ExInfo { get; set; }
 
-        public ResultBasic() { }
+        public ResultBase() { }
 
-        public ResultBasic(TData data, string msg = "")
+        public ResultBase(TData data, string msg = "")
         {
             IsSuccess = true;
             Msg = msg;
@@ -24,7 +24,7 @@ namespace Spear.Inf.Core.CusResult
             ExInfo = null;
         }
 
-        public ResultBasic(string msg)
+        public ResultBase(string msg)
         {
             IsSuccess = false;
             Msg = msg;
@@ -33,7 +33,7 @@ namespace Spear.Inf.Core.CusResult
             ExInfo = null;
         }
 
-        public ResultBasic(Exception exInfo, string msg)
+        public ResultBase(Exception exInfo, string msg)
         {
             IsSuccess = false;
             Msg = msg;
@@ -65,7 +65,7 @@ namespace Spear.Inf.Core.CusResult
         public string ErrorStackTrace { get; set; }
     }
 
-    public class RespResultCallBack<T> : ResultBasic<T>, IAsyncResult
+    public class RespResultCallBack<T> : ResultBase<T>, IAsyncResult
     {
         public RespResultCallBack() { }
 

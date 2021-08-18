@@ -10,13 +10,13 @@ using Spear.Inf.Core.Tool;
 namespace Spear.MidM.Quartz
 {
     [DisallowConcurrentExecution]
-    public abstract class QuartzJobBasic : IJob
+    public abstract class QuartzJobBase : IJob
     {
         protected abstract string JobName { get; }
 
         protected readonly ILogger Logger;
 
-        public QuartzJobBasic()
+        public QuartzJobBase()
         {
             Logger = ServiceContext.Resolve<ILogger>();
         }
@@ -55,7 +55,7 @@ namespace Spear.MidM.Quartz
     }
 
     [DisallowConcurrentExecution]
-    public abstract class JobBasic<TJob> : QuartzJobBasic
+    public abstract class JobBase<TJob> : QuartzJobBase
         where TJob : class
     {
         protected new readonly ILogger<TJob> Logger;

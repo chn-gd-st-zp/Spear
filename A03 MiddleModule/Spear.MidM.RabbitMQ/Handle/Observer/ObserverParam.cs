@@ -2,7 +2,7 @@
 
 namespace Spear.MidM.RabbitMQ
 {
-    public abstract class ObserverParamBasic : IRabbitMQParamBasic
+    public abstract class ObserverParamBase : IRabbitMQParamBase
     {
         /// <summary>
         /// 交换机名
@@ -40,7 +40,7 @@ namespace Spear.MidM.RabbitMQ
         public bool Exclusive { get; set; } = false;
     }
 
-    public class ObserverParamRequest : ObserverParamBasic, IRabbitMQParamRequest
+    public class ObserverParamRequest : ObserverParamBase, IRabbitMQParamRequest
     {
         /// <summary>
         /// 是否消息持久化
@@ -58,7 +58,7 @@ namespace Spear.MidM.RabbitMQ
         public List<IRabbitMQMessageEntity> MessageEntities { get; set; }
     }
 
-    public class ObserverParamResponse : ObserverParamBasic, IRabbitMQParamResponse
+    public class ObserverParamResponse : ObserverParamBase, IRabbitMQParamResponse
     {
         /// <summary>
         /// 队列名

@@ -13,12 +13,12 @@ namespace Spear.Inf.Core.SettingsGeneric
             return config[rootName];
         }
 
-        public virtual T GetSetting<T>(IConfiguration config, string rootName) where T : AppSettingsBasic
+        public virtual T GetSetting<T>(IConfiguration config, string rootName) where T : AppSettingsBase
         {
             return config.GetSection(rootName).Get<T>();
         }
 
-        public virtual T GetSetting<T>(IConfiguration config) where T : AppSettingsBasic
+        public virtual T GetSetting<T>(IConfiguration config) where T : AppSettingsBase
         {
             return config.Get<T>();
         }

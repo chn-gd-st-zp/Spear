@@ -3,14 +3,14 @@
 using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.ServGeneric;
 
-namespace Spear.Inf.Core.Basic
+namespace Spear.Inf.Core.Base
 {
-    public class ServiceBasic
+    public class ServiceBase
     {
         protected HttpContext HttpContext { get; private set; }
         protected ILogger Logger { get; private set; }
 
-        public ServiceBasic()
+        public ServiceBase()
         {
             HttpContext = Resolve<IHttpContextAccessor>().HttpContext;
             Logger = Resolve<ILogger>();
@@ -22,24 +22,24 @@ namespace Spear.Inf.Core.Basic
         }
     }
 
-    public class ServiceBasic<TLoggerType> : ServiceBasic
+    public class ServiceBase<TLoggerType> : ServiceBase
         where TLoggerType : class
     {
         protected new ILogger<TLoggerType> Logger { get; private set; }
 
-        public ServiceBasic() : base()
+        public ServiceBase() : base()
         {
             Logger = Resolve<ILogger<TLoggerType>>();
         }
     }
 
-    public class ServiceBasic<TLoggerType, TCache> : ServiceBasic<TLoggerType>
+    public class ServiceBase<TLoggerType, TCache> : ServiceBase<TLoggerType>
         where TLoggerType : class
         where TCache : ICache
     {
         protected TCache Cache { get; private set; }
 
-        public ServiceBasic() : base()
+        public ServiceBase() : base()
         {
             Cache = Resolve<TCache>();
         }

@@ -4,14 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.ServGeneric;
 
-namespace Spear.Inf.Core.Basic
+namespace Spear.Inf.Core.Base
 {
-    public class ControllerBasic : ControllerBase
+    public class CtrlerBase : ControllerBase
     {
         protected new HttpContext HttpContext { get; private set; }
         protected ILogger Logger { get; private set; }
 
-        public ControllerBasic()
+        public CtrlerBase()
         {
             HttpContext = Resolve<IHttpContextAccessor>().HttpContext;
             Logger = Resolve<ILogger>();
@@ -23,24 +23,24 @@ namespace Spear.Inf.Core.Basic
         }
     }
 
-    public class ControllerBasic<TLoggerType> : ControllerBasic
+    public class CtrlerBase<TLoggerType> : CtrlerBase
         where TLoggerType : class
     {
         protected new ILogger<TLoggerType> Logger { get; private set; }
 
-        public ControllerBasic() : base()
+        public CtrlerBase() : base()
         {
             Logger = Resolve<ILogger<TLoggerType>>();
         }
     }
 
-    public class ControllerBasic<TLoggerType, TCache> : ControllerBasic<TLoggerType>
+    public class CtrlerBase<TLoggerType, TCache> : CtrlerBase<TLoggerType>
         where TLoggerType : class
         where TCache : ICache
     {
         protected TCache Cache { get; private set; }
 
-        public ControllerBasic() : base()
+        public CtrlerBase() : base()
         {
             Cache = Resolve<TCache>();
         }

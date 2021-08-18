@@ -10,9 +10,9 @@ namespace Spear.Inf.Core.SettingsGeneric
     {
         string GetSetting(IConfiguration config, string rootName);
 
-        T GetSetting<T>(IConfiguration config, string rootName) where T : AppSettingsBasic;
+        T GetSetting<T>(IConfiguration config, string rootName) where T : AppSettingsBase;
 
-        T GetSetting<T>(IConfiguration config) where T : AppSettingsBasic;
+        T GetSetting<T>(IConfiguration config) where T : AppSettingsBase;
 
         object GetSetting(IConfiguration config, string rootName, Type type);
     }

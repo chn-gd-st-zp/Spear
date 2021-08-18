@@ -2,7 +2,7 @@
 
 namespace Spear.MidM.Defend.EncryptionNDecrypt
 {
-    public class AESHandle : BasicHandle<AESSettings>
+    public class AESHandle : BaseHandle<AESSettings>
     {
         public AESHandle(string secretPrefix) : base(secretPrefix) { }
 

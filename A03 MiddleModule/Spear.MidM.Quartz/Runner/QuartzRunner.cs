@@ -11,7 +11,7 @@ using Spear.Inf.Core.ServGeneric;
 
 namespace Spear.MidM.Quartz
 {
-    public class QuartzRunner : RunnerBasic<QuartzRunner>
+    public class QuartzRunner : RunnerBase<QuartzRunner>
     {
         private IScheduler _scheduler { get; set; }
 

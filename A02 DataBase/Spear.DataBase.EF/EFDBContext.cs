@@ -47,7 +47,7 @@ namespace Spear.Inf.EF
 
         protected abstract void InitDBSets();
 
-        protected void AddDBSet<TEntity>(DbSet<TEntity> obj) where TEntity : DBEntity_Basic, new()
+        protected void AddDBSet<TEntity>(DbSet<TEntity> obj) where TEntity : DBEntity_Base, new()
         {
             var key = typeof(TEntity);
             var value = obj;
@@ -55,7 +55,7 @@ namespace Spear.Inf.EF
             DBSets.Add(key, value);
         }
 
-        public DbSet<TEntity> GetDBSet<TEntity>() where TEntity : DBEntity_Basic, new()
+        public DbSet<TEntity> GetDBSet<TEntity>() where TEntity : DBEntity_Base, new()
         {
             return DBSets[typeof(TEntity)] as DbSet<TEntity>;
         }
@@ -64,7 +64,7 @@ namespace Spear.Inf.EF
 
         #region 增
 
-        public bool Create<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Basic, new()
+        public bool Create<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Base, new()
         {
             if (obj == null)
                 return false;
@@ -74,7 +74,7 @@ namespace Spear.Inf.EF
             return save ? SaveChanges() == 1 : true;
         }
 
-        public bool Create<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Basic, new()
+        public bool Create<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Base, new()
         {
             if (objs == null || objs.Count() == 0)
                 return false;
@@ -87,13 +87,13 @@ namespace Spear.Inf.EF
 
         #region 删
 
-        public bool Delete<TEntity, TKey>(TKey key) where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new()
+        public bool Delete<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
         {
             var obj = Single<TEntity, TKey>(key);
             return Delete(obj);
         }
 
-        public bool Delete<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Basic, new()
+        public bool Delete<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Base, new()
         {
             if (obj == null)
                 return false;
@@ -103,7 +103,7 @@ namespace Spear.Inf.EF
             return save ? SaveChanges() == 1 : true;
         }
 
-        public bool Delete<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Basic, new()
+        public bool Delete<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Base, new()
         {
             if (objs == null || objs.Count() == 0)
                 return false;
@@ -113,7 +113,7 @@ namespace Spear.Inf.EF
             return save ? SaveChanges() == objs.Count() : true;
         }
 
-        public bool Delete<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : DBEntity_Basic, new()
+        public bool Delete<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : DBEntity_Base, new()
         {
             var objs = List(expression);
             return Delete(objs);
@@ -123,7 +123,7 @@ namespace Spear.Inf.EF
 
         #region 改
 
-        public bool Update<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Basic, new()
+        public bool Update<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Base, new()
         {
             if (obj == null)
                 return false;
@@ -133,7 +133,7 @@ namespace Spear.Inf.EF
             return save ? SaveChanges() == 1 : true;
         }
 
-        public bool Update<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Basic, new()
+        public bool Update<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Base, new()
         {
             if (objs == null || objs.Count() == 0)
                 return false;
@@ -147,12 +147,12 @@ namespace Spear.Inf.EF
 
         #region 查 - 单个
 
-        public TEntity Single<TEntity, TKey>(TKey key) where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new()
+        public TEntity Single<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
         {
             return Find<TEntity>(key);
         }
 
-        public TEntity Single<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : DBEntity_Basic, new()
+        public TEntity Single<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : DBEntity_Base, new()
         {
             return GetDBSet<TEntity>().Where(expression).SingleOrDefault();
         }
@@ -161,7 +161,7 @@ namespace Spear.Inf.EF
 
         #region 查 - 列表
 
-        public List<TEntity> List<TEntity, TKey>(params TKey[] keys) where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new()
+        public List<TEntity> List<TEntity, TKey>(params TKey[] keys) where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
         {
             var query = GetDBSet<TEntity>().AsQueryable();
 
@@ -171,7 +171,7 @@ namespace Spear.Inf.EF
             return query.ToList();
         }
 
-        public List<TEntity> List<TEntity>(Expression<Func<TEntity, bool>> expression = null, IDTO_List param = null) where TEntity : DBEntity_Basic, new()
+        public List<TEntity> List<TEntity>(Expression<Func<TEntity, bool>> expression = null, IDTO_List param = null) where TEntity : DBEntity_Base, new()
         {
             var query = GetDBSet<TEntity>().AsQueryable();
 
@@ -184,7 +184,7 @@ namespace Spear.Inf.EF
             return query.ToList();
         }
 
-        public List<TEntity> ListByQueryable<TEntity>(object queryObj, IDTO_List param = null) where TEntity : DBEntity_Basic, new()
+        public List<TEntity> ListByQueryable<TEntity>(object queryObj, IDTO_List param = null) where TEntity : DBEntity_Base, new()
         {
             return ((IQueryable<TEntity>)queryObj).OrderBy(param.Sort).ToList();
         }
@@ -193,14 +193,14 @@ namespace Spear.Inf.EF
 
         #region 查 - 分页
 
-        public Tuple<List<TEntity>, int> Page<TEntity>(Expression<Func<TEntity, bool>> expression, IDTO_Page param = null) where TEntity : DBEntity_Basic, new()
+        public Tuple<List<TEntity>, int> Page<TEntity>(Expression<Func<TEntity, bool>> expression, IDTO_Page param = null) where TEntity : DBEntity_Base, new()
         {
             var query = GetDBSet<TEntity>().Where(expression);
 
             return PageByQueryable<TEntity>(query, param);
         }
 
-        public Tuple<List<TEntity>, int> PageByQueryable<TEntity>(object queryObj, IDTO_Page param = null) where TEntity : DBEntity_Basic, new()
+        public Tuple<List<TEntity>, int> PageByQueryable<TEntity>(object queryObj, IDTO_Page param = null) where TEntity : DBEntity_Base, new()
         {
             var query = ((IQueryable<TEntity>)queryObj).OrderBy(param.Sort);
 
@@ -224,7 +224,7 @@ namespace Spear.Inf.EF
             return Database.ExecuteSqlRaw(sql, paramArray.Parse());
         }
 
-        public List<TEntity> SelectFromSql<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : DBEntity_Basic, new()
+        public List<TEntity> SelectFromSql<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : DBEntity_Base, new()
         {
             return this.Query<TEntity>(CommandType.Text, sql, paramArray.Parse());
         }
@@ -234,7 +234,7 @@ namespace Spear.Inf.EF
             return Database.ExecuteSqlRaw(sql, paramArray.Parse());
         }
 
-        public List<TEntity> SelectFromStoredProcedure<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : DBEntity_Basic, new()
+        public List<TEntity> SelectFromStoredProcedure<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : DBEntity_Base, new()
         {
             return this.Query<TEntity>(CommandType.StoredProcedure, sql, paramArray.Parse());
         }
@@ -242,7 +242,7 @@ namespace Spear.Inf.EF
         #endregion
     }
 
-    public abstract class EFDBEntityMapping<TDBEntity> : IEntityTypeConfiguration<TDBEntity> where TDBEntity : DBEntity_Basic
+    public abstract class EFDBEntityMapping<TDBEntity> : IEntityTypeConfiguration<TDBEntity> where TDBEntity : DBEntity_Base
     {
         public abstract void Configure(EntityTypeBuilder<TDBEntity> builder);
     }
@@ -273,12 +273,12 @@ namespace Spear.Inf.EF
             return (dr.GetSchemaTable().DefaultView.Count > 0);
         }
 
-        public static IQueryable<T> Query<T>(this EFDBContext dbContext) where T : DBEntity_Basic, new()
+        public static IQueryable<T> Query<T>(this EFDBContext dbContext) where T : DBEntity_Base, new()
         {
             return dbContext.GetDBSet<T>().AsQueryable<T>();
         }
 
-        public static List<T> Query<T>(this EFDBContext dbContext, CommandType eCommandType, string sql, List<SqlParameter> paramList) where T : DBEntity_Basic, new()
+        public static List<T> Query<T>(this EFDBContext dbContext, CommandType eCommandType, string sql, List<SqlParameter> paramList) where T : DBEntity_Base, new()
         {
             var result = new List<T>();
 

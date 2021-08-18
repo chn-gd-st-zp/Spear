@@ -9,9 +9,9 @@ using Spear.Inf.Core.Attr;
 
 using MS = MagicOnion.Server;
 
-namespace Spear.GlobalSupport.Basic.Filter
+namespace Spear.GlobalSupport.Base.Filter
 {
-    public class GRPCFilterItemForAuth : GRPCFilterItemBasic
+    public class GRPCFilterItemForAuth : GRPCFilterItemBase
     {
         private SessionNAuth<HTTPTokenProvider> _sessionNAuth { get; set; }
 

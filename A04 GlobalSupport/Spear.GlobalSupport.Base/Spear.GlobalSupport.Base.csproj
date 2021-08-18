@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
@@ -22,8 +22,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\ZP.DivePro\code\ZP.DivePro.Contract.SessionNAuth\ZP.DivePro.Contract.SessionNAuth.csproj" />
 		<ProjectReference Include="..\..\A01 Infrastructure\Spear.Inf.Core\Spear.Inf.Core.csproj" />
+		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.SessionNAuth\Spear.MidM.SessionNAuth.csproj" />
 	</ItemGroup>
 
 </Project>

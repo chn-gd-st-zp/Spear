@@ -10,40 +10,40 @@ namespace Spear.Inf.Core.CusResult
 {
     public static class CusResultExtend
     {
-        #region ResultBasic
+        #region ResultBase
 
-        public static ResultBasic<T> ResultBasic_Success<T>(this T data, string msg = "操作成功")
+        public static ResultBase<T> ResultBase_Success<T>(this T data, string msg = "操作成功")
         {
-            return new ResultBasic<T>(data, msg);
+            return new ResultBase<T>(data, msg);
         }
 
-        public static ResultBasic<T> ResultBasic_Fail<T>(this T data, string msg = "操作失败")
+        public static ResultBase<T> ResultBase_Fail<T>(this T data, string msg = "操作失败")
         {
-            return new ResultBasic<T>(msg);
+            return new ResultBase<T>(msg);
         }
 
-        public static ResultBasic<T> ResultBasic_Fail<T>(this string msg)
+        public static ResultBase<T> ResultBase_Fail<T>(this string msg)
         {
-            return new ResultBasic<T>(msg);
+            return new ResultBase<T>(msg);
         }
 
-        public static ResultBasic<T> ResultBasic_Exception<T>(this Exception exception, string msg = "操作失败")
+        public static ResultBase<T> ResultBase_Exception<T>(this Exception exception, string msg = "操作失败")
         {
-            return new ResultBasic<T>(exception, msg);
+            return new ResultBase<T>(exception, msg);
         }
 
         #endregion
 
         #region ResultAPI
 
-        public static ResultWebApi<T> ToResultWebApi<T>(this ResultBasic<T> resultBasic)
+        public static ResultWebApi<T> ToResultWebApi<T>(this ResultBase<T> resultBase)
         {
-            if (resultBasic.IsSuccess)
-                return resultBasic.Data.Success(resultBasic.Msg);
-            else if (resultBasic.ExInfo == null)
-                return resultBasic.Data.Fail(resultBasic.Msg);
+            if (resultBase.IsSuccess)
+                return resultBase.Data.Success(resultBase.Msg);
+            else if (resultBase.ExInfo == null)
+                return resultBase.Data.Fail(resultBase.Msg);
             else
-                return resultBasic.Data.Exception(resultBasic.ExInfo);
+                return resultBase.Data.Exception(resultBase.ExInfo);
         }
 
         public static ResultWebApi<T> ToResultWebApi<T>(this T data, string code, string msg)
@@ -84,9 +84,9 @@ namespace Spear.Inf.Core.CusResult
             EnumInfo errorCode = null;
             string errorMsg = "";
 
-            if (exception.IsExtendType<Exception_Basic>())
+            if (exception.IsExtendType<Exception_Base>())
             {
-                var e = exception as Exception_Basic;
+                var e = exception as Exception_Base;
 
                 errorCode = e.ECode;
                 errorMsg = e.Message;
@@ -110,30 +110,30 @@ namespace Spear.Inf.Core.CusResult
 
         #region ResultMicServ
 
-        public static ResultMicServ<T> ToResultMicServ<T>(this ResultBasic<T> resultBasic)
+        public static ResultMicServ<T> ToResultMicServ<T>(this ResultBase<T> resultBase)
         {
             ResultMicServ<T> result;
 
             result = new ResultMicServ<T>();
-            result.IsSuccess = resultBasic.IsSuccess;
+            result.IsSuccess = resultBase.IsSuccess;
             result.Code = Enum_StateCode.Success.ToIntString();
-            result.Msg = resultBasic.Msg;
-            result.Data = resultBasic.Data;
+            result.Msg = resultBase.Msg;
+            result.Data = resultBase.Data;
 
-            if (resultBasic.ExInfo != null)
+            if (resultBase.ExInfo != null)
             {
-                Exception_Basic cusEx = resultBasic.ExInfo as Exception_Basic;
+                Exception_Base cusEx = resultBase.ExInfo as Exception_Base;
                 result.Code = cusEx != null ? cusEx.ECode.ToIntString() : Enum_StateCode.SysError.ToIntString();
-                result.Msg = resultBasic.ExInfo.Message;
-                result.ErrorStackTrace += "\r\n" + resultBasic.ExInfo.StackTrace;
+                result.Msg = resultBase.ExInfo.Message;
+                result.ErrorStackTrace += "\r\n" + resultBase.ExInfo.StackTrace;
             }
 
             return result;
         }
 
-        public static UnaryResult<ResultMicServ<T>> ToMicServResult<T>(this ResultBasic<T> resultBasic)
+        public static UnaryResult<ResultMicServ<T>> ToMicServResult<T>(this ResultBase<T> resultBase)
         {
-            return new UnaryResult<ResultMicServ<T>>(resultBasic.ToResultMicServ());
+            return new UnaryResult<ResultMicServ<T>>(resultBase.ToResultMicServ());
         }
 
         #endregion

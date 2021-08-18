@@ -14,11 +14,11 @@ using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
 
 namespace Spear.Inf.Core.Attr
 {
-    public abstract class GRPCFilterItemBasic : IRequestFilterItem
+    public abstract class GRPCFilterItemBase : IRequestFilterItem
     {
         protected readonly ILogger Logger;
 
-        public GRPCFilterItemBasic() { Logger = ServiceContext.Resolve<ILogger>(); }
+        public GRPCFilterItemBase() { Logger = ServiceContext.Resolve<ILogger>(); }
 
         public string Entrance { get; set; }
         public string Action { get; set; }
@@ -100,15 +100,15 @@ namespace Spear.Inf.Core.Attr
             while (Exception != null && Exception.InnerException != null)
                 Exception = Exception.InnerException;
 
-            Type resultBasicType = typeof(ResultBasic<>);
+            Type resultBaseType = typeof(ResultBase<>);
             Type resultMicServType = realContext.MethodInfo.ReturnParameter.ParameterType.GenericTypeArguments[0];
             Type dataType = resultMicServType.GenericTypeArguments[0];
             Type funcClassType = typeof(CusResultExtend);
-            MethodInfo func_ResultBasic_Exception = funcClassType.GetMethod("ResultBasic_Exception").MakeGenericMethod(dataType);
+            MethodInfo func_ResultBase_Exception = funcClassType.GetMethod("ResultBase_Exception").MakeGenericMethod(dataType);
             MethodInfo func_ToResultMicServ = funcClassType.GetMethod("ToResultMicServ").MakeGenericMethod(dataType);
 
-            var resultBasic = func_ResultBasic_Exception.Invoke(null, new object[] { Exception, null });
-            Result = func_ToResultMicServ.Invoke(null, new object[] { resultBasic });
+            var resultBase = func_ResultBase_Exception.Invoke(null, new object[] { Exception, null });
+            Result = func_ToResultMicServ.Invoke(null, new object[] { resultBase });
 
             //是否标注了 志记录忽略 的标签，无标注 则需进行 日志记录
             if (Exception.GetType().GetCustomAttribute<LogIgnoreAttribute>() == null)

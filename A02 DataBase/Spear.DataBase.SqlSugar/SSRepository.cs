@@ -11,20 +11,20 @@ namespace Spear.Inf.SqlSugar
     }
 
     public class SSRepository<TEntity> : DBRepository<TEntity>
-        where TEntity : DBEntity_Basic, new()
+        where TEntity : DBEntity_Base, new()
     {
         protected override IDBContext GetDBContext() { return ServiceContext.ResolveByKeyed<IDBContext>(Enum_DBType.SqlSugar); }
     }
 
     public class SSRepository<TEntity, TKey> : DBRepository<TEntity, TKey>
-        where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new()
+        where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
     {
         protected override IDBContext GetDBContext() { return ServiceContext.ResolveByKeyed<IDBContext>(Enum_DBType.SqlSugar); }
     }
 
     public class SSRepository<TDBContext, TEntity, TKey> : DBRepository<TDBContext, TEntity, TKey>
         where TDBContext : SSDBContext, IDBContext
-        where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new()
+        where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
     {
         protected override IDBContext GetDBContext() { return ServiceContext.ResolveByKeyed<TDBContext>(Enum_DBType.SqlSugar); }
     }

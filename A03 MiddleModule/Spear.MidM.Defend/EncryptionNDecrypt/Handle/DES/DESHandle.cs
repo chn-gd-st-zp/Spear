@@ -2,7 +2,7 @@
 
 namespace Spear.MidM.Defend.EncryptionNDecrypt
 {
-    public class DESHandle : BasicHandle<DESSettings>
+    public class DESHandle : BaseHandle<DESSettings>
     {
         public DESHandle(string secretPrefix) : base(secretPrefix) { }
 

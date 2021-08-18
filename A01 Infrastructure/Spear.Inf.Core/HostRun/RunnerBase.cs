@@ -11,7 +11,7 @@ namespace Spear.Inf.Core
 {
     public delegate void NewTaskDelegate(params object[] paramArray);
 
-    public abstract class RunnerBasic<TRunner> : IRunner
+    public abstract class RunnerBase<TRunner> : IRunner
         where TRunner : class
     {
         /// <summary>

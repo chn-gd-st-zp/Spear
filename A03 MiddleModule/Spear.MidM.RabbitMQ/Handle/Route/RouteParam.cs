@@ -2,7 +2,7 @@
 
 namespace Spear.MidM.RabbitMQ
 {
-    public abstract class RouteParamBasic : IRabbitMQParamBasic
+    public abstract class RouteParamBase : IRabbitMQParamBase
     {
         /// <summary>
         /// 路由标识
@@ -45,7 +45,7 @@ namespace Spear.MidM.RabbitMQ
         public bool Exclusive { get; set; } = false;
     }
 
-    public class RouteParamRequest : RouteParamBasic, IRabbitMQParamRequest
+    public class RouteParamRequest : RouteParamBase, IRabbitMQParamRequest
     {
         /// <summary>
         /// 是否消息持久化
@@ -63,7 +63,7 @@ namespace Spear.MidM.RabbitMQ
         public List<IRabbitMQMessageEntity> MessageEntities { get; set; }
     }
 
-    public class RouteParamResponse : RouteParamBasic, IRabbitMQParamResponse
+    public class RouteParamResponse : RouteParamBase, IRabbitMQParamResponse
     {
         /// <summary>
         /// 队列名

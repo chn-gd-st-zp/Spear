@@ -17,9 +17,9 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core.AppEntrance
 {
-    public abstract class StartupBasic<T> where T : AppSettingsBasic
+    public abstract class StartupBase<T> where T : AppSettingsBase
     {
-        public StartupBasic(IConfiguration configuration)
+        public StartupBase(IConfiguration configuration)
         {
             Configuration = configuration;
             CurConfig = Configuration.GetSetting<T>();

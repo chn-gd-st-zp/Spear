@@ -4,7 +4,7 @@ using Spear.Inf.Core.Interface;
 
 namespace Spear.MidM.RabbitMQ
 {
-    public interface IRabbitMQParamBasic : IMsgQueueParam
+    public interface IRabbitMQParamBase : IMsgQueueParam
     {
         /// <summary>
         /// 优先级
@@ -32,7 +32,7 @@ namespace Spear.MidM.RabbitMQ
         bool Exclusive { get; set; }
     }
 
-    public interface IRabbitMQParamRequest : IRabbitMQParamBasic
+    public interface IRabbitMQParamRequest : IRabbitMQParamBase
     {
         /// <summary>
         /// 是否消息持久化
@@ -50,7 +50,7 @@ namespace Spear.MidM.RabbitMQ
         List<IRabbitMQMessageEntity> MessageEntities { get; set; }
     }
 
-    public interface IRabbitMQParamResponse : IRabbitMQParamBasic
+    public interface IRabbitMQParamResponse : IRabbitMQParamBase
     {
         /// <summary>
         /// 读取数

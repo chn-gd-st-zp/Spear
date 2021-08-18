@@ -4,7 +4,7 @@ using Spear.Inf.Core.EncryptionNDecrypt;
 
 namespace Spear.MidM.Defend.EncryptionNDecrypt
 {
-    public class MD5Handle : BasicHandle<MD5Settings>
+    public class MD5Handle : BaseHandle<MD5Settings>
     {
         public MD5Handle(string secretPrefix) : base(secretPrefix) { }
 

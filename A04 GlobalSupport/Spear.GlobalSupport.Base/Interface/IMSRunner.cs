@@ -3,7 +3,7 @@
 using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.ServGeneric.MicServ;
 
-namespace Spear.GlobalSupport.Basic.Interface
+namespace Spear.GlobalSupport.Base.Interface
 {
     public interface IMSRunner : IMicServ<IMSRunner>
     {

@@ -2,7 +2,7 @@
 
 namespace Spear.Inf.Core.AppEntrance
 {
-    public class AppSettingsBasic
+    public class AppSettingsBase
     {
         public AutoFacSettings AutoFacSettings { get; set; }
     }

@@ -4,7 +4,7 @@ using Spear.Inf.Core.CusEnum;
 namespace Spear.Inf.Core.CusException
 {
     [LogIgnore]
-    public class Exception_VerifyError : Exception_Basic
+    public class Exception_VerifyError : Exception_Base
     {
         public Exception_VerifyError(string msg) :base(msg)
         {

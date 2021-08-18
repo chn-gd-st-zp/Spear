@@ -2,7 +2,7 @@
 
 namespace Spear.MidM.RabbitMQ
 {
-    public abstract class WorkParamBasic : IRabbitMQParamBasic
+    public abstract class WorkParamBase : IRabbitMQParamBase
     {
         /// <summary>
         /// 队列名
@@ -36,7 +36,7 @@ namespace Spear.MidM.RabbitMQ
         public bool Exclusive { get; set; } = false;
     }
 
-    public class WorkParamRequest : WorkParamBasic, IRabbitMQParamRequest
+    public class WorkParamRequest : WorkParamBase, IRabbitMQParamRequest
     {
         /// <summary>
         /// 是否消息持久化
@@ -54,7 +54,7 @@ namespace Spear.MidM.RabbitMQ
         public List<IRabbitMQMessageEntity> MessageEntities { get; set; }
     }
 
-    public class WorkParamResponse : WorkParamBasic, IRabbitMQParamResponse
+    public class WorkParamResponse : WorkParamBase, IRabbitMQParamResponse
     {
         /// <summary>
         /// 读取数

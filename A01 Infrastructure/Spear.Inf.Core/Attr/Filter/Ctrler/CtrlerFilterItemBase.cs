@@ -18,11 +18,11 @@ using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
 
 namespace Spear.Inf.Core.Attr
 {
-    public abstract class CtrlerFilterItemBasic : IRequestFilterItem
+    public abstract class CtrlerFilterItemBase : IRequestFilterItem
     {
         protected readonly ILogger Logger;
 
-        public CtrlerFilterItemBasic() { Logger = ServiceContext.Resolve<ILogger>(); }
+        public CtrlerFilterItemBase() { Logger = ServiceContext.Resolve<ILogger>(); }
 
         public string Entrance { get; set; }
         public string Action { get; set; }

@@ -11,55 +11,55 @@ namespace Spear.Inf.Core.Interface
     {
         #region 增
 
-        bool Create<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Basic, new();
+        bool Create<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Base, new();
 
-        bool Create<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Basic, new();
+        bool Create<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Base, new();
 
         #endregion
 
         #region 删
 
-        bool Delete<TEntity, TKey>(TKey key) where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new();
+        bool Delete<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_ID<TKey>, new();
 
-        bool Delete<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Basic, new();
+        bool Delete<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Base, new();
 
-        bool Delete<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Basic, new();
+        bool Delete<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Base, new();
 
-        bool Delete<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : DBEntity_Basic, new();
+        bool Delete<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : DBEntity_Base, new();
 
         #endregion
 
         #region 改
 
-        bool Update<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Basic, new();
+        bool Update<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Base, new();
 
-        bool Update<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Basic, new();
+        bool Update<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Base, new();
 
         #endregion
 
         #region 查 - 单个
 
-        TEntity Single<TEntity, TKey>(TKey key) where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new();
+        TEntity Single<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_ID<TKey>, new();
 
-        TEntity Single<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : DBEntity_Basic, new();
+        TEntity Single<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : DBEntity_Base, new();
 
         #endregion
 
         #region 查 - 列表
 
-        List<TEntity> List<TEntity, TKey>(params TKey[] keys) where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new();
+        List<TEntity> List<TEntity, TKey>(params TKey[] keys) where TEntity : DBEntity_Base, IDBField_ID<TKey>, new();
 
-        List<TEntity> List<TEntity>(Expression<Func<TEntity, bool>> expression = null, IDTO_List param = null) where TEntity : DBEntity_Basic, new();
+        List<TEntity> List<TEntity>(Expression<Func<TEntity, bool>> expression = null, IDTO_List param = null) where TEntity : DBEntity_Base, new();
 
-        List<TEntity> ListByQueryable<TEntity>(object queryObj, IDTO_List param = null) where TEntity : DBEntity_Basic, new();
+        List<TEntity> ListByQueryable<TEntity>(object queryObj, IDTO_List param = null) where TEntity : DBEntity_Base, new();
 
         #endregion
 
         #region 查 - 分页
 
-        Tuple<List<TEntity>, int> Page<TEntity>(Expression<Func<TEntity, bool>> expression, IDTO_Page param = null) where TEntity : DBEntity_Basic, new();
+        Tuple<List<TEntity>, int> Page<TEntity>(Expression<Func<TEntity, bool>> expression, IDTO_Page param = null) where TEntity : DBEntity_Base, new();
 
-        Tuple<List<TEntity>, int> PageByQueryable<TEntity>(object queryObj, IDTO_Page param = null) where TEntity : DBEntity_Basic, new();
+        Tuple<List<TEntity>, int> PageByQueryable<TEntity>(object queryObj, IDTO_Page param = null) where TEntity : DBEntity_Base, new();
 
         #endregion
 
@@ -67,11 +67,11 @@ namespace Spear.Inf.Core.Interface
 
         int ExecuteSql(string sql, params DBParameter[] paramArray);
 
-        List<TEntity> SelectFromSql<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : DBEntity_Basic, new();
+        List<TEntity> SelectFromSql<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : DBEntity_Base, new();
 
         int ExecuteStoredProcedure(string sql, params DBParameter[] paramArray);
 
-        List<TEntity> SelectFromStoredProcedure<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : DBEntity_Basic, new();
+        List<TEntity> SelectFromStoredProcedure<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : DBEntity_Base, new();
 
         #endregion
     }
@@ -84,13 +84,13 @@ namespace Spear.Inf.Core.Interface
 
         #region 查 - 列表
 
-        List<T> ListByQueryable<T>(object queryObj, IDTO_List param = null) where T : DBEntity_Basic, new();
+        List<T> ListByQueryable<T>(object queryObj, IDTO_List param = null) where T : DBEntity_Base, new();
 
         #endregion
 
         #region 查 - 分页
 
-        Tuple<List<T>, int> PageByQueryable<T>(object queryObj, IDTO_Page param = null) where T : DBEntity_Basic, new();
+        Tuple<List<T>, int> PageByQueryable<T>(object queryObj, IDTO_Page param = null) where T : DBEntity_Base, new();
 
         #endregion
 
@@ -98,16 +98,16 @@ namespace Spear.Inf.Core.Interface
 
         int ExecuteSql(string sql, params DBParameter[] paramArray);
 
-        List<T> SelectFromSql<T>(string sql, params DBParameter[] paramArray) where T : DBEntity_Basic, new();
+        List<T> SelectFromSql<T>(string sql, params DBParameter[] paramArray) where T : DBEntity_Base, new();
 
         int ExecuteStoredProcedure(string sql, params DBParameter[] paramArray);
 
-        List<T> SelectFromStoredProcedure<T>(string sql, params DBParameter[] paramArray) where T : DBEntity_Basic, new();
+        List<T> SelectFromStoredProcedure<T>(string sql, params DBParameter[] paramArray) where T : DBEntity_Base, new();
 
         #endregion
     }
 
-    public interface IDBFunc4Repository<TEntity> : IDBFunc4Repository where TEntity : DBEntity_Basic, new()
+    public interface IDBFunc4Repository<TEntity> : IDBFunc4Repository where TEntity : DBEntity_Base, new()
     {
         #region 增
 
@@ -158,7 +158,7 @@ namespace Spear.Inf.Core.Interface
         #endregion
     }
 
-    public interface IDBFunc4Repository<TEntity, TKey> : IDBFunc4Repository<TEntity> where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new()
+    public interface IDBFunc4Repository<TEntity, TKey> : IDBFunc4Repository<TEntity> where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
     {
         #region 删
 

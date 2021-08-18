@@ -26,7 +26,7 @@ namespace Spear.Inf.Core.DBRef
 
         #region 查 - 列表
 
-        public virtual List<T> ListByQueryable<T>(object queryObj, IDTO_List param = null) where T : DBEntity_Basic, new()
+        public virtual List<T> ListByQueryable<T>(object queryObj, IDTO_List param = null) where T : DBEntity_Base, new()
         {
             return DBContext.ListByQueryable<T>(queryObj, param);
         }
@@ -35,7 +35,7 @@ namespace Spear.Inf.Core.DBRef
 
         #region 查 - 分页
 
-        public virtual Tuple<List<T>, int> PageByQueryable<T>(object queryObj, IDTO_Page param = null) where T : DBEntity_Basic, new()
+        public virtual Tuple<List<T>, int> PageByQueryable<T>(object queryObj, IDTO_Page param = null) where T : DBEntity_Base, new()
         {
             return DBContext.PageByQueryable<T>(queryObj, param);
         }
@@ -49,7 +49,7 @@ namespace Spear.Inf.Core.DBRef
             return DBContext.ExecuteSql(sql, paramArray);
         }
 
-        public virtual List<T> SelectFromSql<T>(string sql, params DBParameter[] paramArray) where T : DBEntity_Basic, new()
+        public virtual List<T> SelectFromSql<T>(string sql, params DBParameter[] paramArray) where T : DBEntity_Base, new()
         {
             return DBContext.SelectFromSql<T>(sql, paramArray);
         }
@@ -59,7 +59,7 @@ namespace Spear.Inf.Core.DBRef
             return DBContext.ExecuteStoredProcedure(sql, paramArray);
         }
 
-        public virtual List<T> SelectFromStoredProcedure<T>(string sql, params DBParameter[] paramArray) where T : DBEntity_Basic, new()
+        public virtual List<T> SelectFromStoredProcedure<T>(string sql, params DBParameter[] paramArray) where T : DBEntity_Base, new()
         {
             return DBContext.SelectFromStoredProcedure<T>(sql, paramArray);
         }
@@ -68,7 +68,7 @@ namespace Spear.Inf.Core.DBRef
     }
 
     public class DBRepository<TEntity> : DBRepository, IDBRepository<TEntity>
-        where TEntity : DBEntity_Basic, new()
+        where TEntity : DBEntity_Base, new()
     {
 
         #region 增
@@ -157,7 +157,7 @@ namespace Spear.Inf.Core.DBRef
     }
 
     public class DBRepository<TEntity, TKey> : DBRepository<TEntity>, IDBRepository<TEntity, TKey>
-        where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new()
+        where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
     {
         #region 删
 
@@ -189,7 +189,7 @@ namespace Spear.Inf.Core.DBRef
 
     public class DBRepository<TDBContext, TEntity, TKey> : DBRepository<TEntity, TKey>, IDBRepository<TDBContext, TEntity, TKey>
         where TDBContext : IDBContext
-        where TEntity : DBEntity_Basic, IDBField_ID<TKey>, new()
+        where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
     {
         private TDBContext _dbContext;
         public new TDBContext DBContext { get { return _dbContext; } set { _dbContext = value; base.DBContext = value; } }
