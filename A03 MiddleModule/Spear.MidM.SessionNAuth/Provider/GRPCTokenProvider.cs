@@ -22,10 +22,10 @@ namespace Spear.MidM.SessionNAuth
                 if (reqParamList == null || reqParamList.Count() == 0)
                     return "";
 
-                var basicType = typeof(IDTO_GRPC);
+                var baseType = typeof(IDTO_GRPC);
 
                 var reqParam = reqParamList
-                    .Where(o => o.IsExtendType(basicType))
+                    .Where(o => o.IsExtendType(baseType))
                     .Select(o => o as IDTO_GRPC)
                     .Where(o => !o.GRPCContext.Token.IsEmptyString())
                     .FirstOrDefault();
