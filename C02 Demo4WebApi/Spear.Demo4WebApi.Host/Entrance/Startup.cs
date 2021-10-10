@@ -26,7 +26,7 @@ using CUS = Spear.Inf.Core.Interface;
 
 namespace Spear.Demo4WebApi.Host
 {
-    public class Startup : StartupBasic<Settings>
+    public class Startup : StartupBase3X<Settings, ConfigureCollectionBase>
     {
         public Startup(IConfiguration configuration) : base(configuration) { }
 
@@ -73,20 +73,20 @@ namespace Spear.Demo4WebApi.Host
             containerBuilder.RegisterType<EFDBContext_Stainless>().Keyed<EFDBContext_Stainless>(Enum_DBType.EF).InstancePerDependency();
         }
 
-        protected override void Extend_Configure(IApplicationBuilder app, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory)
+        protected override void Extend_Configure(ConfigureCollectionBase configureCollection)
         {
-            ServiceContext.InitServiceProvider(app.ApplicationServices);
+            ServiceContext.InitServiceProvider(configureCollection.App.ApplicationServices);
 
-            if (env.IsDevelopment())
+            if (configureCollection.Env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                configureCollection.App.UseDeveloperExceptionPage();
             }
 
-            app.UseSwagger(CurConfig.SwaggerSettings);
+            configureCollection.App.UseSwagger(CurConfig.SwaggerSettings);
 
-            app.UseRouting();
-            app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
+            configureCollection.App.UseRouting();
+            configureCollection.App.UseAuthorization();
+            configureCollection.App.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });

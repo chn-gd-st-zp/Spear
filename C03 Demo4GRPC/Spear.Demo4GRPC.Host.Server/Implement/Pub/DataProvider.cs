@@ -1,5 +1,5 @@
 ﻿using Spear.Inf.Core.ServGeneric;
-using Spear.Demo4GRPC.Pub.Basic;
+using Spear.Demo4GRPC.Pub.Base;
 using Spear.Demo4GRPC.Pub.TestDemo;
 
 namespace Spear.Demo4GRPC.Host.Server.Implement

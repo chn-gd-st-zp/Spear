@@ -1,12 +1,7 @@
-using System;
 using System.Collections.Generic;
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 using Autofac;
 using Newtonsoft.Json;
@@ -17,12 +12,14 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core.AppEntrance
 {
-    public abstract class StartupBase<T> where T : AppSettingsBase
+    public abstract class StartupBase<TSettings, TConfigureCollection>
+        where TSettings : AppSettingsBase
+        where TConfigureCollection : IConfigureCollection
     {
         public StartupBase(IConfiguration configuration)
         {
             Configuration = configuration;
-            CurConfig = Configuration.GetSetting<T>();
+            CurConfig = Configuration.GetSetting<TSettings>();
             JsonSerializerSettings = SetJsonSerializerSettings();
 
             Printor.PrintText(CurConfig.ToJson());
@@ -37,61 +34,12 @@ namespace Spear.Inf.Core.AppEntrance
         /// <summary>
         /// 配置
         /// </summary>
-        public T CurConfig { get; private set; }
+        public TSettings CurConfig { get; private set; }
 
         /// <summary>
         /// JSON设置
         /// </summary>
         protected JsonSerializerSettings JsonSerializerSettings { get; private set; }
-
-        #region 基础方法
-
-        /// <summary>
-        /// 配置服务
-        /// </summary>
-        /// <param name="services"></param>
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddOptions();
-
-            Extend_ConfigureServices(services);
-        }
-
-        /// <summary>
-        /// 配置容器
-        /// </summary>
-        /// <param name="containerBuilder"></param>
-        public void ConfigureContainer(ContainerBuilder containerBuilder)
-        {
-            List<string> typeIgnore = new List<string>();
-            List<string> typeRegis = new List<string>();
-
-            var runningType = this.GetRunningType();
-
-            containerBuilder.Register(runningType, Configuration, typeIgnore, typeRegis);
-            containerBuilder.Register(runningType, typeIgnore, typeRegis);
-
-            containerBuilder.Register(o => Configuration).As<IConfiguration>().SingleInstance();
-            containerBuilder.Register(o => JsonSerializerSettings).AsSelf().SingleInstance();
-
-            Extend_ConfigureContainer(containerBuilder);
-        }
-
-        /// <summary>
-        /// 配置构造器
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="env"></param>
-        /// <param name="lifetime"></param>
-        /// <param name="loggerFactory"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory)
-        {
-            Extend_Configure(app, env, lifetime, loggerFactory);
-        }
-
-        #endregion
-
-        #region 子类实现
 
         /// <summary>
         /// 设置序列化参数
@@ -115,12 +63,27 @@ namespace Spear.Inf.Core.AppEntrance
         /// 拓展 Configure
         /// 给Web继承的
         /// </summary>
-        /// <param name="app"></param>
-        /// <param name="env"></param>
-        /// <param name="lifetime"></param>
-        /// <param name="loggerFactory"></param>
-        protected abstract void Extend_Configure(IApplicationBuilder app, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory);
+        /// <param name="configureCollection"></param>
+        protected abstract void Extend_Configure(TConfigureCollection configureCollection);
 
-        #endregion
+        /// <summary>
+        /// 配置容器
+        /// </summary>
+        /// <param name="containerBuilder"></param>
+        public void ConfigureContainer(ContainerBuilder containerBuilder)
+        {
+            List<string> typeIgnore = new List<string>();
+            List<string> typeRegis = new List<string>();
+
+            var runningType = this.GetRunningType();
+
+            containerBuilder.Register(runningType, Configuration, typeIgnore, typeRegis);
+            containerBuilder.Register(runningType, typeIgnore, typeRegis);
+
+            containerBuilder.Register(o => Configuration).As<IConfiguration>().SingleInstance();
+            containerBuilder.Register(o => JsonSerializerSettings).AsSelf().SingleInstance();
+
+            Extend_ConfigureContainer(containerBuilder);
+        }
     }
 }

@@ -8,7 +8,7 @@ using Spear.MidM.Quartz;
 
 namespace Spear.Demo4WinApp.Host
 {
-    public class Settings : AppSettingsBasic
+    public class Settings : AppSettingsBase
     {
         public JobSettings JobSettings { get; set; }
     }

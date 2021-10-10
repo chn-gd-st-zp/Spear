@@ -1,4 +1,4 @@
-﻿using Spear.Demo4WebApi.Basic;
+﻿using Spear.Demo4WebApi.Base;
 
 namespace Spear.Demo4WebApi.Contract.DTO.Ouput
 {

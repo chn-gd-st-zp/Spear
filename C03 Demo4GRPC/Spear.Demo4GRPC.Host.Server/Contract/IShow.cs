@@ -9,10 +9,10 @@ namespace Spear.Demo4GRPC.Host.Server.Contract
 {
     public interface IShow : ITransient
     {
-        ResultBasic<List<ODTOTestDemo>> List(ListParam input);
+        ResultBase<List<ODTOTestDemo>> List(ListParam input);
 
-        ResultBasic<ODTO_Page<ODTOTestDemo>> Page(PageParam input);
+        ResultBase<ODTO_Page<ODTOTestDemo>> Page(PageParam input);
 
-        ResultBasic<ODTO_Tree<ODTOTestDemo>> Tree(TreeParam input);
+        ResultBase<ODTO_Tree<ODTOTestDemo>> Tree(TreeParam input);
     }
 }

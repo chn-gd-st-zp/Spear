@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.Inf.Core", "..\A01 In
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "C03 Demo4GRPC", "C03 Demo4GRPC", "{5F959A6C-93FE-4CE8-87F8-E5AA698705FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spear.Demo4GRPC.Host.Server", "Spear.Demo4GRPC.Host.Server\Spear.Demo4GRPC.Host.Server.csproj", "{837FA962-D94D-485D-B70C-649B4D306340}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.Demo4GRPC.Host.Server", "Spear.Demo4GRPC.Host.Server\Spear.Demo4GRPC.Host.Server.csproj", "{837FA962-D94D-485D-B70C-649B4D306340}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spear.Demo4GRPC.Host.Client", "Spear.Demo4GRPC.Host.Client\Spear.Demo4GRPC.Host.Client.csproj", "{AD820FD2-8CF1-4F1C-93B5-698C3A68F22B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.Demo4GRPC.Host.Client", "Spear.Demo4GRPC.Host.Client\Spear.Demo4GRPC.Host.Client.csproj", "{AD820FD2-8CF1-4F1C-93B5-698C3A68F22B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spear.Demo4GRPC.Pub", "Spear.Demo4GRPC.Pub\Spear.Demo4GRPC.Pub.csproj", "{8CA9A51A-EFDF-42D9-9FD7-222EDAE67056}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.Demo4GRPC.Pub", "Spear.Demo4GRPC.Pub\Spear.Demo4GRPC.Pub.csproj", "{8CA9A51A-EFDF-42D9-9FD7-222EDAE67056}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.Inf.DataFile", "..\A01 Infrastructure\Spear.Inf.DataFile\Spear.Inf.DataFile.csproj", "{D8B7547E-2552-4CFB-AC5D-DF06B5723ECE}"
 EndProject
@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.MidM.Swagger", "..\A0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "A04 GlobalSupport", "A04 GlobalSupport", "{B1ED096F-84A1-49BD-B5B6-174E1BD5A0CF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.GlobalSupport.Basic", "..\A04 GlobalSupport\Spear.GlobalSupport.Basic\Spear.GlobalSupport.Basic.csproj", "{3AD107D3-EDC2-45ED-808B-55D282565459}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.GlobalSupport.Base", "..\A04 GlobalSupport\Spear.GlobalSupport.Base\Spear.GlobalSupport.Base.csproj", "{DE0C128D-CCC6-41EB-A524-F049EE49AE60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,10 +61,10 @@ Global
 		{5E851749-9A5F-454B-A316-4FC4717B4880}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E851749-9A5F-454B-A316-4FC4717B4880}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E851749-9A5F-454B-A316-4FC4717B4880}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3AD107D3-EDC2-45ED-808B-55D282565459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3AD107D3-EDC2-45ED-808B-55D282565459}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3AD107D3-EDC2-45ED-808B-55D282565459}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3AD107D3-EDC2-45ED-808B-55D282565459}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE0C128D-CCC6-41EB-A524-F049EE49AE60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE0C128D-CCC6-41EB-A524-F049EE49AE60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE0C128D-CCC6-41EB-A524-F049EE49AE60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE0C128D-CCC6-41EB-A524-F049EE49AE60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,7 +77,7 @@ Global
 		{D8B7547E-2552-4CFB-AC5D-DF06B5723ECE} = {CA6BAF8C-236B-46AA-8DEF-477CD3C3DBB9}
 		{88E4BD86-BE4E-4DE5-9F32-FD7E23D4A21A} = {D0C7F6F8-CB45-4471-9376-317F1F02252B}
 		{5E851749-9A5F-454B-A316-4FC4717B4880} = {D0C7F6F8-CB45-4471-9376-317F1F02252B}
-		{3AD107D3-EDC2-45ED-808B-55D282565459} = {B1ED096F-84A1-49BD-B5B6-174E1BD5A0CF}
+		{DE0C128D-CCC6-41EB-A524-F049EE49AE60} = {B1ED096F-84A1-49BD-B5B6-174E1BD5A0CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {04028CBC-E2A7-4A7B-B5A7-3B879C233B97}

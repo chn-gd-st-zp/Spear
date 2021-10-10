@@ -19,27 +19,27 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
             _export = ServiceContext.Resolve<IFileHandle>();
         }
 
-        public ResultBasic<List<ODTOTestDemo>> List(ListParam input)
+        public ResultBase<List<ODTOTestDemo>> List(ListParam input)
         {
             return _show.List(input);
         }
 
-        public ResultBasic<ODTO_Page<ODTOTestDemo>> Page(PageParam input)
+        public ResultBase<ODTO_Page<ODTOTestDemo>> Page(PageParam input)
         {
             return _show.Page(input);
         }
 
-        public ResultBasic<ODTO_Tree<ODTOTestDemo>> Tree(TreeParam input)
+        public ResultBase<ODTO_Tree<ODTOTestDemo>> Tree(TreeParam input)
         {
             return _show.Tree(input);
         }
 
-        public ResultBasic<List<ODTOTestDemo>> ImportExcel(ImportParam input)
+        public ResultBase<List<ODTOTestDemo>> ImportExcel(ImportParam input)
         {
             return _export.ImportExcel(input);
         }
 
-        public ResultBasic<byte[]> ExportExcel(ExportParam input)
+        public ResultBase<byte[]> ExportExcel(ExportParam input)
         {
             return _export.ExportExcel(input);
         }

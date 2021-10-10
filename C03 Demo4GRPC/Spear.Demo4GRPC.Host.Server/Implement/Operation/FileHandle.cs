@@ -23,7 +23,7 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
             _excelHelper = ServiceContext.Resolve<IExcelHelper>();
         }
 
-        public ResultBasic<List<ODTOTestDemo>> ImportExcel(ImportParam input)
+        public ResultBase<List<ODTOTestDemo>> ImportExcel(ImportParam input)
         {
             List<ODTOTestDemo> result = new List<ODTOTestDemo>();
 
@@ -33,10 +33,10 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
                 importData.ForEach(o => { result.Add(_mapper.Map<ODTOTestDemo>(o)); });
             }
 
-            return result.ResultBasic_Success();
+            return result.ResultBase_Success();
         }
 
-        public ResultBasic<byte[]> ExportExcel(ExportParam input)
+        public ResultBase<byte[]> ExportExcel(ExportParam input)
         {
             var dataList = new List<ExportSetTestDemo>();
             for (int i = 0; i < 10; i++)
@@ -52,7 +52,7 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
             DataTable dt = dataList.ToDataTable();
             var execResult = _excelHelper.ExportFromDataTable(dt);
 
-            return execResult.ResultBasic_Success();
+            return execResult.ResultBase_Success();
         }
     }
 }

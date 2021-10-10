@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-using Spear.Inf.Core.Basic;
+using Spear.Inf.Core.Base;
 using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.DTO;
 using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.Tool;
-using Spear.Demo4GRPC.Pub.Basic;
+using Spear.Demo4GRPC.Pub.Base;
 using Spear.Demo4GRPC.Pub.TestDemo;
 
 namespace Spear.Demo4GRPC.Host.Server.Controller
 {
     [Route("displayer")]
     [ApiController]
-    public class DisplayerController : ControllerBasic
+    public class DisplayerController : ControllerBase
     {
         private readonly IDisplayer_TextDemo _displayer;
 

@@ -11,25 +11,25 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
 {
     public class Show : IShow
     {
-        public ResultBasic<List<ODTOTestDemo>> List(ListParam input)
+        public ResultBase<List<ODTOTestDemo>> List(ListParam input)
         {
             var dataList = new List<ODTOTestDemo>();
-            return dataList.ResultBasic_Success();
+            return dataList.ResultBase_Success();
         }
 
-        public ResultBasic<ODTO_Page<ODTOTestDemo>> Page(PageParam input)
+        public ResultBase<ODTO_Page<ODTOTestDemo>> Page(PageParam input)
         {
             var pageData = new Tuple<List<ODTOTestDemo>, int>(new List<ODTOTestDemo>(), 0);
             var dataList = pageData.ToODTOPage(input);
 
-            return dataList.ResultBasic_Success();
+            return dataList.ResultBase_Success();
         }
 
-        public ResultBasic<ODTO_Tree<ODTOTestDemo>> Tree(TreeParam input)
+        public ResultBase<ODTO_Tree<ODTOTestDemo>> Tree(TreeParam input)
         {
             var dataList = new List<ODTOTestDemo>();
 
-            return dataList.ToTree("").ResultBasic_Success();
+            return dataList.ToTree("").ResultBase_Success();
         }
     }
 }

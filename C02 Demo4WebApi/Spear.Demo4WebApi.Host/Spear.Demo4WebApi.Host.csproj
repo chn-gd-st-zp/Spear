@@ -39,7 +39,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Swagger\Spear.MidM.Swagger.csproj" />
-		<ProjectReference Include="..\..\A04 GlobalSupport\Spear.GlobalSupport.Basic\Spear.GlobalSupport.Basic.csproj" />
+		<ProjectReference Include="..\..\A04 GlobalSupport\Spear.GlobalSupport.Base\Spear.GlobalSupport.Base.csproj" />
 		<ProjectReference Include="..\Spear.Demo4WebApi.IMPL\Spear.Demo4WebApi.IMPL.csproj" />
 	</ItemGroup>
 

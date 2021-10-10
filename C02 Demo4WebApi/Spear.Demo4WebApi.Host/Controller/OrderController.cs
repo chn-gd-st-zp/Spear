@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-using Spear.Inf.Core.Basic;
+using Spear.Inf.Core.Base;
 using Spear.Inf.Core.CusResult;
 using Spear.Demo4WebApi.Contract.DTO.Input;
 using Spear.Demo4WebApi.Contract.Interface;
@@ -12,7 +12,7 @@ namespace Spear.Demo4WebApi.Host
 {
     [Route("order")]
     [ApiController]
-    public class OrderController : ControllerBasic
+    public class OrderController : ControllerBase
     {
         public IWebApiService _webapiService;
 

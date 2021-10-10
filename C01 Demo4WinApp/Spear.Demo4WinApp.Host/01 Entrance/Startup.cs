@@ -13,18 +13,31 @@ using Newtonsoft.Json.Converters;
 using Spear.Inf.Core;
 using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.SettingsGeneric;
+using Spear.MidM.Defend;
 using Spear.MidM.Logger;
 using Spear.MidM.Quartz;
 
 using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
 using CUS = Spear.Inf.Core.Interface;
-using Spear.MidM.Defend;
 
 namespace Spear.Demo4WinApp.Host
 {
-    public class Startup : StartupBasic<Settings>
+    public class Startup : StartupBase3X<Settings, ConfigureCollectionBase>
     {
         public Startup(IConfiguration configuration) : base(configuration) { }
+
+        public void Configure(IApplicationBuilder app, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory)
+        {
+            var configureCollection = new ConfigureCollectionBase()
+            {
+                App = app,
+                Env = env,
+                Lifetime = lifetime,
+                LoggerFactory = loggerFactory
+            };
+
+            Extend_Configure(configureCollection);
+        }
 
         protected override JsonSerializerSettings SetJsonSerializerSettings()
         {
@@ -56,11 +69,11 @@ namespace Spear.Demo4WinApp.Host
             containerBuilder.RegisAES("123456");
         }
 
-        protected override void Extend_Configure(IApplicationBuilder app, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory)
+        protected override void Extend_Configure(ConfigureCollectionBase configureCollection)
         {
-            ServiceContext.InitServiceProvider(app.ApplicationServices);
+            ServiceContext.InitServiceProvider(configureCollection.App.ApplicationServices);
 
-            app.MonitorSettings(this.GetRunningType());
+            configureCollection.App.MonitorSettings(this.GetRunningType());
         }
     }
 }

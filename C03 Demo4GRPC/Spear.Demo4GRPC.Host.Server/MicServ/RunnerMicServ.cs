@@ -2,8 +2,8 @@
 using MagicOnion.Server;
 
 using Spear.Inf.Core.CusResult;
-using Spear.GlobalSupport.Basic.Interface;
-using Spear.Demo4GRPC.Pub.Basic;
+using Spear.GlobalSupport.Base.Interface;
+using Spear.Demo4GRPC.Pub.Base;
 
 using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
 
@@ -20,7 +20,7 @@ namespace Spear.Demo4GRPC.Host.Server.MicServ
 
         public UnaryResult<ResultMicServ<bool>> Run(params string[] args)
         {
-            var execResult = new ResultBasic<bool>();
+            var execResult = new ResultBase<bool>();
 
             execResult = _dataProvider.Spider.Run();
             if (!execResult.IsSuccess)
@@ -30,7 +30,7 @@ namespace Spear.Demo4GRPC.Host.Server.MicServ
             if (!execResult.IsSuccess)
                 return execResult.ToMicServResult();
 
-            return true.ResultBasic_Success().ToMicServResult();
+            return true.ResultBase_Success().ToMicServResult();
         }
     }
 }

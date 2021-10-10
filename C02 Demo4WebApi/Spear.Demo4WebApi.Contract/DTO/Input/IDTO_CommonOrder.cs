@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 using Spear.Inf.Core.DTO;
 using Spear.Inf.Core.Tool;
-using Spear.Demo4WebApi.Basic;
+using Spear.Demo4WebApi.Base;
 
 namespace Spear.Demo4WebApi.Contract.DTO.Input
 {

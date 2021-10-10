@@ -3,7 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 using Spear.Inf.Core.Attr;
-using Spear.Inf.Core.Basic;
+using Spear.Inf.Core.Base;
 using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.ServGeneric.MicServ;
 using Spear.Inf.Core.Tool;
@@ -12,7 +12,7 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
 {
     [Route("health")]
     [ApiController]
-    public class HealthController : ControllerBasic
+    public class HealthController : ControllerBase
     {
         private readonly MicServRunSettings _micServRunSettings;
         private readonly MicServServerSettings _micServServerSettings;

@@ -1,6 +1,6 @@
 ﻿using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
-using Spear.Demo4WebApi.Basic;
+using Spear.Demo4WebApi.Base;
 
 using Ent = Spear.DBIns.Stainless.Entity;
 

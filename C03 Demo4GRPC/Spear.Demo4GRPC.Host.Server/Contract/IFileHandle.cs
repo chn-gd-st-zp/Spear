@@ -8,8 +8,8 @@ namespace Spear.Demo4GRPC.Host.Server.Contract
 {
     public interface IFileHandle : ISingleton
     {
-        ResultBasic<List<ODTOTestDemo>> ImportExcel(ImportParam input);
+        ResultBase<List<ODTOTestDemo>> ImportExcel(ImportParam input);
 
-        ResultBasic<byte[]> ExportExcel(ExportParam input);
+        ResultBase<byte[]> ExportExcel(ExportParam input);
     }
 }

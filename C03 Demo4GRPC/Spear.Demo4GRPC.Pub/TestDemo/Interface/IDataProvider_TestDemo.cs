@@ -1,4 +1,4 @@
-﻿using Spear.Demo4GRPC.Pub.Basic;
+﻿using Spear.Demo4GRPC.Pub.Base;
 
 namespace Spear.Demo4GRPC.Pub.TestDemo
 {

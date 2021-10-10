@@ -10,7 +10,7 @@ using Spear.MidM.Quartz;
 namespace Spear.Demo4WinApp.Host.Job
 {
     [Job("AutoDelJob")]
-    public class AutoDelJob : QuartzJobBasic
+    public class AutoDelJob : QuartzJobBase
     {
         protected override string JobName { get { return "AutoDelJob"; } }
 

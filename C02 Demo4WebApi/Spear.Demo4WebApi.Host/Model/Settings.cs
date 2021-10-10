@@ -3,7 +3,7 @@ using Spear.MidM.Swagger;
 
 namespace Spear.Demo4WebApi.Host
 {
-    public class Settings : AppSettingsBasic
+    public class Settings : AppSettingsBase
     {
         public SwaggerSettings SwaggerSettings { get; set; }
 

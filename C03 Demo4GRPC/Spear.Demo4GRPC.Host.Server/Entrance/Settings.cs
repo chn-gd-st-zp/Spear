@@ -4,7 +4,7 @@ using Spear.MidM.Swagger;
 
 namespace Spear.Demo4GRPC.Host.Server
 {
-    public class Settings : AppSettingsBasic
+    public class Settings : AppSettingsBase
     {
         public SwaggerSettings SwaggerSettings { get; set; }
 

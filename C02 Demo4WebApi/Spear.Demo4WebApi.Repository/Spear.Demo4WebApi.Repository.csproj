@@ -6,7 +6,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\B01 DBInstance\Spear.DBIns.Stainless\Spear.DBIns.Stainless.csproj" />
-		<ProjectReference Include="..\Spear.Demo4WebApi.Basic\Spear.Demo4WebApi.Basic.csproj" />
+		<ProjectReference Include="..\Spear.Demo4WebApi.Base\Spear.Demo4WebApi.Base.csproj" />
 	</ItemGroup>
 
 </Project>

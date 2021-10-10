@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 using Grpc.Net.Client;
 using MagicOnion.Client;
 
-using Spear.Inf.Core.Basic;
+using Spear.Inf.Core.Base;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.DTO;
 using Spear.Inf.Core.ServGeneric.MicServ;
 using Spear.Inf.Core.Tool;
-using Spear.GlobalSupport.Basic.Interface;
+using Spear.GlobalSupport.Base.Interface;
 using Spear.Demo4GRPC.Pub.TestDemo;
 
 using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
@@ -23,7 +23,7 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
 {
     [Route("test")]
     [ApiController]
-    public class TestController : ControllerBasic
+    public class TestController : ControllerBase
     {
         private T GetService<T>() where T : IMicServ<T>
         {

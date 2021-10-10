@@ -36,6 +36,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\A04 GlobalSupport\Spear.GlobalSupport.Base\Spear.GlobalSupport.Base.csproj" />
 		<ProjectReference Include="..\Spear.Demo4GRPC.Pub\Spear.Demo4GRPC.Pub.csproj" />
 	</ItemGroup>
 

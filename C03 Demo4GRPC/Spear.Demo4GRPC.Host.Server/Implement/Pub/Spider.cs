@@ -2,7 +2,7 @@
 
 using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.ServGeneric;
-using Spear.Demo4GRPC.Pub.Basic;
+using Spear.Demo4GRPC.Pub.Base;
 
 namespace Spear.Demo4GRPC.Host.Server.Implement
 {
@@ -15,7 +15,7 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
             _analyzer = ServiceContext.Resolve<IAnalyzer>();
         }
 
-        ResultBasic<bool> ISpider.Run()
+        ResultBase<bool> ISpider.Run()
         {
             Console.WriteLine("抓数据开始");
             Console.WriteLine("抓数据完成");
@@ -25,7 +25,7 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
 
             _analyzer.Run();
 
-            return true.ResultBasic_Success();
+            return true.ResultBase_Success();
         }
     }
 }
