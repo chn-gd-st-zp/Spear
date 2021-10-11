@@ -158,9 +158,9 @@ namespace Spear.Inf.Core.AppEntrance
         /// <typeparam name="T"></typeparam>
         /// <param name="startup"></param>
         /// <returns></returns>
-        public static List<Type> GetRunningType<TSettings, TConfigureCollection>(this StartupBase<TSettings, TConfigureCollection> startup) 
+        public static List<Type> GetRunningType<TSettings, TConfigures>(this StartupBase<TSettings, TConfigures> startup) 
             where TSettings : AppSettingsBase 
-            where TConfigureCollection : IConfigureCollection
+            where TConfigures : AppConfiguresBase
         {
             List<Type> result = new List<Type>();
 

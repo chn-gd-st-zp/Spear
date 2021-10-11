@@ -22,13 +22,13 @@ using CUS = Spear.Inf.Core.Interface;
 
 namespace Spear.Demo4WinApp.Host
 {
-    public class Startup : StartupBase3X<Settings, ConfigureCollectionBase>
+    public class Startup : StartupBase3X<Settings, AppConfiguresBase>
     {
         public Startup(IConfiguration configuration) : base(configuration) { }
 
         public void Configure(IApplicationBuilder app, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory)
         {
-            var configureCollection = new ConfigureCollectionBase()
+            var configures = new AppConfiguresBase()
             {
                 App = app,
                 Env = env,
@@ -36,7 +36,7 @@ namespace Spear.Demo4WinApp.Host
                 LoggerFactory = loggerFactory
             };
 
-            Extend_Configure(configureCollection);
+            Extend_Configure(configures);
         }
 
         protected override JsonSerializerSettings SetJsonSerializerSettings()
@@ -69,11 +69,11 @@ namespace Spear.Demo4WinApp.Host
             containerBuilder.RegisAES("123456");
         }
 
-        protected override void Extend_Configure(ConfigureCollectionBase configureCollection)
+        protected override void Extend_Configure(AppConfiguresBase configures)
         {
-            ServiceContext.InitServiceProvider(configureCollection.App.ApplicationServices);
+            ServiceContext.InitServiceProvider(configures.App.ApplicationServices);
 
-            configureCollection.App.MonitorSettings(this.GetRunningType());
+            configures.App.MonitorSettings(this.GetRunningType());
         }
     }
 }

@@ -26,9 +26,22 @@ using CUS = Spear.Inf.Core.Interface;
 
 namespace Spear.Demo4WebApi.Host
 {
-    public class Startup : StartupBase3X<Settings, ConfigureCollectionBase>
+    public class Startup : StartupBase3X<Settings, AppConfiguresBase>
     {
         public Startup(IConfiguration configuration) : base(configuration) { }
+
+        public void Configure(IApplicationBuilder app, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory)
+        {
+            var configures = new AppConfiguresBase()
+            {
+                App = app,
+                Env = env,
+                Lifetime = lifetime,
+                LoggerFactory = loggerFactory
+            };
+
+            Extend_Configure(configures);
+        }
 
         protected override JsonSerializerSettings SetJsonSerializerSettings()
         {
@@ -73,20 +86,20 @@ namespace Spear.Demo4WebApi.Host
             containerBuilder.RegisterType<EFDBContext_Stainless>().Keyed<EFDBContext_Stainless>(Enum_DBType.EF).InstancePerDependency();
         }
 
-        protected override void Extend_Configure(ConfigureCollectionBase configureCollection)
+        protected override void Extend_Configure(AppConfiguresBase configures)
         {
-            ServiceContext.InitServiceProvider(configureCollection.App.ApplicationServices);
+            ServiceContext.InitServiceProvider(configures.App.ApplicationServices);
 
-            if (configureCollection.Env.IsDevelopment())
+            if (configures.Env.IsDevelopment())
             {
-                configureCollection.App.UseDeveloperExceptionPage();
+                configures.App.UseDeveloperExceptionPage();
             }
 
-            configureCollection.App.UseSwagger(CurConfig.SwaggerSettings);
+            configures.App.UseSwagger(CurConfig.SwaggerSettings);
 
-            configureCollection.App.UseRouting();
-            configureCollection.App.UseAuthorization();
-            configureCollection.App.UseEndpoints(endpoints =>
+            configures.App.UseRouting();
+            configures.App.UseAuthorization();
+            configures.App.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });

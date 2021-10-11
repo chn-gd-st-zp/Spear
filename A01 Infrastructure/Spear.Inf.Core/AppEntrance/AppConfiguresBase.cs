@@ -15,7 +15,7 @@ namespace Spear.Inf.Core.AppEntrance
         ILoggerFactory LoggerFactory { get; set; }
     }
 
-    public class ConfigureCollectionBase : IConfigureCollection
+    public class AppConfiguresBase : IConfigureCollection
     {
         public IApplicationBuilder App { get; set; }
 

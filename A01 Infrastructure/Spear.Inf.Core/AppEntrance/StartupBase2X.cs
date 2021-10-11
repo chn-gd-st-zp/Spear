@@ -8,9 +8,9 @@ using Autofac.Extensions.DependencyInjection;
 
 namespace Spear.Inf.Core.AppEntrance
 {
-    public abstract class StartupBase2X<TSettings, TConfigureCollection> : StartupBase<TSettings, TConfigureCollection>
+    public abstract class StartupBase2X<TSettings, TConfigures> : StartupBase<TSettings, TConfigures>
         where TSettings : AppSettingsBase
-        where TConfigureCollection : IConfigureCollection
+        where TConfigures : AppConfiguresBase
     {
         public StartupBase2X(IConfiguration configuration) : base(configuration) { }
 

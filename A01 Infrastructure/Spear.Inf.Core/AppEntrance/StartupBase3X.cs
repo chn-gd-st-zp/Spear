@@ -3,9 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Spear.Inf.Core.AppEntrance
 {
-    public abstract class StartupBase3X<TSettings, TConfigureCollection> : StartupBase<TSettings, TConfigureCollection>
+    public abstract class StartupBase3X<TSettings, TConfigures> : StartupBase<TSettings, TConfigures>
         where TSettings : AppSettingsBase
-        where TConfigureCollection : IConfigureCollection
+        where TConfigures : AppConfiguresBase
     {
         public StartupBase3X(IConfiguration configuration) : base(configuration) { }
 

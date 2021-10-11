@@ -12,9 +12,9 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core.AppEntrance
 {
-    public abstract class StartupBase<TSettings, TConfigureCollection>
+    public abstract class StartupBase<TSettings, TConfigures>
         where TSettings : AppSettingsBase
-        where TConfigureCollection : IConfigureCollection
+        where TConfigures : AppConfiguresBase
     {
         public StartupBase(IConfiguration configuration)
         {
@@ -63,8 +63,8 @@ namespace Spear.Inf.Core.AppEntrance
         /// ÍØÕ¹ Configure
         /// ¸øWeb¼Ì³ÐµÄ
         /// </summary>
-        /// <param name="configureCollection"></param>
-        protected abstract void Extend_Configure(TConfigureCollection configureCollection);
+        /// <param name="configures"></param>
+        protected abstract void Extend_Configure(TConfigures configures);
 
         /// <summary>
         /// ÅäÖÃÈÝÆ÷
