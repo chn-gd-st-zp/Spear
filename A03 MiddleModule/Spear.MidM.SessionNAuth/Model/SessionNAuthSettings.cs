@@ -4,7 +4,7 @@ using Spear.Inf.Core.SettingsGeneric;
 
 namespace Spear.MidM.SessionNAuth
 {
-    [DIModeForSettings("SessionNAuthSettings", Enum_DIType.Specific, typeof(SessionNAuthSettings))]
+    [DIModeForSettings("SessionNAuthSettings", Enum_DIType.Exclusive, typeof(SessionNAuthSettings))]
     public class SessionNAuthSettings : ISettings
     {
         /// <summary>

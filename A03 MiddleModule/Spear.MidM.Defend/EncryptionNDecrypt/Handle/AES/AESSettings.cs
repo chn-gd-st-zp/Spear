@@ -6,7 +6,7 @@ using Spear.Inf.Core.Interface;
 
 namespace Spear.MidM.Defend.EncryptionNDecrypt
 {
-    [DIModeForSettings("AESSettings", Enum_DIType.Specific, typeof(AESSettings))]
+    [DIModeForSettings("AESSettings", Enum_DIType.Exclusive, typeof(AESSettings))]
     public class AESSettings : IEncryptionNDecryptSettings
     {
         public AESSettings() { }

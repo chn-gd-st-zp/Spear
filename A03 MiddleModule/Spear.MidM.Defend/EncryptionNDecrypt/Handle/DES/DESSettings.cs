@@ -4,7 +4,7 @@ using Spear.Inf.Core.Interface;
 
 namespace Spear.MidM.Defend.EncryptionNDecrypt
 {
-    [DIModeForSettings("DESSettings", Enum_DIType.Specific, typeof(DESSettings))]
+    [DIModeForSettings("DESSettings", Enum_DIType.Exclusive, typeof(DESSettings))]
     public class DESSettings : IEncryptionNDecryptSettings
     {
         public DESSettings() { }

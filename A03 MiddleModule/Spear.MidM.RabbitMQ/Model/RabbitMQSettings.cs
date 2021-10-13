@@ -4,7 +4,7 @@ using Spear.Inf.Core.SettingsGeneric;
 
 namespace Spear.MidM.RabbitMQ
 {
-    [DIModeForSettings("RabbitMQSettings", Enum_DIType.Specific, typeof(RabbitMQSettings))]
+    [DIModeForSettings("RabbitMQSettings", Enum_DIType.Exclusive, typeof(RabbitMQSettings))]
     public class RabbitMQSettings : ISettings
     {
         /// <summary>

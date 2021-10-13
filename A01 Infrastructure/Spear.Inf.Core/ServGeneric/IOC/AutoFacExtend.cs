@@ -293,7 +293,7 @@ namespace Spear.Inf.Core.ServGeneric.IOC
 
                     #endregion
                     break;
-                case Enum_DIType.Specific:
+                case Enum_DIType.Exclusive:
                     #region Specific
 
                     if (classType.IsImplementedType(classInterfaceArray, typeof(ITransient)))
@@ -351,7 +351,7 @@ namespace Spear.Inf.Core.ServGeneric.IOC
 
                     #endregion
                     break;
-                case Enum_DIType.SpecificByNamed:
+                case Enum_DIType.ExclusiveByNamed:
                     #region SpecificByNamed
 
                     if (classType.IsImplementedType(classInterfaceArray, typeof(ITransient)))
@@ -409,7 +409,7 @@ namespace Spear.Inf.Core.ServGeneric.IOC
 
                     #endregion
                     break;
-                case Enum_DIType.SpecificByKeyed:
+                case Enum_DIType.ExclusiveByKeyed:
                     #region SpecificByKeyed
 
                     if (classType.IsImplementedType(classInterfaceArray, typeof(ITransient)))

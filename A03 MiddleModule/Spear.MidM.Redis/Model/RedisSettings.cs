@@ -4,7 +4,7 @@ using Spear.Inf.Core.SettingsGeneric;
 
 namespace Spear.MidM.Redis
 {
-    [DIModeForSettings("RedisSettings", Enum_DIType.Specific, typeof(RedisSettings))]
+    [DIModeForSettings("RedisSettings", Enum_DIType.Exclusive, typeof(RedisSettings))]
     public class RedisSettings : ISettings
     {
         /// <summary>

@@ -4,7 +4,7 @@ using Spear.Inf.Core.ServGeneric;
 
 namespace Spear.Inf.Core.Attr
 {
-    [DIModeForService(Enum_DIType.SpecificByKeyed, typeof(IRequestFilterHandle), Enum_FilterType.GRPC)]
+    [DIModeForService(Enum_DIType.ExclusiveByKeyed, typeof(IRequestFilterHandle), Enum_FilterType.GRPC)]
     public class GRPCFilterHandle : IRequestFilterHandle
     {
         public IRequestFilterItems FilterItems { get { return _filterItems; } }

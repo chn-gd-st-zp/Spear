@@ -41,13 +41,13 @@ namespace Spear.Inf.Core.CusEnum
         AsImpl,
 
         [Remark("指定对象")]
-        Specific,
+        Exclusive,
 
         [Remark("指定对象-ByNamed")]
-        SpecificByNamed,
+        ExclusiveByNamed,
 
         [Remark("指定对象-ByKeyed")]
-        SpecificByKeyed,
+        ExclusiveByKeyed,
     }
 
     public enum Enum_DIKeyedNamedFrom

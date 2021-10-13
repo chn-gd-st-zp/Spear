@@ -103,13 +103,13 @@ namespace Spear.Inf.Core.SettingsGeneric
 
                             obj_target = ServiceContext.Resolve(interfaceType) as T;
                             break;
-                        case Enum_DIType.Specific:
+                        case Enum_DIType.Exclusive:
                             obj_target = ServiceContext.Resolve(attr.Type) as T;
                             break;
-                        case Enum_DIType.SpecificByNamed:
+                        case Enum_DIType.ExclusiveByNamed:
                             obj_target = ServiceContext.ResolveByNamed(attr.Type, attr.Key.ToString()) as T;
                             break;
-                        case Enum_DIType.SpecificByKeyed:
+                        case Enum_DIType.ExclusiveByKeyed:
                             obj_target = ServiceContext.ResolveByKeyed(attr.Type, attr.Key.ToString()) as T;
                             break;
                     }

@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Spear.Inf.Core.ServGeneric.IOC;
 using Spear.Inf.Core.SettingsGeneric;
 using Spear.Inf.Core.Tool;
+using Spear.Inf.Core.ServGeneric;
 
 namespace Spear.Inf.Core.AppEntrance
 {
@@ -48,6 +49,38 @@ namespace Spear.Inf.Core.AppEntrance
         protected abstract JsonSerializerSettings SetJsonSerializerSettings();
 
         /// <summary>
+        /// ≈‰÷√»›∆˜
+        /// </summary>
+        /// <param name="containerBuilder"></param>
+        public void ConfigureContainer(ContainerBuilder containerBuilder)
+        {
+            List<string> typeIgnore = new List<string>();
+            List<string> typeRegis = new List<string>();
+
+            var runningType = this.GetRunningType();
+
+            containerBuilder.Register(runningType, Configuration, typeIgnore, typeRegis);
+            containerBuilder.Register(runningType, typeIgnore, typeRegis);
+
+            containerBuilder.Register(o => Configuration).As<IConfiguration>().SingleInstance();
+            containerBuilder.Register(o => CurConfig).AsSelf().SingleInstance();
+            containerBuilder.Register(o => JsonSerializerSettings).AsSelf().SingleInstance();
+
+            Extend_ConfigureContainer(containerBuilder);
+        }
+
+        /// <summary>
+        /// ≈‰÷√≥Ã–Ú
+        /// </summary>
+        /// <param name="configures"></param>
+        protected void Configure(TConfigures configures)
+        {
+            ServiceContext.InitServiceProvider(configures.App.ApplicationServices);
+
+            Extend_Configure(configures);
+        }
+
+        /// <summary>
         /// Õÿ’π ConfigureServices ∑Ω∑®
         /// </summary>
         /// <param name="services"></param>
@@ -65,25 +98,5 @@ namespace Spear.Inf.Core.AppEntrance
         /// </summary>
         /// <param name="configures"></param>
         protected abstract void Extend_Configure(TConfigures configures);
-
-        /// <summary>
-        /// ≈‰÷√»›∆˜
-        /// </summary>
-        /// <param name="containerBuilder"></param>
-        public void ConfigureContainer(ContainerBuilder containerBuilder)
-        {
-            List<string> typeIgnore = new List<string>();
-            List<string> typeRegis = new List<string>();
-
-            var runningType = this.GetRunningType();
-
-            containerBuilder.Register(runningType, Configuration, typeIgnore, typeRegis);
-            containerBuilder.Register(runningType, typeIgnore, typeRegis);
-
-            containerBuilder.Register(o => Configuration).As<IConfiguration>().SingleInstance();
-            containerBuilder.Register(o => JsonSerializerSettings).AsSelf().SingleInstance();
-
-            Extend_ConfigureContainer(containerBuilder);
-        }
     }
 }

@@ -5,7 +5,7 @@ using Spear.Inf.Core.SettingsGeneric;
 
 namespace Spear.Inf.Core.ServGeneric.IOC
 {
-    [DIModeForSettings("AutoFacSettings", Enum_DIType.Specific, typeof(AutoFacSettings))]
+    [DIModeForSettings("AutoFacSettings", Enum_DIType.Exclusive, typeof(AutoFacSettings))]
     public class AutoFacSettings : ISettings
     {
         public string DefaultPattern { get; set; }

@@ -6,7 +6,7 @@ using Spear.Inf.Core.Interface;
 
 namespace Spear.GlobalSupport.Base.Filter
 {
-    [DIModeForService(Enum_DIType.SpecificByKeyed, typeof(IRequestFilterItems), Enum_FilterType.Ctrler)]
+    [DIModeForService(Enum_DIType.ExclusiveByKeyed, typeof(IRequestFilterItems), Enum_FilterType.Ctrler)]
     public class CtrlerFilterItems : List<IRequestFilterItem>, IRequestFilterItems
     {
         public CtrlerFilterItems()

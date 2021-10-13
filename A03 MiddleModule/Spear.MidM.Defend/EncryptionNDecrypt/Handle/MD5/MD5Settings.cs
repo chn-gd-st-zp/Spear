@@ -4,7 +4,7 @@ using Spear.Inf.Core.Interface;
 
 namespace Spear.MidM.Defend.EncryptionNDecrypt
 {
-    [DIModeForSettings("MD5Settings", Enum_DIType.Specific, typeof(MD5Settings))]
+    [DIModeForSettings("MD5Settings", Enum_DIType.Exclusive, typeof(MD5Settings))]
     public class MD5Settings : IEncryptionNDecryptSettings
     {
         public MD5Settings() { }

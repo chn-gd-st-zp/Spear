@@ -60,20 +60,14 @@ namespace Spear.Inf.Core.Attr
 
         public object Key { get; private set; }
 
-        public DIModeForSettingsAttribute(string configRootName)
-        {
-            ConfigRootName = configRootName;
-            EDIType = Enum_DIType.AsSelf;
-        }
-
-        public DIModeForSettingsAttribute(string configRootName, Enum_DIType eDIType, Type type = null)
+        public DIModeForSettingsAttribute(string configRootName, Enum_DIType eDIType = Enum_DIType.AsSelf, Type type = null)
         {
             ConfigRootName = configRootName;
             EDIType = eDIType;
             Type = type;
         }
 
-        public DIModeForSettingsAttribute(string configRootName, Enum_DIType eDIType, Type type, object key)
+        public DIModeForSettingsAttribute(string configRootName, Enum_DIType eDIType = Enum_DIType.AsSelf, Type type = null, object key = null)
         {
             ConfigRootName = configRootName;
             EDIType = eDIType;
@@ -81,7 +75,7 @@ namespace Spear.Inf.Core.Attr
             Key = key;
         }
 
-        public DIModeForSettingsAttribute(string configRootName, Enum_DIType eDIType, Type type, object key, Enum_DIKeyedNamedFrom knFrom)
+        public DIModeForSettingsAttribute(string configRootName, Enum_DIType eDIType = Enum_DIType.AsSelf, Type type = null, object key = null, Enum_DIKeyedNamedFrom knFrom = Enum_DIKeyedNamedFrom.FromProperty)
         {
             ConfigRootName = configRootName;
             EDIType = eDIType;

@@ -38,7 +38,7 @@ namespace Spear.Demo4GRPC.Host.Server
                 LoggerFactory = loggerFactory
             };
 
-            Extend_Configure(configures);
+            Configure(configures);
         }
 
         protected override JsonSerializerSettings SetJsonSerializerSettings()

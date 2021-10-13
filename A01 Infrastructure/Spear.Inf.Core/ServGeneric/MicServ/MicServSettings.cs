@@ -31,7 +31,7 @@ namespace Spear.Inf.Core.ServGeneric.MicServ
         public int Port { get; set; }
     }
 
-    [DIModeForSettings("MicServRunSettings", Enum_DIType.Specific, typeof(MicServRunSettings))]
+    [DIModeForSettings("MicServRunSettings", Enum_DIType.Exclusive, typeof(MicServRunSettings))]
     public class MicServRunSettings : ISettings
     {
         public string HostPublic { get; set; }
@@ -43,7 +43,7 @@ namespace Spear.Inf.Core.ServGeneric.MicServ
         public int GRPCPort { get; set; }
     }
 
-    [DIModeForSettings("MicServClientSettings", Enum_DIType.Specific, typeof(MicServClientSettings))]
+    [DIModeForSettings("MicServClientSettings", Enum_DIType.Exclusive, typeof(MicServClientSettings))]
     public class MicServClientSettings : ISettings
     {
         public Enum_MSType MSType { get; set; }
@@ -53,7 +53,7 @@ namespace Spear.Inf.Core.ServGeneric.MicServ
         public string Address { get; set; }
     }
 
-    [DIModeForSettings("MicServServerSettings", Enum_DIType.Specific, typeof(MicServServerSettings))]
+    [DIModeForSettings("MicServServerSettings", Enum_DIType.Exclusive, typeof(MicServServerSettings))]
     public class MicServServerSettings : ISettings
     {
         public string ConsulAddress { get; set; }

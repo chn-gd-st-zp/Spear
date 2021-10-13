@@ -14,7 +14,7 @@ using CUS = Spear.Inf.Core.Interface;
 
 namespace Spear.MidM.Logger
 {
-    [DIModeForService(Enum_DIType.Specific, typeof(CUS.ILogger))]
+    [DIModeForService(Enum_DIType.Exclusive, typeof(CUS.ILogger))]
     public class NLogger : CUS.ILogger, ITransient
     {
         private NLog.ILogger _logger;

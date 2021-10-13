@@ -40,7 +40,7 @@ namespace Spear.Demo4WebApi.Host
                 LoggerFactory = loggerFactory
             };
 
-            Extend_Configure(configures);
+            Configure(configures);
         }
 
         protected override JsonSerializerSettings SetJsonSerializerSettings()
