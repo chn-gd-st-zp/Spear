@@ -2,7 +2,6 @@
 using System.Linq;
 
 using Autofac;
-using Autofac.Core;
 
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusException;

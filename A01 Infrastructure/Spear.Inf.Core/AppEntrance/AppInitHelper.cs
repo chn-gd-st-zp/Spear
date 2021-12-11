@@ -6,13 +6,14 @@ using System.Reflection;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyModel;
 
 using Autofac;
 using AutoMapper;
 
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Tool;
-using Microsoft.Extensions.DependencyModel;
+using Spear.Inf.Core.Interface;
 
 namespace Spear.Inf.Core.AppEntrance
 {
@@ -158,8 +159,8 @@ namespace Spear.Inf.Core.AppEntrance
         /// <typeparam name="T"></typeparam>
         /// <param name="startup"></param>
         /// <returns></returns>
-        public static List<Type> GetRunningType<TSettings, TConfigures>(this StartupBase<TSettings, TConfigures> startup) 
-            where TSettings : AppSettingsBase 
+        public static List<Type> GetRunningType<TSettings, TConfigures>(this StartupBase<TSettings, TConfigures> startup)
+            where TSettings : AppSettingsBase
             where TConfigures : AppConfiguresBase
         {
             List<Type> result = new List<Type>();
@@ -251,8 +252,16 @@ namespace Spear.Inf.Core.AppEntrance
             GetAllAssemblies()
             .ForEach(o =>
             {
-                var types = o.GetTypes().Where(o => o.IsClass && !o.IsAbstract && o.IsExtendType(typeof(Profile))).ToList();
-                allTypeInApp.AddRange(types);
+                try
+                {
+                    var types = o.GetTypes().Where(o => o.IsClass && !o.IsAbstract && o.IsImplementedType<IAutoMapperProfile>()).ToList();
+                    if (types.Count() > 0)
+                        allTypeInApp.AddRange(types);
+                }
+                catch
+                {
+                    //
+                }
             });
 
             if (allTypeInApp.Count() != 0)
