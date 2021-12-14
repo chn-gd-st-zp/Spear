@@ -40,7 +40,8 @@ namespace Spear.Inf.Core.Attr
                     if (realAttr.EEnvs.Contains(AppInitHelper.EEnvironment))
                     {
                         var encryptionNDecrypt = ServiceContext.ResolveByKeyed<IEncryptionNDecrypt>(realAttr.EDecryptType);
-                        actionResult = encryptionNDecrypt.Decrypt(actionResult.ToString());
+                        if (encryptionNDecrypt != null)
+                            actionResult = encryptionNDecrypt.Decrypt(actionResult.ToString());
                     }
                 }
             }
