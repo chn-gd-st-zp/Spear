@@ -68,7 +68,7 @@ namespace Spear.MidM.SessionNAuth
 
                         _curUserToken = userTokenCache.MapTo<UserTokenCache, UserTokenRunTime>();
 
-                        _curUserToken.RefreshTime = DateTime.Now;
+                        _curUserToken.UpdateTime = DateTime.Now;
                     }
 
                     return _curUserToken;

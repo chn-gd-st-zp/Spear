@@ -14,27 +14,7 @@ namespace Spear.MidM.SessionNAuth
         /// <summary>
         /// 登录设备
         /// </summary>
-        public Enum_Entry EFacility { get; set; }
-
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTime CreateTime { get; set; }
-
-        /// <summary>
-        /// 刷新时间
-        /// </summary>
-        public DateTime RefreshTime { get; set; }
-
-        /// <summary>
-        /// 用户ID
-        /// </summary>
-        public string UserID { get; set; }
-
-        /// <summary>
-        /// 用户ID
-        /// </summary>
-        public string UserName { get; set; }
+        public Enum_Entry EEntry { get; set; }
 
         /// <summary>
         /// 角色类型
@@ -50,6 +30,31 @@ namespace Spear.MidM.SessionNAuth
         /// 权限代码
         /// </summary>
         public string[] PermissionCodes { get; set; }
+
+        /// <summary>
+        /// 账号ID
+        /// </summary>
+        public string AccountID { get; set; }
+
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateTime { get; set; }
+
+        /// <summary>
+        /// 刷新时间
+        /// </summary>
+        public DateTime UpdateTime { get; set; }
+
+        /// <summary>
+        /// 过期时间
+        /// </summary>
+        public DateTime ExpiredTime { get; set; }
     }
 
     public class UserTokenCache : UserToken
