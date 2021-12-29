@@ -27,7 +27,7 @@ namespace Spear.Demo4GRPC.Host.Client
                     config.LoadConfiguration();
                     config.LoadRunningSettings(args, MicServExtend.LoadMicServRunSettings);
                 })
-                .UseLogger()
+                .UseNLogger()
                 .ConfigureWebHostDefaults(hostBuilder =>
                 {
                     hostBuilder.UseKestrel();

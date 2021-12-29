@@ -42,7 +42,7 @@ namespace Spear.Demo4WinApp.Host
 
                     config.LoadRunningSettings(args, MicServExtend.LoadMicServRunSettings);
                 })
-                .UseLogger()
+                .UseNLogger()
                 .ConfigureWebHostDefaults(hostBuilder =>
                 {
                     hostBuilder.UseKestrel();

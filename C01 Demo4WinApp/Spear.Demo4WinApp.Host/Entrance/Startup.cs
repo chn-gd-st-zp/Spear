@@ -12,13 +12,13 @@ using Newtonsoft.Json.Converters;
 
 using Spear.Inf.Core;
 using Spear.Inf.Core.AppEntrance;
+using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.SettingsGeneric;
 using Spear.MidM.Defend;
 using Spear.MidM.Logger;
 using Spear.MidM.Quartz;
 
 using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
-using CUS = Spear.Inf.Core.Interface;
 
 namespace Spear.Demo4WinApp.Host
 {
@@ -52,7 +52,7 @@ namespace Spear.Demo4WinApp.Host
         protected override void Extend_ConfigureServices(IServiceCollection services)
         {
             //services.AddHostedService<HostedService>();
-            services.AddHostedService<HostedService<QuartzRunner>>();
+            services.AddHostedService<HSSpear<QuartzRunner>>();
 
             services.Monitor<AutoDelSettings>(Configuration);
         }
@@ -62,7 +62,7 @@ namespace Spear.Demo4WinApp.Host
             //containerBuilder.RegisterType<QuartzRunner>().As<IRunner>().SingleInstance();
             containerBuilder.RegisterType<QuartzRunner>().AsSelf().SingleInstance();
 
-            containerBuilder.RegisterGeneric(typeof(NLogger<>)).As(typeof(CUS.ILogger<>)).InstancePerDependency();
+            containerBuilder.RegisterGeneric(typeof(NLogger<>)).As(typeof(ISpearLogger<>)).InstancePerDependency();
 
             containerBuilder.RegisQuartz(this.GetRunningType(), CurConfig.JobSettings);
 

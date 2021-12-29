@@ -4,18 +4,17 @@ using Microsoft.Extensions.Logging;
 
 using NLog;
 
-using Spear.Inf.Core.Attr;
-using Spear.Inf.Core.CusEnum;
+using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.ServGeneric;
-using Spear.Inf.Core.ServGeneric.IOC;
 using Spear.Inf.Core.Tool;
-
-using CUS = Spear.Inf.Core.Interface;
 
 namespace Spear.MidM.Logger
 {
-    [DIModeForService(Enum_DIType.Exclusive, typeof(CUS.ILogger))]
-    public class NLogger : CUS.ILogger, ITransient
+    public interface INLogger : ISpearLogger { }
+
+    public interface INLogger<TTrigger> : INLogger where TTrigger : class { }
+
+    public class NLogger : INLogger
     {
         private NLog.ILogger _logger;
 
@@ -29,7 +28,7 @@ namespace Spear.MidM.Logger
             _logger.Info(msg);
         }
 
-        public void Info(object obj)
+        public void Info<T>(T obj)
         {
             Info(obj.ToJson());
         }
@@ -41,7 +40,7 @@ namespace Spear.MidM.Logger
             _logger.Error(exception, errorObj.ToJson());
         }
 
-        public void Error(object obj, Exception exception = null)
+        public void Error<T>(T obj, Exception exception = null)
         {
             exception = exception != null ? exception : new Exception();
             var errorObj = new { ErrorObj = obj, ErrorInfo = exception.Message, ErrorTrace = exception.StackTrace };
@@ -49,14 +48,14 @@ namespace Spear.MidM.Logger
         }
     }
 
-    public class NLogger<T> : CUS.ILogger<T>
-        where T : class
+    public class NLogger<TTrigger> : INLogger<TTrigger>
+        where TTrigger : class
     {
-        private ILogger<T> _logger;
+        private ILogger<TTrigger> _logger;
 
         public NLogger()
         {
-            _logger = ServiceContext.Resolve<ILogger<T>>();
+            _logger = ServiceContext.Resolve<ILogger<TTrigger>>();
         }
 
         public void Info(string msg)
@@ -64,7 +63,7 @@ namespace Spear.MidM.Logger
             _logger.LogInformation(msg);
         }
 
-        public void Info(object obj)
+        public void Info<T>(T obj)
         {
             Info(obj.ToJson());
         }
@@ -76,7 +75,7 @@ namespace Spear.MidM.Logger
             _logger.LogError(exception, errorObj.ToJson());
         }
 
-        public void Error(object obj, Exception exception = null)
+        public void Error<T>(T obj, Exception exception = null)
         {
             exception = exception != null ? exception : new Exception();
             var errorObj = new { ErrorObj = obj, ErrorInfo = exception.Message, ErrorTrace = exception.StackTrace };

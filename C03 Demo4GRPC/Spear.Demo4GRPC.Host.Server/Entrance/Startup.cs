@@ -14,13 +14,13 @@ using Newtonsoft.Json.Converters;
 
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.AppEntrance;
+using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.ServGeneric.MicServ;
 using Spear.Inf.Core.CusEnum;
 using Spear.MidM.Logger;
 using Spear.MidM.Swagger;
 
 using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
-using CUS = Spear.Inf.Core.Interface;
 
 namespace Spear.Demo4GRPC.Host.Server
 {
@@ -87,7 +87,7 @@ namespace Spear.Demo4GRPC.Host.Server
             containerBuilder.Register(o => CurConfig.MicServRunSettings).AsSelf().SingleInstance();
             containerBuilder.Register(o => CurConfig.MicServServerSettings).AsSelf().SingleInstance();
 
-            containerBuilder.RegisterGeneric(typeof(NLogger<>)).As(typeof(CUS.ILogger<>)).InstancePerDependency();
+            containerBuilder.RegisterGeneric(typeof(NLogger<>)).As(typeof(ISpearLogger<>)).InstancePerDependency();
         }
 
         protected override void Extend_Configure(AppConfiguresBase configures)

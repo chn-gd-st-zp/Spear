@@ -14,11 +14,11 @@ namespace Spear.MidM.Quartz
     {
         protected abstract string JobName { get; }
 
-        protected readonly ILogger Logger;
+        protected readonly ISpearLogger Logger;
 
         public QuartzJobBase()
         {
-            Logger = ServiceContext.Resolve<ILogger>();
+            Logger = ServiceContext.Resolve<ISpearLogger>();
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -58,6 +58,6 @@ namespace Spear.MidM.Quartz
     public abstract class JobBase<TJob> : QuartzJobBase
         where TJob : class
     {
-        protected new readonly ILogger<TJob> Logger;
+        protected new readonly ISpearLogger<TJob> Logger;
     }
 }

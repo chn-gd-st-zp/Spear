@@ -1,10 +1,9 @@
 ﻿using Spear.Inf.Core.Attr;
-using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.SettingsGeneric;
 
 namespace Spear.MidM.SessionNAuth
 {
-    [DIModeForSettings("SessionNAuthSettings", Enum_DIType.Exclusive, typeof(SessionNAuthSettings))]
+    [DIModeForSettings("SessionNAuthSettings", typeof(SessionNAuthSettings))]
     public class SessionNAuthSettings : ISettings
     {
         /// <summary>

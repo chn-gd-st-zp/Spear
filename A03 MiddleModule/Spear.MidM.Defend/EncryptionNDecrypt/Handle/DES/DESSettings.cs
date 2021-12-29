@@ -1,10 +1,9 @@
 ﻿using Spear.Inf.Core.Attr;
-using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
 
 namespace Spear.MidM.Defend.EncryptionNDecrypt
 {
-    [DIModeForSettings("DESSettings", Enum_DIType.Exclusive, typeof(DESSettings))]
+    [DIModeForSettings("DESSettings", typeof(DESSettings))]
     public class DESSettings : IEncryptionNDecryptSettings
     {
         public DESSettings() { }

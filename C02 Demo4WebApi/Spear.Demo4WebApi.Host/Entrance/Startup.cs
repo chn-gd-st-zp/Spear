@@ -78,7 +78,7 @@ namespace Spear.Demo4WebApi.Host
 
         protected override void Extend_ConfigureContainer(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterGeneric(typeof(NLogger<>)).As(typeof(CUS.ILogger<>)).InstancePerDependency();
+            containerBuilder.RegisterGeneric(typeof(NLogger<>)).As(typeof(ISpearLogger<>)).InstancePerDependency();
 
             var optionsBuilder = new DbContextOptionsBuilder<EFDBContext_Stainless>().UseMySQL(CurConfig.DBConnectionSettings.Stainless);
             containerBuilder.Register(o => optionsBuilder.Options).AsSelf().InstancePerDependency();

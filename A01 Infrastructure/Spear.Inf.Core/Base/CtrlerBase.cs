@@ -9,12 +9,12 @@ namespace Spear.Inf.Core.Base
     public class CtrlerBase : ControllerBase
     {
         protected new HttpContext HttpContext { get; private set; }
-        protected ILogger Logger { get; private set; }
+        protected ISpearLogger Logger { get; private set; }
 
         public CtrlerBase()
         {
             HttpContext = Resolve<IHttpContextAccessor>().HttpContext;
-            Logger = Resolve<ILogger>();
+            Logger = Resolve<ISpearLogger>();
         }
 
         protected TTarget Resolve<TTarget>()
@@ -26,11 +26,11 @@ namespace Spear.Inf.Core.Base
     public class CtrlerBase<TLoggerType> : CtrlerBase
         where TLoggerType : class
     {
-        protected new ILogger<TLoggerType> Logger { get; private set; }
+        protected new ISpearLogger<TLoggerType> Logger { get; private set; }
 
         public CtrlerBase() : base()
         {
-            Logger = Resolve<ILogger<TLoggerType>>();
+            Logger = Resolve<ISpearLogger<TLoggerType>>();
         }
     }
 

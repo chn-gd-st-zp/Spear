@@ -127,8 +127,8 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                     var attrList = classType.GetCustomAttributes<DIModeForServiceAttribute>();
                     if (attrList == null || attrList.Count() == 0)
                     {
-                        var attr = new DIModeForServiceAttribute(Enum_DIType.AsImpl);
-                        containerBuilder.Register(attr, classType, typeIgnore, typeRegis);
+                        //var attr = new DIModeForServiceAttribute(Enum_DIType.AsImpl);
+                        //containerBuilder.Register(attr, classType, typeIgnore, typeRegis);
                     }
                     else
                     {

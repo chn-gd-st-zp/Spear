@@ -1,10 +1,9 @@
 ﻿using Spear.Inf.Core.Attr;
-using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.SettingsGeneric;
 
 namespace Spear.MidM.Redis
 {
-    [DIModeForSettings("RedisSettings", Enum_DIType.Exclusive, typeof(RedisSettings))]
+    [DIModeForSettings("RedisSettings", typeof(RedisSettings))]
     public class RedisSettings : ISettings
     {
         /// <summary>

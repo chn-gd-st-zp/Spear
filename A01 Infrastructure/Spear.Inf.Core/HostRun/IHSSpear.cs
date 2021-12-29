@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 using Spear.Inf.Core.CusEnum;
@@ -11,13 +10,35 @@ namespace Spear.Inf.Core
 {
     public delegate void NewTaskDelegate(params object[] paramArray);
 
-    public abstract class RunnerBase<TRunner> : IRunner
-        where TRunner : class
+    public interface IRSpear
+    {
+        /// <summary>
+        /// 运行状态
+        /// </summary>
+        Enum_Process RunningStatus { get; }
+
+        /// <summary>
+        /// 运行
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task Run(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 释放
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task Dispose(CancellationToken cancellationToken = default);
+    }
+
+    public abstract class RSpearBase<TTrigger> : IRSpear
+        where TTrigger : class
     {
         /// <summary>
         /// 日志记录器
         /// </summary>
-        protected ILogger<TRunner> Logger { get; private set; }
+        protected ISpearLogger<TTrigger> Logger { get; private set; }
 
         /// <summary>
         /// 运行状态
@@ -55,14 +76,14 @@ namespace Spear.Inf.Core
         /// <returns></returns>
         public async Task Run(CancellationToken cancellationToken)
         {
-            string runnerName = typeof(TRunner).Name;
+            string runnerName = typeof(TTrigger).Name;
 
             Info($"[{runnerName}]管道初始化...");
             while (ServiceContext.IsDoneLoad) Thread.Sleep(1000);
             Info($"[{runnerName}]管道初始化完成...");
 
             Info($"[{runnerName}]程序初始化...");
-            Logger = ServiceContext.Resolve<ILogger<TRunner>>();
+            Logger = ServiceContext.Resolve<ISpearLogger<TTrigger>>();
             RunningStatus = Enum_Process.Waiting;
             Init();
             Info($"[{runnerName}]程序初始化完成...");

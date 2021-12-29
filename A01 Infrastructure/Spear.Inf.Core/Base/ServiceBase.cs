@@ -8,12 +8,12 @@ namespace Spear.Inf.Core.Base
     public class ServiceBase
     {
         protected HttpContext HttpContext { get; private set; }
-        protected ILogger Logger { get; private set; }
+        protected ISpearLogger Logger { get; private set; }
 
         public ServiceBase()
         {
             HttpContext = Resolve<IHttpContextAccessor>().HttpContext;
-            Logger = Resolve<ILogger>();
+            Logger = Resolve<ISpearLogger>();
         }
 
         protected TTarget Resolve<TTarget>()
@@ -25,11 +25,11 @@ namespace Spear.Inf.Core.Base
     public class ServiceBase<TLoggerType> : ServiceBase
         where TLoggerType : class
     {
-        protected new ILogger<TLoggerType> Logger { get; private set; }
+        protected new ISpearLogger<TLoggerType> Logger { get; private set; }
 
         public ServiceBase() : base()
         {
-            Logger = Resolve<ILogger<TLoggerType>>();
+            Logger = Resolve<ISpearLogger<TLoggerType>>();
         }
     }
 

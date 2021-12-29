@@ -29,6 +29,7 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
         {
             return ServiceContext.ResolveMicServ<T>();
         }
+
         private T GetService<T>(string address) where T : IMicServ<T>
         {
             return MagicOnionClient.Create<T>(GrpcChannel.ForAddress(address));
@@ -49,10 +50,12 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
                 .ResponseAsync.Result;
 
             result = GetService<IMSDisplayer_TextDemo>()
-                .Test1().ResponseAsync.Result;
+                .Test1()
+                .ResponseAsync.Result;
 
             result = GetService<IMSDisplayer_TextDemo>()
-                .Test2("", "").ResponseAsync.Result;
+                .Test2("", "")
+                .ResponseAsync.Result;
 
             result = GetService<IMSDisplayer_TextDemo>(address)
                 .Test3(
@@ -61,7 +64,8 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
                         GRPCContext = new IDTO_GRPCContext() { Token = "" },
                         Param = new ListParam()
                     }
-                ).ResponseAsync.Result;
+                )
+                .ResponseAsync.Result;
 
             result = GetService<IMSDisplayer_TextDemo>(address)
                 .Test4(
@@ -77,7 +81,8 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
                     {
                         EStatus = Enum_Status.Normal,
                     }
-                ).ResponseAsync.Result;
+                )
+                .ResponseAsync.Result;
 
             return false.Fail();
         }

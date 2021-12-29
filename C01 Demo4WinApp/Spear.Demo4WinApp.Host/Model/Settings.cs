@@ -13,7 +13,7 @@ namespace Spear.Demo4WinApp.Host
         public JobSettings JobSettings { get; set; }
     }
 
-    [DIModeForSettings("AutoDelSettings", Enum_DIType.Exclusive, typeof(AutoDelSettings))]
+    [DIModeForSettings("AutoDelSettings", typeof(AutoDelSettings))]
     public class AutoDelSettings : List<AutoDelSettingsItem>, ISettings
     {
         //
@@ -32,21 +32,21 @@ namespace Spear.Demo4WinApp.Host
         public int NumericValue { get; set; }
     }
 
-    [DIModeForSettings("DBSettings", Enum_DIType.Exclusive, typeof(HAHAHAHA_DB))]
+    [DIModeForSettings("DBSettings", typeof(HAHAHAHA_DB))]
     public class HAHAHAHA_DB : ISettings
     {
         [Decrypt(Enum_EncryptionNDecrypt.AES)]
         public string Name { get; set; }
     }
 
-    [DIModeForSettings("TestSettings", Enum_DIType.Exclusive, typeof(HAHAHAHA_List))]
+    [DIModeForSettings("TestSettings", typeof(HAHAHAHA_List))]
     [DIModeForArrayItem]
     public class HAHAHAHA_List : List<HAHAHAHA_Item>, ISettings
     {
         //
     }
 
-    [DIModeForSettings("TestSettings", Enum_DIType.ExclusiveByKeyed, typeof(HAHAHAHA_Item), "Name", Enum_DIKeyedNamedFrom.FromProperty)]
+    [DIModeForSettings("TestSettings", typeof(HAHAHAHA_Item), Enum_DIKeyedNamedFrom.FromProperty, "Name")]
     public class HAHAHAHA_Item : ISettings
     {
         public string Name { get; set; }

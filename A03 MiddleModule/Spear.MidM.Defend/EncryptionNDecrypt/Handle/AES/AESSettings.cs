@@ -1,12 +1,11 @@
 ﻿using System.Security.Cryptography;
 
 using Spear.Inf.Core.Attr;
-using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
 
 namespace Spear.MidM.Defend.EncryptionNDecrypt
 {
-    [DIModeForSettings("AESSettings", Enum_DIType.Exclusive, typeof(AESSettings))]
+    [DIModeForSettings("AESSettings", typeof(AESSettings))]
     public class AESSettings : IEncryptionNDecryptSettings
     {
         public AESSettings() { }

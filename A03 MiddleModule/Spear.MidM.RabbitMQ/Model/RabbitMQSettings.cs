@@ -1,10 +1,9 @@
 ﻿using Spear.Inf.Core.Attr;
-using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.SettingsGeneric;
 
 namespace Spear.MidM.RabbitMQ
 {
-    [DIModeForSettings("RabbitMQSettings", Enum_DIType.Exclusive, typeof(RabbitMQSettings))]
+    [DIModeForSettings("RabbitMQSettings", typeof(RabbitMQSettings))]
     public class RabbitMQSettings : ISettings
     {
         /// <summary>
