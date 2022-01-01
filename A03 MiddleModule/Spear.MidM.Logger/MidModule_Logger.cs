@@ -6,6 +6,8 @@ using Autofac;
 using NLog.Web;
 using Serilog;
 
+using Spear.Inf.Core.Interface;
+
 namespace Spear.MidM.Logger
 {
     public static class MidModule_Logger
@@ -35,9 +37,11 @@ namespace Spear.MidM.Logger
                 .UseSerilog();
         }
 
-        public static ContainerBuilder RegisGlobalSeriLogger(this ContainerBuilder containerBuilder, IConfiguration configuration)
+        public static ContainerBuilder RegisSeriLogger(this ContainerBuilder containerBuilder, IConfiguration configuration)
         {
             Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
+            containerBuilder.RegisterType<SeriLogger>().As<ISpearLogger>().SingleInstance();
+            containerBuilder.RegisterGeneric(typeof(SeriLogger<>)).As(typeof(ISpearLogger<>)).SingleInstance();
 
             return containerBuilder;
         }

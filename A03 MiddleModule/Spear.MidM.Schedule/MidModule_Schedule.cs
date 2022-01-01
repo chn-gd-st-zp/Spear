@@ -13,9 +13,8 @@ using Quartz.Spi;
 using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.Tool;
-using Spear.MidM.Schedule;
 
-namespace Spear.MidM.Quartz
+namespace Spear.MidM.Schedule
 {
     public static class MidModule_Schedule
     {

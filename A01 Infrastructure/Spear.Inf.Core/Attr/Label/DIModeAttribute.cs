@@ -64,14 +64,14 @@ namespace Spear.Inf.Core.Attr
         {
             ConfigRootName = configRootName;
             Type = type;
-            EDIType = Enum_DIType.AsSelf;
+            EDIType = Enum_DIType.Exclusive;
         }
 
         public DIModeForSettingsAttribute(string configRootName, Type type = null, Enum_DIKeyedNamedFrom knFrom = Enum_DIKeyedNamedFrom.FromProperty, object key = null)
         {
             ConfigRootName = configRootName;
             Type = type;
-            EDIType = Enum_DIType.AsSelf;
+            EDIType = Enum_DIType.Exclusive;
             Key = key;
             KNFrom = knFrom;
         }

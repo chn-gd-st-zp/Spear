@@ -59,7 +59,6 @@ namespace Spear.Inf.Core.ServGeneric
             ServiceProvider = serviceProvider;
         }
 
-
         public static object Resolve(Type type)
         {
             try

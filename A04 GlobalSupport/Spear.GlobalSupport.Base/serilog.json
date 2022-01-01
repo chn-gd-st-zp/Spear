@@ -41,7 +41,7 @@
     }
   },
 
-  "SeriLogSettings": {
+  "SeriLoggerSettings": {
     "RollingInterval": "Day",
     "RollOnFileSizeLimit": true,
     "FileSizeLimitMB": 1024,

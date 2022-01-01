@@ -28,6 +28,17 @@ namespace Spear.Inf.Core.CusEnum
         [Remark("XML")]
         XML,
     }
+    public enum Enum_PathMode
+    {
+        [Remark("默认、无")]
+        None = 0,
+
+        [Remark("绝对路径")]
+        ABS,
+
+        [Remark("相对路径")]
+        REF
+    }
 
     public enum Enum_DIType
     {

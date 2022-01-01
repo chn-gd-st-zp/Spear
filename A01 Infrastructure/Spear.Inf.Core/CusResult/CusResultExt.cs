@@ -39,11 +39,11 @@ namespace Spear.Inf.Core.CusResult
         public static ResultWebApi<T> ToResultWebApi<T>(this ResultBase<T> resultBase)
         {
             if (resultBase.IsSuccess)
-                return resultBase.Data.Success(resultBase.Msg);
+                return resultBase.Data.ResultWebApi_Success(resultBase.Msg);
             else if (resultBase.ExInfo == null)
-                return resultBase.Data.Fail(resultBase.Msg);
+                return resultBase.Data.ResultWebApi_Fail(resultBase.Msg);
             else
-                return resultBase.Data.Exception(resultBase.ExInfo);
+                return resultBase.Data.ResultWebApi_Exception(resultBase.ExInfo);
         }
 
         public static ResultWebApi<T> ToResultWebApi<T>(this T data, string code, string msg)
@@ -59,27 +59,27 @@ namespace Spear.Inf.Core.CusResult
             return result;
         }
 
-        public static ResultWebApi<T> Success<T>(this T data, string msg = "操作成功")
+        public static ResultWebApi<T> ResultWebApi_Success<T>(this T data, string msg = "操作成功")
         {
             return data.ToResultWebApi(Enum_StateCode.Success.ToIntString(), msg);
         }
 
-        public static ResultWebApi<T> Fail<T>(this T data, string code = "", string msg = "操作失败")
+        public static ResultWebApi<T> ResultWebApi_Fail<T>(this T data, string code = "", string msg = "操作失败")
         {
             return data.ToResultWebApi(code, msg);
         }
 
-        public static ResultWebApi<T> Fail<T>(this T data, string msg)
+        public static ResultWebApi<T> ResultWebApi_Fail<T>(this T data, string msg)
         {
-            return data.Fail(Enum_StateCode.Fail.ToIntString(), msg);
+            return data.ResultWebApi_Fail(Enum_StateCode.Fail.ToIntString(), msg);
         }
 
-        public static ResultWebApi<T> Fail<T>(this T data)
+        public static ResultWebApi<T> ResultWebApi_Fail<T>(this T data)
         {
-            return data.Fail(Enum_StateCode.Fail.ToIntString());
+            return data.ResultWebApi_Fail(Enum_StateCode.Fail.ToIntString());
         }
 
-        public static ResultWebApi<T> Exception<T>(this T data, Exception exception)
+        public static ResultWebApi<T> ResultWebApi_Exception<T>(this T data, Exception exception)
         {
             EnumInfo errorCode = null;
             string errorMsg = "";

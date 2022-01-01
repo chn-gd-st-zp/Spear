@@ -188,32 +188,27 @@ namespace Spear.Inf.Core.Tool
         }
 
         /// <summary>
-        /// 转为DT
+        /// stream 保存成文件
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="collection"></param>
-        /// <returns></returns>
-        public static DataTable ListToDT<T>(this IEnumerable<T> collection)
+        /// <param name="stream"></param>
+        /// <param name="fileName"></param>
+        public static void StreamToFile(this Stream stream, string fileName)
         {
-            var props = typeof(T).GetProperties();
-            var dt = new DataTable();
-            dt.Columns.AddRange(props.Select(p => new DataColumn(p.Name, p.PropertyType)).ToArray());
-            if (collection.Count() > 0)
-            {
-                for (int i = 0; i < collection.Count(); i++)
-                {
-                    ArrayList tempList = new ArrayList();
-                    foreach (PropertyInfo pi in props)
-                    {
-                        object obj = pi.GetValue(collection.ElementAt(i), null);
-                        tempList.Add(obj);
-                    }
-                    object[] array = tempList.ToArray();
-                    dt.LoadDataRow(array, true);
-                }
-            }
+            byte[] bytes = new byte[stream.Length];
 
-            return dt;
+            stream.Read(bytes, 0, bytes.Length);
+
+            stream.Seek(0, SeekOrigin.Begin);
+
+            FileStream fs = new FileStream(fileName, FileMode.Create);
+
+            BinaryWriter bw = new BinaryWriter(fs);
+
+            bw.Write(bytes);
+
+            bw.Close();
+
+            fs.Close();
         }
 
         #endregion
@@ -465,12 +460,54 @@ namespace Spear.Inf.Core.Tool
         }
 
         /// <summary>
+        /// 转为DT
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        public static DataTable ToDataTable<T>(this IEnumerable<T> collection)
+        {
+            var dt = new DataTable();
+
+            var props = typeof(T).GetProperties();
+            props.ToList().ForEach(o =>
+            {
+                DataColumn column = null;
+
+                if (o.PropertyType.IsGenericType && o.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    column = new DataColumn(o.Name, o.PropertyType.GetGenericArguments()[0]);
+                else
+                    column = new DataColumn(o.Name, o.PropertyType);
+
+                dt.Columns.Add(column);
+            });
+
+            if (collection.Count() > 0)
+            {
+                for (int i = 0; i < collection.Count(); i++)
+                {
+                    ArrayList tempList = new ArrayList();
+                    foreach (PropertyInfo pi in props)
+                    {
+                        object obj = pi.GetValue(collection.ElementAt(i), null);
+                        obj = obj == null ? DBNull.Value : obj;
+                        tempList.Add(obj);
+                    }
+                    object[] array = tempList.ToArray();
+                    dt.LoadDataRow(array, true);
+                }
+            }
+
+            return dt;
+        }
+
+        /// <summary>
         /// List转成DataTable
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="entities"></param>
         /// <returns></returns>
-        public static DataTable ToDataTable<T>(List<T> entities)
+        public static DataTable ToDataTable<T>(this List<T> entities)
         {
             if (entities == null || entities.Count == 0)
             {

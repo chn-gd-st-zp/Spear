@@ -19,6 +19,7 @@ namespace Spear.Inf.Core.EncryptionNDecrypt
         public static string Encrypt(string secret, string iv, string text)
         {
             secret = secret.Length < 8 ? secret.PadRight(8, ' ') : secret.Substring(0, 8);
+            iv = iv.Length < 16 ? iv.PadRight(16, ' ') : iv.Substring(0, 16);
 
             byte[] rgbKey = Encoding.UTF8.GetBytes(secret);
             byte[] rgbIV = iv.ToByteArray();
@@ -43,6 +44,7 @@ namespace Spear.Inf.Core.EncryptionNDecrypt
         public static string Decrypt(string secret, string iv, string text)
         {
             secret = secret.Length < 8 ? secret.PadRight(8, ' ') : secret.Substring(0, 8);
+            iv = iv.Length < 16 ? iv.PadRight(16, ' ') : iv.Substring(0, 16);
 
             byte[] rgbKey = Encoding.UTF8.GetBytes(secret);
             byte[] rgbIV = iv.ToByteArray();

@@ -12,14 +12,27 @@ namespace Spear.Inf.Core.DataFile
     /// </summary>
     public class Thumbnail : IDisposable
     {
-        public Image ImageSource
-        {
-            get { return _imageSource; }
-        }
+        public Image ImageSource { get { return _imageSource; } }
         private Image _imageSource;
 
         private int image_Width;
         private int image_Height;
+
+        /// <summary>
+        /// 类的构造函数
+        /// </summary>
+        /// <param name="stream">图片文件流</param>
+        public Thumbnail(Stream stream)
+        {
+            try
+            {
+                _imageSource = Image.FromStream(stream);
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         /// <summary>
         /// 类的构造函数
@@ -55,15 +68,6 @@ namespace Spear.Inf.Core.DataFile
         }
 
         /// <summary>
-        /// 设置回调方法
-        /// </summary>
-        /// <returns></returns>
-        public bool ThumbnailCallback()
-        {
-            return false;
-        }
-
-        /// <summary>
         /// 绘制缩略图
         /// </summary>
         /// <param name="width">缩略图的宽度</param>
@@ -76,7 +80,7 @@ namespace Spear.Inf.Core.DataFile
                 image_Width = width;
                 image_Height = height;
 
-                return Draw2();
+                return Draw1();
             }
             catch
             {
@@ -96,7 +100,7 @@ namespace Spear.Inf.Core.DataFile
                 image_Width = Convert.ToInt32(_imageSource.Width * percent);
                 image_Height = Convert.ToInt32(_imageSource.Height * percent);
 
-                return Draw2();
+                return Draw1();
             }
             catch
             {
@@ -105,15 +109,6 @@ namespace Spear.Inf.Core.DataFile
         }
 
         private Image Draw1()
-        {
-            Image.GetThumbnailImageAbort callb = new Image.GetThumbnailImageAbort(ThumbnailCallback);
-
-            Image image_Target = _imageSource.GetThumbnailImage(image_Width, image_Height, callb, IntPtr.Zero);
-
-            return image_Target;
-        }
-
-        private Image Draw2()
         {
             //用指定的大小和格式初始化Bitmap类的新实例
             Bitmap bitmap = new Bitmap(image_Width, image_Height, PixelFormat.Format32bppArgb);
@@ -128,6 +123,15 @@ namespace Spear.Inf.Core.DataFile
             graphics.DrawImage(_imageSource, new Rectangle(0, 0, image_Width, image_Height));
 
             return bitmap;
+        }
+
+        private Image Draw2()
+        {
+            Image.GetThumbnailImageAbort callb = new Image.GetThumbnailImageAbort(() => { return false; });
+
+            Image image_Target = _imageSource.GetThumbnailImage(image_Width, image_Height, callb, IntPtr.Zero);
+
+            return image_Target;
         }
     }
 }

@@ -131,7 +131,7 @@ namespace Spear.Inf.Core.Attr
             while (Exception != null && Exception.InnerException != null)
                 Exception = Exception.InnerException;
 
-            Result = false.Exception(Exception);
+            Result = false.ResultWebApi_Exception(Exception);
 
             //是否标注了 志记录忽略 的标签，无标注 则需进行 日志记录
             if (Exception.GetType().GetCustomAttribute<LogIgnoreAttribute>() == null)
