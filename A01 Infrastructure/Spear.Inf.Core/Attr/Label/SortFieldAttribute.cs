@@ -20,6 +20,7 @@ namespace Spear.Inf.Core.Attr
         public Enum_SortDirection EDirection { get; private set; }
     }
 
+    [AttributeUsage(AttributeTargets.Property)]
     public class SortFieldAttribute : Attribute
     {
         public SortFieldAttribute(string realName, params string[] nickNames)

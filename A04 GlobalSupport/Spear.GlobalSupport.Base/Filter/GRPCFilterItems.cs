@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 using Spear.Inf.Core.Attr;
@@ -36,15 +35,13 @@ namespace Spear.GlobalSupport.Base.Filter
 
             base.OnExecuting(realContext);
 
-            var paList = realContext.MethodInfo.GetCustomAttributes<PermissionAuthAttribute>().ToList();
-            if (paList != null && paList.Count() != 0)
-                Auth(paList);
-        }
+            var permissionAttr = realContext.MethodInfo.GetCustomAttribute<PermissionAttribute>();
+            if (permissionAttr == null)
+                return;
 
-        protected void Auth(List<PermissionAuthAttribute> paList)
-        {
-            foreach (var pa in paList)
-                _sessionNAuth.PermissionAuth(pa.Code);
+            _sessionNAuth.VerifyPermission(permissionAttr.Code);
+
+            //if(permissionAttr.AccessLogger)
         }
     }
 }

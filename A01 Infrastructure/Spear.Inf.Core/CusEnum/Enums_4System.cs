@@ -118,6 +118,34 @@ namespace Spear.Inf.Core.CusEnum
         Cancel,
     }
 
+    public enum Enum_PermissionType
+    {
+        [Remark("无操作")]
+        None,
+
+        [Remark("组")]
+        Group,
+
+        [Remark("方法")]
+        Action,
+
+        [Remark("数据")]
+        Data,
+    }
+
+    public enum Enum_TreeNodeType
+    {
+        [Remark("无操作")]
+        None,
+
+        [Remark("组")]
+        Group,
+
+        [Remark("方法")]
+        Node,
+
+    }
+
     public enum Enum_OperationType
     {
         [Remark("无操作")]

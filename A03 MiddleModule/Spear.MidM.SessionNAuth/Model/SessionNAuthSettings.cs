@@ -12,6 +12,11 @@ namespace Spear.MidM.SessionNAuth
         public string AccessTokenKeyInHeader { get; set; }
 
         /// <summary>
+        /// AccessToken在Header中的标识是否加密
+        /// </summary>
+        public bool AccessTokenEncrypt { get; set; }
+
+        /// <summary>
         /// 缓存DBIndex
         /// </summary>
         public int CacheDBIndex { get; set; }

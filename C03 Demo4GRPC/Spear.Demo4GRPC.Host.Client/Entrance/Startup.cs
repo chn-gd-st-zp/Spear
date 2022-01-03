@@ -70,7 +70,7 @@ namespace Spear.Demo4GRPC.Host.Client
         protected override void Extend_ConfigureContainer(ContainerBuilder containerBuilder)
         {
             containerBuilder.Register(o => CurConfig.MicServClientSettings).AsSelf().SingleInstance();
-            containerBuilder.RegisMicServGener(CurConfig.MicServClientSettings);
+            containerBuilder.RegisMicServGeneric(CurConfig.MicServClientSettings);
 
             containerBuilder.RegisterGeneric(typeof(NLogger<>)).As(typeof(ISpearLogger<>)).InstancePerDependency();
         }

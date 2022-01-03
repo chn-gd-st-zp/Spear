@@ -69,7 +69,7 @@ namespace Spear.Inf.Core.DTO
     /// </summary>
     public static class IDTO_Sort_Ext
     {
-        public static string GenerOrderBySql<T>(this List<IDTO_Sort> idtoSorts) where T : DBEntity_Base
+        public static string GenericOrderBySql<T>(this List<IDTO_Sort> idtoSorts) where T : DBEntity_Base
         {
             string result = "";
 

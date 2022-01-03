@@ -460,7 +460,7 @@ namespace Spear.Inf.Core.Tool
         }
 
         /// <summary>
-        /// 转为DT
+        /// List转成DataTable
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="collection"></param>
@@ -507,7 +507,7 @@ namespace Spear.Inf.Core.Tool
         /// <typeparam name="T"></typeparam>
         /// <param name="entities"></param>
         /// <returns></returns>
-        public static DataTable ToDataTable<T>(this List<T> entities)
+        public static DataTable ToDataTable2<T>(this List<T> entities)
         {
             if (entities == null || entities.Count == 0)
             {
@@ -531,7 +531,7 @@ namespace Spear.Inf.Core.Tool
             foreach (var property in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 var propertyType = property.PropertyType;
-                if ((propertyType.IsGenericType) && (propertyType.GetGenericTypeDefinition() == typeof(Nullable<>)))
+                if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
                     propertyType = propertyType.GetGenericArguments()[0];
                 result.Columns.Add(property.Name, propertyType);
             }

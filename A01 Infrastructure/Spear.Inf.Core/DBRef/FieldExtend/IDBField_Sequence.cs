@@ -39,7 +39,7 @@ namespace Spear.Inf.Core.DBRef
             return value.FormatField_Sort();
         }
 
-        public static string GenerNewSort<T>(this IQueryable<T> query) where T : IDBField_Sequence, new()
+        public static string GenericNewSort<T>(this IQueryable<T> query) where T : IDBField_Sequence, new()
         {
             string result = null;
 

@@ -58,15 +58,15 @@ namespace Spear.Inf.Core.ServGeneric.MicServ
             filters.Add(new MagicOnionServiceFilterDescriptor(obj));
         }
 
-        public static ContainerBuilder RegisMicServGener(this ContainerBuilder containerBuilder, MicServClientSettings micServClientSettings)
+        public static ContainerBuilder RegisMicServGeneric(this ContainerBuilder containerBuilder, MicServClientSettings micServClientSettings)
         {
             switch (micServClientSettings.MSType)
             {
                 case Enum_MSType.Normal:
-                    containerBuilder.RegisterType<MicServGener_Normal>().As<IMicServGener>().InstancePerDependency();
+                    containerBuilder.RegisterType<MicServGeneric_Normal>().As<IMicServGeneric>().InstancePerDependency();
                     break;
                 case Enum_MSType.Consul:
-                    containerBuilder.RegisterType<MicServGener_Consul>().As<IMicServGener>().InstancePerDependency();
+                    containerBuilder.RegisterType<MicServGeneric_Consul>().As<IMicServGeneric>().InstancePerDependency();
                     break;
                 default:
                     break;

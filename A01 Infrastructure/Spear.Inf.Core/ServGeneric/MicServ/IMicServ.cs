@@ -7,7 +7,7 @@ namespace Spear.Inf.Core.ServGeneric.MicServ
         //
     }
 
-    public interface IMicServGener
+    public interface IMicServGeneric
     {
         T GetServ<T>(params object[] paramsArray) where T : IMicServ<T>;
     }

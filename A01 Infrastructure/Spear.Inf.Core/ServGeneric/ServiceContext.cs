@@ -264,7 +264,7 @@ namespace Spear.Inf.Core.ServGeneric
 
         public static T ResolveMicServ<T>(params object[] paramArray) where T : IMicServ<T>
         {
-            var micServGener = Resolve<IMicServGener>();
+            var micServGener = Resolve<IMicServGeneric>();
             if (micServGener == null)
                 return default;
 

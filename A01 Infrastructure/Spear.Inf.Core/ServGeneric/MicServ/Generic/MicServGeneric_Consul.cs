@@ -8,11 +8,11 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core.ServGeneric.MicServ
 {
-    public class MicServGener_Consul : IMicServGener
+    public class MicServGeneric_Consul : IMicServGeneric
     {
         public readonly MicServClientSettings micServClientSettings;
 
-        public MicServGener_Consul()
+        public MicServGeneric_Consul()
         {
             micServClientSettings = ServiceContext.Resolve<MicServClientSettings>();
         }
@@ -35,7 +35,7 @@ namespace Spear.Inf.Core.ServGeneric.MicServ
             var hostMode = hostModes.Where(o => o.ReqMode == micServClientSettings.ReqMode).First();
 
             string address = "http://" + hostMode.Host + ":" + hostMode.Port;
-            var target = new MicServGener_Normal().GetServ<T>(address);
+            var target = new MicServGeneric_Normal().GetServ<T>(address);
             return target;
         }
     }

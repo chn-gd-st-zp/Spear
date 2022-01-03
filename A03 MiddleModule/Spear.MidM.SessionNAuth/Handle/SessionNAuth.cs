@@ -12,7 +12,12 @@ using Spear.MidM.Redis;
 
 namespace Spear.MidM.SessionNAuth
 {
-    public class SessionNAuth<T> : ISessionNAuth<T> where T : ITokenProvider
+    public interface ISessionNAuth<T> : ITokenProvider
+    {
+        UserTokenRunTime CurrentUserToken { get; }
+    }
+
+    public class SessionNAuth<TTokenProvider> : ISessionNAuth<TTokenProvider> where TTokenProvider : ITokenProvider
     {
         private readonly SessionNAuthSettings _sessionNAuthSettings;
         private readonly ICache4Redis _cache;
@@ -26,21 +31,24 @@ namespace Spear.MidM.SessionNAuth
             _cache = ServiceContext.Resolve<ICache4Redis>(new TypedParameter(typeof(RedisSettings), redisSettings), new TypedParameter(typeof(int), _sessionNAuthSettings.CacheDBIndex));
         }
 
-        public string CurToken
+        /// <summary>
+        /// 当前Token(字符串)
+        /// </summary>
+        public string CurrentToken
         {
             get
             {
                 try
                 {
-                    if (_curToken.IsEmptyString())
+                    if (_currentToken.IsEmptyString())
                     {
-                        var token1 = ServiceContext.Resolve<T>().CurToken;
-                        var token2 = token1.IsEmptyString() ? "" : token1.ToString();
-                        var token = token2 == "null" ? "" : token2;
-                        _curToken = token;
+                        var token1 = ServiceContext.Resolve<TTokenProvider>().CurrentToken;
+                        var token2 = token1.IsEmptyString() ? "" : token1;
+                        var token = token2.ToLower() == "null" ? "" : token2;
+                        _currentToken = token;
                     }
 
-                    return _curToken;
+                    return _currentToken;
                 }
                 catch (Exception ex)
                 {
@@ -48,17 +56,20 @@ namespace Spear.MidM.SessionNAuth
                 }
             }
         }
-        private string _curToken;
+        private string _currentToken;
 
-        public UserTokenRunTime CurUserToken
+        /// <summary>
+        /// 当前会话对象
+        /// </summary>
+        public UserTokenRunTime CurrentUserToken
         {
             get
             {
-                try
+                if (_currentUserToken == null)
                 {
-                    if (_curUserToken == null)
+                    try
                     {
-                        string token = CurToken;
+                        string token = CurrentToken;
                         if (token.IsEmptyString())
                             throw new Exception_EmptyToken();
 
@@ -66,39 +77,22 @@ namespace Spear.MidM.SessionNAuth
                         if (userTokenCache == null)
                             throw new Exception_NoLogin();
 
-                        _curUserToken = userTokenCache.MapTo<UserTokenCache, UserTokenRunTime>();
+                        _currentUserToken = userTokenCache.MapTo<UserTokenCache, UserTokenRunTime>();
 
-                        _curUserToken.UpdateTime = DateTime.Now;
+                        _currentUserToken.Extenstion(_sessionNAuthSettings.CacheValidDuration);
                     }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
 
-                    return _curUserToken;
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-                finally
-                {
-                    SetUserToken(_curUserToken.MapTo<UserTokenRunTime, UserTokenCache>());
-                }
+                SetUserToken(_currentUserToken.MapTo<UserTokenRunTime, UserTokenCache>());
+
+                return _currentUserToken;
             }
         }
-        private UserTokenRunTime _curUserToken;
-
-        /// <summary>
-        /// 获取Token
-        /// </summary>
-        /// <param name="accessToken">Token</param>
-        /// <returns></returns>
-        public UserTokenCache GetUserToken(string accessToken)
-        {
-            if (accessToken.IsEmptyString())
-                return null;
-
-            accessToken = MD5.Encrypt(accessToken);
-
-            return _cache.Get<UserTokenCache>(_sessionNAuthSettings.CachePrefix + accessToken);
-        }
+        private UserTokenRunTime _currentUserToken;
 
         /// <summary>
         /// 设置Token
@@ -112,10 +106,27 @@ namespace Spear.MidM.SessionNAuth
 
             var time = TimeSpan.FromMinutes(_sessionNAuthSettings.CacheValidDuration);
 
-            var accessToken = MD5.Encrypt(userToken.AccessToken);
+            var accessToken = userToken.AccessToken;
+            if (_sessionNAuthSettings.AccessTokenEncrypt)
+                accessToken = MD5.Encrypt(accessToken);
 
             _cache.Set(_sessionNAuthSettings.CachePrefix + accessToken, userToken, time);
-            _curToken = userToken.AccessToken;
+        }
+
+        /// <summary>
+        /// 获取Token
+        /// </summary>
+        /// <param name="accessToken">Token</param>
+        /// <returns></returns>
+        public UserTokenCache GetUserToken(string accessToken)
+        {
+            if (accessToken.IsEmptyString())
+                return null;
+
+            if (_sessionNAuthSettings.AccessTokenEncrypt)
+                accessToken = MD5.Encrypt(accessToken);
+
+            return _cache.Get<UserTokenCache>(_sessionNAuthSettings.CachePrefix + accessToken);
         }
 
         /// <summary>
@@ -128,7 +139,8 @@ namespace Spear.MidM.SessionNAuth
             if (accessToken.IsEmptyString())
                 return;
 
-            accessToken = MD5.Encrypt(accessToken, 32);
+            if (_sessionNAuthSettings.AccessTokenEncrypt)
+                accessToken = MD5.Encrypt(accessToken);
 
             _cache.Del(_sessionNAuthSettings.CachePrefix + accessToken);
         }
@@ -136,14 +148,14 @@ namespace Spear.MidM.SessionNAuth
         /// <summary>
         /// 权限认证
         /// </summary>
-        public void PermissionAuth(string permissionCode)
+        public void VerifyPermission(string permissionCode)
         {
             try
             {
-                if (CurUserToken.ERoleType == Enum_Role.SuperAdmin)
+                if (CurrentUserToken.AccountInfo.ERoleType == Enum_Role.SuperAdmin)
                     return;
 
-                if (CurUserToken.PermissionCodes.Contains(permissionCode))
+                if (CurrentUserToken.AccountInfo.PermissionCodes.Contains(permissionCode))
                     return;
 
                 throw new Exception_NoAuth();

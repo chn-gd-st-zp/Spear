@@ -2,7 +2,6 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-using Spear.Inf.Core.Base;
 using Spear.Inf.Core.CusResult;
 using Spear.Demo4WebApi.Contract.DTO.Input;
 using Spear.Demo4WebApi.Contract.Interface;
@@ -30,7 +29,7 @@ namespace Spear.Demo4WebApi.Host
         public async Task<ResultWebApi<ODTO_CommonOrder>> Page(IDTO_CommonOrder input)
         {
             var result = await _webapiService.Page(input);
-            return result.Success();
+            return result.ResultWebApi_Success();
         }
     }
 }

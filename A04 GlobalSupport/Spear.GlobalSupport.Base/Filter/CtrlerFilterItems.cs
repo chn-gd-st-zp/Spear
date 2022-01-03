@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -37,15 +36,13 @@ namespace Spear.GlobalSupport.Base.Filter
 
             base.OnExecuting(realContext);
 
-            var paList = ((ControllerActionDescriptor)realContext.ActionDescriptor).MethodInfo.GetCustomAttributes<PermissionAuthAttribute>().ToList();
-            if (paList != null && paList.Count() != 0)
-                Auth(paList);
-        }
+            var permissionAttr = ((ControllerActionDescriptor)realContext.ActionDescriptor).MethodInfo.GetCustomAttribute<PermissionAttribute>();
+            if (permissionAttr == null)
+                return;
 
-        protected void Auth(List<PermissionAuthAttribute> paList)
-        {
-            foreach (var pa in paList)
-                _sessionNAuth.PermissionAuth(pa.Code);
+            _sessionNAuth.VerifyPermission(permissionAttr.Code);
+
+            //if(permissionAttr.AccessLogger)
         }
     }
 }

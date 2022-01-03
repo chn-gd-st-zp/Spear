@@ -9,8 +9,11 @@ namespace Spear.Inf.Core.CusResult
     public class ResultBase<TData>
     {
         public bool IsSuccess { get; set; }
+
         public string Msg { get; set; }
+
         public TData Data { get; set; }
+
         public Exception ExInfo { get; set; }
 
         public ResultBase() { }
@@ -19,7 +22,6 @@ namespace Spear.Inf.Core.CusResult
         {
             IsSuccess = true;
             Msg = msg;
-
             Data = data;
             ExInfo = null;
         }
@@ -28,7 +30,6 @@ namespace Spear.Inf.Core.CusResult
         {
             IsSuccess = false;
             Msg = msg;
-
             Data = default;
             ExInfo = null;
         }
@@ -37,7 +38,6 @@ namespace Spear.Inf.Core.CusResult
         {
             IsSuccess = false;
             Msg = msg;
-
             Data = default;
             ExInfo = exInfo;
         }
@@ -46,7 +46,7 @@ namespace Spear.Inf.Core.CusResult
     public class ResultWebApi<TData>
     {
         [JsonIgnore]
-        public bool Status { get; set; }
+        public bool IsSuccess { get; set; }
 
         public int Code { get; set; }
 
@@ -59,9 +59,13 @@ namespace Spear.Inf.Core.CusResult
     public class ResultMicServ<TData>
     {
         public bool IsSuccess { get; set; }
+
         public string Code { get; set; }
+
         public string Msg { get; set; }
+
         public TData Data { get; set; }
+
         public string ErrorStackTrace { get; set; }
     }
 

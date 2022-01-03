@@ -51,7 +51,7 @@ namespace Spear.Inf.Core.CusResult
             ResultWebApi<T> result;
 
             result = new ResultWebApi<T>();
-            result.Status = true;
+            result.IsSuccess = true;
             result.Code = int.Parse(code);
             result.Msg = msg;
             result.Data = data;

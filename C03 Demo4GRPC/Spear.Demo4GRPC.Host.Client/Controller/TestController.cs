@@ -84,7 +84,7 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
                 )
                 .ResponseAsync.Result;
 
-            return false.Fail();
+            return false.ResultWebApi_Fail();
         }
     }
 }

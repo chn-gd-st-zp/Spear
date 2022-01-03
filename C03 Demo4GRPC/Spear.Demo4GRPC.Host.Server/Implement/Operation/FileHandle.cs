@@ -49,7 +49,7 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
                 });
             }
 
-            DataTable dt = dataList.ToDataTable();
+            DataTable dt = dataList.ToDataTable2();
             var execResult = _excelHelper.ExportFromDataTable(dt);
 
             return execResult.ResultBase_Success();

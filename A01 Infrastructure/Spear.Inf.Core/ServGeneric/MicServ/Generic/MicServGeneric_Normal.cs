@@ -3,11 +3,11 @@ using MagicOnion.Client;
 
 namespace Spear.Inf.Core.ServGeneric.MicServ
 {
-    public class MicServGener_Normal : IMicServGener
+    public class MicServGeneric_Normal : IMicServGeneric
     {
         public readonly MicServClientSettings micServClientSettings;
 
-        public MicServGener_Normal()
+        public MicServGeneric_Normal()
         {
             micServClientSettings = ServiceContext.Resolve<MicServClientSettings>();
         }
