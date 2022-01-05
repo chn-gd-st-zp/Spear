@@ -108,14 +108,14 @@ namespace Spear.Inf.SqlSugar
                 query = query.Where(expression);
 
             if (param != null)
-                query = query.OrderBy(param.Sort.GenerOrderBySql<TEntity>());
+                query = query.OrderBy(param.Sort.GenericOrderBySql<TEntity>());
 
             return query.ToList();
         }
 
         public List<TEntity> ListByQueryable<TEntity>(object queryObj, IDTO_List param = null) where TEntity : DBEntity_Base, new()
         {
-            string orderBy = param.Sort.GenerOrderBySql<TEntity>();
+            string orderBy = param.Sort.GenericOrderBySql<TEntity>();
 
             return ((ISugarQueryable<TEntity>)queryObj).OrderBy(orderBy).ToList();
         }
@@ -133,7 +133,7 @@ namespace Spear.Inf.SqlSugar
 
         public Tuple<List<TEntity>, int> PageByQueryable<TEntity>(object queryObj, IDTO_Page param = null) where TEntity : DBEntity_Base, new()
         {
-            string orderBy = param.Sort.GenerOrderBySql<TEntity>();
+            string orderBy = param.Sort.GenericOrderBySql<TEntity>();
 
             var query = ((ISugarQueryable<TEntity>)queryObj).OrderBy(orderBy);
 

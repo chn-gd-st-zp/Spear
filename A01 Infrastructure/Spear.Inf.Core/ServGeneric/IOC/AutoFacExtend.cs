@@ -188,10 +188,20 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).AsSelf().InstancePerDependency();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).AsSelf().InstancePerDependency();
+                                else
+                                    containerBuilder.RegisterType(classType).AsSelf().WithParameters(diMode.Params).InstancePerDependency();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).AsSelf().WithParameters(diMode.Params).InstancePerDependency();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).AsSelf().InstancePerDependency();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).AsSelf().WithParameters(diMode.Params).InstancePerDependency();
+                            }
                         }
 
                         typeRegis.Add(classType.FullName + "_AsSelf_");
@@ -204,10 +214,20 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).AsSelf().InstancePerLifetimeScope();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).AsSelf().InstancePerLifetimeScope();
+                                else
+                                    containerBuilder.RegisterType(classType).AsSelf().WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).AsSelf().WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).AsSelf().InstancePerLifetimeScope();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).AsSelf().WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            }
                         }
 
                         typeRegis.Add(classType.FullName + "_AsSelf_");
@@ -220,10 +240,20 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).AsSelf().SingleInstance();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).AsSelf().SingleInstance();
+                                else
+                                    containerBuilder.RegisterType(classType).AsSelf().WithParameters(diMode.Params).SingleInstance();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).AsSelf().WithParameters(diMode.Params).SingleInstance();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).AsSelf().SingleInstance();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).AsSelf().WithParameters(diMode.Params).SingleInstance();
+                            }
                         }
 
                         typeRegis.Add(classType.FullName + "_AsSelf_");
@@ -246,10 +276,20 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).AsImplementedInterfaces().InstancePerDependency();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).AsImplementedInterfaces().InstancePerDependency();
+                                else
+                                    containerBuilder.RegisterType(classType).AsImplementedInterfaces().WithParameters(diMode.Params).InstancePerDependency();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).AsImplementedInterfaces().WithParameters(diMode.Params).InstancePerDependency();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).AsImplementedInterfaces().InstancePerDependency();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).AsImplementedInterfaces().WithParameters(diMode.Params).InstancePerDependency();
+                            }
                         }
 
                         typeRegis.Add(classType.FullName + "_AsImpl_");
@@ -262,10 +302,20 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).AsImplementedInterfaces().InstancePerLifetimeScope();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).AsImplementedInterfaces().InstancePerLifetimeScope();
+                                else
+                                    containerBuilder.RegisterType(classType).AsImplementedInterfaces().WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).AsImplementedInterfaces().WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).AsImplementedInterfaces().InstancePerLifetimeScope();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).AsImplementedInterfaces().WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            }
                         }
 
                         typeRegis.Add(classType.FullName + "_AsImpl_");
@@ -274,14 +324,24 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                     {
                         if (classObj != null)
                         {
-                            containerBuilder.Register(o => classObj).AsImplementedInterfaces().InstancePerLifetimeScope();
+                            containerBuilder.Register(o => classObj).AsImplementedInterfaces().SingleInstance();
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).AsImplementedInterfaces().SingleInstance();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).AsImplementedInterfaces().SingleInstance();
+                                else
+                                    containerBuilder.RegisterType(classType).AsImplementedInterfaces().WithParameters(diMode.Params).SingleInstance();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).AsImplementedInterfaces().WithParameters(diMode.Params).SingleInstance();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).AsImplementedInterfaces().SingleInstance();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).AsImplementedInterfaces().WithParameters(diMode.Params).SingleInstance();
+                            }
                         }
 
                         typeRegis.Add(classType.FullName + "_AsImpl_");
@@ -304,13 +364,23 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).As(diMode.Type).InstancePerDependency();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).As(diMode.Type).InstancePerDependency();
+                                else
+                                    containerBuilder.RegisterType(classType).As(diMode.Type).WithParameters(diMode.Params).InstancePerDependency();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).As(diMode.Type).WithParameters(diMode.Params).InstancePerDependency();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).As(diMode.Type).InstancePerDependency();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).As(diMode.Type).WithParameters(diMode.Params).InstancePerDependency();
+                            }
                         }
 
-                        typeRegis.Add(classType.FullName + "_Specific_" + diMode.Type.FullName);
+                        typeRegis.Add(classType.FullName + "_Exclusive_" + diMode.Type.FullName);
                     }
                     else if (classType.IsImplementedType(classInterfaceArray, typeof(IScoped)))
                     {
@@ -320,13 +390,23 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).As(diMode.Type).InstancePerLifetimeScope();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).As(diMode.Type).InstancePerLifetimeScope();
+                                else
+                                    containerBuilder.RegisterType(classType).As(diMode.Type).WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).As(diMode.Type).WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).As(diMode.Type).InstancePerLifetimeScope();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).As(diMode.Type).WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            }
                         }
 
-                        typeRegis.Add(classType.FullName + "_Specific_" + diMode.Type.FullName);
+                        typeRegis.Add(classType.FullName + "_Exclusive_" + diMode.Type.FullName);
                     }
                     else if (classType.IsImplementedType(classInterfaceArray, typeof(ISingleton)))
                     {
@@ -336,23 +416,33 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).As(diMode.Type).SingleInstance();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).As(diMode.Type).SingleInstance();
+                                else
+                                    containerBuilder.RegisterType(classType).As(diMode.Type).WithParameters(diMode.Params).SingleInstance();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).As(diMode.Type).WithParameters(diMode.Params).SingleInstance();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).As(diMode.Type).SingleInstance();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).As(diMode.Type).WithParameters(diMode.Params).SingleInstance();
+                            }
                         }
 
-                        typeRegis.Add(classType.FullName + "_Specific_" + diMode.Type.FullName);
+                        typeRegis.Add(classType.FullName + "_Exclusive_" + diMode.Type.FullName);
                     }
                     else
                     {
-                        typeIgnore.Add(classType.FullName + "_Specific_" + diMode.Type.FullName);
+                        typeIgnore.Add(classType.FullName + "_Exclusive_" + diMode.Type.FullName);
                     }
 
                     #endregion
                     break;
                 case Enum_DIType.ExclusiveByNamed:
-                    #region SpecificByNamed
+                    #region ExclusiveByNamed
 
                     if (classType.IsImplementedType(classInterfaceArray, typeof(ITransient)))
                     {
@@ -362,13 +452,23 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).Named(diMode.Key.ToString(), diMode.Type).InstancePerDependency();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).Named(diMode.Key.ToString(), diMode.Type).InstancePerDependency();
+                                else
+                                    containerBuilder.RegisterType(classType).Named(diMode.Key.ToString(), diMode.Type).WithParameters(diMode.Params).InstancePerDependency();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).Named(diMode.Key.ToString(), diMode.Type).WithParameters(diMode.Params).InstancePerDependency();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).Named(diMode.Key.ToString(), diMode.Type).InstancePerDependency();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).Named(diMode.Key.ToString(), diMode.Type).WithParameters(diMode.Params).InstancePerDependency();
+                            }
                         }
 
-                        typeRegis.Add(classType.FullName + "_SpecificByNamed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
+                        typeRegis.Add(classType.FullName + "_ExclusiveByNamed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
                     }
                     else if (classType.IsImplementedType(classInterfaceArray, typeof(IScoped)))
                     {
@@ -378,13 +478,23 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).Named(diMode.Key.ToString(), diMode.Type).InstancePerLifetimeScope();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).Named(diMode.Key.ToString(), diMode.Type).InstancePerLifetimeScope();
+                                else
+                                    containerBuilder.RegisterType(classType).Named(diMode.Key.ToString(), diMode.Type).WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).Named(diMode.Key.ToString(), diMode.Type).WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).Named(diMode.Key.ToString(), diMode.Type).InstancePerLifetimeScope();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).Named(diMode.Key.ToString(), diMode.Type).WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            }
                         }
 
-                        typeRegis.Add(classType.FullName + "_SpecificByNamed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
+                        typeRegis.Add(classType.FullName + "_ExclusiveByNamed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
                     }
                     else if (classType.IsImplementedType(classInterfaceArray, typeof(ISingleton)))
                     {
@@ -394,23 +504,33 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).Named(diMode.Key.ToString(), diMode.Type).SingleInstance();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).Named(diMode.Key.ToString(), diMode.Type).SingleInstance();
+                                else
+                                    containerBuilder.RegisterType(classType).Named(diMode.Key.ToString(), diMode.Type).WithParameters(diMode.Params).SingleInstance();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).Named(diMode.Key.ToString(), diMode.Type).WithParameters(diMode.Params).SingleInstance();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).Named(diMode.Key.ToString(), diMode.Type).SingleInstance();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).Named(diMode.Key.ToString(), diMode.Type).WithParameters(diMode.Params).SingleInstance();
+                            }
                         }
 
-                        typeRegis.Add(classType.FullName + "_SpecificByNamed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
+                        typeRegis.Add(classType.FullName + "_ExclusiveByNamed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
                     }
                     else
                     {
-                        typeIgnore.Add(classType.FullName + "_SpecificByNamed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
+                        typeIgnore.Add(classType.FullName + "_ExclusiveByNamed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
                     }
 
                     #endregion
                     break;
                 case Enum_DIType.ExclusiveByKeyed:
-                    #region SpecificByKeyed
+                    #region ExclusiveByKeyed
 
                     if (classType.IsImplementedType(classInterfaceArray, typeof(ITransient)))
                     {
@@ -420,13 +540,23 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).Keyed(diMode.Key, diMode.Type).InstancePerDependency();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).Keyed(diMode.Key, diMode.Type).InstancePerDependency();
+                                else
+                                    containerBuilder.RegisterType(classType).Keyed(diMode.Key, diMode.Type).WithParameters(diMode.Params).InstancePerDependency();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).Keyed(diMode.Key, diMode.Type).WithParameters(diMode.Params).InstancePerDependency();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).Keyed(diMode.Key, diMode.Type).InstancePerDependency();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).Keyed(diMode.Key, diMode.Type).WithParameters(diMode.Params).InstancePerDependency();
+                            }
                         }
 
-                        typeRegis.Add(classType.FullName + "SpecificByKeyed" + diMode.Type.FullName + "_" + diMode.Key.ToString());
+                        typeRegis.Add(classType.FullName + "_ExclusiveByKeyed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
                     }
                     else if (classType.IsImplementedType(classInterfaceArray, typeof(IScoped)))
                     {
@@ -436,13 +566,23 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).Keyed(diMode.Key, diMode.Type).InstancePerLifetimeScope();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).Keyed(diMode.Key, diMode.Type).InstancePerLifetimeScope();
+                                else
+                                    containerBuilder.RegisterType(classType).Keyed(diMode.Key, diMode.Type).WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).Keyed(diMode.Key, diMode.Type).WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).Keyed(diMode.Key, diMode.Type).InstancePerLifetimeScope();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).Keyed(diMode.Key, diMode.Type).WithParameters(diMode.Params).InstancePerLifetimeScope();
+                            }
                         }
 
-                        typeRegis.Add(classType.FullName + "SpecificByKeyed" + diMode.Type.FullName + "_" + diMode.Key.ToString());
+                        typeRegis.Add(classType.FullName + "_ExclusiveByKeyed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
                     }
                     else if (classType.IsImplementedType(classInterfaceArray, typeof(ISingleton)))
                     {
@@ -452,17 +592,27 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         }
                         else
                         {
-                            if (diMode.Params == null || diMode.Params.Count() == 0)
-                                containerBuilder.RegisterType(classType).Keyed(diMode.Key, diMode.Type).SingleInstance();
+                            if (!classType.IsGenericType)
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterType(classType).Keyed(diMode.Key, diMode.Type).SingleInstance();
+                                else
+                                    containerBuilder.RegisterType(classType).Keyed(diMode.Key, diMode.Type).WithParameters(diMode.Params).SingleInstance();
+                            }
                             else
-                                containerBuilder.RegisterType(classType).Keyed(diMode.Key, diMode.Type).WithParameters(diMode.Params).SingleInstance();
+                            {
+                                if (diMode.Params == null || diMode.Params.Count() == 0)
+                                    containerBuilder.RegisterGeneric(classType).Keyed(diMode.Key, diMode.Type).SingleInstance();
+                                else
+                                    containerBuilder.RegisterGeneric(classType).Keyed(diMode.Key, diMode.Type).WithParameters(diMode.Params).SingleInstance();
+                            }
                         }
 
-                        typeRegis.Add(classType.FullName + "SpecificByKeyed" + diMode.Type.FullName + "_" + diMode.Key.ToString());
+                        typeRegis.Add(classType.FullName + "_ExclusiveByKeyed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
                     }
                     else
                     {
-                        typeIgnore.Add(classType.FullName + "SpecificByKeyed" + diMode.Type.FullName + "_" + diMode.Key.ToString());
+                        typeIgnore.Add(classType.FullName + "_ExclusiveByKeyed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
                     }
 
                     #endregion

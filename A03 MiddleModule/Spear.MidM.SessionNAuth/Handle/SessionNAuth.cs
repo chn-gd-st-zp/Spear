@@ -105,6 +105,7 @@ namespace Spear.MidM.SessionNAuth
                 return;
 
             var time = TimeSpan.FromMinutes(_sessionNAuthSettings.CacheValidDuration);
+            userToken.ExpiredTime = DateTime.Now.AddMinutes(time.TotalMinutes);
 
             var accessToken = userToken.AccessToken;
             if (_sessionNAuthSettings.AccessTokenEncrypt)
@@ -155,7 +156,7 @@ namespace Spear.MidM.SessionNAuth
                 if (CurrentUserToken.AccountInfo.ERoleType == Enum_Role.SuperAdmin)
                     return;
 
-                if (CurrentUserToken.AccountInfo.PermissionCodes.Contains(permissionCode))
+                if (CurrentUserToken.PermissionCodes.Contains(permissionCode))
                     return;
 
                 throw new Exception_NoAuth();

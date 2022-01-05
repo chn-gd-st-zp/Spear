@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Newtonsoft.Json;
+
 using Spear.Inf.Core.CusEnum;
 
 namespace Spear.MidM.SessionNAuth
@@ -50,11 +52,6 @@ namespace Spear.MidM.SessionNAuth
         public string[] RoleCodes { get; set; }
 
         /// <summary>
-        /// 权限代码
-        /// </summary>
-        public string[] PermissionCodes { get; set; }
-
-        /// <summary>
         /// 账号ID
         /// </summary>
         public string AccountID { get; set; }
@@ -75,12 +72,38 @@ namespace Spear.MidM.SessionNAuth
         public DateTime ExpiredTime { get; set; }
     }
 
-    public class UserToken
+    public abstract class UserToken
     {
         /// <summary>
         /// AccessToken
         /// </summary>
         public string AccessToken { get; set; }
+
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// 权限代码
+        /// </summary>
+        [JsonIgnore]
+        public string[] PermissionCodes { get; set; }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateTime { get { return DeviceInfo.CreateTime; } set { DeviceInfo.CreateTime = value; AccountInfo.CreateTime = value; } }
+
+        /// <summary>
+        /// 刷新时间
+        /// </summary>
+        public DateTime UpdateTime { get { return DeviceInfo.UpdateTime; } set { DeviceInfo.UpdateTime = value; AccountInfo.UpdateTime = value; } }
+
+        /// <summary>
+        /// 过期时间
+        /// </summary>
+        public DateTime ExpiredTime { get { return DeviceInfo.ExpiredTime; } set { DeviceInfo.ExpiredTime = value; AccountInfo.ExpiredTime = value; } }
 
         /// <summary>
         /// 设备信息

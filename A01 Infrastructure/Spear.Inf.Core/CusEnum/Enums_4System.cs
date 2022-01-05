@@ -141,9 +141,8 @@ namespace Spear.Inf.Core.CusEnum
         [Remark("组")]
         Group,
 
-        [Remark("方法")]
+        [Remark("节点")]
         Node,
-
     }
 
     public enum Enum_OperationType
