@@ -6,7 +6,7 @@ using Spear.Inf.Core.DTO;
 
 namespace Spear.Inf.Core.Attr
 {
-    [AttributeUsage(AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Class)]
     public class DefaultSortFieldAttribute : Attribute
     {
         public DefaultSortFieldAttribute(string realName, Enum_SortDirection eDirection)
@@ -36,22 +36,11 @@ namespace Spear.Inf.Core.Attr
 
     public static class SortFieldAttributeExtend
     {
-        public static DefaultSortFieldAttribute GetDefaultSortField<T>(this object obj)
+        public static DefaultSortFieldAttribute GetDefaultSortField<T>(this Type type)
         {
-            Type type = typeof(T);
-            PropertyInfo[] piArray = type.GetProperties();
-
-            return piArray.GetDefaultSortField<T>();
-        }
-
-        public static DefaultSortFieldAttribute GetDefaultSortField<T>(this PropertyInfo[] piArray)
-        {
-            foreach (var pi in piArray)
-            {
-                var attr = pi.GetCustomAttribute<DefaultSortFieldAttribute>();
-                if (attr != null)
-                    return attr;
-            }
+            var attr = type.GetCustomAttribute<DefaultSortFieldAttribute>();
+            if (attr != null)
+                return attr;
 
             return null;
         }
@@ -68,11 +57,17 @@ namespace Spear.Inf.Core.Attr
         {
             foreach (var pi in piArray)
             {
-                var attr = pi.GetCustomAttribute<SortFieldAttribute>();
-                if (attr != null && attr.NickNames.Contains(sortField.FieldName, StringComparer.OrdinalIgnoreCase))
-                    return new Tuple<PropertyInfo, string>(pi, attr.RealName);
-
                 if (pi.Name.Equals(sortField.FieldName, StringComparison.OrdinalIgnoreCase))
+                    return new Tuple<PropertyInfo, string>(pi, pi.Name);
+
+                var attr = pi.GetCustomAttribute<SortFieldAttribute>();
+                if (attr == null)
+                    continue;
+
+                if (attr.RealName.Equals(sortField.FieldName, StringComparison.OrdinalIgnoreCase))
+                    return new Tuple<PropertyInfo, string>(pi, pi.Name);
+
+                if (attr.NickNames.Contains(sortField.FieldName, StringComparer.OrdinalIgnoreCase))
                     return new Tuple<PropertyInfo, string>(pi, pi.Name);
             }
 

@@ -179,14 +179,14 @@ namespace Spear.Inf.EF
                 query = query.Where(expression);
 
             if (param != null)
-                query = query.OrderBy(param.Sort);
+                query = query.OrderBy(param);
 
             return query.ToList();
         }
 
         public List<TEntity> ListByQueryable<TEntity>(object queryObj, IDTO_List param = null) where TEntity : DBEntity_Base, new()
         {
-            return ((IQueryable<TEntity>)queryObj).OrderBy(param.Sort).ToList();
+            return ((IQueryable<TEntity>)queryObj).OrderBy(param).ToList();
         }
 
         #endregion
@@ -202,7 +202,7 @@ namespace Spear.Inf.EF
 
         public Tuple<List<TEntity>, int> PageByQueryable<TEntity>(object queryObj, IDTO_Page param = null) where TEntity : DBEntity_Base, new()
         {
-            var query = ((IQueryable<TEntity>)queryObj).OrderBy(param.Sort);
+            var query = ((IQueryable<TEntity>)queryObj).OrderBy(param);
 
             int rowQty = query.Count();
 

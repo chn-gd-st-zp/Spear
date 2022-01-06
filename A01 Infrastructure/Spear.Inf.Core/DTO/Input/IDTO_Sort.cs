@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 
 using MessagePack;
-using Newtonsoft.Json;
 
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.DBRef;
@@ -52,16 +51,7 @@ namespace Spear.Inf.Core.DTO
         /// 0、2: AES、正序
         /// 1、3: DESC、倒序
         /// </summary>
-        [JsonProperty("EDirection")]
         public Enum_SortDirection EDirection { get; set; }
-
-        /// <summary>
-        /// 排序方式
-        /// 0、2: AES、正序
-        /// 1、3: DESC、倒序
-        /// </summary>
-        [JsonProperty("SortType")]
-        public Enum_SortDirection SortType { get { return EDirection; } set { EDirection = value; } }
     }
 
     /// <summary>
@@ -69,16 +59,18 @@ namespace Spear.Inf.Core.DTO
     /// </summary>
     public static class IDTO_Sort_Ext
     {
-        public static string GenericOrderBySql<T>(this List<IDTO_Sort> idtoSorts) where T : DBEntity_Base
+        public static string GenericOrderBySql<T>(this IDTO_Search param) where T : DBEntity_Base
         {
             string result = "";
 
             Type type = typeof(T);
             PropertyInfo[] propertyInfos = type.GetProperties();
 
+            List<IDTO_Sort> idtoSorts = param == null || param.Sort == null ? new List<IDTO_Sort>() : param.Sort;
+
             if (idtoSorts == null || idtoSorts.Count() == 0)
             {
-                var attr = propertyInfos.GetDefaultSortField<T>();
+                var attr = type.GetDefaultSortField<T>();
                 if (attr != null)
                 {
                     result += result.IsEmptyString() ? "" : ",";
@@ -128,17 +120,16 @@ namespace Spear.Inf.Core.DTO
             return result;
         }
 
-        public static IQueryable<T> OrderBy<T>(this IQueryable<T> query, List<IDTO_Sort> idtoSorts) where T : DBEntity_Base
+        public static IQueryable<T> OrderBy<T>(this IQueryable<T> query, IDTO_Search param) where T : DBEntity_Base
         {
             Type sourceType = typeof(T);
             PropertyInfo[] sourcePropertyInfos = sourceType.GetProperties();
 
-            if (idtoSorts == null)
-                idtoSorts = new List<IDTO_Sort>();
+            List<IDTO_Sort> idtoSorts = param == null || param.Sort == null ? new List<IDTO_Sort>() : param.Sort;
 
             if (idtoSorts.Count == 0)
             {
-                var attr = sourcePropertyInfos.GetDefaultSortField<T>();
+                var attr = sourceType.GetDefaultSortField<T>();
 
                 idtoSorts.Add(new IDTO_Sort() { FieldName = attr.RealName, EDirection = attr.EDirection });
             }
