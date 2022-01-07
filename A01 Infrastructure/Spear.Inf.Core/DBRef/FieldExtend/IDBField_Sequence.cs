@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Spear.Inf.Core.DBRef
+﻿namespace Spear.Inf.Core.DBRef
 {
     public interface IDBField_Sequence
     {
@@ -37,19 +35,6 @@ namespace Spear.Inf.Core.DBRef
             value += plusNum;
 
             return value.FormatField_Sort();
-        }
-
-        public static string GenericNewSort<T>(this IQueryable<T> query) where T : IDBField_Sequence, new()
-        {
-            string result = null;
-
-            T obj = query.OrderByDescending(o => o.CurSequence).FirstOrDefault();
-            if (obj == null)
-                obj = new T();
-
-            result = obj.GetSort(1);
-
-            return result;
         }
     }
 }

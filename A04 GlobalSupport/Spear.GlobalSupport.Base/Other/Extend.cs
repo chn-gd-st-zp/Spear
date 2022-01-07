@@ -27,7 +27,7 @@ namespace Spear.GlobalSupport.Base
             return new ResultBase<TResult>(msg);
         }
 
-        public static ResultBase<TResult> ToServFail<TResult>(this TResult result, string msg)
+        public static ResultBase<TResult> ToServFail<TResult>(this TResult result, string msg = "")
         {
             return new ResultBase<TResult>(msg);
         }

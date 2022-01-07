@@ -63,6 +63,12 @@ namespace Spear.Inf.Core.Interface
 
         #endregion
 
+        #region 查 - 序号
+
+        string GetNextSequence<TEntity>() where TEntity : DBEntity_Base, IDBField_Sequence, new();
+
+        #endregion
+
         #region 执行 SQL
 
         int ExecuteSql(string sql, params DBParameter[] paramArray);

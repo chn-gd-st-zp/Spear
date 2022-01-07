@@ -149,6 +149,21 @@ namespace Spear.Inf.SqlSugar
 
         #endregion
 
+        #region 查 - 序号
+
+        public string GetNextSequence<TEntity>() where TEntity : DBEntity_Base, IDBField_Sequence, new()
+        {
+            var query = GetSimpleClient<TEntity>().AsQueryable();
+
+            var obj = query.OrderBy(o => o.CurSequence, OrderByType.Desc).Single();
+            if (obj == null)
+                obj = new TEntity();
+
+            return obj.GetSort(1);
+        }
+
+        #endregion
+
         #region 执行 SQL
 
         public int ExecuteSql(string sql, params DBParameter[] paramArray)

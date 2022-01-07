@@ -26,7 +26,7 @@ namespace Spear.Inf.Core.CusResult
             ExInfo = null;
         }
 
-        public ResultBase(string msg)
+        public ResultBase(string msg = "操作失败")
         {
             IsSuccess = false;
             Msg = msg;
@@ -34,7 +34,7 @@ namespace Spear.Inf.Core.CusResult
             ExInfo = null;
         }
 
-        public ResultBase(Exception exInfo, string msg)
+        public ResultBase(Exception exInfo, string msg = "运行异常")
         {
             IsSuccess = false;
             Msg = msg;

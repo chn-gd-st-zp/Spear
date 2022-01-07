@@ -217,6 +217,21 @@ namespace Spear.Inf.EF
 
         #endregion
 
+        #region 查 - 序号
+
+        public string GetNextSequence<TEntity>() where TEntity : DBEntity_Base, IDBField_Sequence, new()
+        {
+            var query = GetDBSet<TEntity>();
+
+            var obj = query.OrderByDescending(o => o.CurSequence).FirstOrDefault();
+            if (obj == null)
+                obj = new TEntity();
+
+            return obj.GetSort(1);
+        }
+
+        #endregion
+
         #region 执行 SQL
 
         public int ExecuteSql(string sql, params DBParameter[] paramArray)

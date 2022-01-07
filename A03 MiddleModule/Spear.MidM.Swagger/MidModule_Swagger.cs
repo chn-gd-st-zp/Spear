@@ -29,8 +29,9 @@ namespace Spear.MidM.Swagger
 
                 options.EnableAnnotations();
                 options.DocumentFilter<ApiHiddenFilter>();
-                options.DocumentFilter<PropertyHiddenFilter>();
+                options.DocumentFilter<PropertyOperationFilter>();
                 options.DocumentFilter<EnumDescriptionFilter>();
+                options.OperationFilter<AccessTokenInHeaderFilter>();
 
                 foreach (string xml in xmls)
                     options.IncludeXmlComments(xml, true);
