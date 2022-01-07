@@ -32,6 +32,33 @@ namespace Spear.Inf.Core.Attr
         /// <summary>
         /// 获取枚举的备注信息
         /// </summary>
+        /// <param name="type"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string GetRemark(this Type type, string value)
+        {
+            string result = string.Empty;
+
+            FieldInfo fi = type.GetField(value);
+            if (fi == null)
+                return result;
+
+            var attr = fi.GetCustomAttributes<RemarkAttribute>().FirstOrDefault();
+            if (attr == null)
+                return result;
+
+            var attr_ignore = fi.GetCustomAttributes<RemarkOutputIgnoreAttribute>().FirstOrDefault();
+            if (attr_ignore != null)
+                return result;
+
+            result = attr.Remark;
+
+            return result;
+        }
+
+        /// <summary>
+        /// 获取枚举的备注信息
+        /// </summary>
         /// <param name="em"></param>
         /// <returns></returns>
         public static string GetRemark(this Enum em)

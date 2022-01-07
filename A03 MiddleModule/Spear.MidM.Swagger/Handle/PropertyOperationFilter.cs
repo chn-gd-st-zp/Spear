@@ -20,87 +20,66 @@ namespace Spear.MidM.Swagger
         {
             foreach (ApiDescription apiDescription in context.ApiDescriptions)
             {
-                if (apiDescription.TryGetMethodInfo(out MethodInfo method))
+                var method = default(MethodInfo);
+                if (!apiDescription.TryGetMethodInfo(out method))
+                    continue;
+
+                string actionRoute = "/" + apiDescription.RelativePath;
+                if (actionRoute.Contains("?"))
+                    actionRoute = actionRoute.Substring(0, actionRoute.IndexOf("?", StringComparison.Ordinal));
+
+                foreach (var input in method.GetParameters())
                 {
-                    foreach (var param in method.GetParameters())
+                    if (!doc.Components.Schemas.ContainsKey(input.ParameterType.Name))
+                        continue;
+
+                    var inputSchema = doc.Components.Schemas[input.ParameterType.Name];
+                    var inputProperties = input.ParameterType.GetProperties();
+
+                    foreach (var inputProperty in inputProperties)
                     {
-                        //[参数对象的字段] 循环检查
-                        foreach (var pi in param.ParameterType.GetProperties())
+                        var attr_hid = inputProperty.GetCustomAttribute<PropertyHiddenAttribute>();
+                        var attr_ren = inputProperty.GetCustomAttribute<PropertyRenameAttribute>();
+
+                        #region 形式1
+
+                        foreach (var inputPropertyKey in inputSchema.Properties.Keys)
                         {
-                            //[字段标签隐藏]
-                            var attr_hid = pi.GetCustomAttribute<PropertyHiddenAttribute>();
+                            if (!inputProperty.Name.Equals(inputPropertyKey, StringComparison.OrdinalIgnoreCase))
+                                continue;
+
+                            var inputPropertySchema = inputSchema.Properties[inputPropertyKey];
+
                             if (attr_hid != null)
-                            {
-                                #region 形式1
+                                inputSchema.Properties.Remove(inputPropertyKey);
 
-                                foreach (var key in doc.Components.Schemas[param.ParameterType.Name].Properties.Keys)
-                                {
-                                    if (pi.Name.Equals(key, StringComparison.OrdinalIgnoreCase))
-                                    {
-                                        doc.Components.Schemas[param.ParameterType.Name].Properties.Remove(key);
-                                        break;
-                                    }
-                                }
-
-                                #endregion
-
-                                #region 形式2
-
-                                string routeKey = "/" + apiDescription.RelativePath;
-                                if (routeKey.Contains("?"))
-                                {
-                                    int idx = routeKey.IndexOf("?", StringComparison.Ordinal);
-                                    routeKey = routeKey.Substring(0, idx);
-                                }
-
-                                foreach (var operation in doc.Paths[routeKey].Operations)
-                                {
-                                    var obj = operation.Value.Parameters.Where(o => pi.Name.Equals(o.Name, StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
-                                    if (obj != null)
-                                        operation.Value.Parameters.Remove(obj);
-                                }
-
-                                #endregion
-                            }
-
-                            //[字段标签重命名]
-                            var attr_ren = pi.GetCustomAttribute<PropertyRenameAttribute>();
                             if (attr_ren != null)
                             {
-                                #region 形式1
-
-                                foreach (var prop in doc.Components.Schemas[param.ParameterType.Name].Properties)
-                                {
-                                    if (pi.Name.Equals(prop.Key, StringComparison.OrdinalIgnoreCase))
-                                    {
-                                        doc.Components.Schemas[param.ParameterType.Name].Properties.Remove(prop.Key);
-                                        doc.Components.Schemas[param.ParameterType.Name].Properties.Add(attr_ren.Name, prop.Value);
-
-                                        break;
-                                    }
-                                }
-
-                                #endregion
-
-                                #region 形式2
-
-                                string routeKey = "/" + apiDescription.RelativePath;
-                                if (routeKey.Contains("?"))
-                                {
-                                    int idx = routeKey.IndexOf("?", StringComparison.Ordinal);
-                                    routeKey = routeKey.Substring(0, idx);
-                                }
-
-                                foreach (var operation in doc.Paths[routeKey].Operations)
-                                {
-                                    var obj = operation.Value.Parameters.Where(o => pi.Name.Equals(o.Name, StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
-                                    if (obj != null)
-                                        obj.Name = attr_ren.Name;
-                                }
-
-                                #endregion
+                                inputSchema.Properties.Remove(inputPropertyKey);
+                                inputSchema.Properties.Add(attr_ren.Name, inputPropertySchema);
                             }
+
+                            break;
                         }
+
+                        #endregion
+
+                        #region 形式2
+
+                        foreach (var actionOperation in doc.Paths[actionRoute].Operations)
+                        {
+                            var actionOperationParam = actionOperation.Value.Parameters.Where(o => inputProperty.Name.Equals(o.Name, StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
+                            if (actionOperationParam == null)
+                                continue;
+
+                            if (attr_hid != null)
+                                actionOperation.Value.Parameters.Remove(actionOperationParam);
+
+                            if (attr_ren != null)
+                                actionOperationParam.Name = attr_ren.Name;
+                        }
+
+                        #endregion
                     }
                 }
             }

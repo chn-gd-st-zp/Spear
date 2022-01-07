@@ -42,7 +42,7 @@ namespace Spear.Inf.Core.CusEnum
 
     public enum Enum_DIType
     {
-        [Remark("无")]
+        [Remark("默认、无")]
         None,
 
         [Remark("自身")]
@@ -63,7 +63,7 @@ namespace Spear.Inf.Core.CusEnum
 
     public enum Enum_DIKeyedNamedFrom
     {
-        [Remark("无")]
+        [Remark("默认、无")]
         None,
 
         [Remark("从属性来")]
@@ -120,7 +120,7 @@ namespace Spear.Inf.Core.CusEnum
 
     public enum Enum_PermissionType
     {
-        [Remark("无操作")]
+        [Remark("默认、无")]
         None,
 
         [Remark("组")]
@@ -135,7 +135,7 @@ namespace Spear.Inf.Core.CusEnum
 
     public enum Enum_TreeNodeType
     {
-        [Remark("无操作")]
+        [Remark("默认、无")]
         None,
 
         [Remark("组")]
@@ -147,7 +147,7 @@ namespace Spear.Inf.Core.CusEnum
 
     public enum Enum_OperationType
     {
-        [Remark("无操作")]
+        [Remark("默认、无")]
         None,
 
         [Remark("新增")]

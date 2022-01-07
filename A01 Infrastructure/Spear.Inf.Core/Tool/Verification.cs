@@ -172,17 +172,6 @@ namespace Spear.Inf.Core.Tool
         #endregion
 
         /// <summary>
-        /// 判断是否 继承 某个类型
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="basicType"></param>
-        /// <returns></returns>
-        public static bool IsExtendType(this Type type, Type basicType)
-        {
-            return type.IsSubclassOf(basicType);
-        }
-
-        /// <summary>
         /// 判断是否 实现 或 继承 某个泛型
         /// </summary>
         /// <param name="type"></param>
@@ -207,6 +196,17 @@ namespace Spear.Inf.Core.Tool
 
             // 没有找到任何匹配的接口或类型。
             return false;
+        }
+
+        /// <summary>
+        /// 判断是否 继承 某个类型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="basicType"></param>
+        /// <returns></returns>
+        public static bool IsExtendType(this Type type, Type basicType)
+        {
+            return type.IsSubclassOf(basicType);
         }
 
         /// <summary>

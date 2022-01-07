@@ -1,79 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 using Spear.Inf.Core.Tool;
+using Spear.Inf.Core.Attr;
 
 namespace Spear.MidM.Swagger
 {
     public class EnumDescriptionFilter : IDocumentFilter
     {
-        public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
+        public void Apply(OpenApiDocument doc, DocumentFilterContext context)
         {
-            foreach (var item in swaggerDoc.Components.Schemas)
+            foreach (ApiDescription apiDescription in context.ApiDescriptions)
             {
-                Type type = Type.GetType(item.Key, false, true);
-                if (type == null)
+                var method = default(MethodInfo);
+                if (!apiDescription.TryGetMethodInfo(out method))
                     continue;
 
-                if (!type.IsExtendType<Enum>())
-                    continue;
+                string actionRoute = "/" + apiDescription.RelativePath;
+                if (actionRoute.Contains("?"))
+                    actionRoute = actionRoute.Substring(0, actionRoute.IndexOf("?", StringComparison.Ordinal));
 
-                var propertyEnums = item.Value.Enum;
-                if (propertyEnums != null && propertyEnums.Count > 0)
+                foreach (var input in method.GetParameters())
                 {
-                    List<OpenApiInteger> list = propertyEnums.Select(o => (OpenApiInteger)o).ToList();
+                    if (!doc.Components.Schemas.ContainsKey(input.ParameterType.Name))
+                        continue;
 
-                    item.Value.Description += DescribeEnum(type, list);
-                }
-            }
-        }
+                    var inputSchema = doc.Components.Schemas[input.ParameterType.Name];
+                    var inputProperties = input.ParameterType.GetProperties();
 
-        private static string DescribeEnum(Type type, List<OpenApiInteger> enums)
-        {
-            var enumDescriptions = new List<string>();
-
-            foreach (var item in enums)
-            {
-                if (type == null) type = item.GetType();
-
-                var value = Enum.Parse(type, item.Value.ToString());
-                var desc = GetDescription(type, value);
-
-                if (desc.IsEmptyString())
-                    enumDescriptions.Add($"{item.Value.ToString()}:{Enum.GetName(type, value)}; ");
-                else
-                    enumDescriptions.Add($"{item.Value.ToString()}:{Enum.GetName(type, value)},{desc}; ");
-
-            }
-
-            return $"<br/>{Environment.NewLine}{string.Join("<br/>" + Environment.NewLine, enumDescriptions)}";
-        }
-
-        private static string GetDescription(Type t, object value)
-        {
-            foreach (MemberInfo mInfo in t.GetMembers())
-            {
-                if (mInfo.Name == t.GetEnumName(value))
-                {
-                    foreach (Attribute attr in Attribute.GetCustomAttributes(mInfo))
+                    foreach (var inputProperty in inputProperties)
                     {
-                        if (attr.IsExtendType<DescriptionAttribute>())
-                        {
-                            return ((DescriptionAttribute)attr).Description;
-                        }
+                        if (!doc.Components.Schemas.ContainsKey(inputProperty.PropertyType.Name))
+                            continue;
+
+                        if (!inputProperty.PropertyType.IsExtendType(typeof(Enum)))
+                            continue;
+
+                        var prop = doc.Components.Schemas[inputProperty.PropertyType.Name];
+
+                        prop.Enum = new List<IOpenApiAny>();
+                        foreach (var item in inputProperty.PropertyType.Convert2Dictionary())
+                            prop.Enum.Add(new OpenApiString($"{item.Key}:{item.Value[0]}-{item.Value[1]}"));
+
+                        var attr = inputProperty.GetCustomAttribute<RemarkAttribute>();
+                        if (attr != null)
+                            prop.Description = attr.Remark;
                     }
                 }
             }
-
-            return string.Empty;
         }
     }
 }

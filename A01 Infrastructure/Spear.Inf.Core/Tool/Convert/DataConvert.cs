@@ -20,6 +20,24 @@ namespace Spear.Inf.Core.Tool
         #region 枚举
 
         /// <summary>
+        /// 将字符串转为枚举
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static object Convert2Enum(this Type type, string value)
+        {
+            try
+            {
+                return Enum.Parse(type, value, true);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
         /// 将数字转为枚举
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -104,20 +122,38 @@ namespace Spear.Inf.Core.Tool
         /// <summary>
         /// 将枚举转为字典
         /// </summary>
+        /// <returns></returns>
+        public static Dictionary<int, string[]> Convert2Dictionary(this Type type)
+        {
+            var dic = new Dictionary<int, string[]>();
+
+            var eValueArray = Enum.GetValues(type);
+            foreach (var eValue in eValueArray)
+            {
+                var key = (int)eValue;
+                var value = new string[] { eValue.ToString(), type.GetRemark(eValue.ToString()) };
+
+                dic.Add(key, value);
+            }
+
+            return dic;
+        }
+
+        /// <summary>
+        /// 将枚举转为字典
+        /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="targetEnum"></param>
         /// <returns></returns>
-        public static Dictionary<string, string> Convert2Dictionary<T>() where T : Enum
+        public static Dictionary<int, string[]> Convert2Dictionary<T>() where T : Enum
         {
-            var dic = new Dictionary<string, string>();
+            var dic = new Dictionary<int, string[]>();
 
             var eValueArray = Enum.GetValues(typeof(T));
             foreach (var eValue in eValueArray)
             {
-                string key = eValue.ToString();
-                string value = eValue.ToString().Convert2Enum<T>().GetRemark();
-                if (value.IsEmptyString())
-                    continue;
+                var key = (int)eValue;
+                var value = new string[] { eValue.ToString(), eValue.ToString().Convert2Enum<T>().GetRemark() };
 
                 dic.Add(key, value);
             }
