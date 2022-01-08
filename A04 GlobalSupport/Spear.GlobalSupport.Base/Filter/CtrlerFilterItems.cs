@@ -23,11 +23,11 @@ namespace Spear.GlobalSupport.Base.Filter
 
     public class CtrlerFilterItemForAuth : CtrlerFilterItemBase
     {
-        private SessionNAuth<HTTPTokenProvider> _sessionNAuth { get; set; }
+        private ISessionNAuth<HTTPTokenProvider> _sessionNAuth { get; set; }
 
         public CtrlerFilterItemForAuth()
         {
-            _sessionNAuth = ServiceContext.Resolve<SessionNAuth<HTTPTokenProvider>>();
+            _sessionNAuth = ServiceContext.Resolve<ISessionNAuth<HTTPTokenProvider>>();
         }
 
         public override void OnExecuting(object context)

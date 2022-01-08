@@ -22,11 +22,11 @@ namespace Spear.GlobalSupport.Base.Filter
 
     public class GRPCFilterItemForAuth : GRPCFilterItemBase
     {
-        private SessionNAuth<HTTPTokenProvider> _sessionNAuth { get; set; }
+        private ISessionNAuth<HTTPTokenProvider> _sessionNAuth { get; set; }
 
         public GRPCFilterItemForAuth()
         {
-            _sessionNAuth = ServiceContext.Resolve<SessionNAuth<HTTPTokenProvider>>();
+            _sessionNAuth = ServiceContext.Resolve<ISessionNAuth<HTTPTokenProvider>>();
         }
 
         public override void OnExecuting(object context)

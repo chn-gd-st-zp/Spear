@@ -15,6 +15,14 @@ namespace Spear.MidM.SessionNAuth
     public interface ISessionNAuth<T> : ITokenProvider
     {
         UserTokenRunTime CurrentUserToken { get; }
+
+        void SetUserToken(UserTokenCache userToken);
+
+        UserTokenCache GetUserToken(string accessToken);
+
+        void RemoveUserToken(string accessToken);
+
+        void VerifyPermission(string permissionCode);
     }
 
     public class SessionNAuth<TTokenProvider> : ISessionNAuth<TTokenProvider> where TTokenProvider : ITokenProvider
