@@ -17,15 +17,15 @@ namespace Spear.GlobalSupport.Base.Filter
     {
         public CtrlerFilterItems()
         {
-            Add(new CtrlerFilterItemForAuth());
+            Add(new CtrlerFilterItem());
         }
     }
 
-    public class CtrlerFilterItemForAuth : CtrlerFilterItemBase
+    public class CtrlerFilterItem : CtrlerFilterItemBase
     {
         private ISessionNAuth<HTTPTokenProvider> _sessionNAuth { get; set; }
 
-        public CtrlerFilterItemForAuth()
+        public CtrlerFilterItem()
         {
             _sessionNAuth = ServiceContext.Resolve<ISessionNAuth<HTTPTokenProvider>>();
         }
@@ -36,11 +36,11 @@ namespace Spear.GlobalSupport.Base.Filter
 
             base.OnExecuting(realContext);
 
-            var permissionAttr = ((ControllerActionDescriptor)realContext.ActionDescriptor).MethodInfo.GetCustomAttribute<PermissionAttribute>();
-            if (permissionAttr == null)
-                return;
+            //var permissionAttr = ((ControllerActionDescriptor)realContext.ActionDescriptor).MethodInfo.GetCustomAttribute<PermissionAttribute>();
+            //if (permissionAttr == null)
+            //    return;
 
-            _sessionNAuth.VerifyPermission(permissionAttr.Code);
+            //_sessionNAuth.VerifyPermission(permissionAttr.Code);
 
             //if(permissionAttr.AccessLogger)
         }

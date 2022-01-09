@@ -16,15 +16,15 @@ namespace Spear.GlobalSupport.Base.Filter
     {
         public GRPCFilterItems()
         {
-            Add(new GRPCFilterItemForAuth());
+            Add(new GRPCFilterItem());
         }
     }
 
-    public class GRPCFilterItemForAuth : GRPCFilterItemBase
+    public class GRPCFilterItem : GRPCFilterItemBase
     {
         private ISessionNAuth<HTTPTokenProvider> _sessionNAuth { get; set; }
 
-        public GRPCFilterItemForAuth()
+        public GRPCFilterItem()
         {
             _sessionNAuth = ServiceContext.Resolve<ISessionNAuth<HTTPTokenProvider>>();
         }
@@ -35,11 +35,11 @@ namespace Spear.GlobalSupport.Base.Filter
 
             base.OnExecuting(realContext);
 
-            var permissionAttr = realContext.MethodInfo.GetCustomAttribute<PermissionAttribute>();
-            if (permissionAttr == null)
-                return;
+            //var permissionAttr = realContext.MethodInfo.GetCustomAttribute<PermissionAttribute>();
+            //if (permissionAttr == null)
+            //    return;
 
-            _sessionNAuth.VerifyPermission(permissionAttr.Code);
+            //_sessionNAuth.VerifyPermission(permissionAttr.Code);
 
             //if(permissionAttr.AccessLogger)
         }
