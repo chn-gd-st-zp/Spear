@@ -14,7 +14,7 @@ namespace Spear.MidM.SessionNAuth
 {
     public interface ISessionNAuth<T> : ITokenProvider
     {
-        UserTokenRunTime CurrentUserToken { get; }
+        UserTokenRunTime CurrentAccount { get; }
 
         void SetUserToken(UserTokenCache userToken);
 
@@ -69,7 +69,7 @@ namespace Spear.MidM.SessionNAuth
         /// <summary>
         /// 当前会话对象
         /// </summary>
-        public UserTokenRunTime CurrentUserToken
+        public UserTokenRunTime CurrentAccount
         {
             get
             {
@@ -161,10 +161,10 @@ namespace Spear.MidM.SessionNAuth
         {
             try
             {
-                if (CurrentUserToken.AccountInfo.ERoleType == Enum_Role.SuperAdmin)
+                if (CurrentAccount.AccountInfo.ERoleType == Enum_Role.SuperAdmin)
                     return;
 
-                if (CurrentUserToken.PermissionCodes.Contains(permissionCode))
+                if (CurrentAccount.PermissionCodes.Contains(permissionCode))
                     return;
 
                 throw new Exception_NoAuth();
