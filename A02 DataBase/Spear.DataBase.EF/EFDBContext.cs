@@ -195,22 +195,25 @@ namespace Spear.Inf.EF
 
         public Tuple<List<TEntity>, int> Page<TEntity>(Expression<Func<TEntity, bool>> expression, IDTO_Page param = null) where TEntity : DBEntity_Base, new()
         {
-            var query = GetDBSet<TEntity>().Where(expression);
+            var query = GetDBSet<TEntity>().AsQueryable();
+            if (expression != null)
+                query = query.Where(expression);
 
             return PageByQueryable<TEntity>(query, param);
         }
 
         public Tuple<List<TEntity>, int> PageByQueryable<TEntity>(object queryObj, IDTO_Page param = null) where TEntity : DBEntity_Base, new()
         {
-            var query = ((IQueryable<TEntity>)queryObj).OrderBy(param);
+            var query = queryObj == null ? GetDBSet<TEntity>().AsQueryable() : (IQueryable<TEntity>)queryObj;
+
+            query = query.OrderBy(param);
 
             int rowQty = query.Count();
 
             param.PageSize = param.PageSize == 0 ? 10 : param.PageSize;
             param.PageIndex = param.PageIndex == 0 ? 1 : param.PageIndex;
 
-            var dataList = query.Skip(param.PageSize * (param.PageIndex - 1)).Take(param.PageSize)
-                .ToList();
+            var dataList = query.Skip(param.PageSize * (param.PageIndex - 1)).Take(param.PageSize).ToList();
 
             return new Tuple<List<TEntity>, int>(dataList, rowQty);
         }

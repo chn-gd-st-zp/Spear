@@ -126,7 +126,9 @@ namespace Spear.Inf.SqlSugar
 
         public Tuple<List<TEntity>, int> Page<TEntity>(Expression<Func<TEntity, bool>> expression, IDTO_Page param = null) where TEntity : DBEntity_Base, new()
         {
-            var query = GetSimpleClient<TEntity>().AsQueryable().Where(expression);
+            var query = GetSimpleClient<TEntity>().AsQueryable();
+            if (expression != null)
+                query = query.Where(expression);
 
             return PageByQueryable<TEntity>(query, param);
         }
@@ -135,7 +137,9 @@ namespace Spear.Inf.SqlSugar
         {
             string orderBy = param.GenericOrderBySql<TEntity>();
 
-            var query = ((ISugarQueryable<TEntity>)queryObj).OrderBy(orderBy);
+            var query = queryObj == null ? GetSimpleClient<TEntity>().AsQueryable() : (ISugarQueryable<TEntity>)queryObj;
+
+            query = query.OrderBy(orderBy);
 
             int rowQty = query.Count();
 
