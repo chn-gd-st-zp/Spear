@@ -338,6 +338,20 @@ namespace Spear.Inf.Core.Tool
             return mapper.Map<TTarget>(source);
         }
 
+        /// <summary>
+        /// 类型映射,默认字段名字一一对应
+        /// </summary>
+        /// <typeparam name="TTarget">转化之后的model，可以理解为viewmodel</typeparam>
+        /// <typeparam name="TSource">要被转化的实体，Entity</typeparam>
+        /// <param name="source">可以使用这个扩展方法的类型，任何引用类型</param>
+        /// <returns></returns>
+        public static IEnumerable<TTarget> MapTo<TSource, TTarget>(this IEnumerable<TSource> source)
+            where TTarget : class
+            where TSource : class
+        {
+            return source.Select(o => o.MapTo<TSource, TTarget>());
+        }
+
         #endregion
 
         #region 其他
