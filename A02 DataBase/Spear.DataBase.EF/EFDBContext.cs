@@ -12,20 +12,39 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Spear.Inf.Core.DBRef;
 using Spear.Inf.Core.DTO;
 using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.SettingsGeneric;
 using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.EF
 {
+    public delegate void BulidAction(DbContextOptionsBuilder builder);
+
+    public class EFDBContextOptionBuilder : DbContextOptionsBuilder
+    {
+        public BulidAction BulidAction { get; set; }
+    }
+
+    public class EFDBContextOptionBuilder<TDBcontext> : EFDBContextOptionBuilder
+    {
+        //
+    }
+
     public abstract class EFDBContext : DbContext, IDBContext
     {
         private string _id = Unique.GetGUID();
         public string ID { get { return _id; } }
 
-        public EFDBContext(DbContextOptions options) : base(options)
+        private readonly EFDBContextOptionBuilder _dbOptionBuilder;
+
+        public EFDBContext(EFDBContextOptionBuilder builder) : base(builder.Options)
         {
+            _dbOptionBuilder = builder;
             DBSets = new Dictionary<Type, object>();
             InitDBSets();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            _dbOptionBuilder.BulidAction(optionsBuilder);
         }
 
         public object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new()
@@ -263,13 +282,6 @@ namespace Spear.Inf.EF
         }
 
         #endregion
-    }
-
-    public abstract class EFDBContext<TDBType, TConnectionSettings, TConnectionSettingsKey> : EFDBContext
-        where TDBType : Enum
-        where TConnectionSettings : ISettings
-    {
-        public EFDBContext(IDBOptionFactory<DbContextOptions, TDBType, TConnectionSettings, TConnectionSettingsKey> optionFactory) : base(optionFactory.Option) { }
     }
 
     public abstract class EFDBEntityMapping<TDBEntity> : IEntityTypeConfiguration<TDBEntity> where TDBEntity : DBEntity_Base

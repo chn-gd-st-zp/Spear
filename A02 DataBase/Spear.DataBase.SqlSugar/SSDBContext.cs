@@ -10,7 +10,6 @@ using Spear.Inf.Core.DBRef;
 using Spear.Inf.Core.DTO;
 using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.Tool;
-using Spear.Inf.Core.SettingsGeneric;
 
 namespace Spear.Inf.SqlSugar
 {
@@ -199,14 +198,6 @@ namespace Spear.Inf.SqlSugar
         }
 
         #endregion
-    }
-
-    public abstract class SSDBContext<TDBType, TConnectionSettings, TConnectionSettingsKey> : SSDBContext
-        where TDBType : Enum
-        where TConnectionSettings : ISettings
-    {
-        public SSDBContext(IDBOptionFactory<ConnectionConfig, TDBType, TConnectionSettings, TConnectionSettingsKey> optionFactory) : base(optionFactory.Option) { }
-        public SSDBContext(IDBOptionFactory<List<ConnectionConfig>, TDBType, TConnectionSettings, TConnectionSettingsKey> optionFactory) : base(optionFactory.Option) { }
     }
 
     public static class DBContextExtend
