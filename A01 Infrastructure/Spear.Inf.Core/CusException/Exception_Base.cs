@@ -1,5 +1,6 @@
 ﻿using System;
 
+using Spear.Inf.Core.Base;
 using Spear.Inf.Core.CusEnum;
 
 namespace Spear.Inf.Core.CusException

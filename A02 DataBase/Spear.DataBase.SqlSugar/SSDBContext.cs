@@ -10,17 +10,23 @@ using Spear.Inf.Core.DBRef;
 using Spear.Inf.Core.DTO;
 using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.Tool;
+using Spear.Inf.Core.SettingsGeneric;
 
 namespace Spear.Inf.SqlSugar
 {
     public abstract class SSDBContext : SqlSugarClient, IDBContext
     {
-        public string ID { get { return _id; } }
         private string _id = Unique.GetGUID();
+        public string ID { get { return _id; } }
 
         public SSDBContext(ConnectionConfig connectionConfig) : base(connectionConfig) { }
 
         public SSDBContext(List<ConnectionConfig> connectionConfigList) : base(connectionConfigList) { }
+
+        public object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new()
+        {
+            return GetSimpleClient<TEntity>().AsQueryable();
+        }
 
         #region 增
 
@@ -193,6 +199,14 @@ namespace Spear.Inf.SqlSugar
         }
 
         #endregion
+    }
+
+    public abstract class SSDBContext<TDBType, TConnectionSettings, TConnectionSettingsKey> : SSDBContext
+        where TDBType : Enum
+        where TConnectionSettings : ISettings
+    {
+        public SSDBContext(IDBOptionFactory<ConnectionConfig, TDBType, TConnectionSettings, TConnectionSettingsKey> optionFactory) : base(optionFactory.Option) { }
+        public SSDBContext(IDBOptionFactory<List<ConnectionConfig>, TDBType, TConnectionSettings, TConnectionSettingsKey> optionFactory) : base(optionFactory.Option) { }
     }
 
     public static class DBContextExtend

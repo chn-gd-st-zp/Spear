@@ -2,6 +2,7 @@
 
 using MagicOnion;
 
+using Spear.Inf.Core.Base;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusException;
 using Spear.Inf.Core.Tool;

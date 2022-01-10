@@ -12,20 +12,25 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Spear.Inf.Core.DBRef;
 using Spear.Inf.Core.DTO;
 using Spear.Inf.Core.Interface;
+using Spear.Inf.Core.SettingsGeneric;
 using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.EF
 {
     public abstract class EFDBContext : DbContext, IDBContext
     {
-        public string ID { get { return _id; } }
         private string _id = Unique.GetGUID();
+        public string ID { get { return _id; } }
 
         public EFDBContext(DbContextOptions options) : base(options)
         {
             DBSets = new Dictionary<Type, object>();
-
             InitDBSets();
+        }
+
+        public object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new()
+        {
+            return GetDBSet<TEntity>().AsQueryable();
         }
 
         #region 对象映射
@@ -45,8 +50,6 @@ namespace Spear.Inf.EF
 
         private readonly Dictionary<Type, object> DBSets;
 
-        protected abstract void InitDBSets();
-
         protected void AddDBSet<TEntity>(DbSet<TEntity> obj) where TEntity : DBEntity_Base, new()
         {
             var key = typeof(TEntity);
@@ -59,6 +62,8 @@ namespace Spear.Inf.EF
         {
             return DBSets[typeof(TEntity)] as DbSet<TEntity>;
         }
+
+        protected abstract void InitDBSets();
 
         #endregion
 
@@ -258,6 +263,13 @@ namespace Spear.Inf.EF
         }
 
         #endregion
+    }
+
+    public abstract class EFDBContext<TDBType, TConnectionSettings, TConnectionSettingsKey> : EFDBContext
+        where TDBType : Enum
+        where TConnectionSettings : ISettings
+    {
+        public EFDBContext(IDBOptionFactory<DbContextOptions, TDBType, TConnectionSettings, TConnectionSettingsKey> optionFactory) : base(optionFactory.Option) { }
     }
 
     public abstract class EFDBEntityMapping<TDBEntity> : IEntityTypeConfiguration<TDBEntity> where TDBEntity : DBEntity_Base
