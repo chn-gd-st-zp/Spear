@@ -13,14 +13,34 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.SqlSugar
 {
+    public class SSDBConnectionConfig : ConnectionConfig { };
+
+    public delegate void OptionBulidAction(ConnectionConfig connectionConfig);
+
+    public delegate void OptionsBulidAction(List<ConnectionConfig> connectionConfigs);
+
+    public class SSDBContextOptionBuilder : ConnectionConfig
+    {
+        public SSDBContextOptionBuilder() { BulidAction(this); }
+
+        public OptionBulidAction BulidAction { get; set; }
+    }
+
+    public class SSDBContextOptionsBuilder : List<ConnectionConfig>
+    {
+        public SSDBContextOptionsBuilder() { BulidAction(this); }
+
+        public OptionsBulidAction BulidAction { get; set; }
+    }
+
     public abstract class SSDBContext : SqlSugarClient, IDBContext
     {
         private string _id = Unique.GetGUID();
         public string ID { get { return _id; } }
 
-        public SSDBContext(ConnectionConfig connectionConfig) : base(connectionConfig) { }
+        public SSDBContext(SSDBContextOptionBuilder optionsBuilder) : base(optionsBuilder) { }
 
-        public SSDBContext(List<ConnectionConfig> connectionConfigList) : base(connectionConfigList) { }
+        public SSDBContext(SSDBContextOptionsBuilder optionsBuilder) : base(optionsBuilder) { }
 
         public object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new()
         {

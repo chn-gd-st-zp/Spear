@@ -16,14 +16,14 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.EF
 {
-    public delegate void BulidAction(DbContextOptionsBuilder builder);
+    public delegate void OptionsBuilderAction(DbContextOptionsBuilder optionsBuilder);
 
-    public class EFDBContextOptionBuilder : DbContextOptionsBuilder
+    public class EFDBContextOptionsBuilder : DbContextOptionsBuilder
     {
-        public BulidAction BulidAction { get; set; }
+        public OptionsBuilderAction BulidAction { get; set; }
     }
 
-    public class EFDBContextOptionBuilder<TDBcontext> : EFDBContextOptionBuilder
+    public class EFDBContextOptionsBuilder<TDBcontext> : EFDBContextOptionsBuilder
     {
         //
     }
@@ -33,18 +33,18 @@ namespace Spear.Inf.EF
         private string _id = Unique.GetGUID();
         public string ID { get { return _id; } }
 
-        private readonly EFDBContextOptionBuilder _dbOptionBuilder;
+        private readonly EFDBContextOptionsBuilder _optionsBuilder;
 
-        public EFDBContext(EFDBContextOptionBuilder builder) : base(builder.Options)
+        public EFDBContext(EFDBContextOptionsBuilder optionsBuilder) : base(optionsBuilder.Options)
         {
-            _dbOptionBuilder = builder;
+            _optionsBuilder = optionsBuilder;
             DBSets = new Dictionary<Type, object>();
             InitDBSets();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            _dbOptionBuilder.BulidAction(optionsBuilder);
+            _optionsBuilder.BulidAction(optionsBuilder);
         }
 
         public object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new()
