@@ -9,7 +9,7 @@ namespace Spear.Inf.Core.Tool
         /// <summary>
         /// 时间戳计时开始时间
         /// </summary>
-        private static DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private static DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
         private static DateTimeOffset dto = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
         /// <summary>

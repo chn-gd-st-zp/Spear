@@ -8,7 +8,7 @@ namespace Spear.Inf.Core.DTO
         /// <summary>
         /// 时间戳
         /// </summary>
-        public long Timestamp { get; set; }
+        public long? Timestamp { get; set; }
 
         /// <summary>
         /// 参数校验
