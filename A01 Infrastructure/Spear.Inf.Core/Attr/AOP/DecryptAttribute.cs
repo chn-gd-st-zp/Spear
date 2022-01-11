@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 
 using AspectInjector.Broker;
-
 using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
@@ -23,7 +22,7 @@ namespace Spear.Inf.Core.Attr
     }
 
     [Aspect(Scope.Global)]
-    public class DecryptAspect : AOPAttribute
+    public class DecryptAspect : AOPHandler
     {
         public override object After(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, object actionResult)
         {

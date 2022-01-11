@@ -47,7 +47,7 @@ namespace Spear.Inf.Core.Attr
             #region 参数验证
 
             //自定义的参数验证
-            FuncParams.Verify();
+            paramArray.Verify();
 
             #endregion
         }

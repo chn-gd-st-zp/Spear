@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Spear.Inf.Core.Attr
 {
-    public interface IAOP
+    public interface IAOPHandler
     {
         void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams);
 
@@ -13,7 +13,7 @@ namespace Spear.Inf.Core.Attr
         object After(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, object actionResult);
     }
 
-    public class AOPAttribute : Attribute, IAOP
+    public class AOPHandler :  IAOPHandler
     {
         public virtual void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams) { }
         public virtual void Error(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, Exception error, out bool throwException) { throwException = true; }

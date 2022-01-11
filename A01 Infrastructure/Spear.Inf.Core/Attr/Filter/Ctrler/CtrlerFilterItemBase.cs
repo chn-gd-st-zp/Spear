@@ -64,7 +64,7 @@ namespace Spear.Inf.Core.Attr
             }
 
             //自定义的参数验证
-            FuncParams.Verify();
+            paramDic.Select(o => o.Value).ToArray().Verify();
 
             #endregion
         }

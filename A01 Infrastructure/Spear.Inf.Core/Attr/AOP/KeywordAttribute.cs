@@ -4,30 +4,21 @@ using System.Reflection;
 
 using AspectInjector.Broker;
 
-using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric;
-
 namespace Spear.Inf.Core.Attr
 {
-    [AttributeUsage(AttributeTargets.Property)]
-    public class KeywordDefineAttribute : Attribute
-    {
-        public string Pattern { get; private set; }
-
-        public KeywordDefineAttribute(string pattern) { Pattern = pattern; }
-    }
-
     [Injection(typeof(KeywordResetAspect))]
     [AttributeUsage(AttributeTargets.Property)]
     public class KeywordResetAttribute : Attribute
     {
-        public string Pattern { get; private set; }
+        public string Keyword { get; private set; }
 
-        public KeywordResetAttribute(string pattern) { Pattern = pattern; }
+        public string ToValue { get; private set; }
+
+        public KeywordResetAttribute(string keyword, string toValue) { Keyword = keyword; ToValue = toValue; }
     }
 
     [Aspect(Scope.Global)]
-    public class KeywordResetAspect : AOPAttribute
+    public class KeywordResetAspect : AOPHandler
     {
         public override object After(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, object actionResult)
         {
@@ -41,11 +32,7 @@ namespace Spear.Inf.Core.Attr
                 if (attr != null)
                 {
                     var realAttr = attr as KeywordResetAttribute;
-                    var kr = ServiceContext.Resolve<IKeywordProcessing>();
-                    if (kr != null)
-                    {
-                        //actionResult = actionResult.ToString().Replace(realAttr.Pattern, kr.GetValue<string>(realAttr.Pattern));
-                    }
+                    actionResult = actionResult.ToString().Replace(realAttr.Keyword, realAttr.ToValue);
                 }
             }
 

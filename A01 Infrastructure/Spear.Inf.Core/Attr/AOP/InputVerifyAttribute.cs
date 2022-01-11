@@ -11,9 +11,12 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core.Attr
 {
+    [Injection(typeof(InputVerifyAspect))]
+    [AttributeUsage(AttributeTargets.Method)]
+    public class InputVerifyAttribute : Attribute { }
+
     [Aspect(Scope.Global)]
-    [Injection(typeof(InputVerifyAttribute))]
-    public class InputVerifyAttribute : AOPAttribute
+    public class InputVerifyAspect : AOPHandler
     {
         public override void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams)
         {
@@ -35,12 +38,13 @@ namespace Spear.Inf.Core.Attr
 
     public static class InputVerifyAttributeExtend
     {
-        public static void Verify(this object paramObj)
+        public static void Verify(this object[] paramObjs)
         {
             string errorMsg = "";
 
             List<IDTO_Input> actionParams = new List<IDTO_Input>();
-            LoadParams(paramObj, typeof(IDTO_Input), actionParams);
+            foreach (var paramObj in paramObjs)
+                LoadParams(paramObj, typeof(IDTO_Input), actionParams);
 
             foreach (object actionParam in actionParams)
             {

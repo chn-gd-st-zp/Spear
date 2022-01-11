@@ -13,34 +13,24 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.SqlSugar
 {
+    public delegate ConnectionConfig OptionBulidAction(ConnectionConfig connectionConfig);
+
+    public delegate List<ConnectionConfig> OptionsBulidAction(List<ConnectionConfig> connectionConfigs);
+
+    public class SSDBContextOptionBuilder : ConnectionConfig { public OptionBulidAction BulidAction { get; set; } }
+
+    public class SSDBContextOptionsBuilder : List<ConnectionConfig> { public OptionsBulidAction BulidAction { get; set; } }
+
     public class SSDBConnectionConfig : ConnectionConfig { };
-
-    public delegate void OptionBulidAction(ConnectionConfig connectionConfig);
-
-    public delegate void OptionsBulidAction(List<ConnectionConfig> connectionConfigs);
-
-    public class SSDBContextOptionBuilder : ConnectionConfig
-    {
-        public SSDBContextOptionBuilder() { BulidAction(this); }
-
-        public OptionBulidAction BulidAction { get; set; }
-    }
-
-    public class SSDBContextOptionsBuilder : List<ConnectionConfig>
-    {
-        public SSDBContextOptionsBuilder() { BulidAction(this); }
-
-        public OptionsBulidAction BulidAction { get; set; }
-    }
 
     public abstract class SSDBContext : SqlSugarClient, IDBContext
     {
         private string _id = Unique.GetGUID();
         public string ID { get { return _id; } }
 
-        public SSDBContext(SSDBContextOptionBuilder optionsBuilder) : base(optionsBuilder) { }
+        public SSDBContext(SSDBContextOptionBuilder optionsBuilder) : base(optionsBuilder.BulidAction(optionsBuilder)) { }
 
-        public SSDBContext(SSDBContextOptionsBuilder optionsBuilder) : base(optionsBuilder) { }
+        public SSDBContext(SSDBContextOptionsBuilder optionsBuilder) : base(optionsBuilder.BulidAction(optionsBuilder)) { }
 
         public object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new()
         {
