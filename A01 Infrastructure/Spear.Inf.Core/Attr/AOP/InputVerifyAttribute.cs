@@ -15,8 +15,8 @@ namespace Spear.Inf.Core.Attr
     [AttributeUsage(AttributeTargets.Method)]
     public class InputVerifyAttribute : Attribute { }
 
-    [Aspect(Scope.Global)]
-    public class InputVerifyAspect : AOPHandler
+    [Aspect(Scope.PerInstance)]
+    public class InputVerifyAspect : AOPAspectBase
     {
         public override void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams)
         {

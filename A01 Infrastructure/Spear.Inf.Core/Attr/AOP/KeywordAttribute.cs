@@ -17,8 +17,8 @@ namespace Spear.Inf.Core.Attr
         public KeywordResetAttribute(string keyword, string toValue) { Keyword = keyword; ToValue = toValue; }
     }
 
-    [Aspect(Scope.Global)]
-    public class KeywordResetAspect : AOPHandler
+    [Aspect(Scope.PerInstance)]
+    public class KeywordResetAspect : AOPAspectBase
     {
         public override object After(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, object actionResult)
         {

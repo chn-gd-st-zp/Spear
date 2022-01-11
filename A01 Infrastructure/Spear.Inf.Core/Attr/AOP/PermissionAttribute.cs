@@ -40,8 +40,8 @@ namespace Spear.Inf.Core.Attr
         }
     }
 
-    [Aspect(Scope.Global)]
-    public class PermissionAspect : AOPHandler
+    [Aspect(Scope.PerInstance)]
+    public class PermissionAspect : AOPAspectBase
     {
         public override void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams)
         {

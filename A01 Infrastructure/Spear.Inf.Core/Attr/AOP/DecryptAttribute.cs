@@ -22,7 +22,7 @@ namespace Spear.Inf.Core.Attr
     }
 
     [Aspect(Scope.Global)]
-    public class DecryptAspect : AOPHandler
+    public class DecryptAspect : AOPAspectBase
     {
         public override object After(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, object actionResult)
         {
@@ -47,7 +47,7 @@ namespace Spear.Inf.Core.Attr
 
             return actionResult;
         }
-
+        /*
         [Advice(Kind.Around)]
         public new object HandleMethod(
            [Argument(Source.Instance)] object source,
@@ -58,6 +58,6 @@ namespace Spear.Inf.Core.Attr
         )
         {
             return base.HandleMethod(source, method, triggers, actionName, actionParams);
-        }
+        }*/
     }
 }
