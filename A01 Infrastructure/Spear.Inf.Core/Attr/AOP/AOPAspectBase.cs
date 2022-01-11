@@ -4,23 +4,8 @@ using System.Reflection;
 
 namespace Spear.Inf.Core.Attr
 {
-    public interface IAOPHandler
+    public abstract class AOPAspectBase
     {
-        void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams);
-
-        void Error(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, Exception error, out bool throwException);
-
-        object After(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, object actionResult);
-    }
-
-    public abstract class AOPAspectBase :  IAOPHandler
-    {
-        public virtual void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams) { }
-
-        public virtual void Error(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, Exception error, out bool throwException) { throwException = true; }
-
-        public virtual object After(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, object actionResult) { return actionResult; }
-
         public virtual object HandleMethod(
             object source,
             Func<object[], object> method,
@@ -55,5 +40,11 @@ namespace Spear.Inf.Core.Attr
 
             return result;
         }
+
+        protected virtual void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams) { }
+
+        protected virtual void Error(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, Exception error, out bool throwException) { throwException = true; }
+
+        protected virtual object After(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, object actionResult) { return actionResult; }
     }
 }

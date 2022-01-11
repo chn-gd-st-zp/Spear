@@ -24,7 +24,19 @@ namespace Spear.Inf.Core.Attr
     [Aspect(Scope.Global)]
     public class DecryptAspect : AOPAspectBase
     {
-        public override object After(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, object actionResult)
+        [Advice(Kind.Around)]
+        public new object HandleMethod(
+           [Argument(Source.Instance)] object source,
+           [Argument(Source.Target)] Func<object[], object> method,
+           [Argument(Source.Triggers)] Attribute[] triggers,
+           [Argument(Source.Name)] string actionName,
+           [Argument(Source.Arguments)] object[] actionParams
+        )
+        {
+            return base.HandleMethod(source, method, triggers, actionName, actionParams);
+        }
+
+        protected override object After(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, object actionResult)
         {
             if (
                 methodInfo.IsSpecialName
@@ -47,17 +59,5 @@ namespace Spear.Inf.Core.Attr
 
             return actionResult;
         }
-        /*
-        [Advice(Kind.Around)]
-        public new object HandleMethod(
-           [Argument(Source.Instance)] object source,
-           [Argument(Source.Target)] Func<object[], object> method,
-           [Argument(Source.Triggers)] Attribute[] triggers,
-           [Argument(Source.Name)] string actionName,
-           [Argument(Source.Arguments)] object[] actionParams
-        )
-        {
-            return base.HandleMethod(source, method, triggers, actionName, actionParams);
-        }*/
     }
 }

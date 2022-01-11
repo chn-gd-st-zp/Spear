@@ -18,11 +18,6 @@ namespace Spear.Inf.Core.Attr
     [Aspect(Scope.PerInstance)]
     public class InputVerifyAspect : AOPAspectBase
     {
-        public override void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams)
-        {
-            actionParams.Verify();
-        }
-
         [Advice(Kind.Around)]
         public override object HandleMethod(
            [Argument(Source.Instance)] object source,
@@ -33,6 +28,11 @@ namespace Spear.Inf.Core.Attr
         )
         {
             return base.HandleMethod(source, method, triggers, actionName, actionParams);
+        }
+
+        protected override void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams)
+        {
+            actionParams.Verify();
         }
     }
 

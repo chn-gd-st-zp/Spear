@@ -43,21 +43,6 @@ namespace Spear.Inf.Core.Attr
     [Aspect(Scope.PerInstance)]
     public class PermissionAspect : AOPAspectBase
     {
-        public override void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams)
-        {
-            //
-        }
-
-        public override void Error(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, Exception error, out bool throwException)
-        {
-            throwException = true;
-        }
-
-        public override object After(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, object actionResult)
-        {
-            return actionResult;
-        }
-
         [Advice(Kind.Around)]
         public new object HandleMethod(
            [Argument(Source.Instance)] object source,
@@ -68,6 +53,21 @@ namespace Spear.Inf.Core.Attr
         )
         {
             return base.HandleMethod(source, method, triggers, actionName, actionParams);
+        }
+
+        protected override void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams)
+        {
+            //
+        }
+
+        protected override void Error(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, Exception error, out bool throwException)
+        {
+            throwException = true;
+        }
+
+        protected override object After(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, object actionResult)
+        {
+            return actionResult;
         }
     }
 }
