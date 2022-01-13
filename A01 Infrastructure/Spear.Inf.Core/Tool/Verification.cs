@@ -340,7 +340,7 @@ namespace Spear.Inf.Core.Tool
         /// <returns></returns>
         public static bool IsUserName(this string data)
         {
-            string expression = @"^[a-zA-Z]$";
+            string expression = @"^[a-zA-Z]{1}\w+$";
 
             return Regex.IsMatch(data, expression);
         }

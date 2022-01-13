@@ -62,7 +62,6 @@ namespace Spear.MidM.Redis
             if (dbIndex.HasValue)
                 index = dbIndex.Value;
 
-
             return _connection.GetDatabase(_defaultDatabase);
         }
 

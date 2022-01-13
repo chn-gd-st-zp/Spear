@@ -87,33 +87,35 @@ namespace Spear.MidM.SessionNAuth
         /// <summary>
         /// 权限代码
         /// </summary>
-        [JsonIgnore]
         public string[] PermissionCodes { get; set; }
 
         /// <summary>
         /// 创建时间
         /// </summary>
+        [JsonIgnore]
         public DateTime CreateTime { get { return DeviceInfo.CreateTime; } set { DeviceInfo.CreateTime = value; AccountInfo.CreateTime = value; } }
 
         /// <summary>
         /// 刷新时间
         /// </summary>
+        [JsonIgnore]
         public DateTime UpdateTime { get { return DeviceInfo.UpdateTime; } set { DeviceInfo.UpdateTime = value; AccountInfo.UpdateTime = value; } }
 
         /// <summary>
         /// 过期时间
         /// </summary>
+        [JsonIgnore]
         public DateTime ExpiredTime { get { return DeviceInfo.ExpiredTime; } set { DeviceInfo.ExpiredTime = value; AccountInfo.ExpiredTime = value; } }
 
         /// <summary>
         /// 设备信息
         /// </summary>
-        public SessionInfo4Device DeviceInfo { get; set; }
+        public SessionInfo4Device DeviceInfo { get; set; } = new SessionInfo4Device();
 
         /// <summary>
         /// 账号信息
         /// </summary>
-        public SessionInfo4Account AccountInfo { get; set; }
+        public SessionInfo4Account AccountInfo { get; set; } = new SessionInfo4Account();
     }
 
     public class UserTokenCache : UserToken
