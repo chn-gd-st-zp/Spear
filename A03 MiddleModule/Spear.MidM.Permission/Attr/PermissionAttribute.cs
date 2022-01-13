@@ -3,9 +3,10 @@ using System.Reflection;
 
 using AspectInjector.Broker;
 
+using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
 
-namespace Spear.Inf.Core.Attr
+namespace Spear.MidM.Permission
 {
     [Injection(typeof(PermissionAspect))]
     [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Method)]
