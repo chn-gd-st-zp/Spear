@@ -8,8 +8,4 @@
     <ProjectReference Include="..\Spear.MidM.SessionNAuth\Spear.MidM.SessionNAuth.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Handle\" />
-  </ItemGroup>
-
 </Project>

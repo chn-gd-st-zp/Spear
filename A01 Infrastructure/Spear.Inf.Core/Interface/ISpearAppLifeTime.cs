@@ -4,12 +4,10 @@ namespace Spear.Inf.Core.Interface
 {
     public interface ISpearAppLifeTime
     {
-        Task Starting();
+        Task Started(params object[] args);
 
-        Task Started();
+        Task Stopping(params object[] args);
 
-        Task Stopping();
-
-        Task stopped();
+        Task Stopped(params object[] args);
     }
 }
