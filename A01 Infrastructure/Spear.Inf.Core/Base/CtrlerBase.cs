@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.ServGeneric;
@@ -8,18 +7,11 @@ namespace Spear.Inf.Core.Base
 {
     public class CtrlerBase : ControllerBase
     {
-        protected new HttpContext HttpContext { get; private set; }
         protected ISpearLogger Logger { get; private set; }
 
         public CtrlerBase()
         {
-            HttpContext = Resolve<IHttpContextAccessor>().HttpContext;
-            Logger = Resolve<ISpearLogger>();
-        }
-
-        protected TTarget Resolve<TTarget>()
-        {
-            return ServiceContext.Resolve<TTarget>();
+            Logger = ServiceContext.Resolve<ISpearLogger>();
         }
     }
 
@@ -30,7 +22,7 @@ namespace Spear.Inf.Core.Base
 
         public CtrlerBase() : base()
         {
-            Logger = Resolve<ISpearLogger<TLoggerType>>();
+            Logger = ServiceContext.Resolve<ISpearLogger<TLoggerType>>();
         }
     }
 
@@ -42,7 +34,7 @@ namespace Spear.Inf.Core.Base
 
         public CtrlerBase() : base()
         {
-            Cache = Resolve<TCache>();
+            Cache = ServiceContext.Resolve<TCache>();
         }
     }
 }

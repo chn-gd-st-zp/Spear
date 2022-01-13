@@ -38,7 +38,26 @@ namespace Spear.Inf.Core.Tool
         /// <returns></returns>
         public static bool IsImplementedType(this Type type, Type basicType)
         {
-            return basicType.IsAssignableFrom(type);
+            bool result = false;
+
+            result = basicType.IsAssignableFrom(type);
+            if (result)
+                return result;
+
+            var types = type.GetInterfaces();
+            foreach (var t in types)
+            {
+                if (!t.IsGenericType && !basicType.IsGenericType && t.FullName == basicType.FullName)
+                    return true;
+
+                if (t.IsGenericType && basicType.IsGenericType && t.Name == basicType.Name)
+                {
+                    if (t.GetGenericTypeDefinition() == basicType.GetGenericTypeDefinition())
+                        return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>

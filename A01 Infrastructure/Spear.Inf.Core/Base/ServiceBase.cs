@@ -1,47 +1,52 @@
-﻿using Microsoft.AspNetCore.Http;
-
-using Spear.Inf.Core.Interface;
+﻿using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.ServGeneric;
 
 namespace Spear.Inf.Core.Base
 {
-    public class ServiceBase
+    public class ServiceBase : IService
     {
-        protected HttpContext HttpContext { get; private set; }
         protected ISpearLogger Logger { get; private set; }
 
         public ServiceBase()
         {
-            HttpContext = Resolve<IHttpContextAccessor>().HttpContext;
-            Logger = Resolve<ISpearLogger>();
-        }
-
-        protected TTarget Resolve<TTarget>()
-        {
-            return ServiceContext.Resolve<TTarget>();
+            Logger = ServiceContext.Resolve<ISpearLogger>();
         }
     }
 
-    public class ServiceBase<TLoggerType> : ServiceBase
-        where TLoggerType : class
+    public class ServiceBase<TService> : ServiceBase, IService<TService>
+        where TService : class, IService
     {
-        protected new ISpearLogger<TLoggerType> Logger { get; private set; }
+        protected new ISpearLogger<TService> Logger { get; private set; }
 
-        public ServiceBase() : base()
+        public ServiceBase()
         {
-            Logger = Resolve<ISpearLogger<TLoggerType>>();
+            Logger = ServiceContext.Resolve<ISpearLogger<TService>>();
         }
     }
 
-    public class ServiceBase<TLoggerType, TCache> : ServiceBase<TLoggerType>
-        where TLoggerType : class
+    public class ServiceBase<TService, TCache> : ServiceBase<TService>, IService<TService, TCache>
+        where TService : class, IService
         where TCache : ICache
     {
-        protected TCache Cache { get; private set; }
+        public TCache Cache { get; private set; }
 
-        public ServiceBase() : base()
+        public ServiceBase()
         {
-            Cache = Resolve<TCache>();
+            Cache = ServiceContext.Resolve<TCache>();
+        }
+    }
+
+    public class ServiceBase<TService, TCache, TTokenProvider> : ServiceBase<TService, TCache>, IService<TService, TCache, TTokenProvider>
+        where TService : class, IService
+        where TCache : ICache
+        where TTokenProvider : ITokenProvider
+    {
+
+        public ISession<TTokenProvider> Session { get; private set; }
+
+        public ServiceBase()
+        {
+            Session = ServiceContext.Resolve<ISession<TTokenProvider>>();
         }
     }
 }

@@ -3,17 +3,21 @@ using System.Linq;
 
 using Autofac;
 
+using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusException;
 using Spear.Inf.Core.EncryptionNDecrypt;
+using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.Tool;
 using Spear.MidM.Redis;
 
 namespace Spear.MidM.SessionNAuth
 {
-    public interface ISessionNAuth<T> : ITokenProvider
+    public interface ISessionNAuth : ISession
     {
+        string CurrentToken { get; }
+
         UserTokenRunTime CurrentAccount { get; }
 
         void SetUserToken(UserTokenCache userToken);
@@ -25,10 +29,16 @@ namespace Spear.MidM.SessionNAuth
         void VerifyPermission(string permissionCode);
     }
 
+    public interface ISessionNAuth<TTokenProvider> : ISession<TTokenProvider>, ISessionNAuth where TTokenProvider : ITokenProvider { }
+
+    [DIModeForService(Enum_DIType.Exclusive, typeof(ISession<>))]
+    [DIModeForService(Enum_DIType.Exclusive, typeof(ISessionNAuth<>))]
     public class SessionNAuth<TTokenProvider> : ISessionNAuth<TTokenProvider> where TTokenProvider : ITokenProvider
     {
         private readonly SessionNAuthSettings _sessionNAuthSettings;
         private readonly ICache4Redis _cache;
+
+        public TTokenProvider TokenProvider { get; }
 
         public SessionNAuth()
         {
@@ -37,6 +47,7 @@ namespace Spear.MidM.SessionNAuth
             _sessionNAuthSettings = ServiceContext.Resolve<SessionNAuthSettings>();
             //_cache = ServiceContext.Resolve<ICache4Redis>(new NamedPropertyParameter("redisSettings", redisSettings), new NamedPropertyParameter("defaultDatabase", _sessionNAuthSettings.CacheDBIndex));
             _cache = ServiceContext.Resolve<ICache4Redis>(new TypedParameter(typeof(RedisSettings), redisSettings), new TypedParameter(typeof(int), _sessionNAuthSettings.CacheDBIndex));
+            TokenProvider = ServiceContext.Resolve<TTokenProvider>();
         }
 
         /// <summary>
@@ -50,7 +61,7 @@ namespace Spear.MidM.SessionNAuth
                 {
                     if (_currentToken.IsEmptyString())
                     {
-                        var token1 = ServiceContext.Resolve<TTokenProvider>().CurrentToken;
+                        var token1 = TokenProvider.CurrentToken;
                         var token2 = token1.IsEmptyString() ? "" : token1;
                         var token = token2.ToLower() == "null" ? "" : token2;
                         _currentToken = token;
@@ -175,4 +186,10 @@ namespace Spear.MidM.SessionNAuth
             }
         }
     }
+
+    [DIModeForService(Enum_DIType.ExclusiveByKeyed, typeof(ISessionNAuth), Enum_Protocol.HTTP)]
+    public class SessionNAuth4HTTP : SessionNAuth<HTTPTokenProvider> { }
+
+    [DIModeForService(Enum_DIType.ExclusiveByKeyed, typeof(ISessionNAuth), Enum_Protocol.GRPC)]
+    public class SessionNAuth4GRPC : SessionNAuth<GRPCTokenProvider> { }
 }

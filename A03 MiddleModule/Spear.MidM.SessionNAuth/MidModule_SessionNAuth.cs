@@ -6,10 +6,7 @@ namespace Spear.MidM.SessionNAuth
     {
         public static ContainerBuilder RegisSessionNAuth(this ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterType<HTTPTokenProvider>().AsSelf().InstancePerDependency();
-            containerBuilder.RegisterType<GRPCTokenProvider>().AsSelf().InstancePerDependency();
-
-            containerBuilder.RegisterGeneric(typeof(SessionNAuth<>)).As(typeof(ISessionNAuth<>)).InstancePerDependency();
+            containerBuilder.RegisterGeneric(typeof(SessionNAuth<>)).As(typeof(ISessionNAuth<>)).InstancePerLifetimeScope();
 
             return containerBuilder;
         }

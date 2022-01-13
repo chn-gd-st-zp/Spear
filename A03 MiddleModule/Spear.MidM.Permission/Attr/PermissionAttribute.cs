@@ -1,41 +1,46 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 using AspectInjector.Broker;
 
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
+using Spear.Inf.Core.Interface;
+using Spear.Inf.Core.ServGeneric;
+using Spear.Inf.Core.Tool;
+using Spear.MidM.SessionNAuth;
 
 namespace Spear.MidM.Permission
 {
-    [Injection(typeof(PermissionAspect))]
-    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Method)]
-    public class PermissionAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public abstract class PermissionBaseAttribute : Attribute
     {
-        public readonly Enum_PermissionType EType;
+        public Enum_PermissionType EType { get; }
 
-        public readonly string Code;
+        public string Code { get; }
 
-        public readonly string ParentCode;
+        public string ParentCode { get; }
 
-        public readonly bool AccessLogger;
+        public bool AccessLogger { get; }
 
-        public readonly Enum_Status EStatus;
+        public Enum_Status EStatus { get; }
 
-        public PermissionAttribute(Enum_PermissionType eType, object code, bool accessLogger = true, Enum_Status eStatus = Enum_Status.Normal)
+        public PermissionBaseAttribute(Enum_PermissionType eType, string code, bool accessLogger = true, Enum_Status eStatus = Enum_Status.Normal)
         {
             EType = eType;
-            Code = code.ToString();
+            Code = code;
             ParentCode = "";
             AccessLogger = accessLogger;
             EStatus = eStatus;
         }
 
-        public PermissionAttribute(Enum_PermissionType eType, object code, object parentCode, bool accessLogger = true, Enum_Status eStatus = Enum_Status.Normal)
+        public PermissionBaseAttribute(Enum_PermissionType eType, string code, string parentCode, bool accessLogger = true, Enum_Status eStatus = Enum_Status.Normal)
         {
             EType = eType;
-            Code = code.ToString();
-            ParentCode = parentCode.ToString();
+            Code = code;
+            ParentCode = parentCode;
             AccessLogger = accessLogger;
             EStatus = eStatus;
         }
@@ -58,7 +63,24 @@ namespace Spear.MidM.Permission
 
         protected override void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams)
         {
-            //
+            var attrs = triggers.Where(o => o.IsExtendType<PermissionBaseAttribute>())
+                .Select(o => o as PermissionBaseAttribute)
+                .Where(o => o.EType == Enum_PermissionType.Action)
+                .ToList();
+            if (attrs == null || attrs.Count() == 0)
+                return;
+
+            var type = source.GetType();
+            if (!type.IsImplementedType(typeof(IServiceWithTokenProvider<>)))
+                return;
+
+            var tp = ServiceContext.Resolve(type.GetGenericArguments()[0]) as ITokenProvider;
+            var sha = ServiceContext.ResolveByKeyed<ISessionNAuth>(tp.Protocol);
+            if (sha == null)
+                return;
+
+            foreach (var attr in attrs)
+                sha.VerifyPermission(attr.Code);
         }
 
         protected override void Error(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, Exception error, out bool throwException)

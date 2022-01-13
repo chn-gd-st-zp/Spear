@@ -2,31 +2,37 @@
 
 using Microsoft.AspNetCore.Http;
 
+using Spear.Inf.Core.Attr;
+using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.DTO;
+using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.ServGeneric.MicServ;
 using Spear.Inf.Core.Tool;
 
 namespace Spear.MidM.SessionNAuth
 {
-    public interface ITokenProvider
+    public abstract class TokenProvider : ITokenProvider
     {
-        string CurrentToken { get; }
+        protected readonly SessionNAuthSettings SessionNAuthSettings;
+
+        public TokenProvider() { SessionNAuthSettings = Inf.Core.ServGeneric.ServiceContext.Resolve<SessionNAuthSettings>(); }
+
+        public virtual Enum_Protocol Protocol { get { return Enum_Protocol.None; } }
+
+        public virtual string CurrentToken { get { return ""; } }
     }
 
-    public class HTTPTokenProvider : ITokenProvider
+    [DIModeForService(Enum_DIType.AsSelf)]
+    [DIModeForService(Enum_DIType.ExclusiveByKeyed, typeof(ITokenProvider), Enum_Protocol.HTTP)]
+    public class HTTPTokenProvider : TokenProvider
     {
-        private readonly SessionNAuthSettings _sessionNAuthSettings;
+        public override Enum_Protocol Protocol { get { return Enum_Protocol.HTTP; } }
 
-        public HTTPTokenProvider(SessionNAuthSettings sessionNAuthSettings)
-        {
-            _sessionNAuthSettings = sessionNAuthSettings;
-        }
-
-        public string CurrentToken
+        public override string CurrentToken
         {
             get
             {
-                var iContext = Spear.Inf.Core.ServGeneric.ServiceContext.Resolve<IHttpContextAccessor>();
+                var iContext = Inf.Core.ServGeneric.ServiceContext.Resolve<IHttpContextAccessor>();
                 if (iContext == null)
                     return "";
 
@@ -34,7 +40,7 @@ namespace Spear.MidM.SessionNAuth
                 if (context == null)
                     return "";
 
-                var token1 = context.Request.Headers[_sessionNAuthSettings.AccessTokenKeyInHeader];
+                var token1 = context.Request.Headers[SessionNAuthSettings.AccessTokenKeyInHeader];
                 if (token1.IsEmptyString())
                     return "";
 
@@ -47,9 +53,13 @@ namespace Spear.MidM.SessionNAuth
         }
     }
 
-    public class GRPCTokenProvider : ITokenProvider
+    [DIModeForService(Enum_DIType.AsSelf)]
+    [DIModeForService(Enum_DIType.ExclusiveByKeyed, typeof(ITokenProvider), Enum_Protocol.GRPC)]
+    public class GRPCTokenProvider : TokenProvider
     {
-        public string CurrentToken
+        public override Enum_Protocol Protocol { get { return Enum_Protocol.GRPC; } }
+
+        public override string CurrentToken
         {
             get
             {

@@ -70,16 +70,16 @@ namespace Spear.Inf.Core.CusEnum
         FromProperty,
     }
 
-    public enum Enum_FilterType
+    public enum Enum_Protocol
     {
-        [Remark("默认、无")]
-        None,
+        [Remark("默认，无")]
+        None = 0,
 
-        [Remark("控制器")]
-        Ctrler,
+        [Remark("HTTP")]
+        HTTP,
 
         [Remark("GRPC")]
-        GRPC,
+        GRPC
     }
 
     public enum Enum_ServType
@@ -89,6 +89,18 @@ namespace Spear.Inf.Core.CusEnum
 
         [Remark("WebApi")]
         WebApi,
+
+        [Remark("GRPC")]
+        GRPC,
+    }
+
+    public enum Enum_FilterType
+    {
+        [Remark("默认、无")]
+        None,
+
+        [Remark("控制器")]
+        Ctrler,
 
         [Remark("GRPC")]
         GRPC,
