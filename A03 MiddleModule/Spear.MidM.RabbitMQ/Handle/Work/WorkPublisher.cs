@@ -31,7 +31,7 @@ namespace Spear.MidM.RabbitMQ
                     arguments: arguments
                 );
             }
-            catch (System.Exception ex)
+            catch
             {
                 //
             }

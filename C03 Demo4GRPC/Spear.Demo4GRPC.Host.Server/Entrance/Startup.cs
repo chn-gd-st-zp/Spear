@@ -78,7 +78,7 @@ namespace Spear.Demo4GRPC.Host.Server
                 o.GlobalFilters.AddFilter<GRPCFilterAttribute>();
             });
 
-            services.AddSwagger(CurConfig.SwaggerSettings, CurConfig.SwaggerSettings.Xmls.GetPaths(Enum_InitFile.XML, CurConfig.SwaggerSettings.DefaultPattern));
+            services.AddSwagger(CurConfig.SwaggerSettings, AppInitHelper.GetPaths(Enum_InitFile.XML, CurConfig.SwaggerSettings.Patterns, CurConfig.SwaggerSettings.Xmls));
             services.AddAutoMapper();
         }
 

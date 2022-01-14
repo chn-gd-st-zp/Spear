@@ -7,18 +7,16 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Autofac;
+using Hangfire;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-using Spear.Inf.Core;
 using Spear.Inf.Core.AppEntrance;
-using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.SettingsGeneric;
 using Spear.MidM.Logger;
 using Spear.MidM.Schedule;
 
 using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
-using Hangfire;
 
 namespace Spear.Demo4WinApp.Host
 {
@@ -54,23 +52,23 @@ namespace Spear.Demo4WinApp.Host
             services.Monitor<AutoDelSettings>(Configuration);
 
             services.RegisSchedule(this, CurConfig.ScheduleSettings);
-            //services.RegisHangFire();
+            services.RegisHangFire();
         }
 
         protected override void Extend_ConfigureContainer(ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisSeriLogger(Configuration);
 
-            containerBuilder.RegisQuartz(this);
+            //containerBuilder.RegisQuartz(this);
         }
 
         protected override void Extend_Configure(AppConfiguresBase configures)
         {
             ServiceContext.InitServiceProvider(configures.App.ApplicationServices);
 
-            configures.App.MonitorSettings(AppInitHelper.GetAllType(CurConfig.AutoFacSettings.Patterns, CurConfig.AutoFacSettings.Dlls.ToArray()));
+            configures.App.MonitorSettings(AppInitHelper.GetAllType(CurConfig.AutoFacSettings.Patterns, CurConfig.AutoFacSettings.Dlls));
 
-            //configures.App.UseHangfireDashboard("/hangfire");
+            configures.App.UseHangfireDashboard("/hangfire");
         }
     }
 }

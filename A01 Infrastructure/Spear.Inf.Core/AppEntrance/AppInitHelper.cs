@@ -86,7 +86,8 @@ namespace Spear.Inf.Core.AppEntrance
         /// 根据文件名、文件类型，获取完整路径
         /// </summary>
         /// <param name="eInitFile">文件类型</param>
-        /// <param name="defaultPattern">默认匹配公式</param>
+        /// <param name="patterns">匹配公式</param>
+        /// <param name="fileNames">文件名</param>
         /// <returns></returns>
         public static List<string> GetPaths(Enum_InitFile eInitFile, string[] patterns = null, string[] fileNames = null)
         {

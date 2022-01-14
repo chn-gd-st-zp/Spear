@@ -59,7 +59,7 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         containerBuilder.Register(attr_tmp, obj, typeIgnore, typeRegis);
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     continue;
                 }
@@ -104,7 +104,7 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                         containerBuilder.Register(attr_tmp, obj, typeIgnore, typeRegis);
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     continue;
                 }
@@ -136,7 +136,7 @@ namespace Spear.Inf.Core.ServGeneric.IOC
                             containerBuilder.Register(attr, classType, typeIgnore, typeRegis);
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     continue;
                 }

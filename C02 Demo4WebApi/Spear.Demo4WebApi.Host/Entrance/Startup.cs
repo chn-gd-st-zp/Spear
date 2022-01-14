@@ -73,7 +73,7 @@ namespace Spear.Demo4WebApi.Host
                     options.SerializerSettings.Converters = JsonSerializerSettings.Converters;
                 });
 
-            services.AddSwagger(CurConfig.SwaggerSettings, CurConfig.SwaggerSettings.Xmls.GetPaths(Enum_InitFile.XML, CurConfig.SwaggerSettings.DefaultPattern));
+            services.AddSwagger(CurConfig.SwaggerSettings, AppInitHelper.GetPaths(Enum_InitFile.XML, CurConfig.SwaggerSettings.Patterns, CurConfig.SwaggerSettings.Xmls));
         }
 
         protected override void Extend_ConfigureContainer(ContainerBuilder containerBuilder)

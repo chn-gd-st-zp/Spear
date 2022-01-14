@@ -215,7 +215,7 @@ namespace Spear.Inf.Core.ServGeneric
 
                 return context.ResolveKeyed<T>(keyed);
             }
-            catch (Exception ex)
+            catch
             {
                 return default;
             }

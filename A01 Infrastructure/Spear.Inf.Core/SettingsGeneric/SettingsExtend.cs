@@ -47,7 +47,7 @@ namespace Spear.Inf.Core.SettingsGeneric
                         .MakeGenericMethod(new[] { classType })
                         .Invoke(null, null);
                 }
-                catch (Exception ex)
+                catch
                 {
                     continue;
                 }
