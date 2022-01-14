@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using Spear.Inf.Core.Attr;
+using Spear.Inf.Core.SettingsGeneric;
 
 namespace Spear.MidM.Schedule
 {
@@ -17,7 +18,7 @@ namespace Spear.MidM.Schedule
     }
 
     [DIModeForSettings("ScheduleSettings", typeof(ScheduleSettings))]
-    public class ScheduleSettings
+    public class ScheduleSettings : ISettings
     {
         public List<Enum_ScheduleType> RunningServices { get; set; }
 

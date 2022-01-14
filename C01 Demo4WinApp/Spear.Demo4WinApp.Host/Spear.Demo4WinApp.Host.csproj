@@ -20,6 +20,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Remove="nlog.config" />
+	  <Content Remove="serilog.json" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Update="appsettings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
@@ -32,14 +37,15 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
-		<Content Update="appsettings.Production.json">
+		<Content Include="dockerfile">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
-		<Content Include="Dockerfile">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="nlog.config" />
+	  <None Include="serilog.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -50,9 +56,8 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\A01 Infrastructure\Spear.Inf.Core\Spear.Inf.Core.csproj" />
 		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Apollo\Spear.MidM.Apollo.csproj" />
-		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Defend\Spear.MidM.Defend.csproj" />
 		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Logger\Spear.MidM.Logger.csproj" />
-		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Quartz\Spear.MidM.Quartz.csproj" />
+		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Schedule\Spear.MidM.Schedule.csproj" />
 		<ProjectReference Include="..\..\A04 GlobalSupport\Spear.GlobalSupport.Base\Spear.GlobalSupport.Base.csproj" />
 	</ItemGroup>
 

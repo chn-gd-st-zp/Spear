@@ -4,18 +4,29 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Quartz;
+
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.ServGeneric;
+using Spear.Inf.Core.ServGeneric.IOC;
 using Spear.MidM.Schedule;
 
 namespace Spear.Demo4WinApp.Host.Runner
 {
+    [DisallowConcurrentExecution]
     [DIModeForService(Enum_DIType.ExclusiveByNamed, typeof(IRunner4Timer), "AutoDel")]
-    public class RAutoDel : IRunner4Timer
+    public class RAutoDel : IRunner4Timer, ITransient, IJob
     {
+        public async Task Execute(IJobExecutionContext context)
+        {
+            Run();
+        }
+
         public async Task Run(params string[] args)
         {
+            Console.WriteLine($"AutoDel:{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}");
+
             var autoDelSettings = ServiceContext.Resolve<AutoDelSettings>();
 
             foreach (var autoDelSetting in autoDelSettings)

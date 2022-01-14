@@ -10,7 +10,7 @@ namespace Spear.Inf.Core.ServGeneric
 {
     public class ServiceContext
     {
-        public static bool IsDoneLoad { get { return ServiceProvider == null; } }
+        public static bool IsDoneLoad { get { return ServiceProvider != null; } }
 
         private static IServiceProvider ServiceProvider;
 

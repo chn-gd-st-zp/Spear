@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 
 using Autofac;
 using Hangfire;
+using Hangfire.MemoryStorage;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
@@ -28,7 +29,7 @@ namespace Spear.MidM.Schedule
             var hsType = typeof(IHostedService);
 
             startup.GetRunningType()
-                .Where(o => o.IsClass && o.IsExtendType(hsType))
+                .Where(o => o.IsClass && o.IsImplementedType(hsType))
                 .Select(o => o.GetCustomAttribute<DIModeForServiceAttribute>())
                 .Where(o => o != null)
                 .ToList()
@@ -49,10 +50,11 @@ namespace Spear.MidM.Schedule
                     configuration.SetDataCompatibilityLevel(CompatibilityLevel.Version_170);
                     configuration.UseSimpleAssemblyNameTypeSerializer();
                     configuration.UseRecommendedSerializerSettings();
-                    //configuration.UseSerilogLogProvider();
-                    //configuration.UseMemoryStorage();
+                    configuration.UseSerilogLogProvider();
+                    configuration.UseMemoryStorage();
                     configuration.UseFilter(new AutomaticRetryAttribute { Attempts = 0 });
-                });
+                })
+                .AddHangfireServer();
 
             services.AddTransient<IRegister4Timer, Register4HangFire>();
 
@@ -68,7 +70,7 @@ namespace Spear.MidM.Schedule
 
             startup
                 .GetRunningType()
-                .Where(o => o.IsClass && o.IsImplementedType<IRegister4Timer>())
+                .Where(o => o.IsClass && o.IsImplementedType<IRunner4Timer>() && o.IsImplementedType<IJob>())
                 .ToList()
                 .ForEach(o =>
                 {

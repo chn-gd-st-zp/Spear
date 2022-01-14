@@ -55,10 +55,9 @@ namespace Spear.Inf.Core
             };
         }
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             BackgroundWorker.RunWorkerAsync();
-            return Task.CompletedTask;
         }
 
         protected abstract void DoWork();
