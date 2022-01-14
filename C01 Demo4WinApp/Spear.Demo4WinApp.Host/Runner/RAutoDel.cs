@@ -2,24 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
+using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.ServGeneric;
-using Spear.MidM.Quartz;
+using Spear.MidM.Schedule;
 
-namespace Spear.Demo4WinApp.Host.Job
+namespace Spear.Demo4WinApp.Host.Runner
 {
-    [Job("AutoDelJob")]
-    public class AutoDelJob : QuartzJobBase
+    [DIModeForService(Enum_DIType.ExclusiveByNamed, typeof(IRunner4Timer), "AutoDel")]
+    public class RAutoDel : IRunner4Timer
     {
-        protected override string JobName { get { return "AutoDelJob"; } }
-
-        public override void Execute()
+        public async Task Run(params string[] args)
         {
-            var a = ServiceContext.Resolve<HAHAHAHA_DB>();
-            var b = ServiceContext.Resolve<HAHAHAHA_List>();
-            var c = ServiceContext.ResolveByKeyed<HAHAHAHA_Item>("2");
-
             var autoDelSettings = ServiceContext.Resolve<AutoDelSettings>();
 
             foreach (var autoDelSetting in autoDelSettings)
