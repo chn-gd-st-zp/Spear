@@ -68,7 +68,7 @@ namespace Spear.Demo4WinApp.Host
         {
             ServiceContext.InitServiceProvider(configures.App.ApplicationServices);
 
-            configures.App.MonitorSettings(this.GetRunningType());
+            configures.App.MonitorSettings(AppInitHelper.GetAllType(CurConfig.AutoFacSettings.Patterns, CurConfig.AutoFacSettings.Dlls.ToArray()));
 
             //configures.App.UseHangfireDashboard("/hangfire");
         }

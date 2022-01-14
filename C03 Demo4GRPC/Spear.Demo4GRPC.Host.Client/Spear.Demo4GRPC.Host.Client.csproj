@@ -5,34 +5,26 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn);1591</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn);1591</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content Update="appsettings.json">
+		<Compile Remove="logs\**" />
+		<Content Remove="logs\**" />
+		<EmbeddedResource Remove="logs\**" />
+		<None Remove="logs\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="aockerfile">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="appsettings.Development.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="appsettings.Staging.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="appsettings.Production.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Include="Dockerfile">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
+		</None>
 	</ItemGroup>
 
 	<ItemGroup>

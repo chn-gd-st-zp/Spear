@@ -15,22 +15,19 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content Update="appsettings.json">
+		<Compile Remove="logs\**" />
+		<Content Remove="logs\**" />
+		<EmbeddedResource Remove="logs\**" />
+		<None Remove="logs\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="dockerfile">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="appsettings.Development.json">
+		</None>
+		<None Update="serilog.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="appsettings.Staging.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Include="aockerfile">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
+		</None>
 	</ItemGroup>
 
 	<ItemGroup>
