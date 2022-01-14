@@ -22,7 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="aockerfile">
+		<None Update="dockerfile">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
