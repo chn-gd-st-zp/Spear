@@ -1,0 +1,61 @@
+﻿{
+  "Serilog": {
+    "Using": [
+      "Serilog.Sinks.File",
+      "Serilog.Filters.Expressions"
+    ],
+    "MinimumLevel": {
+      "Default": "Verbose",
+      "Override": {
+        "System": "Information",
+        "Microsoft": "Information",
+        "Microsoft.Hosting.Lifetime": "Information"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "Console"
+      },
+      {
+        "Name": "File",
+        "Args": {
+          "path": "./logs/Common/Demo4WebApi..log",
+          "RestrictedToMinimumLevel": "Verbose",
+          "rollingInterval": "Day",
+          "rollonFileSizeLimit": true,
+          "fileSizeLimitBytes": 10485760,
+          "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level}] [{SourceContext}] {Message}{NewLine}{Exception}"
+        }
+      }
+    ],
+    "Filters": [
+      {
+        "Name": "ByExcluding",
+        "Args": {
+          "expression": "StartWith(SourceContext,'Microsoft')"
+        }
+      }
+    ],
+    "Properties": {
+      "Application": "Demo4WebApi"
+    }
+  },
+
+  "SeriLoggerSettings": {
+    "RollingInterval": "Day",
+    "RollOnFileSizeLimit": true,
+    "FileSizeLimitMB": 1024,
+    "Template": "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} {Message}{NewLine}{Exception}",
+
+    "ToEmail": {
+      "Enable": false,
+      "MinimumLevel": "Error",
+      "Triggers": [ "" ],
+      "MailServer": "",
+      "Port": 0,
+      "SenderEmail": "",
+      "CarbonCopyEmail": [ "" ],
+      "ReceiverEmails": [ "" ]
+    }
+  }
+}

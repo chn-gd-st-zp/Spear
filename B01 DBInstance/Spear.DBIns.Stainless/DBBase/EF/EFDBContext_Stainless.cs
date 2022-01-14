@@ -7,7 +7,7 @@ namespace Spear.DBIns.Stainless
 {
     public class EFDBContext_Stainless : EFDBContext
     {
-        public EFDBContext_Stainless(DbContextOptions<EFDBContext_Stainless> options) : base(options) { }
+        public EFDBContext_Stainless(EFDBContextOptionsBuilder<EFDBContext_Stainless> builder) : base(builder) { }
 
         public DbSet<TE_AgentOrder> TE_AgentOrder { get; set; }
         public DbSet<TE_CustomerOrder> TE_CustomerOrder { get; set; }

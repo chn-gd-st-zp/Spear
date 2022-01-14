@@ -12,9 +12,9 @@ using Spear.Inf.EF;
 namespace Spear.DBIns.Stainless.Entity
 {
     [Table("CustomerOrder")]
+    [DefaultSortField("COID", Enum_SortDirection.ASC)]
     public class TE_CustomerOrder : CommonData, IDBField_ID<string>
     {
-        [DefaultSortField("COID", Enum_SortDirection.ASC)]
         [Column("COID")]
         [JsonProperty("COID")]
         public string ID { get; set; }
