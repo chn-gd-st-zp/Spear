@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-using Spear.Inf.Core.Attr;
+﻿using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.SettingsGeneric;
 
 namespace Spear.MidM.Swagger
@@ -16,8 +14,8 @@ namespace Spear.MidM.Swagger
 
         public string AccessTokenKeyInHeader { get; set; }
 
-        public string DefaultPattern { get; set; }
+        public string[] Patterns { get; set; }
 
-        public List<string> Xmls { get; set; }
+        public string[] Xmls { get; set; }
     }
 }

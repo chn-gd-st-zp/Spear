@@ -85,33 +85,36 @@ namespace Spear.Inf.Core.AppEntrance
         /// <summary>
         /// 根据文件名、文件类型，获取完整路径
         /// </summary>
-        /// <param name="filelNames">文件名</param>
         /// <param name="eInitFile">文件类型</param>
         /// <param name="defaultPattern">默认匹配公式</param>
         /// <returns></returns>
-        public static List<string> GetPaths(this List<string> filelNames, Enum_InitFile eInitFile, string defaultPattern = null)
+        public static List<string> GetPaths(Enum_InitFile eInitFile, string[] patterns = null, string[] fileNames = null)
         {
             string suffix = "." + eInitFile.ToString().ToLower();
 
-            var dllPaths = new List<string>();
+            var filePaths = new List<string>();
 
-            if ((filelNames == null || filelNames.Count() == 0) && defaultPattern.IsEmptyString())
-                return dllPaths;
+            if ((patterns == null || patterns.Length == 0) && (fileNames == null || fileNames.Length == 0))
+                return filePaths;
 
-            if (filelNames == null || filelNames.Count() == 0)
+            if (patterns == null || patterns.Length == 0)
             {
-                dllPaths = Directory.GetFiles(RootPath, defaultPattern + suffix).ToList();
+                Directory.GetFiles(RootPath)
+                    .ToList()
+                    .ForEach(o =>
+                    {
+                        var fileName = fileNames.Where(oo => o.EndsWith(oo + suffix, StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
+                        if (!fileName.IsEmptyString())
+                            filePaths.Add(o);
+                    });
             }
             else
             {
-                filelNames.ForEach(o =>
-                {
-                    o = o.EndsWith(suffix, StringComparison.OrdinalIgnoreCase) ? o : o + suffix;
-                    dllPaths.AddRange(Directory.GetFiles(RootPath, o).ToList());
-                });
+                foreach (var pattern in patterns)
+                    filePaths.AddRange(Directory.GetFiles(RootPath, pattern + suffix).ToList());
             }
 
-            return dllPaths;
+            return filePaths;
         }
 
         /// <summary>

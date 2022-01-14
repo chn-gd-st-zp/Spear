@@ -57,7 +57,7 @@ namespace Spear.Inf.Core.AppEntrance
             List<string> typeIgnore = new List<string>();
             List<string> typeRegis = new List<string>();
 
-            var runningType = AppInitHelper.GetAllType(CurConfig.AutoFacSettings.Patterns, CurConfig.AutoFacSettings.Dlls.ToArray());
+            var runningType = AppInitHelper.GetAllType(CurConfig.AutoFacSettings.Patterns, CurConfig.AutoFacSettings.Dlls);
 
             containerBuilder.Register(runningType, Configuration, typeIgnore, typeRegis);
             containerBuilder.Register(runningType, typeIgnore, typeRegis);

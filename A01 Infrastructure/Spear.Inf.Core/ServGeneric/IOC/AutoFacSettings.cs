@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Spear.Inf.Core.Attr;
+﻿using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.SettingsGeneric;
 
 namespace Spear.Inf.Core.ServGeneric.IOC
@@ -9,6 +8,6 @@ namespace Spear.Inf.Core.ServGeneric.IOC
     {
         public string[] Patterns { get; set; }
 
-        public List<string> Dlls { get; set; }
+        public string[] Dlls { get; set; }
     }
 }
