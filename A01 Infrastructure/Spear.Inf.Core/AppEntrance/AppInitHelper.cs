@@ -117,14 +117,31 @@ namespace Spear.Inf.Core.AppEntrance
         /// <summary>
         /// 获取所有类库
         /// </summary>
+        /// <param name="patterns"></param>
+        /// <param name="dlls"></param>
         /// <returns></returns>
-        public static List<Assembly> GetAllAssemblies()
+        public static List<Assembly> GetAllAssemblies(string[] patterns = null, string[] dlls = null)
         {
             List<Assembly> result = new List<Assembly>();
+
+            if (patterns != null && patterns.Length > 0)
+                patterns = patterns.Select(o => o.Replace("*", "")).ToArray();
 
             var assemblyNameList = DependencyContext.Default.RuntimeLibraries.Select(o => o.Name).ToList();
             foreach (var assemblyName in assemblyNameList)
             {
+                if (patterns != null && patterns.Length > 0)
+                {
+                    if (!patterns.Any(o => assemblyName.StartsWith(o, StringComparison.OrdinalIgnoreCase)))
+                        continue;
+                }
+
+                if (dlls != null && dlls.Length > 0)
+                {
+                    if (!dlls.Any(o => string.Compare(assemblyName, o, true) == 0))
+                        continue;
+                }
+
                 if (!File.Exists(RootPath + assemblyName + ".dll"))
                     continue;
 
@@ -137,56 +154,19 @@ namespace Spear.Inf.Core.AppEntrance
         /// <summary>
         /// 获取所有类型
         /// </summary>
-        /// <param name="diPattern"></param>
+        /// <param name="patterns"></param>
+        /// <param name="dlls"></param>
         /// <returns></returns>
-        public static List<Type> GetAllType()
+        public static List<Type> GetAllType(string[] patterns = null, string[] dlls = null)
         {
             List<Type> result = new List<Type>();
 
-            GetAllAssemblies()
+            GetAllAssemblies(patterns, dlls)
                 .ForEach(assembly =>
                 {
                     var types = assembly.GetTypes();
                     result.AddRange(types);
                 });
-
-            return result;
-        }
-
-        /// <summary>
-        /// 获取运行类型
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="startup"></param>
-        /// <returns></returns>
-        public static List<Type> GetRunningType<TSettings, TConfigures>(this StartupBase<TSettings, TConfigures> startup)
-            where TSettings : AppSettingsBase
-            where TConfigures : AppConfiguresBase
-        {
-            List<Type> result = new List<Type>();
-
-            List<Assembly> assemblyList = GetAllAssemblies();
-
-            if (startup.CurConfig.AutoFacSettings.Dlls == null || startup.CurConfig.AutoFacSettings.Dlls.Count() == 0)
-            {
-                assemblyList = assemblyList
-                    .Where(o => o.GetName().Name.StartsWith(startup.CurConfig.AutoFacSettings.DefaultPattern.Replace("*", "")))
-                    .OrderBy(o => o.FullName)
-                    .ToList();
-            }
-            else
-            {
-                assemblyList = assemblyList
-                    .Where(o => startup.CurConfig.AutoFacSettings.Dlls.Contains(o.GetName().Name))
-                    .OrderBy(o => o.FullName)
-                    .ToList();
-            }
-
-            assemblyList.ForEach(assembly =>
-            {
-                var types = assembly.GetTypes();
-                result.AddRange(types);
-            });
 
             return result;
         }

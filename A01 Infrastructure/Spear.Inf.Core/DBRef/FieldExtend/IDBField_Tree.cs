@@ -57,14 +57,14 @@ namespace Spear.Inf.Core.DBRef
 
             if (full_str.IsEmptyString())
             {
-                obj.FullNode = "," + cur_str + ",";
+                obj.FullNode = cur_str;
                 return;
             }
 
             full_str = full_str.StartsWith(",") ? full_str : "," + full_str;
             full_str = full_str.EndsWith(",") ? full_str : full_str + ",";
 
-            obj.FullNode = full_str + cur_str + ",";
+            obj.FullNode = full_str + cur_str;
         }
 
         public static void SetFullNode<TEntity, TKey>(this TEntity obj, string[] fulls) where TEntity : class, IDBField_Tree<TKey>
@@ -82,7 +82,7 @@ namespace Spear.Inf.Core.DBRef
 
             if (fulls == null || fulls.Length == 0)
             {
-                obj.FullNode = "," + cur_str + ",";
+                obj.FullNode = cur_str;
                 return;
             }
 
@@ -90,7 +90,7 @@ namespace Spear.Inf.Core.DBRef
             fulls_str = fulls_str.StartsWith(",") ? fulls_str : "," + fulls_str;
             fulls_str = fulls_str.EndsWith(",") ? fulls_str : fulls_str + ",";
 
-            obj.FullNode = fulls_str + cur_str + ",";
+            obj.FullNode = fulls_str + cur_str;
         }
     }
 }

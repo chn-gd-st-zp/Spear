@@ -28,7 +28,8 @@ namespace Spear.MidM.Schedule
 
             var hsType = typeof(IHostedService);
 
-            startup.GetRunningType()
+            AppInitHelper
+                .GetAllType()
                 .Where(o => o.IsClass && o.IsImplementedType(hsType))
                 .Select(o => o.GetCustomAttribute<DIModeForServiceAttribute>())
                 .Where(o => o != null)
@@ -68,8 +69,8 @@ namespace Spear.MidM.Schedule
             containerBuilder.RegisterType<StdSchedulerFactory>().As<ISchedulerFactory>().SingleInstance();
             containerBuilder.RegisterType<JobFactory>().As<IJobFactory>().SingleInstance();
 
-            startup
-                .GetRunningType()
+            AppInitHelper
+                .GetAllType()
                 .Where(o => o.IsClass && o.IsImplementedType<IRunner4Timer>() && o.IsImplementedType<IJob>())
                 .ToList()
                 .ForEach(o =>

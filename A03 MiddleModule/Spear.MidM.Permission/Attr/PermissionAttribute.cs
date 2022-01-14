@@ -62,24 +62,24 @@ namespace Spear.MidM.Permission
 
         protected override void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams)
         {
-            var attrs = triggers.Where(o => o.IsExtendType<PermissionBaseAttribute>())
-                .Select(o => o as PermissionBaseAttribute)
-                .Where(o => o.EType == Enum_PermissionType.Action)
-                .ToList();
-            if (attrs == null || attrs.Count() == 0)
-                return;
+            //var attrs = triggers.Where(o => o.IsExtendType<PermissionBaseAttribute>())
+            //    .Select(o => o as PermissionBaseAttribute)
+            //    .Where(o => o.EType == Enum_PermissionType.Action)
+            //    .ToList();
+            //if (attrs == null || attrs.Count() == 0)
+            //    return;
 
-            var type = source.GetType();
-            if (!type.IsImplementedType(typeof(IServiceWithTokenProvider<>)))
-                return;
+            //var type = source.GetType();
+            //if (!type.IsImplementedType(typeof(IServiceWithTokenProvider<>)))
+            //    return;
 
-            var tp = ServiceContext.Resolve(type.GetGenericArguments()[0]) as ITokenProvider;
-            var sha = ServiceContext.ResolveByKeyed<ISessionNAuth>(tp.Protocol);
-            if (sha == null)
-                return;
+            //var tp = ServiceContext.Resolve(type.GetGenericArguments()[0]) as ITokenProvider;
+            //var sha = ServiceContext.ResolveByKeyed<ISessionNAuth>(tp.Protocol);
+            //if (sha == null)
+            //    return;
 
-            foreach (var attr in attrs)
-                sha.VerifyPermission(attr.Code);
+            //foreach (var attr in attrs)
+            //    sha.VerifyPermission(attr.Code);
         }
 
         protected override void Error(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, Exception error, out bool throwException)

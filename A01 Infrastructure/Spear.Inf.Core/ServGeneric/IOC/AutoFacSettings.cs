@@ -7,7 +7,7 @@ namespace Spear.Inf.Core.ServGeneric.IOC
     [DIModeForSettings("AutoFacSettings", typeof(AutoFacSettings))]
     public class AutoFacSettings : ISettings
     {
-        public string DefaultPattern { get; set; }
+        public string[] Patterns { get; set; }
 
         public List<string> Dlls { get; set; }
     }

@@ -9,8 +9,8 @@ namespace Spear.MidM.Permission
             var lifeTime = new PermissionLifeTime();
 
             lifetime.ApplicationStarted.Register(() => lifeTime.Started());
-            lifetime.ApplicationStopping.Register(() => lifeTime.Started());
-            lifetime.ApplicationStopped.Register(() => lifeTime.Started());
+            lifetime.ApplicationStopping.Register(() => lifeTime.Stopping());
+            lifetime.ApplicationStopped.Register(() => lifeTime.Stopped());
 
             return lifetime;
         }
