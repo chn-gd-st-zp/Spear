@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.MidM.Swagger", "A03 M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.GlobalSupport.Base", "A04 GlobalSupport\Spear.GlobalSupport.Base\Spear.GlobalSupport.Base.csproj", "{DB4748B4-782F-4FFB-BBF4-91A2AF661CEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spear.MidM.Schedule", "A03 MiddleModule\Spear.MidM.Schedule\Spear.MidM.Schedule.csproj", "{1EC69701-D02C-44ED-AD5E-83A58AA91332}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.MidM.Schedule", "A03 MiddleModule\Spear.MidM.Schedule\Spear.MidM.Schedule.csproj", "{1EC69701-D02C-44ED-AD5E-83A58AA91332}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
