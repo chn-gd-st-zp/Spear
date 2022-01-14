@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -8,7 +8,7 @@ namespace Spear.Inf.Core.Tool
     /// <summary>
     /// 自定义数值类型序列化转换器(默认保留3位)
     /// </summary>
-    public class DecimalDigitsConverter<TType> : CustomCreationConverter<TType>
+    public class DecimalConverter<TType> : CustomCreationConverter<TType>
     {
         /// <summary>
         /// 重载是否可写
@@ -24,7 +24,7 @@ namespace Spear.Inf.Core.Tool
         /// .ctor
         /// </summary>
         /// <param name="digits">序列化后保留小数位数</param>
-        public DecimalDigitsConverter(int digits) { Digits = digits; }
+        public DecimalConverter(int digits) { Digits = digits; }
 
         /// <summary>
         /// 重载创建方法
