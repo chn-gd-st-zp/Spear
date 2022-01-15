@@ -11,6 +11,7 @@ namespace Spear.MidM.SessionNAuth
         /// <summary>
         /// 登录设备
         /// </summary>
+        [JsonProperty("Entry")]
         public Enum_Entry EEntry { get; set; }
 
         /// <summary>
@@ -44,6 +45,7 @@ namespace Spear.MidM.SessionNAuth
         /// <summary>
         /// 角色类型
         /// </summary>
+        [JsonProperty("RoleType")]
         public Enum_Role ERoleType { get; set; }
 
         /// <summary>
