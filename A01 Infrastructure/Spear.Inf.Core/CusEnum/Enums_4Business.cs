@@ -26,6 +26,18 @@ namespace Spear.Inf.Core.CusEnum
         WeChatMicoApp = 6,
     }
 
+    public enum Enum_AppType
+    {
+        [Remark("默认、无")]
+        None = 0,
+
+        [Remark("苹果")]
+        IOS,
+
+        [Remark("安卓")]
+        Android,
+    }
+
     public enum Enum_EncryptionNDecrypt
     {
         [Remark("默认、无")]

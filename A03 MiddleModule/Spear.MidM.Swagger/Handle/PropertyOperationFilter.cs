@@ -80,7 +80,39 @@ namespace Spear.MidM.Swagger
                         }
 
                         #endregion
+
+                        Rename(inputSchema, inputProperty);
                     }
+                }
+            }
+        }
+
+        public void Rename(OpenApiSchema inputSchema, PropertyInfo inputProperty)
+        {
+            var propertyType = inputProperty.PropertyType;
+
+            if (!propertyType.IsClass)
+                return;
+
+            foreach (var property in propertyType.GetProperties())
+            {
+                if (propertyType.IsClass)
+                {
+                    Rename(inputSchema, inputProperty);
+                    continue;
+                }
+
+                var attr_ren = property.GetCustomAttribute<PropertyRenameAttribute>();
+                if (attr_ren == null)
+                    continue;
+
+                foreach (var inputPropertyKey in inputSchema.Properties.Keys)
+                {
+                    if (!inputProperty.Name.Equals(inputPropertyKey, StringComparison.OrdinalIgnoreCase))
+                        continue;
+
+                    var inputPropertySchema = inputSchema.Properties[inputPropertyKey];
+                    inputSchema.Properties.Add(attr_ren.Name, inputPropertySchema);
                 }
             }
         }
