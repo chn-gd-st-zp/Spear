@@ -49,11 +49,7 @@ namespace Spear.Inf.Core.Attr
             foreach (object actionParam in actionParams)
             {
                 IDTO_Input input = actionParam as IDTO_Input;
-                if (input == null)
-                    continue;
-
-                if (!input.VerifyField(out errorMsg))
-                    throw new Exception_VerifyError(errorMsg);
+                Verify(input);
             }
         }
 
@@ -94,6 +90,23 @@ namespace Spear.Inf.Core.Attr
                         }
                     }
                 }
+            }
+        }
+
+        private static void Verify(IDTO_Input input)
+        {
+            string errorMsg = "";
+
+            if (input == null)
+                return;
+
+            if (!input.VerifyField(out errorMsg))
+                throw new Exception_VerifyError(errorMsg);
+
+            foreach (var property in input.GetType().GetProperties())
+            {
+                if (property.PropertyType.IsClass && property.PropertyType.IsExtendType(typeof(IDTO_Input)))
+                    Verify(property.GetValue(input) as IDTO_Input);
             }
         }
     }

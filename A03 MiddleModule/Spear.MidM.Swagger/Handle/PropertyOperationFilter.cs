@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
 
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
-
 using Swashbuckle.AspNetCore.SwaggerGen;
+
+using Spear.Inf.Core.DTO;
+using Spear.Inf.Core.Tool;
 
 namespace Spear.MidM.Swagger
 {
@@ -36,83 +37,89 @@ namespace Spear.MidM.Swagger
                     var inputSchema = doc.Components.Schemas[input.ParameterType.Name];
                     var inputProperties = input.ParameterType.GetProperties();
 
+                    PropertyOperation(doc, inputSchema, inputProperties);
+
+                    #region 隐藏字段
+
                     foreach (var inputProperty in inputProperties)
                     {
                         var attr_hid = inputProperty.GetCustomAttribute<PropertyHiddenAttribute>();
-                        var attr_ren = inputProperty.GetCustomAttribute<PropertyRenameAttribute>();
-
-                        #region 形式1
+                        if (attr_hid == null)
+                            continue;
 
                         foreach (var inputPropertyKey in inputSchema.Properties.Keys)
                         {
                             if (!inputProperty.Name.Equals(inputPropertyKey, StringComparison.OrdinalIgnoreCase))
                                 continue;
-
                             var inputPropertySchema = inputSchema.Properties[inputPropertyKey];
 
-                            if (attr_hid != null)
-                                inputSchema.Properties.Remove(inputPropertyKey);
-
-                            if (attr_ren != null)
-                            {
-                                inputSchema.Properties.Remove(inputPropertyKey);
-                                inputSchema.Properties.Add(attr_ren.Name, inputPropertySchema);
-                            }
-
-                            break;
+                            inputSchema.Properties.Remove(inputPropertyKey);
                         }
-
-                        #endregion
-
-                        #region 形式2
-
-                        foreach (var actionOperation in doc.Paths[actionRoute].Operations)
-                        {
-                            var actionOperationParam = actionOperation.Value.Parameters.Where(o => inputProperty.Name.Equals(o.Name, StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
-                            if (actionOperationParam == null)
-                                continue;
-
-                            if (attr_hid != null)
-                                actionOperation.Value.Parameters.Remove(actionOperationParam);
-
-                            if (attr_ren != null)
-                                actionOperationParam.Name = attr_ren.Name;
-                        }
-
-                        #endregion
-
-                        Rename(inputSchema, inputProperty);
                     }
+
+                    #endregion
                 }
             }
         }
 
-        public void Rename(OpenApiSchema inputSchema, PropertyInfo inputProperty)
+        private void PropertyOperation(OpenApiDocument doc, OpenApiSchema classSchema, PropertyInfo[] inputProperties)
         {
-            var propertyType = inputProperty.PropertyType;
-
-            if (!propertyType.IsClass)
-                return;
-
-            foreach (var property in propertyType.GetProperties())
+            //遍历字段
+            foreach (var inputProperty in inputProperties)
             {
-                if (propertyType.IsClass)
-                {
-                    Rename(inputSchema, inputProperty);
-                    continue;
-                }
+                //获取字段类型
+                var propertyType = inputProperty.PropertyType;
 
-                var attr_ren = property.GetCustomAttribute<PropertyRenameAttribute>();
-                if (attr_ren == null)
-                    continue;
-
-                foreach (var inputPropertyKey in inputSchema.Properties.Keys)
+                if (propertyType.IsClass && propertyType.IsExtendType(typeof(IDTO_Input)))
                 {
-                    if (!inputProperty.Name.Equals(inputPropertyKey, StringComparison.OrdinalIgnoreCase))
+                    //如果是继承了IDTO_Input的类
+
+                    //从文档中判断是否存在该类型的结构说明
+                    if (!doc.Components.Schemas.ContainsKey(propertyType.Name))
                         continue;
 
-                    var inputPropertySchema = inputSchema.Properties[inputPropertyKey];
-                    inputSchema.Properties.Add(attr_ren.Name, inputPropertySchema);
+                    //获取该字段的结构说明
+                    var classSchema_Property = doc.Components.Schemas[propertyType.Name];
+
+                    //递归调用
+                    PropertyOperation(doc, classSchema_Property, inputProperty.PropertyType.GetProperties());
+                }
+                else
+                {
+                    var inputPropertyKey = "";
+                    var inputPropertySchema = default(OpenApiSchema);
+
+                    //遍历所有字段名标识
+                    foreach (var key in classSchema.Properties.Keys)
+                    {
+                        //找出与字段匹配的字段名标识
+                        if (!inputProperty.Name.Equals(key, StringComparison.OrdinalIgnoreCase))
+                            continue;
+
+                        inputPropertyKey = key;
+                        inputPropertySchema = classSchema.Properties[inputPropertyKey];
+
+                        //找到立刻跳出循环
+                        break;
+                    }
+
+                    //找不到字段信息
+                    if (inputPropertyKey.IsEmptyString() || inputPropertySchema == default)
+                        continue;
+
+                    var attr_hid = inputProperty.GetCustomAttribute<PropertyHiddenAttribute>();
+                    if (attr_hid != null)
+                    {
+                        classSchema.Properties.Remove(inputPropertyKey);
+                    }
+
+                    //如果不存在重命名的标签就进入下个匹配
+                    var attr_ren = inputProperty.GetCustomAttribute<PropertyRenameAttribute>();
+                    if (attr_ren != null)
+                    {
+                        classSchema.Properties.Remove(inputPropertyKey);
+                        classSchema.Properties.Add(attr_ren.Name, inputPropertySchema);
+                    }
                 }
             }
         }
