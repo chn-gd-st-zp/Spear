@@ -44,6 +44,8 @@ namespace Spear.MidM.Permission
             AccessLogger = accessLogger;
             EStatus = eStatus;
         }
+
+        public abstract IPermission Convert();
     }
 
     [Aspect(Scope.PerInstance)]
