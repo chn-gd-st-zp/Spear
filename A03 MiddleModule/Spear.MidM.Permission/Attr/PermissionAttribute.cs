@@ -4,6 +4,7 @@ using System.Reflection;
 
 using AspectInjector.Broker;
 
+using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
@@ -13,7 +14,7 @@ using Spear.MidM.SessionNAuth;
 
 namespace Spear.MidM.Permission
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
     public abstract class PermissionBaseAttribute : Attribute
     {
         public Enum_PermissionType EType { get; }
@@ -62,6 +63,9 @@ namespace Spear.MidM.Permission
 
         protected override void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams)
         {
+            if (AppInitHelper.IsTestMode)
+                return;
+
             var attrs = triggers.Where(o => o.IsExtendType<PermissionBaseAttribute>())
                 .Select(o => o as PermissionBaseAttribute)
                 .Where(o => o.EType == Enum_PermissionType.Action)
