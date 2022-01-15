@@ -10,23 +10,22 @@
         public static readonly int MaxLength = 10;
         public static readonly int MaxLength_Full = 255;
 
-        public static string FormatField_Sort(this int field)
+        public static string FormatSequence(this string field)
         {
-            return field.ToString().PadLeft(MaxLength, '0');
+            return field.PadLeft(MaxLength, '0');
         }
 
-        public static string DefaultField_Sort(this int value)
+        public static string DefaultSequence(this string value)
         {
-            value = 0;
-            return value.FormatField_Sort();
+            return "0".FormatSequence();
         }
 
-        public static void SetSort(this IDBField_Sequence obj, int value)
+        public static void SetSequence(this IDBField_Sequence obj, string value)
         {
-            obj.CurSequence = value.FormatField_Sort();
+            obj.CurSequence = value.FormatSequence();
         }
 
-        public static string GetSort(this IDBField_Sequence obj, int plusNum = 0)
+        public static string GetSequence(this IDBField_Sequence obj, int plusNum = 0)
         {
             int value = 0;
             if (!int.TryParse(obj.CurSequence, out value))
@@ -34,7 +33,7 @@
 
             value += plusNum;
 
-            return value.FormatField_Sort();
+            return value.ToString().FormatSequence();
         }
     }
 }

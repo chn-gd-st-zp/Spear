@@ -243,7 +243,7 @@ namespace Spear.Inf.EF
             if (obj == null)
                 obj = new TEntity();
 
-            return obj.GetSort(1);
+            return obj.GetSequence(1);
         }
 
         #endregion
