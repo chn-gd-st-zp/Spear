@@ -2,6 +2,7 @@
 
 namespace Spear.Inf.Core.CusEnum
 {
+    [KVResource]
     public enum Enum_Role
     {
         [Remark("默认、无")]
@@ -17,6 +18,7 @@ namespace Spear.Inf.Core.CusEnum
         User,
     }
 
+    [KVResource]
     public enum Enum_Gender
     {
         [Remark("默认、无")]

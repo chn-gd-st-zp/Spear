@@ -98,7 +98,7 @@ namespace Spear.MidM.SessionNAuth
 
                         _currentUserToken = userTokenCache.MapTo<UserTokenCache, UserTokenRunTime>();
 
-                        _currentUserToken.Extenstion(_sessionNAuthSettings.CacheValidDuration);
+                        _currentUserToken.Extenstion(_sessionNAuthSettings.CacheMaintainMinutes);
                     }
                     catch (Exception ex)
                     {
@@ -123,7 +123,7 @@ namespace Spear.MidM.SessionNAuth
             if (userToken == null)
                 return;
 
-            var time = TimeSpan.FromMinutes(_sessionNAuthSettings.CacheValidDuration);
+            var time = TimeSpan.FromMinutes(_sessionNAuthSettings.CacheMaintainMinutes);
             userToken.ExpiredTime = DateTime.Now.AddMinutes(time.TotalMinutes);
 
             var accessToken = userToken.AccessToken;

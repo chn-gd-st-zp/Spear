@@ -130,15 +130,15 @@ namespace Spear.MidM.SessionNAuth
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="cacheValidDuration">minutes</param>
-        public void Extenstion(int cacheValidDuration)
+        /// <param name="cacheMaintainMinutes">minutes</param>
+        public void Extenstion(int cacheMaintainMinutes)
         {
             DateTime now = DateTime.Now;
 
             DeviceInfo.UpdateTime = now;
-            DeviceInfo.ExpiredTime = now.AddMinutes(cacheValidDuration);
+            DeviceInfo.ExpiredTime = now.AddMinutes(cacheMaintainMinutes);
             AccountInfo.UpdateTime = now;
-            AccountInfo.ExpiredTime = now.AddMinutes(cacheValidDuration);
+            AccountInfo.ExpiredTime = now.AddMinutes(cacheMaintainMinutes);
         }
     }
 }

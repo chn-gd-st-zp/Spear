@@ -29,6 +29,6 @@ namespace Spear.MidM.SessionNAuth
         /// <summary>
         /// 缓存有效持续时间（分钟）
         /// </summary>
-        public int CacheValidDuration { get; set; }
+        public int CacheMaintainMinutes { get; set; }
     }
 }
