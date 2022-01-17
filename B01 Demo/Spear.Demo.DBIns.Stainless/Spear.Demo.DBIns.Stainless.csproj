@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\A02 DataBase\Spear.DataBase.EF\Spear.DataBase.EF.csproj" />
+		<ProjectReference Include="..\..\A02 DataBase\Spear.DataBase.SqlSugar\Spear.DataBase.SqlSugar.csproj" />
+		<ProjectReference Include="..\Spear.Demo.Inf\Spear.Demo.Inf.csproj" />
+	</ItemGroup>
+
+</Project>

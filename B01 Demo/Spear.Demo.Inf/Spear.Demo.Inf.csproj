@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\A01 Infrastructure\Spear.Inf.Core\Spear.Inf.Core.csproj" />
+		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Apollo\Spear.MidM.Apollo.csproj" />
+		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Attachment\Spear.MidM.Attachment.csproj" />
+		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Defend\Spear.MidM.Defend.csproj" />
+		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Logger\Spear.MidM.Logger.csproj" />
+		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Permission\Spear.MidM.Permission.csproj" />
+		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.RabbitMQ\Spear.MidM.RabbitMQ.csproj" />
+		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Redis\Spear.MidM.Redis.csproj" />
+		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Schedule\Spear.MidM.Schedule.csproj" />
+		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.SessionNAuth\Spear.MidM.SessionNAuth.csproj" />
+		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Swagger\Spear.MidM.Swagger.csproj" />
+		<ProjectReference Include="..\..\A04 GlobalSupport\Spear.GlobalSupport.Base\Spear.GlobalSupport.Base.csproj" />
+	</ItemGroup>
+
+</Project>
