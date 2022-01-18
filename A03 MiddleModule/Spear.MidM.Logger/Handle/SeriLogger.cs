@@ -46,7 +46,7 @@ namespace Spear.MidM.Logger
 
             return configuration
                 .WriteTo.File(
-                    path: $"Logs/{triggerName}/{level}-.log",
+                    path: $"logs/{triggerName}/{level}-.log",
                     restrictedToMinimumLevel: level,
                     outputTemplate: settings.Template,
                     rollingInterval: settings.RollingInterval,
