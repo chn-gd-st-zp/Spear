@@ -53,6 +53,23 @@ namespace Spear.Inf.Core.Attr
             }
         }
 
+        private static void Verify(IDTO_Input input)
+        {
+            string errorMsg = "";
+
+            if (input == null)
+                return;
+
+            if (!input.VerifyField(out errorMsg))
+                throw new Exception_VerifyError(errorMsg);
+
+            foreach (var property in input.GetType().GetProperties())
+            {
+                if (property.PropertyType.IsClass && property.PropertyType.IsExtendType(typeof(IDTO_Input)))
+                    Verify(property.GetValue(input) as IDTO_Input);
+            }
+        }
+
         private static void LoadParams(this object paramObj, Type inputType, List<IDTO_Input> paramList)
         {
             if (paramObj == null)
@@ -90,23 +107,6 @@ namespace Spear.Inf.Core.Attr
                         }
                     }
                 }
-            }
-        }
-
-        private static void Verify(IDTO_Input input)
-        {
-            string errorMsg = "";
-
-            if (input == null)
-                return;
-
-            if (!input.VerifyField(out errorMsg))
-                throw new Exception_VerifyError(errorMsg);
-
-            foreach (var property in input.GetType().GetProperties())
-            {
-                if (property.PropertyType.IsClass && property.PropertyType.IsExtendType(typeof(IDTO_Input)))
-                    Verify(property.GetValue(input) as IDTO_Input);
             }
         }
     }
