@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Consul" Version="1.6.1.1" />
+		<PackageReference Include="MagicOnion" Version="4.0.2" />
+		<PackageReference Include="MagicOnion.Server.HttpGateway" Version="4.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\A01 Infrastructure\Spear.Inf.Core\Spear.Inf.Core.csproj" />
+	</ItemGroup>
+
+</Project>

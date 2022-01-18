@@ -92,8 +92,6 @@ namespace Spear.Demo4GRPC.Host.Server
 
         protected override void Extend_Configure(AppConfiguresBase configures)
         {
-            ServiceContext.InitServiceProvider(configures.App.ApplicationServices);
-
             if (configures.Env.IsDevelopment())
             {
                 configures.App.UseDeveloperExceptionPage();

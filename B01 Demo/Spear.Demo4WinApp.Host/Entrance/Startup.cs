@@ -64,8 +64,6 @@ namespace Spear.Demo4WinApp.Host
 
         protected override void Extend_Configure(AppConfiguresBase configures)
         {
-            ServiceContext.InitServiceProvider(configures.App.ApplicationServices);
-
             configures.App.MonitorSettings(AppInitHelper.GetAllType(CurConfig.AutoFacSettings.Patterns, CurConfig.AutoFacSettings.Dlls));
 
             configures.App.UseHangfireDashboard("/hangfire");

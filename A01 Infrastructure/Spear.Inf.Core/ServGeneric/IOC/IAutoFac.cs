@@ -1,6 +1,6 @@
 ﻿namespace Spear.Inf.Core.ServGeneric.IOC
 {
-    public interface IAutoFac : IServ
+    public interface IAutoFac
     {
         //
     }

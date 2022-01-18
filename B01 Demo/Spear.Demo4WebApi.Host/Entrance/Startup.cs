@@ -100,8 +100,6 @@ namespace Spear.Demo4WebApi.Host
 
         protected override void Extend_Configure(AppConfiguresBase configures)
         {
-            ServiceContext.InitServiceProvider(configures.App.ApplicationServices);
-
             if (configures.Env.IsDevelopment())
             {
                 configures.App.UseDeveloperExceptionPage();

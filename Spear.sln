@@ -57,9 +57,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06 Implement", "06 Implemen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.Demo.Inf", "B01 Demo\Spear.Demo.Inf\Spear.Demo.Inf.csproj", "{91A3F2B5-5BD4-4B57-AB23-97116E67A039}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spear.Demo.DBIns.Stainless", "B01 Demo\Spear.Demo.DBIns.Stainless\Spear.Demo.DBIns.Stainless.csproj", "{B74C06A1-7CA6-4F54-B09B-82DD1DC65EA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.Demo.DBIns.Stainless", "B01 Demo\Spear.Demo.DBIns.Stainless\Spear.Demo.DBIns.Stainless.csproj", "{B74C06A1-7CA6-4F54-B09B-82DD1DC65EA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spear.Demo.Support", "B01 Demo\Spear.Demo.Support\Spear.Demo.Support.csproj", "{07598794-E29F-4652-A625-E1BCBCDE71D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.Demo.Support", "B01 Demo\Spear.Demo.Support\Spear.Demo.Support.csproj", "{07598794-E29F-4652-A625-E1BCBCDE71D7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.Demo4WinApp.Host", "B01 Demo\Spear.Demo4WinApp.Host\Spear.Demo4WinApp.Host.csproj", "{992B2E72-EFEA-4EAD-AFEF-A8C925DFB2A8}"
 EndProject
@@ -67,9 +67,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo4WinApp", "Demo4WinApp"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo4GRPC", "Demo4GRPC", "{F222A90D-2CAD-48C0-8FBD-2DD8EF670BBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spear.Demo.Contract", "B01 Demo\Spear.Demo.Contract\Spear.Demo.Contract.csproj", "{EBCAF235-86B7-4C9B-A52F-C4D2846A66E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.Demo.Contract", "B01 Demo\Spear.Demo.Contract\Spear.Demo.Contract.csproj", "{EBCAF235-86B7-4C9B-A52F-C4D2846A66E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spear.Demo.Impl", "B01 Demo\Spear.Demo.Impl\Spear.Demo.Impl.csproj", "{40405E40-5A8A-4E91-9109-F78162913232}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.Demo.Impl", "B01 Demo\Spear.Demo.Impl\Spear.Demo.Impl.csproj", "{40405E40-5A8A-4E91-9109-F78162913232}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.Demo4GRPC.Host.Server", "B01 Demo\Spear.Demo4GRPC.Host.Server\Spear.Demo4GRPC.Host.Server.csproj", "{34F95F67-5B1F-4363-ACEA-C857BB283255}"
 EndProject
@@ -78,6 +78,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo4WebApi", "Demo4WebApi", "{0D09AD0D-D8C6-43E7-B04F-563C080BF79C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spear.Demo4WebApi.Host", "B01 Demo\Spear.Demo4WebApi.Host\Spear.Demo4WebApi.Host.csproj", "{6FEC3BA5-E288-4105-AB1A-72C0C2FA2D49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spear.MidM.MicoServ", "Spear.MidM.MicoServ\Spear.MidM.MicoServ.csproj", "{C2A30ADD-9D8A-4D6B-B4A7-6BB7C8D240BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -181,6 +183,10 @@ Global
 		{6FEC3BA5-E288-4105-AB1A-72C0C2FA2D49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FEC3BA5-E288-4105-AB1A-72C0C2FA2D49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FEC3BA5-E288-4105-AB1A-72C0C2FA2D49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2A30ADD-9D8A-4D6B-B4A7-6BB7C8D240BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A30ADD-9D8A-4D6B-B4A7-6BB7C8D240BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A30ADD-9D8A-4D6B-B4A7-6BB7C8D240BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A30ADD-9D8A-4D6B-B4A7-6BB7C8D240BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -219,6 +225,7 @@ Global
 		{B39874FA-A69E-4532-9174-307B156638FD} = {F222A90D-2CAD-48C0-8FBD-2DD8EF670BBB}
 		{0D09AD0D-D8C6-43E7-B04F-563C080BF79C} = {BB2E719A-9111-4C09-8412-A1FD2AB5ED92}
 		{6FEC3BA5-E288-4105-AB1A-72C0C2FA2D49} = {0D09AD0D-D8C6-43E7-B04F-563C080BF79C}
+		{C2A30ADD-9D8A-4D6B-B4A7-6BB7C8D240BD} = {F656469A-C9F9-4F44-8B04-B56FA6314399}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A47E5485-EB9D-4BF4-96F4-1EAF60F3DB37}

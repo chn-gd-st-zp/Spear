@@ -77,7 +77,6 @@ namespace Spear.Demo4GRPC.Host.Client
 
         protected override void Extend_Configure(AppConfiguresBase configures)
         {
-            ServiceContext.InitServiceProvider(configures.App.ApplicationServices);
             ServiceContext.InitMicServClient();
 
             if (configures.Env.IsDevelopment())

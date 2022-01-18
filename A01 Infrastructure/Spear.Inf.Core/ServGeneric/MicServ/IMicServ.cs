@@ -1,8 +1,6 @@
-﻿using MagicOnion;
-
-namespace Spear.Inf.Core.ServGeneric.MicServ
+﻿namespace Spear.Inf.Core.ServGeneric.MicServ
 {
-    public interface IMicServ<T> : IServ, IService<T>
+    public interface IMicServ<T> : MagicOnion.IService<T>
     {
         //
     }
