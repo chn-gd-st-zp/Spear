@@ -17,7 +17,7 @@ using Spear.Inf.Core.Interface;
 
 namespace Spear.Inf.Core.AppEntrance
 {
-    public delegate void LoadRunningSettingsDelegate(IConfigurationBuilder configBuilder, List<string> argList);
+    public delegate void LoadRunningSettingsDelegate(IConfigurationBuilder configBuilder, string[] args);
 
     /// <summary>
     /// 程序启动辅助
@@ -211,15 +211,16 @@ namespace Spear.Inf.Core.AppEntrance
         /// <returns></returns>
         public static IConfigurationBuilder LoadRunningSettings(this IConfigurationBuilder configBuilder, string[] args, params LoadRunningSettingsDelegate[] funcArray)
         {
-            List<string> argList = args != null && args.Length > 0 ? args.ToList() : new List<string>();
+            args = args != null && args.Length > 0 ? args : new string[0];
+
             Printor.PrintText("启动参数：");
             Printor.PrintText("{");
-            argList.ForEach(o => { Printor.PrintText("  " + o); });
+            args.ToList().ForEach(o => { Printor.PrintText("  " + o); });
             Printor.PrintText("}");
             Printor.PrintLine();
 
             foreach (var func in funcArray)
-                func(configBuilder, argList);
+                func(configBuilder, args);
 
             return configBuilder;
         }

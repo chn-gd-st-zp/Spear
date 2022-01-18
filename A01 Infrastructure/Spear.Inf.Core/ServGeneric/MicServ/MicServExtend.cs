@@ -22,14 +22,14 @@ namespace Spear.Inf.Core.ServGeneric.MicServ
 {
     public static class MicServExtend
     {
-        public static void LoadMicServRunSettings(IConfigurationBuilder configBuilder, List<string> argList)
+        public static void LoadMicServRunSettings(IConfigurationBuilder configBuilder, string[] args)
         {
-            if (argList.Count() > 0)
+            if (args.Length > 0)
             {
-                string hostPublic = argList.Where(o => o.StartsWith("hostpublic=", StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
-                string hostInternal = argList.Where(o => o.StartsWith("hostinternal=", StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
-                string webApiPort = argList.Where(o => o.StartsWith("webapiport=", StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
-                string micServPort = argList.Where(o => o.StartsWith("micservport=", StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
+                string hostPublic = args.Where(o => o.StartsWith("hostpublic=", StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
+                string hostInternal = args.Where(o => o.StartsWith("hostinternal=", StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
+                string webApiPort = args.Where(o => o.StartsWith("webapiport=", StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
+                string micServPort = args.Where(o => o.StartsWith("micservport=", StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
 
                 var settings = new MicServRunSettings()
                 {
