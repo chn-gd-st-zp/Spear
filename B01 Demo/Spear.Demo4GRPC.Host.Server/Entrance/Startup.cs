@@ -12,15 +12,14 @@ using Autofac;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.AppEntrance;
-using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric.MicServ;
 using Spear.Inf.Core.CusEnum;
 using Spear.MidM.Logger;
 using Spear.MidM.Swagger;
+using Spear.MidM.MicoServ;
+using Spear.MidM.MicoServ.MagicOnion;
 
-using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
+using Spear.GlobalSupport.Base.Filter;
 
 namespace Spear.Demo4GRPC.Host.Server
 {
@@ -71,23 +70,22 @@ namespace Spear.Demo4GRPC.Host.Server
                     options.SerializerSettings.Converters = JsonSerializerSettings.Converters;
                 });
 
+            services.AddSwagger(CurConfig.SwaggerSettings, AppInitHelper.GetPaths(Enum_InitFile.XML, CurConfig.SwaggerSettings.Patterns, CurConfig.SwaggerSettings.Xmls));
+            services.AddAutoMapper();
+
             services.AddGrpc();
             services.AddMagicOnion(o =>
             {
                 o.EnableCurrentContext = true;
                 o.GlobalFilters.AddFilter<GRPCFilterAttribute>();
             });
-
-            services.AddSwagger(CurConfig.SwaggerSettings, AppInitHelper.GetPaths(Enum_InitFile.XML, CurConfig.SwaggerSettings.Patterns, CurConfig.SwaggerSettings.Xmls));
-            services.AddAutoMapper();
         }
 
         protected override void Extend_ConfigureContainer(ContainerBuilder containerBuilder)
         {
-            containerBuilder.Register(o => CurConfig.MicServRunSettings).AsSelf().SingleInstance();
-            containerBuilder.Register(o => CurConfig.MicServServerSettings).AsSelf().SingleInstance();
-
-            containerBuilder.RegisterGeneric(typeof(NLogger<>)).As(typeof(ISpearLogger<>)).InstancePerDependency();
+            containerBuilder.RegisNLogger(Configuration);
+            containerBuilder.Register(o => CurConfig.MicoServDeploySettings).AsSelf().SingleInstance();
+            containerBuilder.Register(o => CurConfig.MicoServServerSettings).AsSelf().SingleInstance();
         }
 
         protected override void Extend_Configure(AppConfiguresBase configures)
@@ -107,7 +105,7 @@ namespace Spear.Demo4GRPC.Host.Server
                 endpoints.UseMagicOnion();
             });
 
-            configures.App.UseConsul(configures.Lifetime, CurConfig.MicServRunSettings, CurConfig.MicServServerSettings);
+            configures.Lifetime.RegisMicoServ();
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 
-using MagicOnion;
-
 using Spear.Inf.Core.Base;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusException;
@@ -105,36 +103,6 @@ namespace Spear.Inf.Core.CusResult
             ResultWebApi<T> result = ToResultWebApi<T>(default(T), errorCode.ToIntString(), errorMsg);
 
             return result;
-        }
-
-        #endregion
-
-        #region ResultMicServ
-
-        public static ResultMicServ<T> ToResultMicServ<T>(this ResultBase<T> resultBase)
-        {
-            ResultMicServ<T> result;
-
-            result = new ResultMicServ<T>();
-            result.IsSuccess = resultBase.IsSuccess;
-            result.Code = Enum_StateCode.Success.ToIntString();
-            result.Msg = resultBase.Msg;
-            result.Data = resultBase.Data;
-
-            if (resultBase.ExInfo != null)
-            {
-                Exception_Base cusEx = resultBase.ExInfo as Exception_Base;
-                result.Code = cusEx != null ? cusEx.ECode.ToIntString() : Enum_StateCode.SysError.ToIntString();
-                result.Msg = resultBase.ExInfo.Message;
-                result.ErrorStackTrace += "\r\n" + resultBase.ExInfo.StackTrace;
-            }
-
-            return result;
-        }
-
-        public static UnaryResult<ResultMicServ<T>> ToMicServResult<T>(this ResultBase<T> resultBase)
-        {
-            return new UnaryResult<ResultMicServ<T>>(resultBase.ToResultMicServ());
         }
 
         #endregion

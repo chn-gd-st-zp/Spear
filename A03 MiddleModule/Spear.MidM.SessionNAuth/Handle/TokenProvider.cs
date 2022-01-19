@@ -6,8 +6,8 @@ using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.DTO;
 using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric.MicServ;
 using Spear.Inf.Core.Tool;
+using Spear.MidM.MicoServ.MagicOnion;
 
 namespace Spear.MidM.SessionNAuth
 {

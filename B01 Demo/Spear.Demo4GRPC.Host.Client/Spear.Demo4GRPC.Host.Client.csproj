@@ -22,11 +22,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Spear.Demo.Support\Spear.Demo.Support.csproj" />
+		<ProjectReference Include="..\Spear.Demo.Impl\Spear.Demo.Impl.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Update="dockerfile">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="nlog.config">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>

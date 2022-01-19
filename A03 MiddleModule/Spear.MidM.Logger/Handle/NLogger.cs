@@ -12,7 +12,7 @@ namespace Spear.MidM.Logger
 {
     public interface INLogger : ISpearLogger { }
 
-    public interface INLogger<TTrigger> : INLogger where TTrigger : class { }
+    public interface INLogger<TTrigger> : INLogger, ISpearLogger<TTrigger> where TTrigger : class { }
 
     public class NLogger : INLogger
     {

@@ -18,7 +18,7 @@ namespace Spear.MidM.Logger
                 .ConfigureLogging((hostingContext, config) =>
                 {
                     config.ClearProviders();
-                    //config.AddNLog("nlog.config");
+                    config.AddNLog("nlog.config");
                 })
                 .UseNLog();
         }
@@ -37,9 +37,18 @@ namespace Spear.MidM.Logger
                 .UseSerilog();
         }
 
+        public static ContainerBuilder RegisNLogger(this ContainerBuilder containerBuilder, IConfiguration configuration)
+        {
+            containerBuilder.RegisterType<NLogger>().As<ISpearLogger>().SingleInstance();
+            containerBuilder.RegisterGeneric(typeof(NLogger<>)).As(typeof(ISpearLogger<>)).SingleInstance();
+
+            return containerBuilder;
+        }
+
         public static ContainerBuilder RegisSeriLogger(this ContainerBuilder containerBuilder, IConfiguration configuration)
         {
             Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
+
             containerBuilder.RegisterType<SeriLogger>().As<ISpearLogger>().SingleInstance();
             containerBuilder.RegisterGeneric(typeof(SeriLogger<>)).As(typeof(ISpearLogger<>)).SingleInstance();
 

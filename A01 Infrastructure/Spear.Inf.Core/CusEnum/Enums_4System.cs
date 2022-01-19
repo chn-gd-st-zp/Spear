@@ -82,18 +82,6 @@ namespace Spear.Inf.Core.CusEnum
         GRPC
     }
 
-    public enum Enum_ServType
-    {
-        [Remark("默认、无")]
-        None,
-
-        [Remark("WebApi")]
-        WebApi,
-
-        [Remark("GRPC")]
-        GRPC,
-    }
-
     public enum Enum_FilterType
     {
         [Remark("默认、无")]

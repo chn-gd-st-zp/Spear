@@ -4,8 +4,8 @@ using Microsoft.Extensions.Hosting;
 using Autofac.Extensions.DependencyInjection;
 
 using Spear.Inf.Core.AppEntrance;
-using Spear.Inf.Core.ServGeneric.MicServ;
 using Spear.MidM.Logger;
+using Spear.MidM.MicoServ;
 
 namespace Spear.Demo4GRPC.Host.Client
 {
@@ -25,7 +25,7 @@ namespace Spear.Demo4GRPC.Host.Client
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config.LoadConfiguration();
-                    config.LoadRunningSettings(args, MicServExtend.LoadMicServRunSettings);
+                    config.LoadRunningSettings(args, MicoServExtend.LoadMicoServDeploySettings);
                 })
                 .UseNLogger()
                 .ConfigureWebHostDefaults(hostBuilder =>

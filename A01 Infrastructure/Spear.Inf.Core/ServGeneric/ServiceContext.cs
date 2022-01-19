@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using Autofac;
 using Autofac.Core;
 
-using Spear.Inf.Core.ServGeneric.MicServ;
-
 namespace Spear.Inf.Core.ServGeneric
 {
     public class ServiceContext
@@ -251,24 +249,6 @@ namespace Spear.Inf.Core.ServGeneric
             {
                 return default;
             }
-        }
-
-        #endregion
-
-        #region 服务 - 微服务
-
-        public static void InitMicServClient()
-        {
-            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-        }
-
-        public static T ResolveMicServ<T>(params object[] paramArray) where T : IMicServ<T>
-        {
-            var micServGener = Resolve<IMicServGeneric>();
-            if (micServGener == null)
-                return default;
-
-            return micServGener.GetServ<T>(paramArray);
         }
 
         #endregion

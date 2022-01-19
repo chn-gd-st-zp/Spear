@@ -2,36 +2,33 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-using Spear.Inf.Core.Attr;
-using Spear.Inf.Core.Base;
 using Spear.Inf.Core.ServGeneric;
-using Spear.Inf.Core.ServGeneric.MicServ;
 using Spear.Inf.Core.Tool;
+using Spear.MidM.MicoServ;
 
 namespace Spear.Demo4GRPC.Host.Server.Controller
 {
-    [Route("health")]
-    [ApiController]
+    [ApiController, Route("api/[controller]")]
     public class HealthController : ControllerBase
     {
-        private readonly MicServRunSettings _micServRunSettings;
-        private readonly MicServServerSettings _micServServerSettings;
+        private readonly MicoServDeploySettings _micoServDeploySettings;
+        private readonly MicoServServerSettings _micoServServerSettings;
 
         public HealthController()
         {
-            _micServRunSettings = ServiceContext.Resolve<MicServRunSettings>();
-            _micServServerSettings = ServiceContext.Resolve<MicServServerSettings>();
+            _micoServDeploySettings = ServiceContext.Resolve<MicoServDeploySettings>();
+            _micoServServerSettings = ServiceContext.Resolve<MicoServServerSettings>();
         }
 
         /// <summary>
         /// 心跳检测
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Route("check")]
-        [LogIgnore]
+        //[LogIgnore]
+        [HttpGet, Route("Check")]
         public async Task<string> Check()
         {
-            string result = $"{_micServServerSettings.NodeName}-{_micServServerSettings.GetHostModes_WebApi(_micServRunSettings).ToJson()} say : im health";
+            string result = $"{_micoServServerSettings.NodeName}-{_micoServServerSettings.GetDeployModes_WebApi(_micoServDeploySettings).ToJson()} say : im health";
             return result;
         }
     }

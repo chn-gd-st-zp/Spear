@@ -8,7 +8,7 @@ using Spear.Inf.Core.Interface;
 
 using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
 
-namespace Spear.Inf.Core.Attr
+namespace Spear.GlobalSupport.Base.Filter
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public class CtrlerFilterAttribute : ActionFilterAttribute, IExceptionFilter, IAsyncExceptionFilter

@@ -1,17 +1,14 @@
-﻿namespace Spear.Inf.Core.Interface
+﻿using Spear.Inf.Core.ServGeneric.IOC;
+
+namespace Spear.Inf.Core.Interface
 {
     public interface IMicoServContainer
     {
         //
     }
 
-    public interface IMicoServContainer<TContainer> : IMicoServContainer
+    public interface IMicoServConnector : ISingleton
     {
-        //
-    }
-
-    public interface IMicoServProvider
-    {
-        TContainer Resolve<TContainer>(params object[] paramArray) where TContainer : IMicoServContainer;
+        string GenericServAddress(string serverIdentity);
     }
 }

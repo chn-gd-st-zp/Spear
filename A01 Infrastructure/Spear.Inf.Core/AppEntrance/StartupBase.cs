@@ -22,9 +22,6 @@ namespace Spear.Inf.Core.AppEntrance
             Configuration = configuration;
             CurConfig = Configuration.GetSetting<TSettings>();
             JsonSerializerSettings = SetJsonSerializerSettings();
-
-            Printor.PrintText(CurConfig.ToJson());
-            Printor.PrintLine();
         }
 
         /// <summary>
@@ -76,6 +73,9 @@ namespace Spear.Inf.Core.AppEntrance
         protected void Configure(TConfigures configures)
         {
             ServiceContext.InitServiceProvider(configures.App.ApplicationServices);
+
+            Printor.PrintText(CurConfig.ToJson());
+            Printor.PrintLine();
 
             Extend_Configure(configures);
         }

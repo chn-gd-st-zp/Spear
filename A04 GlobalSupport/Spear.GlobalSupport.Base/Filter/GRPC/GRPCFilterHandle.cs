@@ -1,8 +1,9 @@
-﻿using Spear.Inf.Core.CusEnum;
+﻿using Spear.Inf.Core.Attr;
+using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.ServGeneric;
 
-namespace Spear.Inf.Core.Attr
+namespace Spear.GlobalSupport.Base.Filter
 {
     [DIModeForService(Enum_DIType.ExclusiveByKeyed, typeof(IRequestFilterHandle), Enum_FilterType.GRPC)]
     public class GRPCFilterHandle : IRequestFilterHandle

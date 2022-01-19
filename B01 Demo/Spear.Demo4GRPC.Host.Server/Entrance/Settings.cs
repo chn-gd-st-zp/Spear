@@ -1,5 +1,5 @@
 ﻿using Spear.Inf.Core.AppEntrance;
-using Spear.Inf.Core.ServGeneric.MicServ;
+using Spear.MidM.MicoServ;
 using Spear.MidM.Swagger;
 
 namespace Spear.Demo4GRPC.Host.Server
@@ -8,8 +8,8 @@ namespace Spear.Demo4GRPC.Host.Server
     {
         public SwaggerSettings SwaggerSettings { get; set; }
 
-        public MicServServerSettings MicServServerSettings { get; set; }
+        public MicoServServerSettings MicoServServerSettings { get; set; }
 
-        public MicServRunSettings MicServRunSettings { get; set; }
+        public MicoServDeploySettings MicoServDeploySettings { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class DeployMode
     {
-        public Enum_AccessMode ReqMode { get; set; }
+        public Enum_AccessMode AccessMode { get; set; }
 
         public string Host { get; set; }
 

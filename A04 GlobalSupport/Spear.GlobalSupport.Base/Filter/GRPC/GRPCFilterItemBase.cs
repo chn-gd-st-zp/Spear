@@ -4,15 +4,16 @@ using System.Reflection;
 
 using MessagePack;
 
+using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric.MicServ;
 using Spear.Inf.Core.Tool;
+using Spear.MidM.MicoServ.MagicOnion;
 
 using MS = MagicOnion.Server;
 using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
 
-namespace Spear.Inf.Core.Attr
+namespace Spear.GlobalSupport.Base.Filter
 {
     public abstract class GRPCFilterItemBase : IRequestFilterItem
     {
@@ -66,7 +67,7 @@ namespace Spear.Inf.Core.Attr
                 {
                     var respContent = realContext.GetRawResponse();
 
-                    Result = respContent == null || respContent.Length == 0 ? new ResultMicServ<object>() : MessagePackSerializer.Deserialize<ResultMicServ<object>>(respContent.AsMemory());
+                    Result = respContent == null || respContent.Length == 0 ? new MagicOnionResult<object>() : MessagePackSerializer.Deserialize<MagicOnionResult<object>>(respContent.AsMemory());
 
                     //记录每次请求的往返内容
                     Logger.Info(new
@@ -101,14 +102,13 @@ namespace Spear.Inf.Core.Attr
                 Exception = Exception.InnerException;
 
             Type resultBaseType = typeof(ResultBase<>);
-            Type resultMicServType = realContext.MethodInfo.ReturnParameter.ParameterType.GenericTypeArguments[0];
-            Type dataType = resultMicServType.GenericTypeArguments[0];
-            Type funcClassType = typeof(CusResultExtend);
-            MethodInfo func_ResultBase_Exception = funcClassType.GetMethod("ResultBase_Exception").MakeGenericMethod(dataType);
-            MethodInfo func_ToResultMicServ = funcClassType.GetMethod("ToResultMicServ").MakeGenericMethod(dataType);
+            Type ResultMicoServType = realContext.MethodInfo.ReturnParameter.ParameterType.GenericTypeArguments[0];
+            Type dataType = ResultMicoServType.GenericTypeArguments[0];
+            MethodInfo func_ResultBase_Exception = typeof(CusResultExtend).GetMethod("ResultBase_Exception").MakeGenericMethod(dataType);
+            MethodInfo func_ToResultMicoServ = typeof(MagicOnionResultExtend).GetMethod("ToMagicOnionResult").MakeGenericMethod(dataType);
 
             var resultBase = func_ResultBase_Exception.Invoke(null, new object[] { Exception, null });
-            Result = func_ToResultMicServ.Invoke(null, new object[] { resultBase });
+            Result = func_ToResultMicoServ.Invoke(null, new object[] { resultBase });
 
             //是否标注了 志记录忽略 的标签，无标注 则需进行 日志记录
             if (Exception.GetType().GetCustomAttribute<LogIgnoreAttribute>() == null)

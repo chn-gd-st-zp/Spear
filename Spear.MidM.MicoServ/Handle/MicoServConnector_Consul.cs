@@ -4,29 +4,32 @@ using System.Linq;
 
 using Consul;
 
+using Spear.Inf.Core.Attr;
+using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.Tool;
 
 namespace Spear.MidM.MicoServ
 {
-    public class MicServProvider_Consul : IMicoServProvider
+    [DIModeForService(Enum_DIType.ExclusiveByKeyed, typeof(IMicoServConnector), Enum_RegisCenter.Consul)]
+    public class MicoServConnector_Consul : IMicoServConnector
     {
         public readonly MicoServClientSettings micoServClientSettings;
 
-        public MicServProvider_Consul()
+        public MicoServConnector_Consul()
         {
             micoServClientSettings = ServiceContext.Resolve<MicoServClientSettings>();
         }
 
-        public TContainer Resolve<TContainer>(params object[] paramArray) where TContainer : IMicoServContainer
+        public string GenericServAddress(string serverIdentity)
         {
-            string name = paramArray[0].ToString();
+            string servName = serverIdentity;
 
-            ConsulClient consulClient = new ConsulClient(o => o.Address = new Uri(micoServClientSettings.Address));
+            ConsulClient consulClient = new ConsulClient(o => o.Address = new Uri(micoServClientSettings.ServAddress));
 
             CatalogService service = null;
-            CatalogService[] services = consulClient.Catalog.Service(name).Result.Response;
+            CatalogService[] services = consulClient.Catalog.Service(servName).Result.Response;
             if (services != null && services.Any())
             {
                 //模拟随机一台进行请求，这里只是测试，可以选择合适的负载均衡工具或框架
@@ -34,11 +37,9 @@ namespace Spear.MidM.MicoServ
             }
 
             List<DeployMode> hostModes = service.ServiceAddress.ToObject<List<DeployMode>>();
-            var hostMode = hostModes.Where(o => o.ReqMode == micoServClientSettings.ReqMode).First();
+            var hostMode = hostModes.Where(o => o.AccessMode == micoServClientSettings.AccessMode).First();
 
-            string address = "http://" + hostMode.Host + ":" + hostMode.Port;
-            var target = new MicServProvider_Normal().Resolve<TContainer>(address);
-            return target;
+            return $"http://{ hostMode.Host}:{hostMode.Port}";
         }
     }
 }

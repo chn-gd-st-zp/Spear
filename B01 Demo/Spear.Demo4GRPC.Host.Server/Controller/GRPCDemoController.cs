@@ -15,13 +15,12 @@ using Spear.Demo.Inf.DTO;
 
 namespace Spear.Demo4GRPC.Host.Server.Controller
 {
-    [Route("grpc")]
-    [ApiController]
-    public class GRPCController : ControllerBase
+    [ApiController, Route("api/[controller]")]
+    public class GRPCDemoController : ControllerBase
     {
         private readonly IGRPCService _grpcService;
 
-        public GRPCController()
+        public GRPCDemoController()
         {
             _grpcService = ServiceContext.Resolve<IGRPCService>();
         }
@@ -31,7 +30,7 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpPost, Route("list")]
+        [HttpPost, Route("List")]
         public async Task<ResultWebApi<List<ODTOTestDemo>>> List(IDTO_ListParam input)
         {
             var result = _grpcService.List(input);
@@ -44,7 +43,7 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpPost, Route("page")]
+        [HttpPost, Route("Page")]
         public async Task<ResultWebApi<ODTO_Page<ODTOTestDemo>>> Page(IDTO_PageParam input)
         {
             var result = _grpcService.Page(input);
@@ -57,7 +56,7 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpPost, Route("tree")]
+        [HttpPost, Route("Tree")]
         public async Task<ResultWebApi<ODTO_Tree<ODTOTestDemo>>> Tree(IDTO_TreeParam input)
         {
             var result = _grpcService.Tree(input);
@@ -70,8 +69,8 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpPost, Route("import")]
-        public async Task<ResultWebApi<List<ODTOTestDemo>>> ImportExport(IFormFile input)
+        [HttpPost, Route("ImportExcel")]
+        public async Task<ResultWebApi<List<ODTOTestDemo>>> ImportExcel(IFormFile input)
         {
             IDTO_Import inputParam = new IDTO_Import()
             {
@@ -88,7 +87,7 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpPost, Route("export")]
+        [HttpPost, Route("ExportExcel")]
         public IActionResult ExportExcel(IDTO_Export input)
         {
             var result = _grpcService.ExportExcel(input);

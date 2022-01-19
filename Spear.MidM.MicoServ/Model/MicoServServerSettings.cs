@@ -17,61 +17,61 @@ namespace Spear.MidM.MicoServ
 
         public string WebApiProto { get; set; }
 
-        public Enum_AccessMode WebApiReqMode { get; set; }
+        public Enum_AccessMode WebApiAccessMode { get; set; }
 
 
         public string GRPCProto { get; set; }
 
-        public Enum_AccessMode GRPCReqMode { get; set; }
+        public Enum_AccessMode GRPCAccessMode { get; set; }
 
 
         public string HealthCheckRoute { get; set; }
 
 
-        public string GetServAddr_WebApi(MicoServDeploySettings micServRunSettings)
+        public string GetServAddr_WebApi(MicoServDeploySettings micoServDeploySettings)
         {
-            var DeployModes = GetDeployModes_WebApi(micServRunSettings);
+            var DeployModes = GetDeployModes_WebApi(micoServDeploySettings);
 
-            string result = $"{WebApiProto}://{DeployModes.First().Host}:{micServRunSettings.WebApiPort}";
+            string result = $"{WebApiProto}://{DeployModes.First().Host}:{micoServDeploySettings.WebApiPort}";
             return result;
         }
 
-        public string GetServAddr_MicServ(MicoServDeploySettings micServRunSettings)
+        public string GetServAddr_MicoServ(MicoServDeploySettings micoServDeploySettings)
         {
-            var DeployModes = GetDeployModes_MicServ(micServRunSettings);
+            var DeployModes = GetDeployModes_MicoServ(micoServDeploySettings);
 
-            string result = $"{GRPCProto}://{DeployModes.First().Host}:{micServRunSettings.GRPCPort}";
+            string result = $"{GRPCProto}://{DeployModes.First().Host}:{micoServDeploySettings.GRPCPort}";
             return result;
         }
 
-        public List<DeployMode> GetDeployModes_WebApi(MicoServDeploySettings micServRunSettings)
+        public List<DeployMode> GetDeployModes_WebApi(MicoServDeploySettings micoServDeploySettings)
         {
-            return GetDeployModes(Enum_ServType.WebApi, micServRunSettings);
+            return GetDeployModes(Enum_Protocol.HTTP, micoServDeploySettings);
         }
 
-        public List<DeployMode> GetDeployModes_MicServ(MicoServDeploySettings micServRunSettings)
+        public List<DeployMode> GetDeployModes_MicoServ(MicoServDeploySettings micoServDeploySettings)
         {
-            return GetDeployModes(Enum_ServType.GRPC, micServRunSettings);
+            return GetDeployModes(Enum_Protocol.GRPC, micoServDeploySettings);
         }
 
-        public List<DeployMode> GetDeployModes(Enum_ServType servType, MicoServDeploySettings micServRunSettings)
+        public List<DeployMode> GetDeployModes(Enum_Protocol servType, MicoServDeploySettings micoServDeploySettings)
         {
             List<DeployMode> result = new List<DeployMode>();
 
-            var reqMode = servType == Enum_ServType.WebApi ? WebApiReqMode : GRPCReqMode;
-            var port = servType == Enum_ServType.WebApi ? micServRunSettings.WebApiPort : micServRunSettings.GRPCPort;
+            var accessMode = servType == Enum_Protocol.HTTP ? WebApiAccessMode : GRPCAccessMode;
+            var port = servType == Enum_Protocol.HTTP ? micoServDeploySettings.WebApiPort : micoServDeploySettings.GRPCPort;
 
-            switch (reqMode)
+            switch (accessMode)
             {
                 case Enum_AccessMode.Internal:
-                    result.Add(new DeployMode { ReqMode = Enum_AccessMode.Internal, Host = micServRunSettings.HostInternal, Port = port });
+                    result.Add(new DeployMode { AccessMode = Enum_AccessMode.Internal, Host = micoServDeploySettings.HostInternal, Port = port });
                     break;
                 case Enum_AccessMode.Public:
-                    result.Add(new DeployMode { ReqMode = Enum_AccessMode.Public, Host = micServRunSettings.HostPublic, Port = port });
+                    result.Add(new DeployMode { AccessMode = Enum_AccessMode.Public, Host = micoServDeploySettings.HostPublic, Port = port });
                     break;
                 case Enum_AccessMode.PublicNInternal:
-                    result.Add(new DeployMode { ReqMode = Enum_AccessMode.Internal, Host = micServRunSettings.HostInternal, Port = port });
-                    result.Add(new DeployMode { ReqMode = Enum_AccessMode.Public, Host = micServRunSettings.HostPublic, Port = port });
+                    result.Add(new DeployMode { AccessMode = Enum_AccessMode.Internal, Host = micoServDeploySettings.HostInternal, Port = port });
+                    result.Add(new DeployMode { AccessMode = Enum_AccessMode.Public, Host = micoServDeploySettings.HostPublic, Port = port });
                     break;
             }
 

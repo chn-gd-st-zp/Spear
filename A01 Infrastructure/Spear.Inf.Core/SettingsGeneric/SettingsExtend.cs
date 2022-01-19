@@ -42,7 +42,6 @@ namespace Spear.Inf.Core.SettingsGeneric
                     if (!classType.IsImplementedType<ISettings>())
                         continue;
 
-                    var settingsExtendType = typeof(SettingsExtend);
                     typeof(SettingsExtend).GetMethod("SettingsOnChange")
                         .MakeGenericMethod(new[] { classType })
                         .Invoke(null, null);

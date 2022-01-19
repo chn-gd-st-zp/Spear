@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 
-using MessagePack;
 using Newtonsoft.Json;
 
 namespace Spear.Inf.Core.CusResult
@@ -53,20 +52,6 @@ namespace Spear.Inf.Core.CusResult
         public string Msg { get; set; }
 
         public TData Data { get; set; }
-    }
-
-    [MessagePackObject(true)]
-    public class ResultMicServ<TData>
-    {
-        public bool IsSuccess { get; set; }
-
-        public string Code { get; set; }
-
-        public string Msg { get; set; }
-
-        public TData Data { get; set; }
-
-        public string ErrorStackTrace { get; set; }
     }
 
     public class RespResultCallBack<T> : ResultBase<T>, IAsyncResult

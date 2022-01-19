@@ -11,13 +11,13 @@ using Autofac;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.AppEntrance;
-using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric.MicServ;
+using Spear.Inf.Core.CusEnum;
 using Spear.MidM.Logger;
-
-using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
+using Spear.MidM.Swagger;
+using Spear.MidM.MicoServ;
+using Spear.MidM.MicoServ.MagicOnion;
+using Spear.GlobalSupport.Base.Filter;
 
 namespace Spear.Demo4GRPC.Host.Client
 {
@@ -64,33 +64,34 @@ namespace Spear.Demo4GRPC.Host.Client
                     options.SerializerSettings.Converters = JsonSerializerSettings.Converters;
                 });
 
+            services.AddSwagger(CurConfig.SwaggerSettings, AppInitHelper.GetPaths(Enum_InitFile.XML, CurConfig.SwaggerSettings.Patterns, CurConfig.SwaggerSettings.Xmls));
             services.AddAutoMapper();
         }
 
         protected override void Extend_ConfigureContainer(ContainerBuilder containerBuilder)
         {
-            containerBuilder.Register(o => CurConfig.MicServClientSettings).AsSelf().SingleInstance();
-            containerBuilder.RegisMicServGeneric(CurConfig.MicServClientSettings);
-
-            containerBuilder.RegisterGeneric(typeof(NLogger<>)).As(typeof(ISpearLogger<>)).InstancePerDependency();
+            containerBuilder.RegisNLogger(Configuration);
+            containerBuilder.Register(o => CurConfig.MicoServClientSettings).AsSelf().SingleInstance();
+            containerBuilder.RegisMagicOnion();
         }
 
         protected override void Extend_Configure(AppConfiguresBase configures)
         {
-            ServiceContext.InitMicServClient();
-
             if (configures.Env.IsDevelopment())
             {
                 configures.App.UseDeveloperExceptionPage();
             }
+
+            configures.App.UseSwagger(CurConfig.SwaggerSettings);
 
             configures.App.UseRouting();
             configures.App.UseAuthorization();
             configures.App.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.UseMagicOnion();
             });
+
+            configures.Lifetime.RegisMicoServ();
         }
     }
 }

@@ -6,10 +6,10 @@ using Autofac.Extensions.DependencyInjection;
 using Com.Ctrip.Framework.Apollo;
 
 using Spear.Inf.Core.AppEntrance;
-using Spear.Inf.Core.ServGeneric.MicServ;
 using Spear.Inf.Core.SettingsGeneric;
 using Spear.MidM.Apollo;
 using Spear.MidM.Logger;
+using Spear.MidM.MicoServ;
 
 namespace Spear.Demo4WinApp.Host
 {
@@ -40,7 +40,7 @@ namespace Spear.Demo4WinApp.Host
                     //    .AddNamespace("???");
                     //}
 
-                    config.LoadRunningSettings(args, MicServExtend.LoadMicServRunSettings);
+                    config.LoadRunningSettings(args, MicoServExtend.LoadMicoServDeploySettings);
                 })
                 .UseNLogger()
                 .UseSeriLogger()
