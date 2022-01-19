@@ -10,30 +10,37 @@ using Spear.MidM.MicoServ.MagicOnion;
 
 using Spear.Demo.Inf.DTO;
 using Spear.Demo.Support;
+using Spear.Inf.Core.ServGeneric;
 
 namespace Spear.Demo4GRPC.Host.Client.Controller
 {
     [ApiController, Route("api/[controller]")]
     public class GRPCDemoController : ControllerBase
     {
-        private TContainer GetService<TContainer>(string serverIdentity) where TContainer : IMagicOnionContainer<TContainer>
+        private TContainer GetService<TContainer>() where TContainer : IMagicOnionContainer<TContainer>
         {
-            var service = MicoServContext.Resolve<TContainer>(Enum_RegisCenter.Normal, serverIdentity);
-            //var service = return MicoServContext.Resolve<TContainer>(Enum_RegisCenter.Consul, "TestDemo");
+            var result = default(TContainer);
 
-            return service;
+            var regisCenter = ServiceContext.Resolve<MicoServClientSettings>().RegisCenter;
+            var serverIdentity = "";
+
+            regisCenter = Enum_RegisCenter.Normal;
+            serverIdentity = "http://localhost:1001";
+            result = MicoServContext.Resolve<TContainer>(regisCenter, serverIdentity);
+
+            //regisCenter = Enum_RegisCenter.Consul;
+            //serverIdentity = "Demo4GRPC";
+            //result = MicoServContext.Resolve<TContainer>(regisCenter, serverIdentity);
+
+            return result;
         }
 
         [HttpGet, Route("go")]
         public async Task<ResultWebApi<bool>> Go()
         {
-            string address = "http://localhost:1001";
             object result = null;
 
-            var aaa = GetService<IGRPCDemoContainer>(address);
-            result = aaa.Test1().ResponseAsync.Result;
-
-            result = GetService<IGRPCDemoContainer>(address)
+            result = GetService<IGRPCDemoContainer>()
                 .Test3(
                     new IDTO_GRPC<IDTO_ListParam>
                     {
@@ -43,22 +50,22 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
                 )
                 .ResponseAsync.Result;
 
-            //result = GetService<IGRPCDemoContainer>(address)
-            //    .Test4(
-            //        new IDTO_GRPC<IDTO_ListParam>
-            //        {
-            //            GRPCContext = new IDTO_GRPCContext() { Token = "123" },
-            //            Param = new IDTO_ListParam()
-            //            {
-            //                EStatus = Enum_Status.Normal,
-            //            }
-            //        },
-            //        new IDTO_ListParam()
-            //        {
-            //            EStatus = Enum_Status.Normal,
-            //        }
-            //    )
-            //    .ResponseAsync.Result;
+            result = GetService<IGRPCDemoContainer>()
+                .Test4(
+                    new IDTO_GRPC<IDTO_ListParam>
+                    {
+                        GRPCContext = new IDTO_GRPCContext() { Token = "123" },
+                        Param = new IDTO_ListParam()
+                        {
+                            EStatus = Enum_Status.Normal,
+                        }
+                    },
+                    new IDTO_ListParam()
+                    {
+                        EStatus = Enum_Status.Normal,
+                    }
+                )
+                .ResponseAsync.Result;
 
             return false.ResultWebApi_Fail();
         }
