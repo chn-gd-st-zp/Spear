@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.DTO;
+using Spear.Inf.Core.ServGeneric;
 using Spear.MidM.MicoServ;
 using Spear.MidM.MicoServ.MagicOnion;
 
 using Spear.Demo.Inf.DTO;
 using Spear.Demo.Support;
-using Spear.Inf.Core.ServGeneric;
 
 namespace Spear.Demo4GRPC.Host.Client.Controller
 {
