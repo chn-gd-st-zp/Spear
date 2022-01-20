@@ -13,7 +13,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\A01 Infrastructure\Spear.Inf.Core\Spear.Inf.Core.csproj" />
 		<ProjectReference Include="..\Spear.MidM.Redis\Spear.MidM.Redis.csproj" />
 	</ItemGroup>
 
