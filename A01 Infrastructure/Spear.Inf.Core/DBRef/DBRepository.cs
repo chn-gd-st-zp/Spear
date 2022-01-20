@@ -12,10 +12,7 @@ namespace Spear.Inf.Core.DBRef
     {
         public virtual IDBContext DBContext { get; protected set; }
 
-        public DBRepository()
-        {
-            DBContext = GetDBContext();
-        }
+        public DBRepository() { DBContext = GetDBContext(); }
 
         protected virtual IDBContext GetDBContext() { return ServiceContext.Resolve<IDBContext>(); }
 
@@ -70,7 +67,6 @@ namespace Spear.Inf.Core.DBRef
     public class DBRepository<TEntity> : DBRepository, IDBRepository<TEntity>
         where TEntity : DBEntity_Base, new()
     {
-
         #region 增
 
         public virtual bool Create(TEntity obj)
@@ -192,7 +188,7 @@ namespace Spear.Inf.Core.DBRef
         where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
     {
         private TDBContext _dbContext;
-        public new TDBContext DBContext { get { return _dbContext; } set { _dbContext = value; base.DBContext = value; } }
+        public new TDBContext DBContext { get { return _dbContext; } protected set { _dbContext = value; base.DBContext = value; } }
 
         public DBRepository() { DBContext = (TDBContext)GetDBContext(); }
 

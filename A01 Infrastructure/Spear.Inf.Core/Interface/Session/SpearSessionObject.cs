@@ -112,12 +112,12 @@ namespace Spear.Inf.Core.Interface
         /// <summary>
         /// 设备信息
         /// </summary>
-        public SpearSessionDevice DeviceInfo { get; set; } = new SpearSessionDevice();
+        public SpearSessionDevice DeviceInfo { get; set; }
 
         /// <summary>
         /// 账号信息
         /// </summary>
-        public SpearSessionAccount AccountInfo { get; set; } = new SpearSessionAccount();
+        public SpearSessionAccount AccountInfo { get; set; }
 
         /// <summary>
         /// 续

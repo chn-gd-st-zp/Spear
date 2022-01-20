@@ -6,6 +6,8 @@ namespace Spear.Inf.Core.Interface
     {
         string ID { get; }
 
+        int SaveChanges();
+
         object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new();
     }
 }

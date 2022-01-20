@@ -32,6 +32,8 @@ namespace Spear.Inf.SqlSugar
 
         public SSDBContext(SSDBContextOptionsBuilder optionsBuilder) : base(optionsBuilder.BulidAction(optionsBuilder)) { }
 
+        public int SaveChanges() { return SaveQueues(); }
+
         public object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new()
         {
             return GetSimpleClient<TEntity>().AsQueryable();
