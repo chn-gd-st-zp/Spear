@@ -1,6 +1,5 @@
 ﻿using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.ServGeneric;
-using Spear.MidM.SessionNAuth;
 
 using CoreSB = Spear.Inf.Core.Base;
 
@@ -11,11 +10,11 @@ namespace Spear.GlobalSupport.Base
         where TService : class, IService
         where TTokenProvider : ITokenProvider
     {
-        public ISessionNAuth<TTokenProvider> SessionNAuth { get; }
+        public ISpearSession<TTokenProvider> SessionNAuth { get; }
 
         public ServiceBase()
         {
-            SessionNAuth = ServiceContext.Resolve<ISessionNAuth<TTokenProvider>>();
+            SessionNAuth = ServiceContext.Resolve<ISpearSession<TTokenProvider>>();
         }
     }
 }

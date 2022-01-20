@@ -42,11 +42,11 @@ namespace Spear.Inf.Core.Base
         where TTokenProvider : ITokenProvider
     {
 
-        public ISession<TTokenProvider> Session { get; private set; }
+        public ISpearSession<TTokenProvider> Session { get; private set; }
 
         public ServiceBase()
         {
-            Session = ServiceContext.Resolve<ISession<TTokenProvider>>();
+            Session = ServiceContext.Resolve<ISpearSession<TTokenProvider>>();
         }
     }
 }

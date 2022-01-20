@@ -1,0 +1,44 @@
+﻿using Microsoft.AspNetCore.Http;
+
+using Spear.Inf.Core.Attr;
+using Spear.Inf.Core.CusEnum;
+using Spear.Inf.Core.Interface;
+using Spear.Inf.Core.Tool;
+
+namespace Spear.MidM.SessionNAuth
+{
+    [DIModeForService(Enum_DIType.AsSelf)]
+    [DIModeForService(Enum_DIType.ExclusiveByKeyed, typeof(ITokenProvider), Enum_Protocol.HTTP)]
+    public class HTTPTokenProvider : ITokenProvider
+    {
+        public Enum_Protocol Protocol { get { return Enum_Protocol.HTTP; } }
+
+        public string CurrentToken
+        {
+            get
+            {
+                var iContext = Inf.Core.ServGeneric.ServiceContext.Resolve<IHttpContextAccessor>();
+                if (iContext == null)
+                    return "";
+
+                var context = iContext.HttpContext;
+                if (context == null)
+                    return "";
+
+                var sessionNAuthSettings = Inf.Core.ServGeneric.ServiceContext.Resolve<SessionNAuthSettings>();
+                var token1 = context.Request.Headers[sessionNAuthSettings.AccessTokenKeyInHeader];
+                if (token1.IsEmptyString())
+                    return "";
+
+                var token2 = token1.ToString();
+                if (token2.ToLower() == "null".ToLower())
+                    return "";
+
+                return token2;
+            }
+        }
+    }
+
+    [DIModeForService(Enum_DIType.ExclusiveByKeyed, typeof(ISpearSession), Enum_Protocol.HTTP)]
+    public class SpearSession4HTTP : SpearSession<HTTPTokenProvider> { }
+}

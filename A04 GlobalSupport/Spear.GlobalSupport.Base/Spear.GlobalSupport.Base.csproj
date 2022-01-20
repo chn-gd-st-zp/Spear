@@ -17,6 +17,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\A01 Infrastructure\Spear.Inf.Core\Spear.Inf.Core.csproj" />
 		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.Logger\Spear.MidM.Logger.csproj" />
+		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.MicoServ\Spear.MidM.MicoServ.csproj" />
 		<ProjectReference Include="..\..\A03 MiddleModule\Spear.MidM.SessionNAuth\Spear.MidM.SessionNAuth.csproj" />
 	</ItemGroup>
 

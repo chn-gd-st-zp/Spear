@@ -10,7 +10,6 @@ using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.Tool;
-using Spear.MidM.SessionNAuth;
 
 namespace Spear.MidM.Permission
 {
@@ -80,12 +79,12 @@ namespace Spear.MidM.Permission
                 return;
 
             var tp = ServiceContext.Resolve(type.GetGenericArguments()[0]) as ITokenProvider;
-            var sha = ServiceContext.ResolveByKeyed<ISessionNAuth>(tp.Protocol);
-            if (sha == null)
+            var session = ServiceContext.ResolveByKeyed<ISpearSession>(tp.Protocol);
+            if (session == null)
                 return;
 
             foreach (var attr in attrs)
-                sha.VerifyPermission(attr.Code);
+                session.VerifyPermission(attr.Code);
         }
 
         protected override void Error(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, Exception error, out bool throwException)

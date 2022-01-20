@@ -12,6 +12,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\A01 Infrastructure\Spear.Inf.Core\Spear.Inf.Core.csproj" />
+	  <ProjectReference Include="..\Spear.MidM.SessionNAuth\Spear.MidM.SessionNAuth.csproj" />
 	</ItemGroup>
 
 </Project>

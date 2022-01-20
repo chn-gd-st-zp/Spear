@@ -9,11 +9,4 @@ namespace Spear.Inf.Core.Interface
 
         string CurrentToken { get; }
     }
-
-    public interface ISession : ITransient { }
-
-    public interface ISession<TTokenProvider> : ISession where TTokenProvider : ITokenProvider
-    {
-        TTokenProvider TokenProvider { get; }
-    }
 }

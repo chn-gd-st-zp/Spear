@@ -43,6 +43,6 @@ namespace Spear.Inf.Core.Interface
         where TCache : ICache
         where TTokenProvider : ITokenProvider
     {
-        ISession<TTokenProvider> Session { get; }
+        ISpearSession<TTokenProvider> Session { get; }
     }
 }

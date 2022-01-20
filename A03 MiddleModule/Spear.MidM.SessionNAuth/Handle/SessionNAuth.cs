@@ -14,33 +14,15 @@ using Spear.MidM.Redis;
 
 namespace Spear.MidM.SessionNAuth
 {
-    public interface ISessionNAuth : ISession
-    {
-        string CurrentToken { get; }
-
-        UserTokenRunTime CurrentAccount { get; }
-
-        void SetUserToken(UserTokenCache userToken);
-
-        UserTokenCache GetUserToken(string accessToken);
-
-        void RemoveUserToken(string accessToken);
-
-        void VerifyPermission(string permissionCode);
-    }
-
-    public interface ISessionNAuth<TTokenProvider> : ISession<TTokenProvider>, ISessionNAuth where TTokenProvider : ITokenProvider { }
-
-    [DIModeForService(Enum_DIType.Exclusive, typeof(ISession<>))]
-    [DIModeForService(Enum_DIType.Exclusive, typeof(ISessionNAuth<>))]
-    public class SessionNAuth<TTokenProvider> : ISessionNAuth<TTokenProvider> where TTokenProvider : ITokenProvider
+    [DIModeForService(Enum_DIType.Exclusive, typeof(ISpearSession<>))]
+    public class SpearSession<TTokenProvider> : ISpearSession<TTokenProvider> where TTokenProvider : ITokenProvider
     {
         private readonly SessionNAuthSettings _sessionNAuthSettings;
         private readonly ICache4Redis _cache;
 
         public TTokenProvider TokenProvider { get; }
 
-        public SessionNAuth()
+        public SpearSession()
         {
             var redisSettings = ServiceContext.Resolve<RedisSettings>();
 
@@ -50,9 +32,6 @@ namespace Spear.MidM.SessionNAuth
             TokenProvider = ServiceContext.Resolve<TTokenProvider>();
         }
 
-        /// <summary>
-        /// 当前Token(字符串)
-        /// </summary>
         public string CurrentToken
         {
             get
@@ -77,10 +56,7 @@ namespace Spear.MidM.SessionNAuth
         }
         private string _currentToken;
 
-        /// <summary>
-        /// 当前会话对象
-        /// </summary>
-        public UserTokenRunTime CurrentAccount
+        public SpearSessionInfo CurrentAccount
         {
             get
             {
@@ -92,11 +68,11 @@ namespace Spear.MidM.SessionNAuth
                         if (token.IsEmptyString())
                             throw new Exception_EmptyToken();
 
-                        UserTokenCache userTokenCache = GetUserToken(token);
+                        SpearSessionInfo userTokenCache = Get(token);
                         if (userTokenCache == null)
                             throw new Exception_NoLogin();
 
-                        _currentUserToken = userTokenCache.MapTo<UserTokenCache, UserTokenRunTime>();
+                        _currentUserToken = userTokenCache;
 
                         _currentUserToken.Extenstion(_sessionNAuthSettings.CacheMaintainMinutes);
                     }
@@ -106,39 +82,29 @@ namespace Spear.MidM.SessionNAuth
                     }
                 }
 
-                SetUserToken(_currentUserToken.MapTo<UserTokenRunTime, UserTokenCache>());
+                Set(_currentUserToken);
 
                 return _currentUserToken;
             }
         }
-        private UserTokenRunTime _currentUserToken;
+        private SpearSessionInfo _currentUserToken;
 
-        /// <summary>
-        /// 设置Token
-        /// </summary>
-        /// <param name="userToken"></param>
-        /// <returns></returns>
-        public void SetUserToken(UserTokenCache userToken)
+        public void Set(SpearSessionInfo info)
         {
-            if (userToken == null)
+            if (info == null)
                 return;
 
             var time = TimeSpan.FromMinutes(_sessionNAuthSettings.CacheMaintainMinutes);
-            userToken.ExpiredTime = DateTime.Now.AddMinutes(time.TotalMinutes);
+            info.ExpiredTime = DateTime.Now.AddMinutes(time.TotalMinutes);
 
-            var accessToken = userToken.AccessToken;
+            var accessToken = info.AccessToken;
             if (_sessionNAuthSettings.AccessTokenEncrypt)
                 accessToken = MD5.Encrypt(accessToken);
 
-            _cache.Set(_sessionNAuthSettings.CachePrefix + accessToken, userToken, time);
+            _cache.Set(_sessionNAuthSettings.CachePrefix + accessToken, info, time);
         }
 
-        /// <summary>
-        /// 获取Token
-        /// </summary>
-        /// <param name="accessToken">Token</param>
-        /// <returns></returns>
-        public UserTokenCache GetUserToken(string accessToken)
+        public SpearSessionInfo Get(string accessToken)
         {
             if (accessToken.IsEmptyString())
                 return null;
@@ -146,15 +112,10 @@ namespace Spear.MidM.SessionNAuth
             if (_sessionNAuthSettings.AccessTokenEncrypt)
                 accessToken = MD5.Encrypt(accessToken);
 
-            return _cache.Get<UserTokenCache>(_sessionNAuthSettings.CachePrefix + accessToken);
+            return _cache.Get<SpearSessionInfo>(_sessionNAuthSettings.CachePrefix + accessToken);
         }
 
-        /// <summary>
-        /// 移除Token
-        /// </summary>
-        /// <param name="accessToken">Token</param>
-        /// <returns></returns>
-        public void RemoveUserToken(string accessToken)
+        public void Remove(string accessToken)
         {
             if (accessToken.IsEmptyString())
                 return;
@@ -165,9 +126,6 @@ namespace Spear.MidM.SessionNAuth
             _cache.Del(_sessionNAuthSettings.CachePrefix + accessToken);
         }
 
-        /// <summary>
-        /// 权限认证
-        /// </summary>
         public void VerifyPermission(string permissionCode)
         {
             try
@@ -186,10 +144,4 @@ namespace Spear.MidM.SessionNAuth
             }
         }
     }
-
-    [DIModeForService(Enum_DIType.ExclusiveByKeyed, typeof(ISessionNAuth), Enum_Protocol.HTTP)]
-    public class SessionNAuth4HTTP : SessionNAuth<HTTPTokenProvider> { }
-
-    [DIModeForService(Enum_DIType.ExclusiveByKeyed, typeof(ISessionNAuth), Enum_Protocol.GRPC)]
-    public class SessionNAuth4GRPC : SessionNAuth<GRPCTokenProvider> { }
 }

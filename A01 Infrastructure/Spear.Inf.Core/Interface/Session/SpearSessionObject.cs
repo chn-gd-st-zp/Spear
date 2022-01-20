@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 
 using Spear.Inf.Core.CusEnum;
 
-namespace Spear.MidM.SessionNAuth
+namespace Spear.Inf.Core.Interface
 {
-    public class SessionInfo4Device
+    public class SpearSessionDevice
     {
         /// <summary>
         /// 登录设备
@@ -40,7 +40,7 @@ namespace Spear.MidM.SessionNAuth
         public DateTime ExpiredTime { get; set; }
     }
 
-    public class SessionInfo4Account
+    public class SpearSessionAccount
     {
         /// <summary>
         /// 角色类型
@@ -74,7 +74,7 @@ namespace Spear.MidM.SessionNAuth
         public DateTime ExpiredTime { get; set; }
     }
 
-    public abstract class UserToken
+    public class SpearSessionInfo
     {
         /// <summary>
         /// AccessToken
@@ -112,23 +112,15 @@ namespace Spear.MidM.SessionNAuth
         /// <summary>
         /// 设备信息
         /// </summary>
-        public SessionInfo4Device DeviceInfo { get; set; } = new SessionInfo4Device();
+        public SpearSessionDevice DeviceInfo { get; set; } = new SpearSessionDevice();
 
         /// <summary>
         /// 账号信息
         /// </summary>
-        public SessionInfo4Account AccountInfo { get; set; } = new SessionInfo4Account();
-    }
+        public SpearSessionAccount AccountInfo { get; set; } = new SpearSessionAccount();
 
-    public class UserTokenCache : UserToken
-    {
-        //
-    }
-
-    public class UserTokenRunTime : UserTokenCache
-    {
         /// <summary>
-        /// 
+        /// 续
         /// </summary>
         /// <param name="cacheMaintainMinutes">minutes</param>
         public void Extenstion(int cacheMaintainMinutes)

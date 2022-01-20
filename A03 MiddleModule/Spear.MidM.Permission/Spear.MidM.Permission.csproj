@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Spear.MidM.SessionNAuth\Spear.MidM.SessionNAuth.csproj" />
+    <ProjectReference Include="..\..\A01 Infrastructure\Spear.Inf.Core\Spear.Inf.Core.csproj" />
   </ItemGroup>
 
 </Project>
