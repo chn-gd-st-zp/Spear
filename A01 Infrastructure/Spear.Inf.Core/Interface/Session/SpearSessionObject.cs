@@ -3,6 +3,7 @@
 using Newtonsoft.Json;
 
 using Spear.Inf.Core.CusEnum;
+using Spear.Inf.Core.ServGeneric;
 
 namespace Spear.Inf.Core.Interface
 {

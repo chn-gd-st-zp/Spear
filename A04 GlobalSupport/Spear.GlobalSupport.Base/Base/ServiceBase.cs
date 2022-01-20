@@ -10,11 +10,11 @@ namespace Spear.GlobalSupport.Base
         where TService : class, IService
         where TTokenProvider : ITokenProvider
     {
-        public ISpearSession<TTokenProvider> SessionNAuth { get; }
+        public ISpearSession<TTokenProvider> Session { get; }
 
         public ServiceBase()
         {
-            SessionNAuth = ServiceContext.Resolve<ISpearSession<TTokenProvider>>();
+            Session = ServiceContext.Resolve<ISpearSession<TTokenProvider>>();
         }
     }
 }

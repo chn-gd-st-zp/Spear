@@ -4,14 +4,6 @@ namespace Spear.Inf.Core.Interface
 {
     public interface ISpearSession : ITransient
     {
-        /// <summary>
-        /// 当前Token(字符串)
-        /// </summary>
-        string CurrentToken { get; }
-
-        /// <summary>
-        /// 当前会话对象
-        /// </summary>
         SpearSessionInfo CurrentAccount { get; }
 
         void Set(SpearSessionInfo info);

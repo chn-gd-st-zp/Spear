@@ -32,7 +32,7 @@ namespace Spear.MidM.SessionNAuth
             TokenProvider = ServiceContext.Resolve<TTokenProvider>();
         }
 
-        public string CurrentToken
+        private string CurrentToken
         {
             get
             {
@@ -94,14 +94,11 @@ namespace Spear.MidM.SessionNAuth
             if (info == null)
                 return;
 
-            var time = TimeSpan.FromMinutes(_sessionNAuthSettings.CacheMaintainMinutes);
-            info.ExpiredTime = DateTime.Now.AddMinutes(time.TotalMinutes);
-
             var accessToken = info.AccessToken;
             if (_sessionNAuthSettings.AccessTokenEncrypt)
                 accessToken = MD5.Encrypt(accessToken);
 
-            _cache.Set(_sessionNAuthSettings.CachePrefix + accessToken, info, time);
+            _cache.Set(_sessionNAuthSettings.CachePrefix + accessToken, info, info.ExpiredTime);
         }
 
         public SpearSessionInfo Get(string accessToken)
@@ -142,6 +139,15 @@ namespace Spear.MidM.SessionNAuth
             {
                 throw new Exception("运行出错[权限认证]", ex);
             }
+        }
+    }
+
+    public static class SpearSessionInfoExt
+    {
+        public static void SetExpiredTime(this SpearSessionInfo info)
+        {
+            var time = TimeSpan.FromMinutes(ServiceContext.Resolve<SessionNAuthSettings>().CacheMaintainMinutes);
+            info.ExpiredTime = DateTime.Now.AddMinutes(time.TotalMinutes);
         }
     }
 }
