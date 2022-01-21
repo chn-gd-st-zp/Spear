@@ -8,10 +8,19 @@ namespace Spear.Inf.Core.CusEnum
         None,
 
         [Remark("开发环境")]
+        DEV,
+
+        [Remark("开发环境")]
         Development,
 
         [Remark("测试环境")]
+        STA,
+
+        [Remark("测试环境")]
         Staging,
+
+        [Remark("生产环境")]
+        PRO,
 
         [Remark("生产环境")]
         Production,

@@ -53,7 +53,7 @@ namespace Spear.Inf.Core.AppEntrance
         {
             get
             {
-                bool isTest = EEnvironment == Enum_Environment.Production ? false : true;
+                bool isTest = EEnvironment == Enum_Environment.PRO || EEnvironment == Enum_Environment.Production ? false : true;
 
                 try
                 {
@@ -188,15 +188,15 @@ namespace Spear.Inf.Core.AppEntrance
 
             configBuilder
                 .SetBasePath(RootPath)
-                .AddJsonFile($"appsettings.json", true, false);
+                .AddJsonFile($"appsettings.json", true, true);
 
             if (!envName.IsEmptyString())
-                configBuilder.AddJsonFile($"appsettings.{envName}.json", true, false);
+                configBuilder.AddJsonFile($"appsettings.{envName.ToLower()}.json", true, true);
 
             if (configFiles != null)
             {
                 foreach (var file in configFiles)
-                    configBuilder.AddJsonFile(file, true, false);
+                    configBuilder.AddJsonFile(file, true, true);
             }
 
             return configBuilder;
