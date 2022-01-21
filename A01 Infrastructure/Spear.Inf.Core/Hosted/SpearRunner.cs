@@ -7,9 +7,7 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core
 {
-    public delegate void NewTaskDelegate(params object[] paramArray);
-
-    public interface IRSpear
+    public interface ISpearRunner
     {
         /// <summary>
         /// 运行状态
@@ -31,7 +29,7 @@ namespace Spear.Inf.Core
         Task Dispose(CancellationToken cancellationToken = default);
     }
 
-    public abstract class RSpearBase<TTrigger> : IRSpear
+    public abstract class SpearRunnerBase<TTrigger> : ISpearRunner
         where TTrigger : class
     {
         /// <summary>

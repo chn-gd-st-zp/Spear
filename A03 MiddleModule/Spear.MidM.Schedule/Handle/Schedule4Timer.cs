@@ -8,11 +8,12 @@ using Quartz.Spi;
 using Spear.Inf.Core;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
+using Spear.Inf.Core.Hosted;
 
 namespace Spear.MidM.Schedule
 {
     [DIModeForService(Enum_DIType.ExclusiveByKeyed, typeof(Schedule4Timer), Enum_ScheduleType.Timer)]
-    public class Schedule4Timer : HSSpearScheduleBase
+    public class Schedule4Timer : SpearScheduleBase
     {
         protected override void DoWork()
         {
