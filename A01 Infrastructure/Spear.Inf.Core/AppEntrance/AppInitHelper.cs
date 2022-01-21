@@ -190,7 +190,7 @@ namespace Spear.Inf.Core.AppEntrance
                 .SetBasePath(RootPath)
                 .AddJsonFile($"appsettings.json", true, true);
 
-            if (!envName.IsEmptyString())
+            if (EEnvironment != Enum_Environment.None)
                 configBuilder.AddJsonFile($"appsettings.{envName.ToLower()}.json", true, true);
 
             if (configFiles != null)
