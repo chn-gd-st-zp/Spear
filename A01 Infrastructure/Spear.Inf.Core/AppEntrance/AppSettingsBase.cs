@@ -4,6 +4,6 @@ namespace Spear.Inf.Core.AppEntrance
 {
     public class AppSettingsBase
     {
-        public AutoFacSettings AutoFacSettings { get; set; }
+        public InjectionSettings InjectionSettings { get; set; }
     }
 }

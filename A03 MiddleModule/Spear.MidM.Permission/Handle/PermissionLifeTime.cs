@@ -27,7 +27,7 @@ namespace Spear.MidM.Permission
             var attrs = new List<PermissionBaseAttribute>();
 
             AppInitHelper
-                .GetAllType(ServiceContext.Resolve<AutoFacSettings>().Patterns)
+                .GetAllType(ServiceContext.Resolve<InjectionSettings>().Patterns)
                 .Select(o => new
                 {
                     Current = o,

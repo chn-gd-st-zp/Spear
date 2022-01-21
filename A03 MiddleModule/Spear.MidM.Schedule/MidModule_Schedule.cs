@@ -29,7 +29,7 @@ namespace Spear.MidM.Schedule
             var hsType = typeof(IHostedService);
 
             AppInitHelper
-                .GetAllType(startup.CurConfig.AutoFacSettings.Patterns, startup.CurConfig.AutoFacSettings.Dlls)
+                .GetAllType(startup.CurConfig.InjectionSettings.Patterns, startup.CurConfig.InjectionSettings.Dlls)
                 .Where(o => o.IsClass && o.IsImplementedType(hsType))
                 .Select(o => o.GetCustomAttribute<DIModeForServiceAttribute>())
                 .Where(o => o != null)
@@ -70,7 +70,7 @@ namespace Spear.MidM.Schedule
             containerBuilder.RegisterType<JobFactory>().As<IJobFactory>().SingleInstance();
 
             AppInitHelper
-                .GetAllType(startup.CurConfig.AutoFacSettings.Patterns, startup.CurConfig.AutoFacSettings.Dlls)
+                .GetAllType(startup.CurConfig.InjectionSettings.Patterns, startup.CurConfig.InjectionSettings.Dlls)
                 .Where(o => o.IsClass && o.IsImplementedType<IRunner4Timer>() && o.IsImplementedType<IJob>())
                 .ToList()
                 .ForEach(o =>

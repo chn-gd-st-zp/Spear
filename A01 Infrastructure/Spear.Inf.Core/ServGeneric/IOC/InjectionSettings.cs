@@ -3,8 +3,8 @@ using Spear.Inf.Core.SettingsGeneric;
 
 namespace Spear.Inf.Core.ServGeneric.IOC
 {
-    [DIModeForSettings("AutoFacSettings", typeof(AutoFacSettings))]
-    public class AutoFacSettings : ISettings
+    [DIModeForSettings("InjectionSettings", typeof(InjectionSettings))]
+    public class InjectionSettings : ISettings
     {
         public string[] Patterns { get; set; }
 
