@@ -1,7 +1,6 @@
 ﻿using Spear.Inf.Core;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
-using Spear.Inf.Core.ServGeneric;
 
 namespace Spear.MidM.Schedule
 {

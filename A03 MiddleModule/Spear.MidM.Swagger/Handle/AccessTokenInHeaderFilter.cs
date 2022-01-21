@@ -4,7 +4,7 @@ using Microsoft.OpenApi.Models;
 
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-using Spear.Inf.Core.ServGeneric;
+using Spear.Inf.Core;
 
 namespace Spear.MidM.Swagger
 {

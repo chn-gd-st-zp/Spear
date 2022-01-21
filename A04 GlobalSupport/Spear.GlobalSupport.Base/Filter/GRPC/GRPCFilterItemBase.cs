@@ -4,6 +4,7 @@ using System.Reflection;
 
 using MessagePack;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.Interface;
@@ -11,7 +12,6 @@ using Spear.Inf.Core.Tool;
 using Spear.MidM.MicoServ.MagicOnion;
 
 using MS = MagicOnion.Server;
-using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
 
 namespace Spear.GlobalSupport.Base.Filter
 {

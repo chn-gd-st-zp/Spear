@@ -3,14 +3,14 @@ using System.Linq;
 using System.Reflection;
 
 using AspectInjector.Broker;
+
 using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric;
 
 namespace Spear.Inf.Core.Attr
 {
-    [Injection(typeof(DecryptAspect))]
+    [AspectInjector.Broker.Injection(typeof(DecryptAspect))]
     [AttributeUsage(AttributeTargets.Property)]
     public class DecryptAttribute : Attribute
     {

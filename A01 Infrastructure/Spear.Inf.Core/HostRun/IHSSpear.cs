@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Autofac;
 using Autofac.Core;
 
-namespace Spear.Inf.Core.ServGeneric
+namespace Spear.Inf.Core
 {
     public class ServiceContext
     {

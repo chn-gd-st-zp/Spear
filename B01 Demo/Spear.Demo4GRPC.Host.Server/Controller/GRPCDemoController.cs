@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.DTO;
-using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.Tool;
 
 using Spear.Demo.Contract;

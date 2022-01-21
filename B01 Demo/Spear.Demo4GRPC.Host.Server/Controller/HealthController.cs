@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-using Spear.Inf.Core.ServGeneric;
+using Spear.Inf.Core;
 using Spear.Inf.Core.Tool;
 using Spear.MidM.MicoServ;
 

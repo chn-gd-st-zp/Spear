@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using MagicOnion.Server;
-
+using Spear.Inf.Core;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
 
 using MS = MagicOnion.Server;
-using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
 
 namespace Spear.GlobalSupport.Base.Filter
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-    public class GRPCFilterAttribute : MagicOnionFilterAttribute
+    public class GRPCFilterAttribute : MS.MagicOnionFilterAttribute
     {
         public override async ValueTask Invoke(MS.ServiceContext context, Func<MS.ServiceContext, ValueTask> next)
         {

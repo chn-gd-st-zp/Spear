@@ -6,10 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Autofac;
 using Newtonsoft.Json;
 
-using Spear.Inf.Core.ServGeneric.IOC;
+using Spear.Inf.Core.Injection;
 using Spear.Inf.Core.SettingsGeneric;
 using Spear.Inf.Core.Tool;
-using Spear.Inf.Core.ServGeneric;
 
 namespace Spear.Inf.Core.AppEntrance
 {

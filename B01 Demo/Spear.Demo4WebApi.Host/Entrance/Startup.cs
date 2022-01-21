@@ -13,6 +13,7 @@ using Autofac;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
@@ -22,8 +23,6 @@ using Spear.MidM.Swagger;
 using Spear.GlobalSupport.Base.Filter;
 
 using Spear.Demo.DBIns.Stainless;
-
-using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
 
 namespace Spear.Demo4WebApi.Host
 {

@@ -4,8 +4,8 @@ using Microsoft.Extensions.Logging;
 
 using NLog;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.Tool;
 
 namespace Spear.MidM.Logger

@@ -1,5 +1,5 @@
 ﻿using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric.IOC;
+using Spear.Inf.Core.Injection;
 
 namespace Spear.MidM.MicoServ
 {

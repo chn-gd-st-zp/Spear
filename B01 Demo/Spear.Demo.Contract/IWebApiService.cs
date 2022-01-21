@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 using Spear.Demo.Inf.DTO;
-using Spear.Inf.Core.ServGeneric.IOC;
+using Spear.Inf.Core.Injection;
 
 namespace Spear.Demo.Contract
 {

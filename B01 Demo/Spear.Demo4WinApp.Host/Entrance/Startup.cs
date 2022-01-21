@@ -16,8 +16,6 @@ using Spear.Inf.Core.SettingsGeneric;
 using Spear.MidM.Logger;
 using Spear.MidM.Schedule;
 
-using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
-
 namespace Spear.Demo4WinApp.Host
 {
     public class Startup : StartupBase3X<Settings, AppConfiguresBase>

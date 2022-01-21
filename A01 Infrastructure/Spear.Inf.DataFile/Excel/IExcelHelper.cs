@@ -2,7 +2,7 @@
 using System.Data;
 using System.IO;
 
-using Spear.Inf.Core.ServGeneric.IOC;
+using Spear.Inf.Core.Injection;
 
 namespace Spear.Inf.DataFile.Excel
 {

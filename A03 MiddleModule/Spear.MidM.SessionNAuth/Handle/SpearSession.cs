@@ -3,12 +3,12 @@ using System.Linq;
 
 using Autofac;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusException;
 using Spear.Inf.Core.EncryptionNDecrypt;
 using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.Tool;
 using Spear.MidM.Redis;
 

@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 using Consul;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.Tool;
 
 namespace Spear.MidM.MicoServ

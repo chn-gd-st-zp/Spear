@@ -3,10 +3,10 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric;
-using Spear.Inf.Core.ServGeneric.IOC;
+using Spear.Inf.Core.Injection;
 using Spear.Inf.Core.Tool;
 
 namespace Spear.MidM.Permission

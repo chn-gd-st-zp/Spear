@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 
 using Spear.Inf.Core.DTO;
 using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric;
 
 namespace Spear.Inf.Core.DBRef
 {

@@ -12,7 +12,7 @@ using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.SettingsGeneric;
 using Spear.Inf.Core.Tool;
 
-namespace Spear.Inf.Core.ServGeneric.IOC
+namespace Spear.Inf.Core.Injection
 {
     public static class AutoFacExtend
     {

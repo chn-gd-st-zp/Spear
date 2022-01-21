@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
-using Spear.Inf.Core.ServGeneric;
 
 using Spear.Demo.Contract;
 using Spear.Demo.Inf.DTO;

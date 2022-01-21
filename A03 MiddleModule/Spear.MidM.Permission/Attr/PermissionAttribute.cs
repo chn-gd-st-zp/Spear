@@ -4,11 +4,11 @@ using System.Reflection;
 
 using AspectInjector.Broker;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.Tool;
 
 namespace Spear.MidM.Permission

@@ -7,10 +7,10 @@ using Serilog.Core;
 using Serilog.Configuration;
 using Serilog.Events;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.SettingsGeneric;
-using Spear.Inf.Core.ServGeneric;
 using Spear.Inf.Core.Tool;
 
 namespace Spear.MidM.Logger

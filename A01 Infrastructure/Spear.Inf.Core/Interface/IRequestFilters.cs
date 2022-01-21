@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Spear.Inf.Core.ServGeneric.IOC;
+using Spear.Inf.Core.Injection;
 
 namespace Spear.Inf.Core.Interface
 {

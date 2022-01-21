@@ -2,7 +2,7 @@
 
 using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.DTO;
-using Spear.Inf.Core.ServGeneric.IOC;
+using Spear.Inf.Core.Injection;
 
 using Spear.Demo.Inf.DTO;
 

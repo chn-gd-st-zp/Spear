@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
 using MagicOnion;
-using MagicOnion.Server;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.DTO;
 using Spear.MidM.MicoServ.MagicOnion;
@@ -11,11 +11,9 @@ using Spear.Demo.Support;
 using Spear.Demo.Contract;
 using Spear.Demo.Inf.DTO;
 
-using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
-
 namespace Spear.Demo4GRPC.Host.Server.MicoServ
 {
-    public class GRPCDemoContainer : ServiceBase<IGRPCDemoContainer>, IGRPCDemoContainer
+    public class GRPCDemoContainer : MagicOnion.Server.ServiceBase<IGRPCDemoContainer>, IGRPCDemoContainer
     {
         private readonly IGRPCService _grpcService;
 

@@ -5,8 +5,6 @@ using System.Linq;
 using AutoMapper;
 using MessagePack;
 
-using Spear.Inf.Core.ServGeneric;
-
 namespace Spear.Inf.Core.DTO
 {
     [MessagePackObject(true)]

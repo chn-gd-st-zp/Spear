@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
@@ -17,7 +18,7 @@ namespace Spear.MidM.SessionNAuth
         {
             get
             {
-                var iContext = Inf.Core.ServGeneric.ServiceContext.Resolve<IHttpContextAccessor>();
+                var iContext = ServiceContext.Resolve<IHttpContextAccessor>();
                 if (iContext == null)
                     return "";
 
@@ -25,7 +26,7 @@ namespace Spear.MidM.SessionNAuth
                 if (context == null)
                     return "";
 
-                var sessionNAuthSettings = Inf.Core.ServGeneric.ServiceContext.Resolve<SessionNAuthSettings>();
+                var sessionNAuthSettings = ServiceContext.Resolve<SessionNAuthSettings>();
                 var token1 = context.Request.Headers[sessionNAuthSettings.AccessTokenKeyInHeader];
                 if (token1.IsEmptyString())
                     return "";

@@ -2,9 +2,9 @@
 
 using RabbitMQ.Client;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric;
 
 namespace Spear.MidM.RabbitMQ
 {

@@ -1,5 +1,5 @@
 ﻿using Spear.Inf.Core.CusEnum;
-using Spear.Inf.Core.ServGeneric.IOC;
+using Spear.Inf.Core.Injection;
 
 namespace Spear.Inf.Core.Interface
 {

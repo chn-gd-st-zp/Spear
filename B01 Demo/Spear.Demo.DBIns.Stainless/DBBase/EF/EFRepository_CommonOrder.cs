@@ -3,7 +3,7 @@ using System.Linq;
 
 using Spear.Inf.Core.DBRef;
 using Spear.Inf.Core.DTO;
-using Spear.Inf.Core.ServGeneric.IOC;
+using Spear.Inf.Core.Injection;
 
 using Spear.Demo.DBIns.Stainless.Entity;
 

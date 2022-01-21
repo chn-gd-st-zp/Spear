@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.Hosting;
 
-using Spear.Inf.Core.ServGeneric;
-
 namespace Spear.Inf.Core
 {
     public class HSSpear : IHostedService

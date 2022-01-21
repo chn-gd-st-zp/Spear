@@ -1,5 +1,4 @@
 ﻿using Spear.Inf.Core.Interface;
-using Spear.Inf.Core.ServGeneric;
 
 namespace Spear.Inf.Core.Base
 {

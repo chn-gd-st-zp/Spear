@@ -3,10 +3,10 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.CusEnum;
-using Spear.Inf.Core.ServGeneric;
-using Spear.Inf.Core.ServGeneric.IOC;
+using Spear.Inf.Core.Injection;
 using Spear.Inf.Core.Tool;
 
 namespace Spear.MidM.Attachment

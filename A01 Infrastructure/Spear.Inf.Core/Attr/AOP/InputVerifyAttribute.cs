@@ -11,7 +11,7 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core.Attr
 {
-    [Injection(typeof(InputVerifyAspect))]
+    [AspectInjector.Broker.Injection(typeof(InputVerifyAspect))]
     [AttributeUsage(AttributeTargets.Method)]
     public class InputVerifyAttribute : Attribute { }
 

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
-using Microsoft.AspNetCore.Http;
 
-using Spear.Inf.Core.ServGeneric;
+using Microsoft.AspNetCore.Http;
 
 namespace Spear.Inf.Core.Tool
 {

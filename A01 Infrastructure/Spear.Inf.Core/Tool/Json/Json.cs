@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-using Spear.Inf.Core.ServGeneric;
-
 namespace Spear.Inf.Core.Tool
 {
     public static class JsonConvertExt

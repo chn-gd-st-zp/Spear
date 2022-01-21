@@ -1,4 +1,4 @@
-﻿namespace Spear.Inf.Core.ServGeneric.IOC
+﻿namespace Spear.Inf.Core.Injection
 {
     public interface IAutoFac
     {

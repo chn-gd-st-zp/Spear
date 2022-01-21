@@ -6,7 +6,7 @@ using AspectInjector.Broker;
 
 namespace Spear.Inf.Core.Attr
 {
-    [Injection(typeof(KeywordResetAspect))]
+    [AspectInjector.Broker.Injection(typeof(KeywordResetAspect))]
     [AttributeUsage(AttributeTargets.Property)]
     public class KeywordResetAttribute : Attribute
     {

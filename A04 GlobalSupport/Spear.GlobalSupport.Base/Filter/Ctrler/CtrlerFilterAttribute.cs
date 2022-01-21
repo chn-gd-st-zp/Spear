@@ -3,10 +3,9 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc.Filters;
 
+using Spear.Inf.Core;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
-
-using ServiceContext = Spear.Inf.Core.ServGeneric.ServiceContext;
 
 namespace Spear.GlobalSupport.Base.Filter
 {

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
-using Spear.Inf.Core.ServGeneric.IOC;
+using Spear.Inf.Core.Injection;
 using Spear.MidM.Schedule;
 
 namespace Spear.Demo4WinApp.Host.Runner
