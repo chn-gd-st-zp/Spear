@@ -27,8 +27,8 @@ namespace Spear.MidM.SessionNAuth
             var redisSettings = ServiceContext.Resolve<RedisSettings>();
 
             _sessionNAuthSettings = ServiceContext.Resolve<SessionNAuthSettings>();
-            //_cache = ServiceContext.Resolve<ICache4Redis>(new NamedPropertyParameter("redisSettings", redisSettings), new NamedPropertyParameter("defaultDatabase", _sessionNAuthSettings.CacheDBIndex));
-            _cache = ServiceContext.Resolve<ICache4Redis>(new TypedParameter(typeof(RedisSettings), redisSettings), new TypedParameter(typeof(int), _sessionNAuthSettings.CacheDBIndex));
+            //_cache = ServiceContext.Resolve<ICache4Redis>(typeof(SessionNAuthSettings), new NamedPropertyParameter("redisSettings", redisSettings), new NamedPropertyParameter("defaultDatabase", _sessionNAuthSettings.CacheDBIndex));
+            _cache = ServiceContext.ResolveByKeyed<ICache4Redis>(typeof(SessionNAuthSettings), new TypedParameter(typeof(RedisSettings), redisSettings), new TypedParameter(typeof(int), _sessionNAuthSettings.CacheDBIndex));
             TokenProvider = ServiceContext.Resolve<TTokenProvider>();
         }
 
