@@ -130,8 +130,8 @@ namespace Spear.Inf.Core.DTO
             if (idtoSorts.Count == 0)
             {
                 var attr = sourceType.GetDefaultSortField<T>();
-
-                idtoSorts.Add(new IDTO_Sort() { FieldName = attr.RealName, EDirection = attr.EDirection });
+                if (attr != null)
+                    idtoSorts.Add(new IDTO_Sort() { FieldName = attr.RealName, EDirection = attr.EDirection });
             }
 
             Type classType = typeof(IDTO_Sort_Ext);
