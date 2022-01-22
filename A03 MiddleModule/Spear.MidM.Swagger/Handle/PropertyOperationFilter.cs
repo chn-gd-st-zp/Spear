@@ -118,7 +118,7 @@ namespace Spear.MidM.Swagger
                     if (attr_ren != null)
                     {
                         classSchema.Properties.Remove(inputPropertyKey);
-                        classSchema.Properties.Add(attr_ren.Name, inputPropertySchema);
+                        classSchema.Properties.Add(attr_ren.Name.FormatPropertyName(), inputPropertySchema);
                     }
                 }
             }

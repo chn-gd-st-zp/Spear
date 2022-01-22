@@ -75,5 +75,25 @@ namespace Spear.Inf.Core.Tool
         {
             return new JsonResult(obj, jsonSetting);
         }
+
+        public static string FormatPropertyName(this string propertyName)
+        {
+            string result = propertyName;
+
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic.Add(result, "");
+
+            var json = dic.ToJson();
+
+            dic = json.ToObject<Dictionary<string, string>>();
+
+            foreach (var kv in dic)
+            {
+                result = kv.Key;
+                break;
+            }
+
+            return result;
+        }
     }
 }
