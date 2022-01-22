@@ -2,6 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Authors>chn-gd-st-zp</Authors>
+		<Company>chn-gd-st-zp</Company>
 	</PropertyGroup>
 
 	<ItemGroup>
