@@ -13,16 +13,10 @@ namespace Spear.MidM.Redis
         private readonly RedisSettings _redisSettings;
         private readonly int _defaultDatabase;
 
-        public SERedis(RedisSettings redisSettings)
+        public SERedis(RedisSettings redisSettings, int defaultDatabase = -1)
         {
             _redisSettings = redisSettings;
-            _defaultDatabase = redisSettings.DefaultDatabase;
-        }
-
-        public SERedis(RedisSettings redisSettings, int defaultDatabase)
-        {
-            _redisSettings = redisSettings;
-            _defaultDatabase = defaultDatabase;
+            _defaultDatabase = defaultDatabase == -1 ? redisSettings.DefaultDatabase : defaultDatabase;
         }
 
         private ConnectionMultiplexer _connection
