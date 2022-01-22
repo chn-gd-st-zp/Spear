@@ -8,7 +8,9 @@ using Serilog.Configuration;
 using Serilog.Events;
 
 using Spear.Inf.Core;
+using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.Attr;
+using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.SettingsGeneric;
 using Spear.Inf.Core.Tool;
@@ -18,6 +20,8 @@ namespace Spear.MidM.Logger
     [DIModeForSettings("SeriLoggerSettings", typeof(SeriLoggerSettings))]
     public class SeriLoggerSettings : ISettings
     {
+        public Enum_PathMode PathMode { get; set; }
+        public string PathAddr { get; set; }
         public RollingInterval RollingInterval { get; set; }
         public bool RollOnFileSizeLimit { get; set; }
         public int FileSizeLimitMB { get; set; }
@@ -46,7 +50,7 @@ namespace Spear.MidM.Logger
 
             return configuration
                 .WriteTo.File(
-                    path: $"logs/{triggerName}/{level}-.log",
+                    path: $"{AppInitHelper.GenericPath(settings.PathMode, settings.PathAddr)}{triggerName}/{level}-.log",
                     restrictedToMinimumLevel: level,
                     outputTemplate: settings.Template,
                     rollingInterval: settings.RollingInterval,

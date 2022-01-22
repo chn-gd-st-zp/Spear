@@ -5,7 +5,6 @@ using System.Linq;
 
 using Spear.Inf.Core;
 using Spear.Inf.Core.AppEntrance;
-using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Injection;
 using Spear.Inf.Core.Tool;
 
@@ -13,25 +12,6 @@ namespace Spear.MidM.Attachment
 {
     public static class AttachmentHandlerHelper
     {
-        public static string GetRootPath()
-        {
-            var setting = ServiceContext.Resolve<AttachmentSettings>();
-            var rootPath = setting.Basic.PathMode == Enum_PathMode.ABS ?
-                setting.Basic.PathAddr
-                :
-                (
-                    AppInitHelper.RootPath +
-                    (
-                        setting.Basic.PathAddr.StartsWith("/") ?
-                        setting.Basic.PathAddr.Substring(1)
-                        :
-                        setting.Basic.PathAddr
-                    )
-                );
-
-            return rootPath.EndsWith("/") ? rootPath : rootPath + "/";
-        }
-
         public static AttachmentOperationSetting GetOperation(string key)
         {
             var setting = ServiceContext.Resolve<AttachmentSettings>();
@@ -143,7 +123,7 @@ namespace Spear.MidM.Attachment
             if (result.State != Enum_AttachmentResult.Success)
                 return result;
 
-            var basePath = AttachmentHandlerHelper.GetRootPath() + key;
+            var basePath = AppInitHelper.GenericPath(Setting.Basic.PathMode, Setting.Basic.PathAddr) + key;
             var fileName = Unique.GetGUID();
 
             basePath = basePath.ToLower();
@@ -172,12 +152,6 @@ namespace Spear.MidM.Attachment
 
             return result;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="fileExt"></param>
-        /// <returns></returns>
 
         /// <summary>
         /// 

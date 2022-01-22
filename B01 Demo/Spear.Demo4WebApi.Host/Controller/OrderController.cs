@@ -9,8 +9,7 @@ using Spear.Demo.Inf.DTO;
 
 namespace Spear.Demo4WebApi.Host
 {
-    [Route("order")]
-    [ApiController]
+    [ApiController, Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
         public IWebApiService _webapiService;
@@ -18,6 +17,16 @@ namespace Spear.Demo4WebApi.Host
         public OrderController(IWebApiService webapiService)
         {
             _webapiService = webapiService;
+        }
+
+        /// <summary>
+        /// 测试
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, Route("Test")]
+        public async Task<ResultWebApi<bool>> Test()
+        {
+            return true.ResultWebApi_Success();
         }
 
         /// <summary>

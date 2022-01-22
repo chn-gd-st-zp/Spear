@@ -83,6 +83,30 @@ namespace Spear.Inf.Core.AppEntrance
         }
 
         /// <summary>
+        /// 生成路径
+        /// </summary>
+        /// <param name="ePathMode"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string GenericPath(Enum_PathMode ePathMode, string path)
+        {
+            var rootPath = ePathMode == Enum_PathMode.ABS ?
+                path
+                :
+                (
+                    RootPath +
+                    (
+                        path.StartsWith("/") ?
+                        path.Substring(1)
+                        :
+                        path
+                    )
+                );
+
+            return rootPath.EndsWith("/") ? rootPath : rootPath + "/";
+        }
+
+        /// <summary>
         /// 根据文件名、文件类型，获取完整路径
         /// </summary>
         /// <param name="eInitFile">文件类型</param>

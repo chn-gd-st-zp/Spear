@@ -42,6 +42,8 @@
   },
 
   "SeriLoggerSettings": {
+    "PathMode": "REF", //ABS
+    "PathAddr": "/logs/", //C:/attachment/
     "RollingInterval": "Day",
     "RollOnFileSizeLimit": true,
     "FileSizeLimitMB": 1024,

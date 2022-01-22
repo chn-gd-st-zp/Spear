@@ -80,21 +80,21 @@ namespace Spear.Demo4WebApi.Host
         {
             containerBuilder.RegisSeriLogger(Configuration);
 
-            var efOptionsBuilder = new EFDBContextOptionsBuilder<EFDBContext_Stainless>()
-            {
-                BulidAction = (optionsBuilder) =>
-                {
-                    optionsBuilder.UseSqlServer(ServiceContext.Resolve<DBConnectionSettings>().Stainless);
+            //var efOptionsBuilder = new EFDBContextOptionsBuilder<EFDBContext_Stainless>()
+            //{
+            //    BulidAction = (optionsBuilder) =>
+            //    {
+            //        optionsBuilder.UseSqlServer(ServiceContext.Resolve<DBConnectionSettings>().Stainless);
 
-                    return optionsBuilder.Options;
-                }
-            };
-            containerBuilder.Register(o => efOptionsBuilder).AsSelf().InstancePerDependency();
+            //        return optionsBuilder.Options;
+            //    }
+            //};
+            //containerBuilder.Register(o => efOptionsBuilder).AsSelf().InstancePerDependency();
 
-            containerBuilder.RegisterType<EFDBContext_Stainless>().As<IDBContext>().InstancePerDependency();
-            containerBuilder.RegisterType<EFDBContext_Stainless>().As<EFDBContext_Stainless>().InstancePerDependency();
-            containerBuilder.RegisterType<EFDBContext_Stainless>().Keyed<IDBContext>(Enum_ORMType.EF).InstancePerDependency();
-            containerBuilder.RegisterType<EFDBContext_Stainless>().Keyed<EFDBContext_Stainless>(Enum_ORMType.EF).InstancePerDependency();
+            //containerBuilder.RegisterType<EFDBContext_Stainless>().As<IDBContext>().InstancePerDependency();
+            //containerBuilder.RegisterType<EFDBContext_Stainless>().As<EFDBContext_Stainless>().InstancePerDependency();
+            //containerBuilder.RegisterType<EFDBContext_Stainless>().Keyed<IDBContext>(Enum_ORMType.EF).InstancePerDependency();
+            //containerBuilder.RegisterType<EFDBContext_Stainless>().Keyed<EFDBContext_Stainless>(Enum_ORMType.EF).InstancePerDependency();
         }
 
         protected override void Extend_Configure(AppConfiguresBase configures)
