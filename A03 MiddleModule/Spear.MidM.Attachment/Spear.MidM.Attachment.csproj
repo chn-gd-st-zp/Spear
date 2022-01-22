@@ -5,6 +5,7 @@
     <Authors>chn-gd-st-zp</Authors>
     <Company>chn-gd-st-zp</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
