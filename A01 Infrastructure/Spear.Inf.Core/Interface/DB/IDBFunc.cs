@@ -19,7 +19,7 @@ namespace Spear.Inf.Core.Interface
 
         #region 删
 
-        bool Delete<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_ID<TKey>, new();
+        bool Delete<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new();
 
         bool Delete<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Base, new();
 
@@ -39,7 +39,7 @@ namespace Spear.Inf.Core.Interface
 
         #region 查 - 单个
 
-        TEntity Single<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_ID<TKey>, new();
+        TEntity Single<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new();
 
         TEntity Single<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : DBEntity_Base, new();
 
@@ -47,7 +47,7 @@ namespace Spear.Inf.Core.Interface
 
         #region 查 - 列表
 
-        List<TEntity> List<TEntity, TKey>(params TKey[] keys) where TEntity : DBEntity_Base, IDBField_ID<TKey>, new();
+        List<TEntity> List<TEntity, TKey>(params TKey[] keys) where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new();
 
         List<TEntity> List<TEntity>(Expression<Func<TEntity, bool>> expression = null, IDTO_List param = null) where TEntity : DBEntity_Base, new();
 
@@ -164,7 +164,7 @@ namespace Spear.Inf.Core.Interface
         #endregion
     }
 
-    public interface IDBFunc4Repository<TEntity, TKey> : IDBFunc4Repository<TEntity> where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
+    public interface IDBFunc4Repository<TEntity, TKey> : IDBFunc4Repository<TEntity> where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
     {
         #region 删
 

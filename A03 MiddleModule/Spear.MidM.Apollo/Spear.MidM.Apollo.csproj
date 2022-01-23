@@ -5,11 +5,20 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>chn-gd-st-zp</Authors>
 		<Company>chn-gd-st-zp</Company>
+		<Version>1.0.1</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Com.Ctrip.Framework.Apollo" Version="2.4.4" />
-	  <PackageReference Include="Com.Ctrip.Framework.Apollo.Configuration" Version="2.4.1" />
+		<PackageReference Include="Com.Ctrip.Framework.Apollo" Version="2.4.4" />
+		<PackageReference Include="Com.Ctrip.Framework.Apollo.Configuration" Version="2.4.1" />
 	</ItemGroup>
 
 	<ItemGroup>

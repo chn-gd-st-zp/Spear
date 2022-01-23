@@ -100,7 +100,7 @@ namespace Spear.Inf.EF
 
         #region 删
 
-        public bool Delete<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
+        public bool Delete<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
         {
             var obj = Single<TEntity, TKey>(key);
             return Delete(obj);
@@ -160,7 +160,7 @@ namespace Spear.Inf.EF
 
         #region 查 - 单个
 
-        public TEntity Single<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
+        public TEntity Single<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
         {
             return Find<TEntity>(key);
         }
@@ -174,12 +174,12 @@ namespace Spear.Inf.EF
 
         #region 查 - 列表
 
-        public List<TEntity> List<TEntity, TKey>(params TKey[] keys) where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
+        public List<TEntity> List<TEntity, TKey>(params TKey[] keys) where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
         {
             var query = GetDBSet<TEntity>().AsQueryable();
 
             if (keys != null && keys.Length != 0)
-                query = query.Where(o => keys.Contains(o.ID));
+                query = query.Where(o => keys.Contains(o.PrimeryKey));
 
             return query.ToList();
         }

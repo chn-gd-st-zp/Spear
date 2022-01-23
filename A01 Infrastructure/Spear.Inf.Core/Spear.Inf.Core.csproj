@@ -5,7 +5,15 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>chn-gd-st-zp</Authors>
 		<Company>chn-gd-st-zp</Company>
-		<Version>1.0.3</Version>
+		<Version>1.0.5</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>

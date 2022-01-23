@@ -39,7 +39,7 @@ namespace Spear.MidM.Swagger
 
                     PropertyOperation(doc, inputSchema, inputProperties);
 
-                    #region 隐藏字段
+                    #region 隐藏字段 特殊处理
 
                     foreach (var inputProperty in inputProperties)
                     {
@@ -51,7 +51,6 @@ namespace Spear.MidM.Swagger
                         {
                             if (!inputProperty.Name.Equals(inputPropertyKey, StringComparison.OrdinalIgnoreCase))
                                 continue;
-                            var inputPropertySchema = inputSchema.Properties[inputPropertyKey];
 
                             inputSchema.Properties.Remove(inputPropertyKey);
                         }
@@ -111,6 +110,7 @@ namespace Spear.MidM.Swagger
                     if (attr_hid != null)
                     {
                         classSchema.Properties.Remove(inputPropertyKey);
+                        break;
                     }
 
                     //如果不存在重命名的标签就进入下个匹配
@@ -119,6 +119,7 @@ namespace Spear.MidM.Swagger
                     {
                         classSchema.Properties.Remove(inputPropertyKey);
                         classSchema.Properties.Add(attr_ren.Name.FormatPropertyName(), inputPropertySchema);
+                        break;
                     }
                 }
             }

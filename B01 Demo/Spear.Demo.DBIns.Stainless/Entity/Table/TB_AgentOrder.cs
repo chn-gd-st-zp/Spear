@@ -13,11 +13,11 @@ namespace Spear.Demo.DBIns.Stainless.Entity
 {
     [Table("AgentOrder")]
     [DefaultSortField("AOID", Enum_SortDirection.ASC)]
-    public class TB_AgentOrder : CommonData, IDBField_ID<long>
+    public class TB_AgentOrder : CommonData, IDBField_PrimeryKey<long>
     {
         [Column("AOID")]
         [JsonProperty("AOID")]
-        public long ID { get; set; }
+        public long PrimeryKey { get; set; }
 
         [Column("CreateTime")]
         [JsonProperty("CreateTime")]
@@ -28,7 +28,7 @@ namespace Spear.Demo.DBIns.Stainless.Entity
     {
         public override void Configure(EntityTypeBuilder<TB_AgentOrder> builder)
         {
-            builder.HasKey(att => att.ID);
+            builder.HasKey(att => att.PrimeryKey);
         }
     }
 }

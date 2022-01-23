@@ -15,7 +15,7 @@ namespace Spear.Demo.DBIns.Stainless
     }
 
     public abstract class EFRepository_CommonOrder<TEntity, TKey> : EFRepository_Stainless<TEntity, TKey>, EFRepository_CommonOrder
-        where TEntity : CommonData, IDBField_ID<TKey>, new()
+        where TEntity : CommonData, IDBField_PrimeryKey<TKey>, new()
     {
 
         private IQueryable<TEntity> GenericQuery(DateTime? beginTime, DateTime? endTime)

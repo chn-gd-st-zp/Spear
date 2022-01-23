@@ -13,7 +13,7 @@ namespace Spear.Inf.Core.DTO
         /// <summary>
         /// 参数校验
         /// </summary>
-        /// <param name="msg"></param>
+        /// <param name="errorMsg"></param>
         /// <returns></returns>
         public virtual bool VerifyField(out string errorMsg) { errorMsg = ""; return true; }
     }

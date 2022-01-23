@@ -152,7 +152,7 @@ namespace Spear.Inf.Core.DBRef
     }
 
     public class DBRepository<TEntity, TKey> : DBRepository<TEntity>, IDBRepository<TEntity, TKey>
-        where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
+        where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
     {
         #region 删
 
@@ -184,7 +184,7 @@ namespace Spear.Inf.Core.DBRef
 
     public class DBRepository<TDBContext, TEntity, TKey> : DBRepository<TEntity, TKey>, IDBRepository<TDBContext, TEntity, TKey>
         where TDBContext : IDBContext
-        where TEntity : DBEntity_Base, IDBField_ID<TKey>, new()
+        where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
     {
         private TDBContext _dbContext;
         public new TDBContext DBContext { get { return _dbContext; } protected set { _dbContext = value; base.DBContext = value; } }

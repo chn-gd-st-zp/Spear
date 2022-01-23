@@ -4,6 +4,15 @@
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>chn-gd-st-zp</Authors>
+		<Version>1.0.1</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -13,7 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Spear.MidM.SessionNAuth\Spear.MidM.SessionNAuth.csproj" />
+		<ProjectReference Include="..\Spear.MidM.SessionNAuth\Spear.MidM.SessionNAuth.csproj" />
 	</ItemGroup>
 
 </Project>

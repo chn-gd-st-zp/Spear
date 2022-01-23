@@ -1,15 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Authors>chn-gd-st-zp</Authors>
-    <Company>chn-gd-st-zp</Company>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<Authors>chn-gd-st-zp</Authors>
+		<Company>chn-gd-st-zp</Company>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Version>1.0.2</Version>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\A01 Infrastructure\Spear.Inf.DataFile\Spear.Inf.DataFile.csproj" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\A01 Infrastructure\Spear.Inf.DataFile\Spear.Inf.DataFile.csproj" />
+	</ItemGroup>
 
 </Project>
