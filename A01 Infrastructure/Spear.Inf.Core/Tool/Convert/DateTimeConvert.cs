@@ -87,7 +87,39 @@ namespace Spear.Inf.Core.Tool
         #region 格式化
 
         /// <summary>
-        /// 
+        /// 是否已经过去
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static bool IsPass(this string date)
+        {
+            return date.ToDateTime().IsPass();
+        }
+
+        /// <summary>
+        /// 是否已经过去
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static bool IsPass(this DateTime dateTime)
+        {
+            DateTime now = DateTime.Now;
+
+            return now > dateTime;
+        }
+
+        /// <summary>
+        /// 转换日期时间
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static DateTime ToDateTime(this string date)
+        {
+            return DateTime.Parse(date);
+        }
+
+        /// <summary>
+        /// 转换日期
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
@@ -97,26 +129,13 @@ namespace Spear.Inf.Core.Tool
         }
 
         /// <summary>
-        /// 
+        /// 转换日期时间
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
         public static string ToDateTimeString(this DateTime dateTime)
         {
             return dateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
-        }
-
-        /// <summary>
-        /// 是否已经过去
-        /// </summary>
-        /// <param name="date"></param>
-        /// <returns></returns>
-        public static bool IsPass(this string date)
-        {
-            DateTime now = DateTime.Now;
-            DateTime dataTime = date.ToEndTime();
-
-            return now > dataTime;
         }
 
         /// <summary>
