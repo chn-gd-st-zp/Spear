@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 
 using AutoMapper;
+using Mapster;
 
 using Spear.Inf.Core.Attr;
 
@@ -298,58 +299,145 @@ namespace Spear.Inf.Core.Tool
         #region 映射
 
         /// <summary>
-        /// 类型转换
+        /// 
         /// </summary>
-        /// <param name="data"></param>
-        /// <param name="targetType"></param>
+        /// <param name="obj"></param>
+        /// <param name="destinationType"></param>
         /// <returns></returns>
-        public static object TypeTo(this object data, Type targetType)
+        public static object TypeTo(this object obj, Type destinationType)
         {
-            if (!targetType.IsGenericType)
+            if (!destinationType.IsGenericType)
             {
-                return Convert.ChangeType(data, targetType);
+                return Convert.ChangeType(obj, destinationType);
             }
             else
             {
-                Type genericTypeDefinition = targetType.GetGenericTypeDefinition();
+                Type genericTypeDefinition = destinationType.GetGenericTypeDefinition();
                 if (genericTypeDefinition == typeof(Nullable<>))
-                {
-                    return Convert.ChangeType(data, Nullable.GetUnderlyingType(targetType));
-                }
+                    return Convert.ChangeType(obj, Nullable.GetUnderlyingType(destinationType));
             }
 
-            throw new InvalidCastException(string.Format("Invalid cast from type \"{0}\" to type \"{1}\".", data.GetType().FullName, targetType.FullName));
+            throw new InvalidCastException(string.Format("Invalid cast from type \"{0}\" to type \"{1}\".", obj.GetType().FullName, destinationType.FullName));
         }
 
         /// <summary>
-        /// 类型映射,默认字段名字一一对应
+        /// 
         /// </summary>
-        /// <typeparam name="TTarget">转化之后的model，可以理解为viewmodel</typeparam>
-        /// <typeparam name="TSource">要被转化的实体，Entity</typeparam>
-        /// <param name="source">可以使用这个扩展方法的类型，任何引用类型</param>
+        /// <typeparam name="TDestination"></typeparam>
+        /// <param name="obj"></param>
         /// <returns></returns>
-        public static TTarget MapTo<TSource, TTarget>(this TSource source)
-            where TTarget : class
-            where TSource : class
+        public static object TypeTo<TDestination>(this object obj)
         {
-            if (source == null) return default(TTarget);
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<TSource, TTarget>());
-            var mapper = config.CreateMapper();
-            return mapper.Map<TTarget>(source);
+            return TypeTo(obj, typeof(TDestination));
         }
 
         /// <summary>
-        /// 类型映射,默认字段名字一一对应
+        /// 
         /// </summary>
-        /// <typeparam name="TTarget">转化之后的model，可以理解为viewmodel</typeparam>
-        /// <typeparam name="TSource">要被转化的实体，Entity</typeparam>
-        /// <param name="source">可以使用这个扩展方法的类型，任何引用类型</param>
+        /// <typeparam name="TDestination"></typeparam>
+        /// <param name="source"></param>
         /// <returns></returns>
-        public static IEnumerable<TTarget> MapTo<TSource, TTarget>(this IEnumerable<TSource> source)
-            where TTarget : class
-            where TSource : class
+        public static TDestination MapTo<TDestination>(this object source)
+            where TDestination : class
         {
-            return source.Select(o => o.MapTo<TSource, TTarget>());
+            if (source == null) return default(TDestination);
+
+            Type tSource = source.GetType();
+            Type tTarget = typeof(TDestination);
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap(tSource, tTarget)).CreateMapper();
+            return mapper.Map<TDestination>(source);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TDestination"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static IEnumerable<TDestination> MapTo<TSource, TDestination>(this IEnumerable<TSource> source)
+            where TSource : class
+            where TDestination : class
+        {
+            return source.Select(o => o.MapTo<TDestination>());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TDestination"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static TDestination AdaptTo<TDestination>(this object source)
+        {
+            return source.AdaptTo<TDestination>(TypeAdapterConfig.GlobalSettings);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TDestination"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        public static TDestination AdaptTo<TDestination>(this object source, TypeAdapterConfig config)
+        {
+            if (source == null) return default(TDestination);
+
+            return config.GetDynamicMapFunction<TDestination>(source.GetType())(source);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TDestination"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static TDestination AdaptTo<TSource, TDestination>(this TSource source)
+        {
+            return TypeAdapter<TSource, TDestination>.Map(source);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TDestination"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        public static TDestination AdaptTo<TSource, TDestination>(this TSource source, TypeAdapterConfig config)
+        {
+            return config.GetMapFunction<TSource, TDestination>()(source);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TDestination"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="destination"></param>
+        /// <returns></returns>
+        public static TDestination AdaptTo<TSource, TDestination>(this TSource source, TDestination destination)
+        {
+            return source.AdaptTo(destination, TypeAdapterConfig.GlobalSettings);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TDestination"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="destination"></param>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        public static TDestination AdaptTo<TSource, TDestination>(this TSource source, TDestination destination, TypeAdapterConfig config)
+        {
+            return config.GetMapToTargetFunction<TSource, TDestination>()(source, destination);
         }
 
         #endregion
