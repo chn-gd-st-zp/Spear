@@ -2,6 +2,7 @@
 
 namespace Spear.Inf.Core.CusEnum
 {
+    [KVResource]
     public enum Enum_Status
     {
         [Remark("默认、无")]
@@ -17,6 +18,7 @@ namespace Spear.Inf.Core.CusEnum
         Delete,
     }
 
+    [KVResource]
     public enum Enum_Process
     {
         [Remark("默认、无")]
@@ -42,5 +44,50 @@ namespace Spear.Inf.Core.CusEnum
 
         [Remark("失败")]
         Fail,
+    }
+
+    [KVResource]
+    public enum Enum_OperationType
+    {
+        [Remark("默认、无")]
+        None,
+
+        [Remark("新增")]
+        Create,
+
+        [Remark("删除")]
+        Delete,
+
+        [Remark("修改")]
+        Update,
+    }
+
+    [KVResource]
+    public enum Enum_TreeNodeType
+    {
+        [Remark("默认、无")]
+        None,
+
+        [Remark("组")]
+        Group,
+
+        [Remark("节点")]
+        Node,
+    }
+
+    [KVResource]
+    public enum Enum_PermissionType
+    {
+        [Remark("默认、无")]
+        None,
+
+        [Remark("组")]
+        Group,
+
+        [Remark("方法")]
+        Action,
+
+        [Remark("数据")]
+        Data,
     }
 }

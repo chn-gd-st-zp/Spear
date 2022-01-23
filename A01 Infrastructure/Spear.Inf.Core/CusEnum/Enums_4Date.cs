@@ -2,6 +2,7 @@
 
 namespace Spear.Inf.Core.CusEnum
 {
+    [KVResource]
     public enum Enum_DateCycle
     {
         [Remark("默认、无")]
@@ -23,6 +24,7 @@ namespace Spear.Inf.Core.CusEnum
         Year,
     }
 
+    [KVResource]
     public enum Enum_TimeUnit
     {
         [Remark("默认、无")]

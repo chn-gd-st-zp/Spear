@@ -2,6 +2,18 @@
 
 namespace Spear.Inf.Core.CusEnum
 {
+    public enum Enum_PathMode
+    {
+        [Remark("默认、无")]
+        None = 0,
+
+        [Remark("绝对路径")]
+        ABS,
+
+        [Remark("相对路径")]
+        REF
+    }
+
     public enum Enum_Environment
     {
         [Remark("默认、无")]
@@ -36,17 +48,6 @@ namespace Spear.Inf.Core.CusEnum
 
         [Remark("XML")]
         XML,
-    }
-    public enum Enum_PathMode
-    {
-        [Remark("默认、无")]
-        None = 0,
-
-        [Remark("绝对路径")]
-        ABS,
-
-        [Remark("相对路径")]
-        REF
     }
 
     public enum Enum_DIType
@@ -103,16 +104,19 @@ namespace Spear.Inf.Core.CusEnum
         GRPC,
     }
 
-    public enum Enum_RemoteChannel
+    public enum Enum_EncryptionNDecrypt
     {
         [Remark("默认、无")]
         None,
 
-        [Remark("手机")]
-        Mobile,
+        [Remark("AES")]
+        AES,
 
-        [Remark("邮箱")]
-        Email,
+        [Remark("DES")]
+        DES,
+
+        [Remark("MD5")]
+        MD5,
     }
 
     public enum Enum_TipsResult
@@ -125,47 +129,5 @@ namespace Spear.Inf.Core.CusEnum
 
         [Remark("取消")]
         Cancel,
-    }
-
-    public enum Enum_PermissionType
-    {
-        [Remark("默认、无")]
-        None,
-
-        [Remark("组")]
-        Group,
-
-        [Remark("方法")]
-        Action,
-
-        [Remark("数据")]
-        Data,
-    }
-
-    public enum Enum_TreeNodeType
-    {
-        [Remark("默认、无")]
-        None,
-
-        [Remark("组")]
-        Group,
-
-        [Remark("节点")]
-        Node,
-    }
-
-    public enum Enum_OperationType
-    {
-        [Remark("默认、无")]
-        None,
-
-        [Remark("新增")]
-        Create,
-
-        [Remark("删除")]
-        Delete,
-
-        [Remark("修改")]
-        Update,
     }
 }

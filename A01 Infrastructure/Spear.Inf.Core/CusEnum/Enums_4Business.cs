@@ -2,6 +2,7 @@
 
 namespace Spear.Inf.Core.CusEnum
 {
+    [KVResource]
     public enum Enum_Entry
     {
         [Remark("默认、无")]
@@ -26,6 +27,7 @@ namespace Spear.Inf.Core.CusEnum
         WeChatMicoApp = 6,
     }
 
+    [KVResource]
     public enum Enum_AppType
     {
         [Remark("默认、无")]
@@ -38,21 +40,7 @@ namespace Spear.Inf.Core.CusEnum
         Android,
     }
 
-    public enum Enum_EncryptionNDecrypt
-    {
-        [Remark("默认、无")]
-        None,
-
-        [Remark("AES")]
-        AES,
-
-        [Remark("DES")]
-        DES,
-
-        [Remark("DES")]
-        MD5,
-    }
-
+    [KVResource]
     public enum Enum_SIMProvider
     {
         [Remark("默认、无")]
@@ -69,5 +57,18 @@ namespace Spear.Inf.Core.CusEnum
 
         [Remark("其他")]
         Other,
+    }
+
+    [KVResource]
+    public enum Enum_RemoteChannel
+    {
+        [Remark("默认、无")]
+        None,
+
+        [Remark("手机")]
+        Mobile,
+
+        [Remark("邮箱")]
+        Email,
     }
 }
