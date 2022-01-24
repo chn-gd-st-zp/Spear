@@ -336,8 +336,9 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <typeparam name="TDestination"></typeparam>
         /// <param name="source"></param>
+        /// <param name="byProfile"></param>
         /// <returns></returns>
-        public static TDestination MapTo<TDestination>(this object source)
+        public static TDestination MapTo<TDestination>(this object source, bool byProfile = false)
             where TDestination : class
         {
             if (source == null) return default(TDestination);
@@ -345,7 +346,8 @@ namespace Spear.Inf.Core.Tool
             Type tSource = source.GetType();
             Type tTarget = typeof(TDestination);
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap(tSource, tTarget)).CreateMapper();
+            IMapper mapper = byProfile ? ServiceContext.Resolve<IMapper>() : new MapperConfiguration(cfg => cfg.CreateMap(tSource, tTarget)).CreateMapper();
+
             return mapper.Map<TDestination>(source);
         }
 
@@ -355,12 +357,13 @@ namespace Spear.Inf.Core.Tool
         /// <typeparam name="TSource"></typeparam>
         /// <typeparam name="TDestination"></typeparam>
         /// <param name="source"></param>
+        /// <param name="byProfile"></param>
         /// <returns></returns>
-        public static IEnumerable<TDestination> MapTo<TSource, TDestination>(this IEnumerable<TSource> source)
+        public static IEnumerable<TDestination> MapTo<TSource, TDestination>(this IEnumerable<TSource> source, bool byProfile = false)
             where TSource : class
             where TDestination : class
         {
-            return source.Select(o => o.MapTo<TDestination>());
+            return source.Select(o => o.MapTo<TDestination>(byProfile));
         }
 
         /// <summary>
