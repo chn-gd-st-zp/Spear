@@ -110,7 +110,7 @@ namespace Spear.MidM.Swagger
                     if (attr_hid != null)
                     {
                         classSchema.Properties.Remove(inputPropertyKey);
-                        break;
+                        continue;
                     }
 
                     //如果不存在重命名的标签就进入下个匹配
@@ -119,7 +119,7 @@ namespace Spear.MidM.Swagger
                     {
                         classSchema.Properties.Remove(inputPropertyKey);
                         classSchema.Properties.Add(attr_ren.Name.FormatPropertyName(), inputPropertySchema);
-                        break;
+                        continue;
                     }
                 }
             }
