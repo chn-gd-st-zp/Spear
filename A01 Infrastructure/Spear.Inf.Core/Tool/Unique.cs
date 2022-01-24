@@ -64,9 +64,9 @@ namespace Spear.Inf.Core.Tool
         /// <summary>
         /// 生成随机码，0-9，a-z,A-Z
         /// </summary>
-        /// <param name="Length"></param>
+        /// <param name="length"></param>
         /// <returns></returns>
-        public static string GetRandomCode3(int Length)
+        public static string GetRandomCode3(int length)
         {
             char[] constant =
             {
@@ -75,10 +75,10 @@ namespace Spear.Inf.Core.Tool
                 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
             };
 
-            StringBuilder newRandom = new StringBuilder(Length);
+            StringBuilder newRandom = new StringBuilder(length);
             Random random = GetRandom();
-            for (int i = 0; i < Length; i++)
-                newRandom.Append(constant[random.Next(Length)]);
+            for (int i = 0; i < length; i++)
+                newRandom.Append(constant[random.Next(length)]);
 
             return newRandom.ToString();
         }
@@ -86,9 +86,9 @@ namespace Spear.Inf.Core.Tool
         /// <summary>
         /// 用于验证码卡的随机数，不包含：0 O I L o i l 这些容易混淆的字符
         /// </summary>
-        /// <param name="Length"></param>
+        /// <param name="length"></param>
         /// <returns></returns>
-        public static string GetRandomCode4(int Length)
+        public static string GetRandomCode4(int length)
         {
             char[] constant =
             {
@@ -99,7 +99,7 @@ namespace Spear.Inf.Core.Tool
 
             StringBuilder newRandom = new StringBuilder(constant.Length);
             Random random = GetRandom();
-            for (int i = 0; i < Length; i++)
+            for (int i = 0; i < length; i++)
                 newRandom.Append(constant[random.Next(constant.Length)]);
 
             return newRandom.ToString();
@@ -108,9 +108,9 @@ namespace Spear.Inf.Core.Tool
         /// <summary>
         /// 字母全部为大写的随机码，不包含：0 O I L  这些容易混淆的字符
         /// </summary>
-        /// <param name="Length"></param>
+        /// <param name="length"></param>
         /// <returns></returns>
-        public static string GetRandomCode5(int Length)
+        public static string GetRandomCode5(int length)
         {
             char[] constant =
             {
@@ -120,7 +120,7 @@ namespace Spear.Inf.Core.Tool
 
             StringBuilder newRandom = new StringBuilder(constant.Length);
             Random random = GetRandom();
-            for (int i = 0; i < Length; i++)
+            for (int i = 0; i < length; i++)
                 newRandom.Append(constant[random.Next(constant.Length)]);
 
             return newRandom.ToString();
