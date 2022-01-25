@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,14 +28,15 @@ namespace Spear.Demo4GRPC.Host.Server
     {
         public Startup(IConfiguration configuration) : base(configuration) { }
 
-        public void Configure(IApplicationBuilder app, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory, IApiVersionDescriptionProvider apiVerDescProvider)
         {
             var configures = new AppConfiguresBase()
             {
                 App = app,
                 Env = env,
                 Lifetime = lifetime,
-                LoggerFactory = loggerFactory
+                LoggerFactory = loggerFactory,
+                ApiVerDescProvider = apiVerDescProvider,
             };
 
             Configure(configures);
@@ -73,11 +75,13 @@ namespace Spear.Demo4GRPC.Host.Server
             services.AddSwagger(CurConfig.SwaggerSettings, AppInitHelper.GetPaths(Enum_InitFile.XML, CurConfig.SwaggerSettings.Patterns, CurConfig.SwaggerSettings.Xmls));
             services.AddAutoMapper();
 
-            services.AddGrpc();
-            services.AddMagicOnion(o =>
+            services.RegisMicoServHandler(servs =>
             {
-                o.EnableCurrentContext = true;
-                o.GlobalFilters.AddFilter<GRPCFilterAttribute>();
+                servs.AddMagicOnion(o =>
+                {
+                    o.EnableCurrentContext = true;
+                    o.GlobalFilters.AddFilter<GRPCFilterAttribute>();
+                });
             });
         }
 
@@ -95,17 +99,16 @@ namespace Spear.Demo4GRPC.Host.Server
                 configures.App.UseDeveloperExceptionPage();
             }
 
-            configures.App.UseSwagger(CurConfig.SwaggerSettings);
+            configures.UseSwagger(CurConfig.SwaggerSettings);
 
             configures.App.UseRouting();
             configures.App.UseAuthorization();
             configures.App.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.UseMagicOnion();
             });
 
-            configures.Lifetime.RegisMicoServ();
+            configures.MapMagicOnion().UseMicoServ();
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,14 +26,15 @@ namespace Spear.Demo4GRPC.Host.Client
     {
         public Startup(IConfiguration configuration) : base(configuration) { }
 
-        public void Configure(IApplicationBuilder app, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory, IApiVersionDescriptionProvider apiVerDescProvider)
         {
             var configures = new AppConfiguresBase()
             {
                 App = app,
                 Env = env,
                 Lifetime = lifetime,
-                LoggerFactory = loggerFactory
+                LoggerFactory = loggerFactory,
+                ApiVerDescProvider = apiVerDescProvider,
             };
 
             Configure(configures);
@@ -72,7 +74,7 @@ namespace Spear.Demo4GRPC.Host.Client
         {
             containerBuilder.RegisNLogger(Configuration);
             containerBuilder.Register(o => CurConfig.MicoServClientSettings).AsSelf().SingleInstance();
-            containerBuilder.RegisMagicOnion();
+            containerBuilder.RegisMicoServProvider<MagicOnionProvider>();
         }
 
         protected override void Extend_Configure(AppConfiguresBase configures)
@@ -82,7 +84,7 @@ namespace Spear.Demo4GRPC.Host.Client
                 configures.App.UseDeveloperExceptionPage();
             }
 
-            configures.App.UseSwagger(CurConfig.SwaggerSettings);
+            configures.UseSwagger(CurConfig.SwaggerSettings);
 
             configures.App.UseRouting();
             configures.App.UseAuthorization();
@@ -91,7 +93,7 @@ namespace Spear.Demo4GRPC.Host.Client
                 endpoints.MapControllers();
             });
 
-            configures.Lifetime.RegisMicoServ();
+            configures.UseMicoServ();
         }
     }
 }

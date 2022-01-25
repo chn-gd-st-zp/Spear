@@ -6,11 +6,13 @@ namespace Spear.MidM.Swagger
     [DIModeForSettings("SwaggerSettings", typeof(SwaggerSettings))]
     public class SwaggerSettings : ISettings
     {
-        public string Code { get; set; }
+        public string RoutePrefix { get; set; } = "swagger";
 
         public string Title { get; set; }
 
-        public string Version { get; set; }
+        public string VersionKeyInQuery { get; set; }
+
+        public string VersionKeyInHeader { get; set; }
 
         public string AccessTokenKeyInHeader { get; set; }
 

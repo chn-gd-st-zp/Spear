@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -13,6 +14,8 @@ namespace Spear.Inf.Core.AppEntrance
         IHostApplicationLifetime Lifetime { get; set; }
 
         ILoggerFactory LoggerFactory { get; set; }
+
+        IApiVersionDescriptionProvider ApiVerDescProvider { get; set; }
     }
 
     public class AppConfiguresBase : IConfigureCollection
@@ -24,5 +27,7 @@ namespace Spear.Inf.Core.AppEntrance
         public IHostApplicationLifetime Lifetime { get; set; }
 
         public ILoggerFactory LoggerFactory { get; set; }
+
+        public IApiVersionDescriptionProvider ApiVerDescProvider { get; set; }
     }
 }

@@ -7,9 +7,12 @@ using Spear.Inf.Core.CusResult;
 using Spear.Demo.Contract;
 using Spear.Demo.Inf.DTO;
 
-namespace Spear.Demo4WebApi.Host
+namespace Spear.Demo4WebApi.Host.Controller.v1
 {
-    [ApiController, Route("api/[controller]")]
+    [ApiVersion("1.0", Deprecated = true)]
+    [ApiVersion("2.0", Deprecated = false)]
+    [ApiVersion("3.0", Deprecated = false)]
+    [ApiController, Route("api/[controller]"), Route("api/v{version:apiVersion}/[controller]")]
     public class OrderController : ControllerBase
     {
         public IWebApiService _webapiService;
@@ -24,9 +27,9 @@ namespace Spear.Demo4WebApi.Host
         /// </summary>
         /// <returns></returns>
         [HttpGet, Route("Test")]
-        public async Task<ResultWebApi<bool>> Test()
+        public async Task<ResultWebApi<string>> Test()
         {
-            return true.ResultWebApi_Success();
+            return HttpContext.GetRequestedApiVersion().ToString().ResultWebApi_Success();
         }
 
         /// <summary>

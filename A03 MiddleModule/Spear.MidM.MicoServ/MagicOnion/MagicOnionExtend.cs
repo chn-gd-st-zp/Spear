@@ -2,28 +2,43 @@
 using System.Linq;
 using System.Collections.Generic;
 
-using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Builder;
 
-using Autofac;
-using Grpc.Net.Client;
 using MessagePack;
-using MagicOnion.Client;
 using MagicOnion.Server;
 
-using Spear.Inf.Core.Tool;
+using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.DTO;
-using Spear.Inf.Core.Interface;
+using Spear.Inf.Core.Tool;
 
 namespace Spear.MidM.MicoServ.MagicOnion
 {
     public static class MagicOnionExtend
     {
+        public static AppConfiguresBase MapMagicOnion(this AppConfiguresBase appConfigures)
+        {
+            appConfigures.App.UseEndpoints(endpoints =>
+            {
+                endpoints.MapMagicOnionService();
+            });
+
+            return appConfigures;
+        }
+
+        public static void AddFilter(this IList<MagicOnionServiceFilterDescriptor> filters, Type type)
+        {
+            filters.Add(new MagicOnionServiceFilterDescriptor(type));
+        }
+
+        public static void AddFilter(this IList<MagicOnionServiceFilterDescriptor> filters, params Type[] types)
+        {
+            foreach (var type in types)
+                filters.Add(new MagicOnionServiceFilterDescriptor(type));
+        }
+
         public static void AddFilter<T>(this IList<MagicOnionServiceFilterDescriptor> filters) where T : MagicOnionFilterAttribute
         {
-            var obj = InstanceCreator.Create<T>();
-
-            filters.Add(new MagicOnionServiceFilterDescriptor(obj));
+            filters.Add(new MagicOnionServiceFilterDescriptor(typeof(T)));
         }
 
         public static object[] RestoreParams(this ServiceContext context)
@@ -61,26 +76,6 @@ namespace Spear.MidM.MicoServ.MagicOnion
             }
 
             return reqParamArray.ToArray();
-        }
-
-        public static TContainer Resolve<TContainer>(string address) where TContainer : IMicoServContainer, IMagicOnionContainer<TContainer>
-        {
-            GrpcChannel channel = GrpcChannel.ForAddress(address);
-            return MagicOnionClient.Create<TContainer>(channel);
-        }
-
-        public static ContainerBuilder RegisMagicOnion(this ContainerBuilder containerBuilder)
-        {
-            containerBuilder.RegisterType<MagicOnionProvider>().As<IMicoServProvider>().SingleInstance();
-
-            return containerBuilder;
-        }
-
-        public static IEndpointRouteBuilder UseMagicOnion(this IEndpointRouteBuilder builder)
-        {
-            builder.MapMagicOnionService();
-
-            return builder;
         }
     }
 }
