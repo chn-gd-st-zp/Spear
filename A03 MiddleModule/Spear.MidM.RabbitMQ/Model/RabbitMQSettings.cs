@@ -9,20 +9,17 @@ namespace Spear.MidM.RabbitMQ
         /// <summary>
         /// 主机名
         /// </summary>
-        //[Decrypt(Enum_EncryptionNDecrypt.AES, Enum_Environment.Staging, Enum_Environment.Production)]
-        public string HostName { get; set; }
+        public virtual string HostName { get; set; }
 
         /// <summary>
         /// 用户名
         /// </summary>
-        //[Decrypt(Enum_EncryptionNDecrypt.AES, Enum_Environment.Staging, Enum_Environment.Production)]
-        public string UserName { get; set; }
+        public virtual string UserName { get; set; }
 
         /// <summary>
         /// 密码
         /// </summary>
-        //[Decrypt(Enum_EncryptionNDecrypt.AES, Enum_Environment.Staging, Enum_Environment.Production)]
-        public string Password { get; set; }
+        public virtual string Password { get; set; }
 
         /// <summary>
         /// 虚拟主机

@@ -14,7 +14,7 @@ namespace Spear.MidM.Redis
             return containerBuilder;
         }
 
-        public static ContainerBuilder RegisRedis(this ContainerBuilder containerBuilder, string name) 
+        public static ContainerBuilder RegisRedis(this ContainerBuilder containerBuilder, string name)
         {
             containerBuilder.RegisterType<SERedis>().Named<ICache>(name).SingleInstance();
             containerBuilder.RegisterType<SERedis>().Named<ICache4Redis>(name).SingleInstance();

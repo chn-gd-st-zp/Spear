@@ -9,8 +9,7 @@ namespace Spear.MidM.Redis
         /// <summary>
         /// 链接
         /// </summary>
-        //[Decrypt(Enum_EncryptionNDecrypt.AES, Enum_Environment.Staging, Enum_Environment.Production)]
-        public string Connection { get; set; }
+        public virtual string Connection { get; set; }
 
         /// <summary>
         /// 名称

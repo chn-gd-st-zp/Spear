@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
+using Autofac;
+
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Tool;
@@ -17,9 +19,28 @@ namespace Spear.Inf.Core.SettingsGeneric
     public static class SettingsExtend
     {
         /// <summary>
+        /// 覆盖注入配置
+        /// </summary>
+        /// <typeparam name="TNewSettings"></typeparam>
+        /// <typeparam name="TDistSettings"></typeparam>
+        /// <param name="containerBuilder"></param>
+        /// <param name="redisSettings"></param>
+        /// <returns></returns>
+        public static ContainerBuilder CoverSettings<TNewSettings, TDistSettings>(this ContainerBuilder containerBuilder, TNewSettings newSettings)
+            where TNewSettings : class, TDistSettings
+            where TDistSettings : class, ISettings
+        {
+            containerBuilder.Register(o => newSettings).As(typeof(TDistSettings)).SingleInstance();
+
+            return containerBuilder;
+        }
+
+        /// <summary>
         /// 监控配置
         /// </summary>
         /// <typeparam name="T"></typeparam>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
         public static void Monitor<T>(this IServiceCollection services, IConfiguration configuration) where T : class, ISettings
         {
             services.Configure<T>(configuration);
@@ -28,10 +49,8 @@ namespace Spear.Inf.Core.SettingsGeneric
         /// <summary>
         /// 监听配置更新
         /// </summary>
-        /// <param name="containerBuilder"></param>
+        /// <param name="app"></param>
         /// <param name="typeList"></param>
-        /// <param name="typeIgnore"></param>
-        /// <param name="typeRegis"></param>
         public static void MonitorSettings(this IApplicationBuilder app, IEnumerable<Type> typeList)
         {
             foreach (var classType in typeList.Where(o => o.IsClass && !o.IsAbstract).ToList())
