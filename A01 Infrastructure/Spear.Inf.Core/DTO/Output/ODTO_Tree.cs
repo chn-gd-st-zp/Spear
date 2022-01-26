@@ -13,7 +13,7 @@ namespace Spear.Inf.Core.DTO
     public class ODTO_TreeNode<T> where T : class
     {
         public T Info { get; set; }
-        public ODTO_Tree<T> Childs { get; set; }
+        public List<ODTO_TreeNode<T>> Childs { get; set; }
 
         public ODTO_TreeNode()
         {
