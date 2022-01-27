@@ -46,6 +46,7 @@ namespace Spear.MidM.Swagger
                         var prop = doc.Components.Schemas[inputProperty.PropertyType.Name];
 
                         prop.Enum = new List<IOpenApiAny>();
+                        prop.Description = "";
                         foreach (var item in inputProperty.PropertyType.Convert2Dictionary())
                         {
                             prop.Enum.Add(new OpenApiString(item.Value[0]));

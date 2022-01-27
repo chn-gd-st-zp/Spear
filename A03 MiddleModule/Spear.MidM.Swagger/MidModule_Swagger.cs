@@ -123,7 +123,7 @@ namespace Spear.MidM.Swagger
                         //options.EnableDeepLinking();
                         options.ShowExtensions();
                         options.DefaultModelExpandDepth(2);
-                        options.DefaultModelsExpandDepth(2);
+                        //options.DefaultModelsExpandDepth(-1);
                         options.DefaultModelRendering(ModelRendering.Model);
                     }
                 });
