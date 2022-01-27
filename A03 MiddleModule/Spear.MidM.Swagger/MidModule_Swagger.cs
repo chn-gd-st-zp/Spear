@@ -116,15 +116,15 @@ namespace Spear.MidM.Swagger
                         options.RoutePrefix = swaggerSettings.RoutePrefix.ToLower();
                         options.SwaggerEndpoint($"{description.GroupName}/swagger.json", $"V{description.ApiVersion}");
 
-                        options.DefaultModelExpandDepth(2);
-                        options.DefaultModelRendering(ModelRendering.Model);
-                        options.DefaultModelsExpandDepth(-1);
+                        options.DocExpansion(DocExpansion.List);
                         options.DisplayOperationId();
                         options.DisplayRequestDuration();
-                        options.DocExpansion(DocExpansion.None);
+                        options.EnableFilter();
                         //options.EnableDeepLinking();
-                        //options.EnableFilter();
                         options.ShowExtensions();
+                        options.DefaultModelExpandDepth(2);
+                        options.DefaultModelsExpandDepth(2);
+                        options.DefaultModelRendering(ModelRendering.Model);
                     }
                 });
         }

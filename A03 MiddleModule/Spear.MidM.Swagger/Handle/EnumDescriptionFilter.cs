@@ -47,11 +47,14 @@ namespace Spear.MidM.Swagger
 
                         prop.Enum = new List<IOpenApiAny>();
                         foreach (var item in inputProperty.PropertyType.Convert2Dictionary())
-                            prop.Enum.Add(new OpenApiString($"{item.Key}:{item.Value[0]}-{item.Value[1]}"));
+                        {
+                            prop.Enum.Add(new OpenApiString(item.Value[0]));
+                            prop.Description += $"<br>{item.Key}:{item.Value[0]}-{item.Value[1]}";
+                        }
 
                         var attr = inputProperty.GetCustomAttribute<RemarkAttribute>();
                         if (attr != null)
-                            prop.Description = attr.Remark;
+                            prop.Description = attr.Remark + prop.Description;
                     }
                 }
             }
