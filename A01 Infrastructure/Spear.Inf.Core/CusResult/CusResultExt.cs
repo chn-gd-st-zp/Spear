@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.Base;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusException;
@@ -93,10 +93,11 @@ namespace Spear.Inf.Core.CusResult
             else
             {
                 errorCode = Enum_StateCode.SysError;
+
 #if DEBUG
                 errorMsg = exception.Message;
 #else
-                errorMsg = "程序出现错误，请联系管理员";
+                errorMsg = AppInitHelper.IsTestMode ? exception.Message : "程序出现错误，请联系管理员";
 #endif
             }
 

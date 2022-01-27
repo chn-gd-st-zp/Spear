@@ -39,6 +39,8 @@ namespace Spear.Inf.Core.Interface
 
         #region 查 - 单个
 
+        TEntity Single<TEntity>(object key) where TEntity : DBEntity_Base, new();
+
         TEntity Single<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new();
 
         TEntity Single<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : DBEntity_Base, new();
