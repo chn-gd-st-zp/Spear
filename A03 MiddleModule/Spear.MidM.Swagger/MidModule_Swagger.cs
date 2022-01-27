@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Builder;
@@ -105,7 +106,7 @@ namespace Spear.MidM.Swagger
             return services;
         }
 
-        public static void UseSwagger(this AppConfiguresBase appConfigures, SwaggerSettings swaggerSettings)
+        public static void UseSwagger(this AppConfiguresBase appConfigures, SwaggerSettings swaggerSettings, Action<SwaggerUIOptions> optionsAction = null)
         {
             appConfigures.App
                 .UseSwagger()
@@ -116,15 +117,20 @@ namespace Spear.MidM.Swagger
                         options.RoutePrefix = swaggerSettings.RoutePrefix.ToLower();
                         options.SwaggerEndpoint($"{description.GroupName}/swagger.json", $"V{description.ApiVersion}");
 
-                        options.DocExpansion(DocExpansion.List);
-                        options.DisplayOperationId();
-                        options.DisplayRequestDuration();
-                        options.EnableFilter();
-                        //options.EnableDeepLinking();
-                        options.ShowExtensions();
-                        options.DefaultModelExpandDepth(2);
-                        //options.DefaultModelsExpandDepth(-1);
-                        options.DefaultModelRendering(ModelRendering.Model);
+                        if (options != null)
+                            optionsAction(options);
+                        else
+                        {
+                            options.DocExpansion(DocExpansion.None);
+                            options.DisplayOperationId();
+                            options.DisplayRequestDuration();
+                            options.EnableFilter();
+                            options.EnableDeepLinking();
+                            options.ShowExtensions();
+                            options.DefaultModelExpandDepth(2);
+                            options.DefaultModelsExpandDepth(2);
+                            options.DefaultModelRendering(ModelRendering.Model);
+                        }
                     }
                 });
         }
