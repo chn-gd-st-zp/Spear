@@ -117,7 +117,7 @@ namespace Spear.MidM.Swagger
                         options.RoutePrefix = swaggerSettings.RoutePrefix.ToLower();
                         options.SwaggerEndpoint($"{description.GroupName}/swagger.json", $"V{description.ApiVersion}");
 
-                        if (options != null)
+                        if (optionsAction != null)
                             optionsAction(options);
                         else
                         {
