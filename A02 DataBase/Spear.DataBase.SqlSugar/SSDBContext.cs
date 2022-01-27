@@ -93,6 +93,11 @@ namespace Spear.Inf.SqlSugar
 
         #region 查 - 单个
 
+        public TEntity Single<TEntity>(object key) where TEntity : DBEntity_Base, new()
+        {
+            return GetSimpleClient<TEntity>().GetById(key);
+        }
+
         public TEntity Single<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
         {
             return GetSimpleClient<TEntity>().GetById(key);
