@@ -1,7 +1,7 @@
 ﻿using System;
 
 using Spear.Inf.Core.Base;
-using Spear.Inf.Core.CusEnum;
+using Spear.Inf.Core.Interface;
 
 namespace Spear.Inf.Core.CusException
 {
@@ -11,7 +11,7 @@ namespace Spear.Inf.Core.CusException
 
         public Exception_Base(string msg) : base(msg)
         {
-            ECode = Enum_StateCode.None;
+            ECode = ServiceContext.Resolve<IStateCode>().None;
         }
 
         public Exception_Base(EnumInfo code, string msg) : base(msg)

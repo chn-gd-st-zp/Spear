@@ -1,9 +1,10 @@
 ﻿using MagicOnion;
 using MessagePack;
 
-using Spear.Inf.Core.CusEnum;
+using Spear.Inf.Core;
 using Spear.Inf.Core.CusException;
 using Spear.Inf.Core.CusResult;
+using Spear.Inf.Core.Interface;
 
 namespace Spear.MidM.MicoServ.MagicOnion
 {
@@ -21,16 +22,18 @@ namespace Spear.MidM.MicoServ.MagicOnion
         {
             MagicOnionResult<T> result;
 
+            var stateCode = ServiceContext.Resolve<IStateCode>();
+
             result = new MagicOnionResult<T>();
             result.IsSuccess = resultBase.IsSuccess;
-            result.Code = Enum_StateCode.Success.ToIntString();
+            result.Code = stateCode.Success.ToIntString();
             result.Msg = resultBase.Msg;
             result.Data = resultBase.Data;
 
             if (resultBase.ExInfo != null)
             {
                 Exception_Base cusEx = resultBase.ExInfo as Exception_Base;
-                result.Code = cusEx != null ? cusEx.ECode.ToIntString() : Enum_StateCode.SysError.ToIntString();
+                result.Code = cusEx != null ? cusEx.ECode.ToIntString() : stateCode.SysError.ToIntString();
                 result.Msg = resultBase.ExInfo.Message;
                 result.ErrorStackTrace += "\r\n" + resultBase.ExInfo.StackTrace;
             }

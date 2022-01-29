@@ -47,7 +47,7 @@ namespace Spear.Inf.Core.CusResult
         [JsonIgnore]
         public bool IsSuccess { get; set; }
 
-        public int Code { get; set; }
+        public string Code { get; set; }
 
         public string Msg { get; set; }
 

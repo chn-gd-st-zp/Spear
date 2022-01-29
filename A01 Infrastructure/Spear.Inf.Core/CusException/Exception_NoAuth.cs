@@ -1,4 +1,4 @@
-﻿using Spear.Inf.Core.CusEnum;
+﻿using Spear.Inf.Core.Interface;
 
 namespace Spear.Inf.Core.CusException
 {
@@ -6,7 +6,7 @@ namespace Spear.Inf.Core.CusException
     {
         public Exception_NoAuth() :base("没有权限")
         {
-            ECode = Enum_StateCode.NoAuth;
+            ECode = ServiceContext.Resolve<IStateCode>().NoAuth;
         }
     }
 }

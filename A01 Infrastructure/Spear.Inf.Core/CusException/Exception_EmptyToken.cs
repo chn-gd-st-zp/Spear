@@ -1,4 +1,4 @@
-﻿using Spear.Inf.Core.CusEnum;
+﻿using Spear.Inf.Core.Interface;
 
 namespace Spear.Inf.Core.CusException
 {
@@ -6,7 +6,7 @@ namespace Spear.Inf.Core.CusException
     {
         public Exception_EmptyToken() :base("空令牌")
         {
-            ECode = Enum_StateCode.EmptyToken;
+            ECode = ServiceContext.Resolve<IStateCode>().EmptyToken;
         }
     }
 }

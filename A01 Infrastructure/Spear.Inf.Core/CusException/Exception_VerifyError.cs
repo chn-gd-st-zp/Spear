@@ -1,5 +1,5 @@
 ﻿using Spear.Inf.Core.Attr;
-using Spear.Inf.Core.CusEnum;
+using Spear.Inf.Core.Interface;
 
 namespace Spear.Inf.Core.CusException
 {
@@ -8,7 +8,7 @@ namespace Spear.Inf.Core.CusException
     {
         public Exception_VerifyError(string msg) :base(msg)
         {
-            ECode = Enum_StateCode.ValidError;
+            ECode = ServiceContext.Resolve<IStateCode>().ValidError;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Spear.Inf.Core.CusEnum;
+﻿using Spear.Inf.Core.Interface;
 
 namespace Spear.Inf.Core.CusException
 {
@@ -6,7 +6,7 @@ namespace Spear.Inf.Core.CusException
     {
         public Exception_NoLogin() : base("请登录")
         {
-            ECode = Enum_StateCode.NoLogin;
+            ECode = ServiceContext.Resolve<IStateCode>().NoLogin;
         }
     }
 }

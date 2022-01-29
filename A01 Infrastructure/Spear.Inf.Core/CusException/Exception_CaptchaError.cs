@@ -1,4 +1,4 @@
-﻿using Spear.Inf.Core.CusEnum;
+﻿using Spear.Inf.Core.Interface;
 
 namespace Spear.Inf.Core.CusException
 {
@@ -6,7 +6,7 @@ namespace Spear.Inf.Core.CusException
     {
         public Exception_CaptchaError(string msg) :base(msg)
         {
-            ECode = Enum_StateCode.CaptchaFailed;
+            ECode = ServiceContext.Resolve<IStateCode>().CaptchaFailed;
         }
     }
 }
