@@ -1,37 +1,15 @@
 ﻿using System;
-using Spear.Inf.Core.Base;
+
+using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusException;
+using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core.CusResult
 {
     public static class CusResultExtend
     {
-        #region ResultBase
-
-        internal static ResultBase<T> ResultBase_Success<T>(this T data, string msg = "操作成功")
-        {
-            return new ResultBase<T>(data, msg);
-        }
-
-        internal static ResultBase<T> ResultBase_Fail<T>(this T data, string msg = "操作失败")
-        {
-            return new ResultBase<T>(msg);
-        }
-
-        internal static ResultBase<T> ResultBase_Fail<T>(this string msg)
-        {
-            return new ResultBase<T>(msg);
-        }
-
-        internal static ResultBase<T> ResultBase_Exception<T>(this Exception exception, string msg = "操作失败")
-        {
-            return new ResultBase<T>(exception, msg);
-        }
-
-        #endregion
-
-        #region ResultAPI
+        private static IStateCode stateCode = ServiceContext.Resolve<IStateCode>();
 
         internal static ResultWebApi<T> ToResultWebApi<T>(this ResultBase<T> resultBase)
         {
@@ -43,42 +21,19 @@ namespace Spear.Inf.Core.CusResult
                 return resultBase.Data.ResultWebApi_Exception(resultBase.ExInfo);
         }
 
-        internal static ResultWebApi<T> ToResultWebApi<T>(this T data, string code, string msg)
+        private static ResultWebApi<T> ResultWebApi_Success<T>(this T data, string msg = "操作成功")
         {
-            ResultWebApi<T> result;
-
-            result = new ResultWebApi<T>();
-            result.IsSuccess = true;
-            result.Code = code;
-            result.Msg = msg;
-            result.Data = data;
-
-            return result;
+            return data.ToResultWebApi(stateCode.Success, msg);
         }
 
-        internal static ResultWebApi<T> ResultWebApi_Success<T>(this T data, string msg = "操作成功")
+        private static ResultWebApi<T> ResultWebApi_Fail<T>(this T data, string msg = "操作失败")
         {
-            return data.ToResultWebApi(Enum_StateCode.Success.ToIntString(), msg);
+            return data.ToResultWebApi(stateCode.Fail, msg);
         }
 
-        internal static ResultWebApi<T> ResultWebApi_Fail<T>(this T data, string code = "", string msg = "操作失败")
+        private static ResultWebApi<T> ResultWebApi_Exception<T>(this T data, Exception exception)
         {
-            return data.ToResultWebApi(code, msg);
-        }
-
-        internal static ResultWebApi<T> ResultWebApi_Fail<T>(this T data, string msg)
-        {
-            return data.ResultWebApi_Fail(Enum_StateCode.Fail.ToIntString(), msg);
-        }
-
-        internal static ResultWebApi<T> ResultWebApi_Fail<T>(this T data)
-        {
-            return data.ResultWebApi_Fail(Enum_StateCode.Fail.ToIntString());
-        }
-
-        internal static ResultWebApi<T> ResultWebApi_Exception<T>(this T data, Exception exception)
-        {
-            EnumInfo errorCode = null;
+            SpearEnumItem errorCode = null;
             string errorMsg = "";
 
             if (exception.IsExtendType<Exception_Base>())
@@ -90,7 +45,7 @@ namespace Spear.Inf.Core.CusResult
             }
             else
             {
-                errorCode = Enum_StateCode.SysError;
+                errorCode = stateCode.SysError;
 
 #if DEBUG
                 errorMsg = exception.Message;
@@ -99,11 +54,22 @@ namespace Spear.Inf.Core.CusResult
 #endif
             }
 
-            ResultWebApi<T> result = ToResultWebApi<T>(default(T), errorCode.ToIntString(), errorMsg);
+            ResultWebApi<T> result = ToResultWebApi(default(T), errorCode, errorMsg);
 
             return result;
         }
 
-        #endregion
+        private static ResultWebApi<T> ToResultWebApi<T>(this T data, SpearEnumItem code, string msg)
+        {
+            ResultWebApi<T> result;
+
+            result = new ResultWebApi<T>();
+            result.IsSuccess = true;
+            result.Code = code.ToIntString();
+            result.Msg = msg;
+            result.Data = data;
+
+            return result;
+        }
     }
 }

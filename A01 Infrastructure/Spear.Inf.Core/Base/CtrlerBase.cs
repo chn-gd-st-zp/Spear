@@ -46,10 +46,5 @@ namespace Spear.Inf.Core.Base
         {
             return result.ToResultWebApi();
         }
-
-        public static ResultWebApi<TResult> ToException<TResult>(this TResult result, Exception exception)
-        {
-            return result.ResultWebApi_Exception(exception);
-        }
     }
 }

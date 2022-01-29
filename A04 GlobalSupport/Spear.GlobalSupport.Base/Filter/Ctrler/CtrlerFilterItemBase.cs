@@ -12,6 +12,7 @@ using Spear.Inf.Core;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.Base;
 using Spear.Inf.Core.CusException;
+using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.DTO;
 using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.Tool;
@@ -131,7 +132,7 @@ namespace Spear.GlobalSupport.Base.Filter
             while (Exception != null && Exception.InnerException != null)
                 Exception = Exception.InnerException;
 
-            Result = false.ToException(Exception);
+            Result = new ResultBase<bool> { IsSuccess = false, ExInfo = Exception }.ToAPIResult();
 
             //是否标注了 志记录忽略 的标签，无标注 则需进行 日志记录
             if (Exception.GetType().GetCustomAttribute<LogIgnoreAttribute>() == null)
