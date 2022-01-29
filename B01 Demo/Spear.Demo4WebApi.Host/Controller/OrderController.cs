@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 
+using Spear.Inf.Core.Base;
 using Spear.Inf.Core.CusResult;
 
 using Spear.Demo.Contract;
@@ -29,7 +30,8 @@ namespace Spear.Demo4WebApi.Host.Controller.v1
         [HttpGet, Route("Test")]
         public async Task<ResultWebApi<string>> Test()
         {
-            return HttpContext.GetRequestedApiVersion().ToString().ResultWebApi_Success();
+            var result = new ResultBase<string> { Data = HttpContext.GetRequestedApiVersion().ToString() };
+            return result.ToAPIResult();
         }
 
         /// <summary>
@@ -41,7 +43,7 @@ namespace Spear.Demo4WebApi.Host.Controller.v1
         public async Task<ResultWebApi<ODTO_CommonOrder>> Page(IDTO_CommonOrder input)
         {
             var result = await _webapiService.Page(input);
-            return result.ResultWebApi_Success();
+            return result.ToAPIResult();
         }
     }
 }

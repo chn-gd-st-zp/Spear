@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Spear.Inf.Core;
+using Spear.Inf.Core.Base;
 using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.DTO;
 using Spear.Inf.Core.Tool;
@@ -33,9 +34,9 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
         [HttpPost, Route("List")]
         public async Task<ResultWebApi<List<ODTOTestDemo>>> List(IDTO_ListParam input)
         {
-            var result = _grpcService.List(input);
+            var result = await _grpcService.List(input);
 
-            return result.ToResultWebApi();
+            return result.ToAPIResult();
         }
 
         /// <summary>
@@ -46,9 +47,9 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
         [HttpPost, Route("Page")]
         public async Task<ResultWebApi<ODTO_Page<ODTOTestDemo>>> Page(IDTO_PageParam input)
         {
-            var result = _grpcService.Page(input);
+            var result = await _grpcService.Page(input);
 
-            return result.ToResultWebApi();
+            return result.ToAPIResult();
         }
 
         /// <summary>
@@ -59,9 +60,9 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
         [HttpPost, Route("Tree")]
         public async Task<ResultWebApi<ODTO_Tree<ODTOTestDemo>>> Tree(IDTO_TreeParam input)
         {
-            var result = _grpcService.Tree(input);
+            var result = await _grpcService.Tree(input);
 
-            return result.ToResultWebApi();
+            return result.ToAPIResult();
         }
 
         /// <summary>
@@ -77,9 +78,9 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
                 FileBase64 = input.OpenReadStream().Convert2Base64(true)
             };
 
-            var result = _grpcService.ImportExcel(inputParam);
+            var result = await _grpcService.ImportExcel(inputParam);
 
-            return result.ToResultWebApi();
+            return result.ToAPIResult();
         }
 
         /// <summary>
@@ -90,11 +91,11 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
         [HttpPost, Route("ExportExcel")]
         public IActionResult ExportExcel(IDTO_Export input)
         {
-            var result = _grpcService.ExportExcel(input);
+            var result = _grpcService.ExportExcel(input).Result;
             if (result.IsSuccess)
                 return File(result.Data, "application/octet-stream", DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".xls");
 
-            return result.ToResultWebApi().ToJsonResult();
+            return result.ToAPIResult().ToJsonResult();
         }
     }
 }

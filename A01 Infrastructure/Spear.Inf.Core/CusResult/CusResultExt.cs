@@ -1,7 +1,5 @@
 ﻿using System;
-using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.Base;
-using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusException;
 using Spear.Inf.Core.Tool;
 
@@ -11,22 +9,22 @@ namespace Spear.Inf.Core.CusResult
     {
         #region ResultBase
 
-        public static ResultBase<T> ResultBase_Success<T>(this T data, string msg = "操作成功")
+        internal static ResultBase<T> ResultBase_Success<T>(this T data, string msg = "操作成功")
         {
             return new ResultBase<T>(data, msg);
         }
 
-        public static ResultBase<T> ResultBase_Fail<T>(this T data, string msg = "操作失败")
+        internal static ResultBase<T> ResultBase_Fail<T>(this T data, string msg = "操作失败")
         {
             return new ResultBase<T>(msg);
         }
 
-        public static ResultBase<T> ResultBase_Fail<T>(this string msg)
+        internal static ResultBase<T> ResultBase_Fail<T>(this string msg)
         {
             return new ResultBase<T>(msg);
         }
 
-        public static ResultBase<T> ResultBase_Exception<T>(this Exception exception, string msg = "操作失败")
+        internal static ResultBase<T> ResultBase_Exception<T>(this Exception exception, string msg = "操作失败")
         {
             return new ResultBase<T>(exception, msg);
         }
@@ -35,7 +33,7 @@ namespace Spear.Inf.Core.CusResult
 
         #region ResultAPI
 
-        public static ResultWebApi<T> ToResultWebApi<T>(this ResultBase<T> resultBase)
+        internal static ResultWebApi<T> ToResultWebApi<T>(this ResultBase<T> resultBase)
         {
             if (resultBase.IsSuccess)
                 return resultBase.Data.ResultWebApi_Success(resultBase.Msg);
@@ -45,7 +43,7 @@ namespace Spear.Inf.Core.CusResult
                 return resultBase.Data.ResultWebApi_Exception(resultBase.ExInfo);
         }
 
-        public static ResultWebApi<T> ToResultWebApi<T>(this T data, string code, string msg)
+        internal static ResultWebApi<T> ToResultWebApi<T>(this T data, string code, string msg)
         {
             ResultWebApi<T> result;
 
@@ -58,27 +56,27 @@ namespace Spear.Inf.Core.CusResult
             return result;
         }
 
-        public static ResultWebApi<T> ResultWebApi_Success<T>(this T data, string msg = "操作成功")
+        internal static ResultWebApi<T> ResultWebApi_Success<T>(this T data, string msg = "操作成功")
         {
             return data.ToResultWebApi(Enum_StateCode.Success.ToIntString(), msg);
         }
 
-        public static ResultWebApi<T> ResultWebApi_Fail<T>(this T data, string code = "", string msg = "操作失败")
+        internal static ResultWebApi<T> ResultWebApi_Fail<T>(this T data, string code = "", string msg = "操作失败")
         {
             return data.ToResultWebApi(code, msg);
         }
 
-        public static ResultWebApi<T> ResultWebApi_Fail<T>(this T data, string msg)
+        internal static ResultWebApi<T> ResultWebApi_Fail<T>(this T data, string msg)
         {
             return data.ResultWebApi_Fail(Enum_StateCode.Fail.ToIntString(), msg);
         }
 
-        public static ResultWebApi<T> ResultWebApi_Fail<T>(this T data)
+        internal static ResultWebApi<T> ResultWebApi_Fail<T>(this T data)
         {
             return data.ResultWebApi_Fail(Enum_StateCode.Fail.ToIntString());
         }
 
-        public static ResultWebApi<T> ResultWebApi_Exception<T>(this T data, Exception exception)
+        internal static ResultWebApi<T> ResultWebApi_Exception<T>(this T data, Exception exception)
         {
             EnumInfo errorCode = null;
             string errorMsg = "";

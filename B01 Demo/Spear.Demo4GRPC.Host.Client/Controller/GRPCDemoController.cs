@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,9 +39,10 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
         [HttpGet, Route("go")]
         public async Task<ResultWebApi<bool>> Go()
         {
-            object result = null;
+            var result = new ResultWebApi<List<object>>();
 
-            result = GetService<IGRPCDemoContainer>()
+            result.Data.Add(
+                GetService<IGRPCDemoContainer>()
                 .Test3(
                     new IDTO_GRPC<IDTO_ListParam>
                     {
@@ -48,9 +50,11 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
                         Param = new IDTO_ListParam()
                     }
                 )
-                .ResponseAsync.Result;
+                .ResponseAsync.Result
+            );
 
-            result = GetService<IGRPCDemoContainer>()
+            result.Data.Add(
+                GetService<IGRPCDemoContainer>()
                 .Test4(
                     new IDTO_GRPC<IDTO_ListParam>
                     {
@@ -65,9 +69,10 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
                         EStatus = Enum_Status.Normal,
                     }
                 )
-                .ResponseAsync.Result;
+                .ResponseAsync.Result
+            );
 
-            return false.ResultWebApi_Fail();
+            return result.ToAPIResult();
         }
     }
 }

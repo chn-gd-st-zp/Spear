@@ -52,6 +52,11 @@ namespace Spear.Inf.Core.CusResult
         public string Msg { get; set; }
 
         public TData Data { get; set; }
+
+        public ResultWebApi<bool> ToAPIResult()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class RespResultCallBack<T> : ResultBase<T>, IAsyncResult

@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
 
+using Microsoft.AspNetCore.Mvc;
+
+using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.Interface;
 
 namespace Spear.Inf.Core.Base
@@ -34,6 +37,19 @@ namespace Spear.Inf.Core.Base
         public CtrlerBase() : base()
         {
             Cache = ServiceContext.Resolve<TCache>();
+        }
+    }
+
+    public static class CtrlorBaseExtend
+    {
+        public static ResultWebApi<TResult> ToAPIResult<TResult>(this ResultBase<TResult> result)
+        {
+            return result.ToResultWebApi();
+        }
+
+        public static ResultWebApi<TResult> ToException<TResult>(this TResult result, Exception exception)
+        {
+            return result.ResultWebApi_Exception(exception);
         }
     }
 }

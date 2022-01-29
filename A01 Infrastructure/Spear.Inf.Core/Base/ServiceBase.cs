@@ -1,4 +1,5 @@
-﻿using Spear.Inf.Core.Interface;
+﻿using Spear.Inf.Core.CusResult;
+using Spear.Inf.Core.Interface;
 
 namespace Spear.Inf.Core.Base
 {
@@ -46,6 +47,29 @@ namespace Spear.Inf.Core.Base
         public ServiceBase()
         {
             Session = ServiceContext.Resolve<ISpearSession<TTokenProvider>>();
+        }
+    }
+
+    public static class ServiceBaseExtend
+    {
+        public static ResultBase<TResult> ToServSuccess<TResult>(this TResult result, string msg = "")
+        {
+            return new ResultBase<TResult>(result, msg);
+        }
+
+        public static ResultBase<string> ToServFail(this string msg)
+        {
+            return new ResultBase<string>(msg);
+        }
+
+        public static ResultBase<TResult> ToServFail<TResult>(this string msg)
+        {
+            return new ResultBase<TResult>(msg);
+        }
+
+        public static ResultBase<TResult> ToServFail<TResult>(this TResult result, string msg = "")
+        {
+            return new ResultBase<TResult>(msg);
         }
     }
 }

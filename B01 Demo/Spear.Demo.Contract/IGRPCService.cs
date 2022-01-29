@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.DTO;
@@ -10,14 +11,14 @@ namespace Spear.Demo.Contract
 {
     public interface IGRPCService : ITransient
     {
-        ResultBase<List<ODTOTestDemo>> List(IDTO_ListParam input);
+        Task<ResultBase<List<ODTOTestDemo>>> List(IDTO_ListParam input);
 
-        ResultBase<ODTO_Page<ODTOTestDemo>> Page(IDTO_PageParam input);
+        Task<ResultBase<ODTO_Page<ODTOTestDemo>>> Page(IDTO_PageParam input);
 
-        ResultBase<ODTO_Tree<ODTOTestDemo>> Tree(IDTO_TreeParam input);
+        Task<ResultBase<ODTO_Tree<ODTOTestDemo>>> Tree(IDTO_TreeParam input);
 
-        ResultBase<List<ODTOTestDemo>> ImportExcel(IDTO_Import input);
+        Task<ResultBase<List<ODTOTestDemo>>> ImportExcel(IDTO_Import input);
 
-        ResultBase<byte[]> ExportExcel(IDTO_Export input);
+        Task<ResultBase<byte[]>> ExportExcel(IDTO_Export input);
     }
 }

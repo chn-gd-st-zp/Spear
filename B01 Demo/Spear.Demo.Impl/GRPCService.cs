@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Data;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using AutoMapper;
 
 using Spear.Inf.Core;
 using Spear.Inf.Core.Attr;
+using Spear.Inf.Core.Base;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.DBRef;
@@ -20,7 +22,7 @@ using Spear.Demo.Contract;
 namespace Spear.Demo4GRPC.Host.Server.Implement
 {
     [DIModeForService(Enum_DIType.Exclusive, typeof(IGRPCService))]
-    public class GRPCService : IGRPCService
+    public class GRPCService : ServiceBase<GRPCService>, IGRPCService
     {
         private readonly IMapper _mapper;
         private readonly IExcelHelper _excelHelper;
@@ -31,28 +33,28 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
             _excelHelper = ServiceContext.Resolve<IExcelHelper>();
         }
 
-        public ResultBase<List<ODTOTestDemo>> List(IDTO_ListParam input)
+        public async Task<ResultBase<List<ODTOTestDemo>>> List(IDTO_ListParam input)
         {
             var dataList = new List<ODTOTestDemo>();
-            return dataList.ResultBase_Success();
+            return dataList.ToServSuccess();
         }
 
-        public ResultBase<ODTO_Page<ODTOTestDemo>> Page(IDTO_PageParam input)
+        public async Task<ResultBase<ODTO_Page<ODTOTestDemo>>> Page(IDTO_PageParam input)
         {
             var pageData = new Tuple<List<ODTOTestDemo>, int>(new List<ODTOTestDemo>(), 0);
             var dataList = pageData.ToODTOPage(input);
 
-            return dataList.ResultBase_Success();
+            return dataList.ToServSuccess();
         }
 
-        public ResultBase<ODTO_Tree<ODTOTestDemo>> Tree(IDTO_TreeParam input)
+        public async Task<ResultBase<ODTO_Tree<ODTOTestDemo>>> Tree(IDTO_TreeParam input)
         {
             var dataList = new List<ODTOTestDemo>();
 
-            return dataList.ToTree("").ResultBase_Success();
+            return dataList.ToTree("").ToServSuccess();
         }
 
-        public ResultBase<List<ODTOTestDemo>> ImportExcel(IDTO_Import input)
+        public async Task<ResultBase<List<ODTOTestDemo>>> ImportExcel(IDTO_Import input)
         {
             List<ODTOTestDemo> result = new List<ODTOTestDemo>();
 
@@ -62,10 +64,10 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
                 importData.ForEach(o => { result.Add(_mapper.Map<ODTOTestDemo>(o)); });
             }
 
-            return result.ResultBase_Success();
+            return result.ToServSuccess();
         }
 
-        public ResultBase<byte[]> ExportExcel(IDTO_Export input)
+        public async Task<ResultBase<byte[]>> ExportExcel(IDTO_Export input)
         {
             var dataList = new List<MExport>();
             for (int i = 0; i < 10; i++)
@@ -81,7 +83,7 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
             DataTable dt = dataList.ToDataTable2();
             var execResult = _excelHelper.ExportFromDataTable(dt);
 
-            return execResult.ResultBase_Success();
+            return execResult.ToServSuccess();
         }
     }
 }

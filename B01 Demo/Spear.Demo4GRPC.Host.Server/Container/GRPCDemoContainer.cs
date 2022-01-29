@@ -24,55 +24,63 @@ namespace Spear.Demo4GRPC.Host.Server.MicoServ
 
         public UnaryResult<MagicOnionResult<bool>> Test1()
         {
-            return true.ResultBase_Success().ToUnaryResult();
+            var result = new ResultBase<bool>();
+
+            return result.ToUnaryResult();
         }
 
         public UnaryResult<MagicOnionResult<bool>> Test2(params string[] args)
         {
-            return true.ResultBase_Success().ToUnaryResult();
+            var result = new ResultBase<bool>();
+
+            return result.ToUnaryResult();
         }
 
         public UnaryResult<MagicOnionResult<bool>> Test3(IDTO_GRPC<IDTO_ListParam> input)
         {
-            return true.ResultBase_Success().ToUnaryResult();
+            var result = new ResultBase<bool>();
+
+            return result.ToUnaryResult();
         }
 
         public UnaryResult<MagicOnionResult<bool>> Test4(IDTO_GRPC<IDTO_ListParam> input, IDTO_ListParam input2)
         {
-            return true.ResultBase_Success().ToUnaryResult();
+            var result = new ResultBase<bool>();
+
+            return result.ToUnaryResult();
         }
 
         public UnaryResult<MagicOnionResult<List<ODTOTestDemo>>> List(IDTO_GRPC<IDTO_ListParam> input)
         {
-            var result = _grpcService.List(input.Param);
+            var result = _grpcService.List(input.Param).Result;
 
             return result.ToUnaryResult();
         }
 
         public UnaryResult<MagicOnionResult<ODTO_Page<ODTOTestDemo>>> Page(IDTO_GRPC<IDTO_PageParam> input)
         {
-            var result = _grpcService.Page(input.Param);
+            var result = _grpcService.Page(input.Param).Result;
 
             return result.ToUnaryResult();
         }
 
         public UnaryResult<MagicOnionResult<ODTO_Tree<ODTOTestDemo>>> Tree(IDTO_GRPC<IDTO_TreeParam> input)
         {
-            var result = _grpcService.Tree(input.Param);
+            var result = _grpcService.Tree(input.Param).Result;
 
             return result.ToUnaryResult();
         }
 
         public UnaryResult<MagicOnionResult<List<ODTOTestDemo>>> ImportExcel(IDTO_GRPC<IDTO_Import> input)
         {
-            var result = _grpcService.ImportExcel(input.Param);
+            var result = _grpcService.ImportExcel(input.Param).Result;
 
             return result.ToUnaryResult();
         }
 
         public UnaryResult<MagicOnionResult<byte[]>> ExportExcel(IDTO_GRPC<IDTO_Export> input)
         {
-            var result = _grpcService.ExportExcel(input.Param);
+            var result = _grpcService.ExportExcel(input.Param).Result;
 
             return result.ToUnaryResult();
         }
