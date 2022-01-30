@@ -1,4 +1,5 @@
-﻿using Spear.Inf.Core.CusEnum;
+﻿using Spear.Inf.Core.Attr;
+using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
 
 namespace Spear.Inf.Core.Interface
@@ -27,6 +28,7 @@ namespace Spear.Inf.Core.Interface
 
 namespace Spear.Inf.Core.CusEnum
 {
+    [DIModeForService(Enum_DIType.Exclusive, typeof(IStateCode))]
     public sealed class Enum_StateCode : SpearEnum, IStateCode
     {
         public Enum_StateCode()
