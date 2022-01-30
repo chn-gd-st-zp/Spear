@@ -155,21 +155,42 @@ namespace Spear.Inf.Core.AppEntrance
             if (patterns != null && patterns.Length > 0)
                 patterns = patterns.Select(o => o.Replace("*", "")).ToArray();
 
-            var assemblyNameList = DependencyContext.Default.RuntimeLibraries.Select(o => o.Name).ToList();
-            foreach (var assemblyName in assemblyNameList)
+            var assemblyNameList_source = DependencyContext.Default.RuntimeLibraries.Select(o => o.Name).ToList();
+            var assemblyNameList_target = new List<string>();
+
+            if (assemblyNameList_target.Count() == 0 && dlls != null)
             {
-                if (patterns != null && patterns.Length > 0)
+                foreach (var dll in dlls)
                 {
-                    if (!patterns.Any(o => assemblyName.StartsWith(o, StringComparison.OrdinalIgnoreCase)))
-                        continue;
-                }
+                    var sourceName = assemblyNameList_source
+                        .Where(sourceName => string.Compare(dll, sourceName, true) == 0)
+                        .FirstOrDefault();
 
-                if (dlls != null && dlls.Length > 0)
+                    if (!sourceName.IsEmptyString() && !assemblyNameList_target.Any(targetName => string.Compare(targetName, sourceName, true) == 0))
+                        assemblyNameList_target.Add(sourceName);
+                }
+            }
+
+            if (assemblyNameList_target.Count() == 0 && patterns != null)
+            {
+                foreach (var pattern in patterns)
                 {
-                    if (!dlls.Any(o => string.Compare(assemblyName, o, true) == 0))
-                        continue;
-                }
+                    var pat = pattern.Replace("*", "");
+                    pat = pat.EndsWith(".") ? pat : pat + ".";
 
+                    assemblyNameList_source
+                        .Where(sourceName => sourceName.StartsWith(pat, StringComparison.OrdinalIgnoreCase))
+                        .ToList()
+                        .ForEach(sourceName =>
+                        {
+                            if (!assemblyNameList_target.Any(targetName => string.Compare(targetName, sourceName, true) == 0))
+                                assemblyNameList_target.Add(sourceName);
+                        });
+                }
+            }
+
+            foreach (var assemblyName in assemblyNameList_target)
+            {
                 if (!File.Exists(RootPath + assemblyName + ".dll"))
                     continue;
 

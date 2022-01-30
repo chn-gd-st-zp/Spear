@@ -13,7 +13,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 using Spear.Inf.Core.AppEntrance;
-using Spear.Inf.Core.CusEnum;
 using Spear.MidM.Logger;
 using Spear.MidM.Swagger;
 using Spear.MidM.MicoServ;
@@ -66,7 +65,7 @@ namespace Spear.Demo4GRPC.Host.Client
                     options.SerializerSettings.Converters = JsonSerializerSettings.Converters;
                 });
 
-            services.AddSwagger(CurConfig.SwaggerSettings, AppInitHelper.GetPaths(Enum_InitFile.XML, CurConfig.SwaggerSettings.Patterns, CurConfig.SwaggerSettings.Xmls));
+            services.AddSwagger(CurConfig.SwaggerSettings);
             services.AddAutoMapper();
         }
 

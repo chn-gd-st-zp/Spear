@@ -13,6 +13,7 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 using Spear.Inf.Core.AppEntrance;
+using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Tool;
 
 namespace Spear.MidM.Swagger
@@ -20,8 +21,8 @@ namespace Spear.MidM.Swagger
     public static class MidModule_Swagger
     {
         public static IServiceCollection AddSwagger(
-            this IServiceCollection services, SwaggerSettings swaggerSettings, List<string> xmls,
-            string tokenKey = null, OpenApiSecurityScheme oass = null, OpenApiSecurityRequirement oasr = null
+            this IServiceCollection services, SwaggerSettings swaggerSettings,
+            OpenApiSecurityScheme oass = null, OpenApiSecurityRequirement oasr = null
         )
         {
             services
@@ -93,12 +94,13 @@ namespace Spear.MidM.Swagger
                     options.DocumentFilter<EnumDescriptionFilter>();
                     options.OperationFilter<AccessTokenInHeaderFilter>();
 
+                    List<string> xmls = AppInitHelper.GetPaths(Enum_InitFile.XML, swaggerSettings.Patterns, swaggerSettings.Xmls);
                     foreach (string xml in xmls)
                         options.IncludeXmlComments(xml, true);
 
-                    if (!tokenKey.IsEmptyString() && oass != null && oasr != null)
+                    if (!swaggerSettings.AccessTokenKeyInHeader.IsEmptyString() && oass != null && oasr != null)
                     {
-                        options.AddSecurityDefinition(tokenKey, oass);
+                        options.AddSecurityDefinition(swaggerSettings.AccessTokenKeyInHeader, oass);
                         options.AddSecurityRequirement(oasr);
                     }
                 });
