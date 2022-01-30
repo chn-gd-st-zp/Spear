@@ -24,7 +24,7 @@ namespace Spear.Inf.Core.SettingsGeneric
         /// <typeparam name="TNewSettings"></typeparam>
         /// <typeparam name="TDistSettings"></typeparam>
         /// <param name="containerBuilder"></param>
-        /// <param name="redisSettings"></param>
+        /// <param name="newSettings"></param>
         /// <returns></returns>
         public static ContainerBuilder CoverSettings<TNewSettings, TDistSettings>(this ContainerBuilder containerBuilder, TNewSettings newSettings)
             where TNewSettings : class, TDistSettings

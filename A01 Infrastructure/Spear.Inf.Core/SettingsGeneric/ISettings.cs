@@ -6,4 +6,9 @@ namespace Spear.Inf.Core.SettingsGeneric
     {
         //
     }
+
+    public class AppSettingsBase : ISettings
+    {
+        public InjectionSettings InjectionSettings { get; set; }
+    }
 }
