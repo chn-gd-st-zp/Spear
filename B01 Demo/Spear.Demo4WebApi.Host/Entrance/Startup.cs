@@ -18,6 +18,7 @@ using Spear.Inf.Core;
 using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
+using Spear.Inf.Core.Tool;
 using Spear.Inf.EF;
 using Spear.MidM.Logger;
 using Spear.MidM.Swagger;
@@ -51,7 +52,9 @@ namespace Spear.Demo4WebApi.Host
             {
                 Formatting = Formatting.None,
                 DateFormatString = "yyyy-MM-dd HH:mm:ss.fff",
-                Converters = new List<JsonConverter> { new StringEnumConverter() },
+                Converters = new List<JsonConverter> {
+                    new StringEnumConverter()
+                },
             };
         }
 
@@ -80,6 +83,8 @@ namespace Spear.Demo4WebApi.Host
 
         protected override void Extend_ConfigureContainer(ContainerBuilder containerBuilder)
         {
+            //containerBuilder.RegisStateCodeNameConverter<Enum_StateCode>();
+            containerBuilder.RegisStateCodeValueConverter<Enum_StateCode>();
             containerBuilder.RegisSeriLogger(Configuration);
 
             //var efOptionsBuilder = new EFDBContextOptionsBuilder<EFDBContext_Stainless>()

@@ -3,6 +3,9 @@ using System.Threading;
 
 using Newtonsoft.Json;
 
+using Spear.Inf.Core.CusEnum;
+using Spear.Inf.Core.Tool;
+
 namespace Spear.Inf.Core.CusResult
 {
     public class ResultBase<TData>
@@ -47,7 +50,8 @@ namespace Spear.Inf.Core.CusResult
         [JsonIgnore]
         public bool IsSuccess { get; set; }
 
-        public string Code { get; set; }
+        [JsonConverter(typeof(StateCodeJsonConverter<Enum_StateCode>))]
+        public SpearEnumItem Code { get; set; }
 
         public string Msg { get; set; }
 

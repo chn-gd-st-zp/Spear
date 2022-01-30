@@ -28,7 +28,7 @@ namespace Spear.MidM.MicoServ.MagicOnion
 
             result = new MagicOnionResult<T>();
             result.IsSuccess = resultBase.IsSuccess;
-            result.Code = resultBase.IsSuccess ? stateCode.Success.ToIntString() : stateCode.Fail.ToIntString();
+            result.Code = resultBase.IsSuccess ? stateCode.Success : stateCode.Fail;
             result.Msg = resultBase.Msg;
             result.Data = resultBase.Data;
 
@@ -58,7 +58,7 @@ namespace Spear.MidM.MicoServ.MagicOnion
                 }
 
                 var cusEx = resultBase.ExInfo as Exception_Base;
-                result.Code = errorCode.ToIntString();
+                result.Code = errorCode;
                 result.Msg = errorMsg;
                 result.ErrorStackTrace += "\r\n" + resultBase.ExInfo.StackTrace;
             }

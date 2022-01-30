@@ -27,10 +27,10 @@ namespace Spear.Demo4WebApi.Host.Controller.v1
         /// 测试
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Route("Test")]
+        [HttpPost, Route("Test")]
         public async Task<ResultWebApi<string>> Test()
         {
-            var result = new ResultBase<string> { Data = HttpContext.GetRequestedApiVersion().ToString() };
+            var result = new ResultBase<string> { IsSuccess = true, Data = HttpContext.GetRequestedApiVersion().ToString() };
             return result.ToAPIResult();
         }
 

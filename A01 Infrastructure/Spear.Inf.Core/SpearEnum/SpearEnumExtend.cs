@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Autofac;
+
+using Spear.Inf.Core.Interface;
+using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core.CusEnum
 {
@@ -28,46 +31,70 @@ namespace Spear.Inf.Core.CusEnum
             return cusEnum;
         }
 
-        public static SpearEnumItem ParseString(this SpearEnumFactory enumParams, string name)
+        public static SpearEnumItem Restore<TSpearEnum>(this object value, bool fromName = true)
+        where TSpearEnum : ISpearEnum, new()
         {
-            return enumParams.Keys.ContainsKey(name) ? enumParams.Keys[name] : null;
-        }
+            var result = default(SpearEnumItem);
 
-        public static List<SpearEnumItem> ParseString(this SpearEnumFactory enumParams, string[] nameArray)
-        {
-            List<SpearEnumItem> result = new List<SpearEnumItem>();
-
-            foreach (string name in nameArray)
+            var spearEnum = new TSpearEnum();
+            foreach (var property in spearEnum.GetType().GetProperties())
             {
-                SpearEnumItem enumInfo = enumParams.ParseString(name);
-                if (enumInfo == null)
+                if (!property.PropertyType.IsExtendType(typeof(SpearEnumItem)))
                     continue;
 
-                result.Add(enumInfo);
+                var prop = property.GetValue(spearEnum);
+                if (prop == null)
+                    continue;
+
+                var spearEnumItem = prop as SpearEnumItem;
+                if (spearEnumItem == null)
+                    continue;
+
+                if (fromName)
+                {
+                    if (spearEnumItem.Name != value.ToString())
+                        continue;
+                }
+                else
+                {
+                    if (spearEnumItem.Value != (int)value)
+                        continue;
+                }
+
+                result = spearEnumItem;
+
+                break;
             }
 
             return result;
         }
 
-        public static SpearEnumItem ParseInt(this SpearEnumFactory enumParams, int value)
+        public static ContainerBuilder RegisSpearEnumNameConverter<TSpearEnum>(this ContainerBuilder containerBuilder)
+            where TSpearEnum : ISpearEnum, new()
         {
-            return enumParams.Values.ContainsKey(value) ? enumParams.Values[value] : null;
+            containerBuilder.RegisterGeneric(typeof(SpearEnumNameConverter<>)).As(typeof(ISpearEnumConverter<>)).InstancePerDependency();
+
+            return containerBuilder;
         }
 
-        public static List<SpearEnumItem> ParseInt(this SpearEnumFactory enumParams, int[] valueArray)
+        public static ContainerBuilder RegisSpearEnumValueConverter<TSpearEnum>(this ContainerBuilder containerBuilder)
+            where TSpearEnum : ISpearEnum, new()
         {
-            List<SpearEnumItem> result = new List<SpearEnumItem>();
+            containerBuilder.RegisterGeneric(typeof(SpearEnumValueConverter<>)).As(typeof(ISpearEnumConverter<>)).InstancePerDependency();
 
-            foreach (int value in valueArray)
-            {
-                SpearEnumItem enumInfo = enumParams.ParseInt(value);
-                if (enumInfo == null)
-                    continue;
+            return containerBuilder;
+        }
 
-                result.Add(enumInfo);
-            }
+        public static ContainerBuilder RegisStateCodeNameConverter<TStateCode>(this ContainerBuilder containerBuilder)
+            where TStateCode : IStateCode, new()
+        {
+            return containerBuilder.RegisSpearEnumNameConverter<TStateCode>();
+        }
 
-            return result;
+        public static ContainerBuilder RegisStateCodeValueConverter<TStateCode>(this ContainerBuilder containerBuilder)
+            where TStateCode : IStateCode, new()
+        {
+            return containerBuilder.RegisSpearEnumValueConverter<TStateCode>();
         }
     }
 }

@@ -9,8 +9,6 @@ namespace Spear.Inf.Core.CusResult
 {
     public static class CusResultExtend
     {
-        private static IStateCode stateCode = ServiceContext.Resolve<IStateCode>();
-
         internal static ResultWebApi<T> ToResultWebApi<T>(this ResultBase<T> resultBase)
         {
             if (resultBase.IsSuccess)
@@ -23,12 +21,12 @@ namespace Spear.Inf.Core.CusResult
 
         private static ResultWebApi<T> ResultWebApi_Success<T>(this T data, string msg = "操作成功")
         {
-            return data.ToResultWebApi(stateCode.Success, msg);
+            return data.ToResultWebApi(ServiceContext.Resolve<IStateCode>().Success, msg);
         }
 
         private static ResultWebApi<T> ResultWebApi_Fail<T>(this T data, string msg = "操作失败")
         {
-            return data.ToResultWebApi(stateCode.Fail, msg);
+            return data.ToResultWebApi(ServiceContext.Resolve<IStateCode>().Fail, msg);
         }
 
         private static ResultWebApi<T> ResultWebApi_Exception<T>(this T data, Exception exception)
@@ -45,7 +43,7 @@ namespace Spear.Inf.Core.CusResult
             }
             else
             {
-                errorCode = stateCode.SysError;
+                errorCode = ServiceContext.Resolve<IStateCode>().SysError;
 
 #if DEBUG
                 errorMsg = exception.Message;
@@ -65,7 +63,7 @@ namespace Spear.Inf.Core.CusResult
 
             result = new ResultWebApi<T>();
             result.IsSuccess = true;
-            result.Code = code.ToIntString();
+            result.Code = code;
             result.Msg = msg;
             result.Data = data;
 

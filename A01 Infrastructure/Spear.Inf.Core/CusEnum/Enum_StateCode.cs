@@ -31,7 +31,7 @@ namespace Spear.Inf.Core.CusEnum
     [DIModeForService(Enum_DIType.Exclusive, typeof(IStateCode))]
     public sealed class Enum_StateCode : SpearEnum, IStateCode
     {
-        internal Enum_StateCode()
+        public Enum_StateCode()
         {
             _none = Factory.NewEnum("None", 0);
             _success = Factory.NewEnum("Success", 200);
