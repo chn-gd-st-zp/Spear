@@ -15,6 +15,6 @@ namespace Spear.Inf.Core.DTO
         /// </summary>
         /// <param name="errorMsg"></param>
         /// <returns></returns>
-        public virtual bool VerifyField(out string errorMsg) { errorMsg = ""; return true; }
+        public virtual bool Validation(out string errorMsg) { errorMsg = ""; return true; }
     }
 }

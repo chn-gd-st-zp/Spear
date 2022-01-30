@@ -10,7 +10,7 @@ namespace Spear.Demo.Inf.DTO
     {
         public Enum_Status EStatus { get; set; }
 
-        public override bool VerifyField(out string errorMsg)
+        public override bool Validation(out string errorMsg)
         {
             errorMsg = "";
 

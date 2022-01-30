@@ -61,7 +61,7 @@ namespace Spear.GlobalSupport.Base.Filter
             )
             {
                 var errorMsg = realContext.ModelState.GetValidationSummary();
-                throw new Exception_VerifyError(errorMsg);
+                throw new Exception_ParamsValidationFailed(errorMsg);
             }
 
             //自定义的参数验证

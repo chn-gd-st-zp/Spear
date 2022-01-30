@@ -60,8 +60,8 @@ namespace Spear.Inf.Core.Attr
             if (input == null)
                 return;
 
-            if (!input.VerifyField(out errorMsg))
-                throw new Exception_VerifyError(errorMsg);
+            if (!input.Validation(out errorMsg))
+                throw new Exception_ParamsValidationFailed(errorMsg);
 
             foreach (var property in input.GetType().GetProperties())
             {

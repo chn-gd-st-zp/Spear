@@ -14,9 +14,9 @@ namespace Spear.Inf.Core.Interface
 
         SpearEnumItem SysError { get; }
 
-        SpearEnumItem ValidError { get; }
+        SpearEnumItem ParamsValidationFailed { get; }
 
-        SpearEnumItem CaptchaFailed { get; }
+        SpearEnumItem CaptchaValidationFailed { get; }
 
         SpearEnumItem EmptyToken { get; }
 
@@ -38,8 +38,8 @@ namespace Spear.Inf.Core.CusEnum
             _fail = Factory.NewEnum("Fail", 400);
             _sysError = Factory.NewEnum("SysError", 500);
 
-            _validError = Factory.NewEnum("ValidError", 1);
-            _captchaFailed = Factory.NewEnum("CaptchaFailed", 2);
+            _paramsValidationFailed = Factory.NewEnum("ParamsValidationFailed", 1);
+            _captchaValidationFailed = Factory.NewEnum("CaptchaValidationFailed", 2);
             _emptyToken = Factory.NewEnum("EmptyToken", 3);
             _noLogin = Factory.NewEnum("NoLogin", 4);
             _noPermission = Factory.NewEnum("NoPermission", 5);
@@ -57,11 +57,11 @@ namespace Spear.Inf.Core.CusEnum
         public SpearEnumItem SysError { get { return _sysError; } }
         private SpearEnumItem _sysError;
 
-        public SpearEnumItem ValidError { get { return _validError; } }
-        private SpearEnumItem _validError;
+        public SpearEnumItem ParamsValidationFailed { get { return _paramsValidationFailed; } }
+        private SpearEnumItem _paramsValidationFailed;
 
-        public SpearEnumItem CaptchaFailed { get { return _captchaFailed; } }
-        private SpearEnumItem _captchaFailed;
+        public SpearEnumItem CaptchaValidationFailed { get { return _captchaValidationFailed; } }
+        private SpearEnumItem _captchaValidationFailed;
 
         public SpearEnumItem EmptyToken { get { return _emptyToken; } }
         private SpearEnumItem _emptyToken;
