@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using MessagePack;
+
 using Spear.Inf.Core.Injection;
 using Spear.Inf.Core.Interface;
 
@@ -18,7 +20,6 @@ namespace Spear.Inf.Core.Interface
 
 namespace Spear.Inf.Core.CusEnum
 {
-    [Serializable]
     public abstract class SpearEnum : ISpearEnum
     {
         protected readonly SpearEnumFactory Factory;
@@ -26,14 +27,14 @@ namespace Spear.Inf.Core.CusEnum
         public SpearEnum() { Factory = new SpearEnumFactory(); }
     }
 
-    [Serializable]
+    [MessagePackObject(true)]
     public class SpearEnumItem
     {
         public string Name { get; set; }
 
         public int Value { get; set; }
 
-        internal SpearEnumItem() { }
+        public SpearEnumItem() { }
 
         internal string ToStr() { return Name; }
 

@@ -28,9 +28,9 @@ namespace Spear.Demo4WebApi.Host.Controller.v1
         /// </summary>
         /// <returns></returns>
         [HttpPost, Route("Test")]
-        public async Task<ResultWebApi<string>> Test()
+        public async Task<WebApiResult<string>> Test()
         {
-            var result = new ResultBase<string> { IsSuccess = true, Data = HttpContext.GetRequestedApiVersion().ToString() };
+            var result = new ProcessResult<string> { IsSuccess = true, Data = HttpContext.GetRequestedApiVersion().ToString() };
             return result.ToAPIResult();
         }
 
@@ -40,7 +40,7 @@ namespace Spear.Demo4WebApi.Host.Controller.v1
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost, Route("page")]
-        public async Task<ResultWebApi<ODTO_CommonOrder>> Page(IDTO_CommonOrder input)
+        public async Task<WebApiResult<ODTO_CommonOrder>> Page(IDTO_CommonOrder input)
         {
             var result = await _webapiService.Page(input);
             return result.ToAPIResult();

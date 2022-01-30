@@ -88,6 +88,6 @@ namespace Spear.Demo.Inf.Model
         public decimal Rate { get; set; }
 
         [ExportAggregate(12, "消耗占比", typeof(decimal), Enum_AggregateType.Normal, "0.00", Suffix = "%", Enlargement = 100)]
-        public decimal? Rate2 { get { return DataConvert.Divider(Use, Amt); } set { } }
+        public decimal? Rate2 { get { return MathConverter.Divider(Use, Amt); } set { } }
     }
 }

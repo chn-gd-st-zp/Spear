@@ -24,28 +24,28 @@ namespace Spear.Demo4GRPC.Host.Server.MicoServ
 
         public UnaryResult<MagicOnionResult<bool>> Test1()
         {
-            var result = new ResultBase<bool>();
+            var result = new ProcessResult<bool>();
 
             return result.ToUnaryResult();
         }
 
         public UnaryResult<MagicOnionResult<bool>> Test2(params string[] args)
         {
-            var result = new ResultBase<bool>();
+            var result = new ProcessResult<bool>();
 
             return result.ToUnaryResult();
         }
 
         public UnaryResult<MagicOnionResult<bool>> Test3(IDTO_GRPC<IDTO_ListParam> input)
         {
-            var result = new ResultBase<bool>();
+            var result = new ProcessResult<bool>();
 
             return result.ToUnaryResult();
         }
 
         public UnaryResult<MagicOnionResult<bool>> Test4(IDTO_GRPC<IDTO_ListParam> input, IDTO_ListParam input2)
         {
-            var result = new ResultBase<bool>();
+            var result = new ProcessResult<bool>();
 
             return result.ToUnaryResult();
         }

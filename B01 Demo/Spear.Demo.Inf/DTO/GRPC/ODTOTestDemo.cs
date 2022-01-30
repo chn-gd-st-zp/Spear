@@ -61,6 +61,6 @@ namespace Spear.Demo.Inf.DTO
         /// <summary>
         /// 节点状态
         /// </summary>
-        public Enum_Status EStatus { get { return Status.Convert2Enum<Enum_Status>(); } }
+        public Enum_Status EStatus { get { return Status.ToEnum<Enum_Status>(); } }
     }
 }

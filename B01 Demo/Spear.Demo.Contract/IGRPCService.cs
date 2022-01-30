@@ -11,14 +11,14 @@ namespace Spear.Demo.Contract
 {
     public interface IGRPCService : ITransient
     {
-        Task<ResultBase<List<ODTOTestDemo>>> List(IDTO_ListParam input);
+        Task<ProcessResult<List<ODTOTestDemo>>> List(IDTO_ListParam input);
 
-        Task<ResultBase<ODTO_Page<ODTOTestDemo>>> Page(IDTO_PageParam input);
+        Task<ProcessResult<ODTO_Page<ODTOTestDemo>>> Page(IDTO_PageParam input);
 
-        Task<ResultBase<ODTO_Tree<ODTOTestDemo>>> Tree(IDTO_TreeParam input);
+        Task<ProcessResult<ODTO_Tree<ODTOTestDemo>>> Tree(IDTO_TreeParam input);
 
-        Task<ResultBase<List<ODTOTestDemo>>> ImportExcel(IDTO_Import input);
+        Task<ProcessResult<List<ODTOTestDemo>>> ImportExcel(IDTO_Import input);
 
-        Task<ResultBase<byte[]>> ExportExcel(IDTO_Export input);
+        Task<ProcessResult<byte[]>> ExportExcel(IDTO_Export input);
     }
 }

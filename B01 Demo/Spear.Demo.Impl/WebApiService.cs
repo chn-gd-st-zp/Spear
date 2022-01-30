@@ -15,7 +15,7 @@ namespace Spear.Demo.Impl
     [DIModeForService(Enum_DIType.Exclusive, typeof(IWebApiService))]
     public class WebApiService : ServiceBase<WebApiService>, IWebApiService
     {
-        public async Task<ResultBase<ODTO_CommonOrder>> Page(IDTO_CommonOrder input)
+        public async Task<ProcessResult<ODTO_CommonOrder>> Page(IDTO_CommonOrder input)
         {
             var rp = ServiceContext.ResolveByKeyed<EFRepository_CommonOrder>(input.EUserType);
             var execResult = rp.Page(input.BeginTime, input.EndTime, input);

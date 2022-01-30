@@ -12,7 +12,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 using Spear.Inf.Core.AppEntrance;
+using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.SettingsGeneric;
+using Spear.Inf.Core.Tool;
 using Spear.MidM.Logger;
 using Spear.MidM.Schedule;
 
@@ -55,6 +57,7 @@ namespace Spear.Demo4WinApp.Host
 
         protected override void Extend_ConfigureContainer(ContainerBuilder containerBuilder)
         {
+            containerBuilder.RegisStateCodeValueConverter<Enum_StateCode>();
             containerBuilder.RegisSeriLogger(Configuration);
 
             //containerBuilder.RegisQuartz(this);

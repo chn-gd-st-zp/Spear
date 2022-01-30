@@ -1,4 +1,4 @@
-﻿using Spear.Inf.Core.AppEntrance;
+﻿using Spear.Inf.Core.SettingsGeneric;
 using Spear.MidM.Swagger;
 
 namespace Spear.Demo4WebApi.Host

@@ -42,7 +42,7 @@ namespace Spear.Inf.Core.Base
 
     public static class CtrlorBaseExtend
     {
-        public static ResultWebApi<TResult> ToAPIResult<TResult>(this ResultBase<TResult> result)
+        public static WebApiResult<TResult> ToAPIResult<TResult>(this ProcessResult<TResult> result)
         {
             return result.ToResultWebApi();
         }

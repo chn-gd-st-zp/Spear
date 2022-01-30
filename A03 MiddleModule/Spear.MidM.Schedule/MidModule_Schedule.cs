@@ -14,6 +14,7 @@ using Quartz.Spi;
 using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.Tool;
+using Spear.Inf.Core.SettingsGeneric;
 
 namespace Spear.MidM.Schedule
 {
@@ -36,7 +37,7 @@ namespace Spear.MidM.Schedule
                 .ToList()
                 .ForEach(o =>
                 {
-                    if (settings.RunningServices.Contains(o.Key.ToString().Convert2Enum<Enum_ScheduleType>()))
+                    if (settings.RunningServices.Contains(o.Key.ToString().ToEnum<Enum_ScheduleType>()))
                         services.AddSingleton(hsType, o.Type);
                 });
 

@@ -15,33 +15,33 @@ namespace Spear.MidM.MicoServ.MagicOnion
 
     public static class MagicOnionResultExtend
     {
-        public static UnaryResult<MagicOnionResult<T>> ToUnaryResult<T>(this ResultBase<T> resultBase)
+        public static UnaryResult<MagicOnionResult<T>> ToUnaryResult<T>(this ProcessResult<T> processResult)
         {
-            return new UnaryResult<MagicOnionResult<T>>(resultBase.ToMagicOnionResult());
+            return new UnaryResult<MagicOnionResult<T>>(processResult.ToMagicOnionResult());
         }
 
-        public static MagicOnionResult<T> ToMagicOnionResult<T>(this ResultBase<T> resultBase)
+        public static MagicOnionResult<T> ToMagicOnionResult<T>(this ProcessResult<T> processResult)
         {
             MagicOnionResult<T> result;
 
             var stateCode = ISpearEnum.Restore<IStateCode>();
 
             result = new MagicOnionResult<T>();
-            result.IsSuccess = resultBase.IsSuccess;
-            result.Code = resultBase.IsSuccess ? stateCode.Success : stateCode.Fail;
-            result.Msg = resultBase.Msg;
-            result.Data = resultBase.Data;
+            result.IsSuccess = processResult.IsSuccess;
+            result.Code = processResult.IsSuccess ? stateCode.Success : stateCode.Fail;
+            result.Msg = processResult.Msg;
+            result.Data = processResult.Data;
 
-            if (resultBase.ExInfo != null)
+            if (processResult.ExInfo != null)
             {
-                var exception = resultBase.ExInfo;
+                var exception = processResult.ExInfo;
 
                 SpearEnumItem errorCode = null;
                 string errorMsg = "";
 
                 if (exception.IsExtendType<Exception_Base>())
                 {
-                    var e = resultBase.ExInfo as Exception_Base;
+                    var e = processResult.ExInfo as Exception_Base;
 
                     errorCode = e.ECode;
                     errorMsg = e.Message;
@@ -57,10 +57,10 @@ namespace Spear.MidM.MicoServ.MagicOnion
 #endif
                 }
 
-                var cusEx = resultBase.ExInfo as Exception_Base;
+                var cusEx = processResult.ExInfo as Exception_Base;
                 result.Code = errorCode;
                 result.Msg = errorMsg;
-                result.ErrorStackTrace += "\r\n" + resultBase.ExInfo.StackTrace;
+                result.ErrorStackTrace += "\r\n" + processResult.ExInfo.StackTrace;
             }
 
             return result;

@@ -16,7 +16,8 @@ using Spear.Demo.Inf.DTO;
 
 namespace Spear.Demo4GRPC.Host.Server.Controller
 {
-    [ApiController, Route("api/[controller]")]
+    [ApiVersion("1.0", Deprecated = true)]
+    [ApiController, Route("api/[controller]"), Route("api/v{version:apiVersion}/[controller]")]
     public class GRPCDemoController : ControllerBase
     {
         private readonly IGRPCService _grpcService;
@@ -32,7 +33,7 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost, Route("List")]
-        public async Task<ResultWebApi<List<ODTOTestDemo>>> List(IDTO_ListParam input)
+        public async Task<WebApiResult<List<ODTOTestDemo>>> List(IDTO_ListParam input)
         {
             var result = await _grpcService.List(input);
 
@@ -45,7 +46,7 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost, Route("Page")]
-        public async Task<ResultWebApi<ODTO_Page<ODTOTestDemo>>> Page(IDTO_PageParam input)
+        public async Task<WebApiResult<ODTO_Page<ODTOTestDemo>>> Page(IDTO_PageParam input)
         {
             var result = await _grpcService.Page(input);
 
@@ -58,7 +59,7 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost, Route("Tree")]
-        public async Task<ResultWebApi<ODTO_Tree<ODTOTestDemo>>> Tree(IDTO_TreeParam input)
+        public async Task<WebApiResult<ODTO_Tree<ODTOTestDemo>>> Tree(IDTO_TreeParam input)
         {
             var result = await _grpcService.Tree(input);
 
@@ -71,11 +72,11 @@ namespace Spear.Demo4GRPC.Host.Server.Controller
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost, Route("ImportExcel")]
-        public async Task<ResultWebApi<List<ODTOTestDemo>>> ImportExcel(IFormFile input)
+        public async Task<WebApiResult<List<ODTOTestDemo>>> ImportExcel(IFormFile input)
         {
             IDTO_Import inputParam = new IDTO_Import()
             {
-                FileBase64 = input.OpenReadStream().Convert2Base64(true)
+                FileBase64 = input.OpenReadStream().ToBase64(true)
             };
 
             var result = await _grpcService.ImportExcel(inputParam);

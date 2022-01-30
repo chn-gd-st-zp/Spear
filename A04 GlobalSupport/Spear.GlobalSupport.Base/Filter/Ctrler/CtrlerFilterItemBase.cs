@@ -132,7 +132,7 @@ namespace Spear.GlobalSupport.Base.Filter
             while (Exception != null && Exception.InnerException != null)
                 Exception = Exception.InnerException;
 
-            Result = new ResultBase<bool> { IsSuccess = false, ExInfo = Exception }.ToAPIResult();
+            Result = new ProcessResult<bool> { IsSuccess = false, ExInfo = Exception }.ToAPIResult();
 
             //是否标注了 志记录忽略 的标签，无标注 则需进行 日志记录
             if (Exception.GetType().GetCustomAttribute<LogIgnoreAttribute>() == null)

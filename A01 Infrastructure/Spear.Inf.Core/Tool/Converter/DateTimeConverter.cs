@@ -2,7 +2,7 @@
 
 namespace Spear.Inf.Core.Tool
 {
-    public static class DateTimeConvert
+    public static class DateTimeConverter
     {
         #region 时间戳
 
@@ -23,6 +23,16 @@ namespace Spear.Inf.Core.Tool
         }
 
         /// <summary>
+        /// 10位时间戳（单位：秒）转换为DateTime
+        /// </summary>
+        /// <param name="timeStamp">10位时间戳（单位：秒）</param>
+        /// <returns>DateTime</returns>
+        public static DateTime ToDateTimeFromTimeStamp(this long timeStamp)
+        {
+            return dt.AddSeconds(timeStamp).ToLocalTime();
+        }
+
+        /// <summary>
         /// DateTime转换为13位时间戳（单位：毫秒）
         /// </summary>
         /// <param name="dateTime"> DateTime</param>
@@ -33,23 +43,23 @@ namespace Spear.Inf.Core.Tool
         }
 
         /// <summary>
-        /// 10位时间戳（单位：秒）转换为DateTime
-        /// </summary>
-        /// <param name="timeStamp">10位时间戳（单位：秒）</param>
-        /// <returns>DateTime</returns>
-        public static DateTime TimeStampToDateTime(this long timeStamp)
-        {
-            return dt.AddSeconds(timeStamp).ToLocalTime();
-        }
-
-        /// <summary>
         /// 13位时间戳（单位：毫秒）转换为DateTime
         /// </summary>
         /// <param name="longTimeStamp">13位时间戳（单位：毫秒）</param>
         /// <returns>DateTime</returns>
-        public static DateTime LongTimeStampToDateTime(this long longTimeStamp)
+        public static DateTime ToDateTimeFromLongTimeStamp(this long longTimeStamp)
         {
             return dt.AddMilliseconds(longTimeStamp).ToLocalTime();
+        }
+
+        /// <summary>
+        /// 获取当前Unix时间
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static double ToUnixTime(this DateTime dateTime)
+        {
+            return dateTime.ToUniversalTime().Subtract(dt).TotalMilliseconds;
         }
 
         /// <summary>
@@ -57,29 +67,9 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="unixTime">Unix时间</param>
         /// <returns>DateTime</returns>
-        public static DateTime ToDateTime(long unixTime)
+        public static DateTime ToDateTimeFromUnixTime(long unixTime)
         {
             return dto.AddTicks(unixTime * 10).DateTime;
-        }
-
-        /// <summary>
-        /// 获取当前Unix时间
-        /// </summary>
-        /// <param name="dateTime"></param>
-        /// <returns></returns>
-        public static string ToUnixTimeString(this DateTime dateTime)
-        {
-            return ToUnixTimeNumber(dateTime).ToString("f0");
-        }
-
-        /// <summary>
-        /// 获取当前Unix时间
-        /// </summary>
-        /// <param name="dateTime"></param>
-        /// <returns></returns>
-        public static double ToUnixTimeNumber(this DateTime dateTime)
-        {
-            return dateTime.ToUniversalTime().Subtract(dt).TotalMilliseconds;
         }
 
         #endregion
@@ -91,9 +81,9 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="date"></param>
         /// <returns></returns>
-        public static bool IsPass(this string date)
+        public static bool IsPast(this string date)
         {
-            return date.ToDateTime().IsPass();
+            return date.ToDateTime().IsPast();
         }
 
         /// <summary>
@@ -101,7 +91,7 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
-        public static bool IsPass(this DateTime dateTime)
+        public static bool IsPast(this DateTime dateTime)
         {
             DateTime now = DateTime.Now;
 
@@ -141,26 +131,6 @@ namespace Spear.Inf.Core.Tool
         /// <summary>
         /// 转化成起始时间
         /// </summary>
-        /// <param name="dateTime"></param>
-        /// <returns></returns>
-        public static DateTime ToBeginTime(this DateTime dateTime)
-        {
-            return ToBeginTime(dateTime.ToString("yyyy-MM-dd"));
-        }
-
-        /// <summary>
-        /// 转化成结束时间
-        /// </summary>
-        /// <param name="dateTime"></param>
-        /// <returns></returns>
-        public static DateTime ToEndTime(this DateTime dateTime)
-        {
-            return ToEndTime(dateTime.ToString("yyyy-MM-dd"));
-        }
-
-        /// <summary>
-        /// 转化成起始时间
-        /// </summary>
         /// <param name="date">yyyy-MM-dd</param>
         /// <returns></returns>
         public static DateTime ToBeginTime(this string date)
@@ -172,6 +142,16 @@ namespace Spear.Inf.Core.Tool
             }
 
             return DateTime.Parse(date + " 00:00:00.000");
+        }
+
+        /// <summary>
+        /// 转化成起始时间
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static DateTime ToBeginTime(this DateTime dateTime)
+        {
+            return ToBeginTime(dateTime.ToString("yyyy-MM-dd"));
         }
 
         /// <summary>
@@ -191,6 +171,27 @@ namespace Spear.Inf.Core.Tool
         }
 
         /// <summary>
+        /// 转化成结束时间
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static DateTime ToEndTime(this DateTime dateTime)
+        {
+            return ToEndTime(dateTime.ToString("yyyy-MM-dd"));
+        }
+
+        /// <summary>
+        /// 获取指定日期月份的最后一日
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
+        public static DateTime FirstDayOfMonth(this string month)
+        {
+            DateTime dt = DateTime.Parse(DateTime.Now.ToString("yyyy-") + month.PadLeft(2, '0') + DateTime.Now.ToString("-01 00:00:00"));
+            return dt.FirstDayOfMonth();
+        }
+
+        /// <summary>
         /// 获取指定日期月份的第一日
         /// </summary>
         /// <param name="dateTime"></param>
@@ -203,12 +204,12 @@ namespace Spear.Inf.Core.Tool
         /// <summary>
         /// 获取指定日期月份的最后一日
         /// </summary>
-        /// <param name="dt"></param>
+        /// <param name="month"></param>
         /// <returns></returns>
-        public static DateTime FirstDayOfMonth(this string month)
+        public static DateTime LastDayOfMonth(this string month)
         {
             DateTime dt = DateTime.Parse(DateTime.Now.ToString("yyyy-") + month.PadLeft(2, '0') + DateTime.Now.ToString("-01 00:00:00"));
-            return dt.FirstDayOfMonth();
+            return dt.LastDayOfMonth();
         }
 
         /// <summary>
@@ -219,17 +220,6 @@ namespace Spear.Inf.Core.Tool
         public static DateTime LastDayOfMonth(this DateTime dateTime)
         {
             return DateTime.Parse(DateTime.Parse(dateTime.AddMonths(1).ToString("yyyy-MM") + "-01 00:00:00").AddDays(-1).ToString("yyyy-MM-dd") + " 23:59:59");
-        }
-
-        /// <summary>
-        /// 获取指定日期月份的最后一日
-        /// </summary>
-        /// <param name="dt"></param>
-        /// <returns></returns>
-        public static DateTime LastDayOfMonth(this string month)
-        {
-            DateTime dt = DateTime.Parse(DateTime.Now.ToString("yyyy-") + month.PadLeft(2, '0') + DateTime.Now.ToString("-01 00:00:00"));
-            return dt.LastDayOfMonth();
         }
 
         /// <summary>

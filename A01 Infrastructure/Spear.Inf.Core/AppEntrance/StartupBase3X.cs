@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using Spear.Inf.Core.SettingsGeneric;
+
 namespace Spear.Inf.Core.AppEntrance
 {
     public abstract class StartupBase3X<TSettings, TConfigures> : StartupBase<TSettings, TConfigures>

@@ -34,6 +34,19 @@ namespace Spear.Inf.Core.Tool
         /// <summary>
         /// 创建对象
         /// </summary>
+        /// <param name="type"></param>
+        /// <param name="genericType"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static object CreateGenericType(Type type, Type genericType, params object[] args)
+        {
+            type = type.MakeGenericType(genericType);
+            return Activator.CreateInstance(type, args);
+        }
+
+        /// <summary>
+        /// 创建对象
+        /// </summary>
         /// <param name="assemblyName"></param>
         /// <param name="className"></param>
         /// <returns></returns>

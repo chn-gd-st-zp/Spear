@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 
 using Microsoft.AspNetCore.Http;
@@ -14,80 +12,6 @@ namespace Spear.Inf.Core.Tool
     public class NET
     {
         public static string GetSimplifyOrigin => Origin?.Replace("http://", "").Replace("https://", "");
-
-        /// <summary>
-        /// 获取IP
-        /// </summary>
-        public static string IP
-        {
-            get
-            {
-                string result = String.Empty;
-                var httpContext = ServiceContext.Resolve<IHttpContextAccessor>();
-                if (httpContext != null)
-                {
-                    result = httpContext.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
-                    if (result.IsEmptyString())
-                    {
-                        result = httpContext.HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString();
-                    }
-
-                    if (!result.IsEmptyString())
-                    {
-                        //可能有代理
-                        if (result.IndexOf(".") == -1)    //没有“.”肯定是非IPv4格式
-                            result = null;
-                        else
-                        {
-                            if (result.IndexOf(",") != -1)
-                            {
-                                //有“,”，估计多个代理。取第一个不是内网的IP。
-                                result = result.Replace(" ", "").Replace("'", "");
-                                string[] temparyip = result.Split(",;".ToCharArray());
-                                for (int i = 0; i < temparyip.Length; i++)
-                                {
-                                    if (Verification.IsIP(temparyip[i])
-                                        && temparyip[i].Substring(0, 3) != "10."
-                                        && temparyip[i].Substring(0, 7) != "192.168"
-                                        && temparyip[i].Substring(0, 7) != "172.16.")
-                                    {
-                                        return temparyip[i];    //找到不是内网的地址
-                                    }
-                                }
-                            }
-                            else if (Verification.IsIP(result)) //代理即是IP格式 ,IsIPAddress判断是否是IP的方法,
-                                return result;
-                            else
-                                result = null;    //代理中的内容 非IP，取IP
-                        }
-                    }
-
-                    if (result.IsEmptyString())
-                        result = httpContext.HttpContext.Request.Headers["X-Real-IP"].FirstOrDefault();
-
-                    if (result.IsEmptyString())
-                        result = httpContext.HttpContext.Request.Host.Host;
-                }
-
-                return result;
-            }
-        }
-
-        /// <summary>
-        /// 获取IP
-        /// </summary>
-        public static string IP_LW
-        {
-            get
-            {
-                return System.Net.NetworkInformation.NetworkInterface
-                    .GetAllNetworkInterfaces()
-                    .Select(p => p.GetIPProperties())
-                    .SelectMany(p => p.UnicastAddresses)
-                    .Where(p => p.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && !IPAddress.IsLoopback(p.Address))
-                    .FirstOrDefault()?.Address.ToString();
-            }
-        }
 
         /// <summary>
         /// 获取客户UserAgent
@@ -173,27 +97,28 @@ namespace Spear.Inf.Core.Tool
         /// <returns></returns>  
         public static string GetIP()
         {
-            HttpContext httpContext = ServiceContext.Resolve<IHttpContextAccessor>().HttpContext;
+            var httpContext = ServiceContext.Resolve<IHttpContextAccessor>().HttpContext;
+            var request = httpContext.Request;
 
-            if (httpContext.Request.Headers.ContainsKey("$http_X-Real-IP"))
+            if (request.Headers.ContainsKey("$http_X-Real-IP"))
             {
-                return httpContext.Request.Headers["$http_X-Real-IP"].FirstOrDefault();
+                return request.Headers["$http_X-Real-IP"].FirstOrDefault();
             }
-            else if (httpContext.Request.Headers.ContainsKey("X-Real-IP"))
+            else if (request.Headers.ContainsKey("X-Real-IP"))
             {
-                return httpContext.Request.Headers["X-Real-IP"].FirstOrDefault();
+                return request.Headers["X-Real-IP"].FirstOrDefault();
             }
-            else if (httpContext.Request.Headers.ContainsKey("CF-Connecting-IP"))
+            else if (request.Headers.ContainsKey("CF-Connecting-IP"))
             {
-                return httpContext.Request.Headers["CF-Connecting-IP"].FirstOrDefault();
+                return request.Headers["CF-Connecting-IP"].FirstOrDefault();
             }
-            else if (httpContext.Request.Headers.ContainsKey("HTTP_X_FORWARDED_FOR"))
+            else if (request.Headers.ContainsKey("HTTP_X_FORWARDED_FOR"))
             {
-                return httpContext.Request.Headers["HTTP_X_FORWARDED_FOR"].FirstOrDefault();
+                return request.Headers["HTTP_X_FORWARDED_FOR"].FirstOrDefault();
             }
-            else if (httpContext.Request.Headers.ContainsKey("REMOTE_ADDR"))
+            else if (request.Headers.ContainsKey("REMOTE_ADDR"))
             {
-                return httpContext.Request.Headers["REMOTE_ADDR"].FirstOrDefault();
+                return request.Headers["REMOTE_ADDR"].FirstOrDefault();
             }
             else
             {

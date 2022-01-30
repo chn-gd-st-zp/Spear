@@ -101,14 +101,11 @@ namespace Spear.GlobalSupport.Base.Filter
             while (Exception != null && Exception.InnerException != null)
                 Exception = Exception.InnerException;
 
-            Type resultBaseType = typeof(ResultBase<>);
-            Type ResultMicoServType = realContext.MethodInfo.ReturnParameter.ParameterType.GenericTypeArguments[0];
-            Type dataType = ResultMicoServType.GenericTypeArguments[0];
-            MethodInfo func_ResultBase_Exception = typeof(CusResultExtend).GetMethod("ResultBase_Exception").MakeGenericMethod(dataType);
-            MethodInfo func_ToResultMicoServ = typeof(MagicOnionResultExtend).GetMethod("ToMagicOnionResult").MakeGenericMethod(dataType);
+            Type dataType = realContext.MethodInfo.ReturnParameter.ParameterType.GenericTypeArguments[0];
+            Type dataGenericType = dataType.GenericTypeArguments[0];
+            var processResult = ProcessResult.FromException<bool>(dataGenericType, Exception);
 
-            var resultBase = func_ResultBase_Exception.Invoke(null, new object[] { Exception, null });
-            Result = func_ToResultMicoServ.Invoke(null, new object[] { resultBase });
+            Result = processResult.ToMagicOnionResult();
 
             //是否标注了 志记录忽略 的标签，无标注 则需进行 日志记录
             if (Exception.GetType().GetCustomAttribute<LogIgnoreAttribute>() == null)

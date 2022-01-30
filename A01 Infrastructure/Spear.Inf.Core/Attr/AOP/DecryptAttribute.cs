@@ -4,9 +4,9 @@ using System.Reflection;
 
 using AspectInjector.Broker;
 
-using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
+using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core.Attr
 {

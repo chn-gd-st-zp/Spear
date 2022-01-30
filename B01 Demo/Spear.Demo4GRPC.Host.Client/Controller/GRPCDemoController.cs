@@ -7,6 +7,7 @@ using Spear.Inf.Core;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusResult;
 using Spear.Inf.Core.DTO;
+using Spear.Inf.Core.Interface;
 using Spear.MidM.MicoServ;
 using Spear.MidM.MicoServ.MagicOnion;
 
@@ -15,7 +16,8 @@ using Spear.Demo.Support;
 
 namespace Spear.Demo4GRPC.Host.Client.Controller
 {
-    [ApiController, Route("api/[controller]")]
+    [ApiVersion("1.0", Deprecated = true)]
+    [ApiController, Route("api/[controller]"), Route("api/v{version:apiVersion}/[controller]")]
     public class GRPCDemoController : ControllerBase
     {
         private TContainer GetService<TContainer>() where TContainer : IMagicOnionContainer<TContainer>
@@ -37,9 +39,11 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
         }
 
         [HttpGet, Route("go")]
-        public async Task<ResultWebApi<List<object>>> Go()
+        public async Task<WebApiResult<List<object>>> Go()
         {
-            var result = new ResultWebApi<List<object>>();
+            var result = new WebApiResult<List<object>>();
+            result.Code = ISpearEnum.Restore<IStateCode>().Success;
+            result.Data = new List<object>();
 
             result.Data.Add(
                 GetService<IGRPCDemoContainer>()

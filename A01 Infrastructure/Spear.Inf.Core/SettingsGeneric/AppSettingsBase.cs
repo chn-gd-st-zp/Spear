@@ -1,6 +1,6 @@
 ﻿using Spear.Inf.Core.Injection;
 
-namespace Spear.Inf.Core.AppEntrance
+namespace Spear.Inf.Core.SettingsGeneric
 {
     public class AppSettingsBase
     {

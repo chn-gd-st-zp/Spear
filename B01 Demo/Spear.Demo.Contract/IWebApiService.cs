@@ -9,6 +9,6 @@ namespace Spear.Demo.Contract
 {
     public interface IWebApiService : ITransient
     {
-        Task<ResultBase<ODTO_CommonOrder>> Page(IDTO_CommonOrder input);
+        Task<ProcessResult<ODTO_CommonOrder>> Page(IDTO_CommonOrder input);
     }
 }

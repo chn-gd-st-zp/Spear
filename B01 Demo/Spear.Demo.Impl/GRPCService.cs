@@ -33,13 +33,13 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
             _excelHelper = ServiceContext.Resolve<IExcelHelper>();
         }
 
-        public async Task<ResultBase<List<ODTOTestDemo>>> List(IDTO_ListParam input)
+        public async Task<ProcessResult<List<ODTOTestDemo>>> List(IDTO_ListParam input)
         {
             var dataList = new List<ODTOTestDemo>();
             return dataList.ToServSuccess();
         }
 
-        public async Task<ResultBase<ODTO_Page<ODTOTestDemo>>> Page(IDTO_PageParam input)
+        public async Task<ProcessResult<ODTO_Page<ODTOTestDemo>>> Page(IDTO_PageParam input)
         {
             var pageData = new Tuple<List<ODTOTestDemo>, int>(new List<ODTOTestDemo>(), 0);
             var dataList = pageData.ToODTOPage(input);
@@ -47,18 +47,18 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
             return dataList.ToServSuccess();
         }
 
-        public async Task<ResultBase<ODTO_Tree<ODTOTestDemo>>> Tree(IDTO_TreeParam input)
+        public async Task<ProcessResult<ODTO_Tree<ODTOTestDemo>>> Tree(IDTO_TreeParam input)
         {
             var dataList = new List<ODTOTestDemo>();
 
             return dataList.ToTree("").ToServSuccess();
         }
 
-        public async Task<ResultBase<List<ODTOTestDemo>>> ImportExcel(IDTO_Import input)
+        public async Task<ProcessResult<List<ODTOTestDemo>>> ImportExcel(IDTO_Import input)
         {
             List<ODTOTestDemo> result = new List<ODTOTestDemo>();
 
-            using (var stream = input.FileBase64.Convert2Stream())
+            using (var stream = input.FileBase64.ToStream())
             {
                 List<MImport> importData = stream.ToObject<MImport>();
                 importData.ForEach(o => { result.Add(_mapper.Map<ODTOTestDemo>(o)); });
@@ -67,7 +67,7 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
             return result.ToServSuccess();
         }
 
-        public async Task<ResultBase<byte[]>> ExportExcel(IDTO_Export input)
+        public async Task<ProcessResult<byte[]>> ExportExcel(IDTO_Export input)
         {
             var dataList = new List<MExport>();
             for (int i = 0; i < 10; i++)
@@ -76,11 +76,11 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
                 {
                     Amt = 1000,
                     Use = 200,
-                    Rate = DataConvert.Divider(200, 1000),
+                    Rate = MathConverter.Divider(200, 1000),
                 });
             }
 
-            DataTable dt = dataList.ToDataTable2();
+            DataTable dt = dataList.ToDataTable();
             var execResult = _excelHelper.ExportFromDataTable(dt);
 
             return execResult.ToServSuccess();

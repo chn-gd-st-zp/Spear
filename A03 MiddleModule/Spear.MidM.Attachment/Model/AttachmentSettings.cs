@@ -86,6 +86,6 @@ namespace Spear.MidM.Attachment
 
         public string Height { get; set; }
 
-        public Enum_AttachmentPictureSize EType { get { return Type.Convert2Enum<Enum_AttachmentPictureSize>(); } }
+        public Enum_AttachmentPictureSize EType { get { return Type.ToEnum<Enum_AttachmentPictureSize>(); } }
     }
 }

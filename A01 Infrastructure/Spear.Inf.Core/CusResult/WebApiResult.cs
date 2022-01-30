@@ -1,6 +1,7 @@
 ﻿using System;
 
-using Spear.Inf.Core.AppEntrance;
+using Newtonsoft.Json;
+
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusException;
 using Spear.Inf.Core.Interface;
@@ -8,29 +9,32 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core.CusResult
 {
-    public static class CusResultExtend
+    public class WebApiResult<TData>
     {
-        internal static ResultWebApi<T> ToResultWebApi<T>(this ResultBase<T> resultBase)
-        {
-            if (resultBase.IsSuccess)
-                return resultBase.Data.ResultWebApi_Success(resultBase.Msg);
-            else if (resultBase.ExInfo == null)
-                return resultBase.Data.ResultWebApi_Fail(resultBase.Msg);
-            else
-                return resultBase.Data.ResultWebApi_Exception(resultBase.ExInfo);
-        }
+        [JsonIgnore]
+        public bool IsSuccess { get; set; }
 
-        private static ResultWebApi<T> ResultWebApi_Success<T>(this T data, string msg = "操作成功")
+        [JsonConverter(typeof(StateCodeJsonConverter<Enum_StateCode>))]
+        public SpearEnumItem Code { get; set; }
+
+        public string Msg { get; set; }
+
+        public TData Data { get; set; }
+    }
+
+    public static class WebApiResultExtend
+    {
+        internal static WebApiResult<TData> ResultWebApi_Success<TData>(this TData data, string msg = "操作成功")
         {
             return data.ToResultWebApi(ISpearEnum.Restore<IStateCode>().Success, msg);
         }
 
-        private static ResultWebApi<T> ResultWebApi_Fail<T>(this T data, string msg = "操作失败")
+        internal static WebApiResult<TData> ResultWebApi_Fail<TData>(this TData data, string msg = "操作失败")
         {
             return data.ToResultWebApi(ISpearEnum.Restore<IStateCode>().Fail, msg);
         }
 
-        private static ResultWebApi<T> ResultWebApi_Exception<T>(this T data, Exception exception)
+        internal static WebApiResult<TData> ResultWebApi_Exception<TData>(this TData data, Exception exception)
         {
             SpearEnumItem errorCode = null;
             string errorMsg = "";
@@ -53,16 +57,16 @@ namespace Spear.Inf.Core.CusResult
 #endif
             }
 
-            ResultWebApi<T> result = ToResultWebApi(default(T), errorCode, errorMsg);
+            WebApiResult<TData> result = ToResultWebApi(default(TData), errorCode, errorMsg);
 
             return result;
         }
 
-        private static ResultWebApi<T> ToResultWebApi<T>(this T data, SpearEnumItem code, string msg)
+        private static WebApiResult<TData> ToResultWebApi<TData>(this TData data, SpearEnumItem code, string msg)
         {
-            ResultWebApi<T> result;
+            WebApiResult<TData> result;
 
-            result = new ResultWebApi<T>();
+            result = new WebApiResult<TData>();
             result.IsSuccess = true;
             result.Code = code;
             result.Msg = msg;

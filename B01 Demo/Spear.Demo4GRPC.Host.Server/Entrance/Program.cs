@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 
 using Autofac.Extensions.DependencyInjection;
 
-using Spear.Inf.Core.AppEntrance;
+using Spear.Inf.Core.Tool;
 using Spear.MidM.Logger;
 using Spear.MidM.MicoServ;
 

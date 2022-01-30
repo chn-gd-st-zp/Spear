@@ -13,6 +13,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 using Spear.Inf.Core.AppEntrance;
+using Spear.Inf.Core.CusEnum;
+using Spear.Inf.Core.Tool;
 using Spear.MidM.Logger;
 using Spear.MidM.Swagger;
 using Spear.MidM.MicoServ;
@@ -71,6 +73,7 @@ namespace Spear.Demo4GRPC.Host.Client
 
         protected override void Extend_ConfigureContainer(ContainerBuilder containerBuilder)
         {
+            containerBuilder.RegisStateCodeValueConverter<Enum_StateCode>();
             containerBuilder.RegisNLogger(Configuration);
             containerBuilder.Register(o => CurConfig.MicoServClientSettings).AsSelf().SingleInstance();
             containerBuilder.RegisMicoServProvider<MagicOnionProvider>();

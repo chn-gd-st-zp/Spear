@@ -12,10 +12,9 @@ using Autofac;
 using AutoMapper;
 
 using Spear.Inf.Core.CusEnum;
-using Spear.Inf.Core.Tool;
 using Spear.Inf.Core.Interface;
 
-namespace Spear.Inf.Core.AppEntrance
+namespace Spear.Inf.Core.Tool
 {
     public delegate void LoadRunningSettingsDelegate(IConfigurationBuilder configBuilder, string[] args);
 
@@ -35,7 +34,7 @@ namespace Spear.Inf.Core.AppEntrance
 
                 try
                 {
-                    eEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").Convert2Enum<Enum_Environment>();
+                    eEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").ToEnum<Enum_Environment>();
                 }
                 catch (Exception)
                 {

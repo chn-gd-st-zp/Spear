@@ -139,7 +139,7 @@ namespace Spear.MidM.Attachment
             if (result.State != Enum_AttachmentResult.Success)
                 return result;
 
-            using (var stream = datas.Convert2Stream())
+            using (var stream = datas.ToStream())
             {
                 result = Do(operation, stream, basePath, fileName, fileExt);
                 if (result.State == Enum_AttachmentResult.Success)

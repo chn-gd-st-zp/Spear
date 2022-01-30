@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 
+using Spear.Inf.Core.SettingsGeneric;
+
 namespace Spear.Inf.Core.AppEntrance
 {
     public abstract class StartupBase2X<TSettings, TConfigures> : StartupBase<TSettings, TConfigures>
