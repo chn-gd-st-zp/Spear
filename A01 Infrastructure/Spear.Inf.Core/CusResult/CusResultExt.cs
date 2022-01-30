@@ -1,5 +1,6 @@
 ﻿using System;
 
+using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusException;
 using Spear.Inf.Core.Interface;
