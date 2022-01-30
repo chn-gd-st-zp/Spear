@@ -37,7 +37,7 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
         }
 
         [HttpGet, Route("go")]
-        public async Task<ResultWebApi<bool>> Go()
+        public async Task<ResultWebApi<List<object>>> Go()
         {
             var result = new ResultWebApi<List<object>>();
 
@@ -72,7 +72,7 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
                 .ResponseAsync.Result
             );
 
-            return result.ToAPIResult();
+            return result;
         }
     }
 }
