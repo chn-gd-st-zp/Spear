@@ -6,7 +6,7 @@ namespace Spear.Inf.Core.CusException
     {
         public Exception_NoPermission() :base("没有权限")
         {
-            ECode = ServiceContext.Resolve<IStateCode>().NoPermission;
+            ECode = ISpearEnum.Restore<IStateCode>().NoPermission;
         }
     }
 }

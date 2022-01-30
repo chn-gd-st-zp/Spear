@@ -11,7 +11,7 @@ namespace Spear.Inf.Core.CusException
 
         public Exception_Base(string msg) : base(msg)
         {
-            ECode = ServiceContext.Resolve<IStateCode>().None;
+            ECode = ISpearEnum.Restore<IStateCode>().None;
         }
 
         public Exception_Base(SpearEnumItem code, string msg) : base(msg)

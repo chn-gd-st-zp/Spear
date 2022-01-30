@@ -6,7 +6,7 @@ namespace Spear.Inf.Core.CusException
     {
         public Exception_CaptchaValidationFailed(string msg) :base(msg)
         {
-            ECode = ServiceContext.Resolve<IStateCode>().CaptchaValidationFailed;
+            ECode = ISpearEnum.Restore<IStateCode>().CaptchaValidationFailed;
         }
     }
 }

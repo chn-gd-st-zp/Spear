@@ -6,7 +6,14 @@ using Spear.Inf.Core.Interface;
 
 namespace Spear.Inf.Core.Interface
 {
-    public interface ISpearEnum : ISingleton { }
+    public interface ISpearEnum : ISingleton
+    {
+        public static TSpearEnum Restore<TSpearEnum>()
+            where TSpearEnum : ISpearEnum
+        {
+            return ServiceContext.Resolve<TSpearEnum>();
+        }
+    }
 }
 
 namespace Spear.Inf.Core.CusEnum

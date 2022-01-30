@@ -6,7 +6,7 @@ namespace Spear.Inf.Core.CusException
     {
         public Exception_EmptyToken() :base("空令牌")
         {
-            ECode = ServiceContext.Resolve<IStateCode>().EmptyToken;
+            ECode = ISpearEnum.Restore<IStateCode>().EmptyToken;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using MagicOnion;
 using MessagePack;
 
-using Spear.Inf.Core;
 using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusException;
@@ -25,7 +24,7 @@ namespace Spear.MidM.MicoServ.MagicOnion
         {
             MagicOnionResult<T> result;
 
-            var stateCode = ServiceContext.Resolve<IStateCode>();
+            var stateCode = ISpearEnum.Restore<IStateCode>();
 
             result = new MagicOnionResult<T>();
             result.IsSuccess = resultBase.IsSuccess;

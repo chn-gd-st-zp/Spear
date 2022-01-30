@@ -8,7 +8,7 @@ namespace Spear.Inf.Core.CusException
     {
         public Exception_ParamsValidationFailed(string msg) :base(msg)
         {
-            ECode = ServiceContext.Resolve<IStateCode>().ParamsValidationFailed;
+            ECode = ISpearEnum.Restore<IStateCode>().ParamsValidationFailed;
         }
     }
 }

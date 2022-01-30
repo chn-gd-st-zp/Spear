@@ -36,7 +36,8 @@ namespace Spear.Inf.Core.CusEnum
         {
             var result = default(SpearEnumItem);
 
-            var spearEnum = new TSpearEnum();
+            var spearEnum = ISpearEnum.Restore<TSpearEnum>();
+            spearEnum = spearEnum == null ? new TSpearEnum() : spearEnum;
             foreach (var property in spearEnum.GetType().GetProperties())
             {
                 if (!property.PropertyType.IsExtendType(typeof(SpearEnumItem)))

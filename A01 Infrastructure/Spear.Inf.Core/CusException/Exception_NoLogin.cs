@@ -6,7 +6,7 @@ namespace Spear.Inf.Core.CusException
     {
         public Exception_NoLogin() : base("请登录")
         {
-            ECode = ServiceContext.Resolve<IStateCode>().NoLogin;
+            ECode = ISpearEnum.Restore<IStateCode>().NoLogin;
         }
     }
 }
