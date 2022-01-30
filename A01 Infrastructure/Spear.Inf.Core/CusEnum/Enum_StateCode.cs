@@ -22,7 +22,7 @@ namespace Spear.Inf.Core.Interface
 
         SpearEnumItem NoLogin { get; }
 
-        SpearEnumItem NoAuth { get; }
+        SpearEnumItem NoPermission { get; }
     }
 }
 
@@ -42,7 +42,7 @@ namespace Spear.Inf.Core.CusEnum
             _captchaFailed = Factory.NewEnum("CaptchaFailed", 2);
             _emptyToken = Factory.NewEnum("EmptyToken", 3);
             _noLogin = Factory.NewEnum("NoLogin", 4);
-            _noAuth = Factory.NewEnum("NoAuth", 5);
+            _noPermission = Factory.NewEnum("NoPermission", 5);
         }
 
         public SpearEnumItem None { get { return _none; } }
@@ -69,7 +69,7 @@ namespace Spear.Inf.Core.CusEnum
         public SpearEnumItem NoLogin { get { return _noLogin; } }
         private SpearEnumItem _noLogin;
 
-        public SpearEnumItem NoAuth { get { return _noAuth; } }
-        private SpearEnumItem _noAuth;
+        public SpearEnumItem NoPermission { get { return _noPermission; } }
+        private SpearEnumItem _noPermission;
     }
 }

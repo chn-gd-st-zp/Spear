@@ -133,7 +133,7 @@ namespace Spear.MidM.SessionNAuth
                 if (CurrentAccount.PermissionCodes.Contains(permissionCode))
                     return;
 
-                throw new Exception_NoAuth();
+                throw new Exception_NoPermission();
             }
             catch (Exception ex)
             {
