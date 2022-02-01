@@ -60,6 +60,9 @@ namespace Spear.Inf.Core.CusEnum
 
         [Remark("修改")]
         Update,
+
+        [Remark("查询")]
+        Search,
     }
 
     [KVResource]

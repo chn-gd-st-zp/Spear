@@ -15,56 +15,56 @@ namespace Spear.Demo.Inf.Model
         public string ID { get; set; }
 
         [ExportAggregate(1, "ID", typeof(string), Enum_AggregateType.Normal)]
-        public string ID2 { get { return ""; } set { } }
+        public string ID2 { get { return string.Empty; } set { } }
 
 
         [ExportContent(2, "节点名称", typeof(string))]
         public string Name { get; set; }
 
         [ExportAggregate(2, "节点名称", typeof(string), Enum_AggregateType.Normal)]
-        public string Name2 { get { return ""; } set { } }
+        public string Name2 { get { return string.Empty; } set { } }
 
 
         [ExportContent(3, "创建时间", typeof(DateTime))]
         public DateTime CreateTime { get; set; }
 
         [ExportAggregate(3, "创建时间", typeof(string), Enum_AggregateType.Normal)]
-        public string CreateTime2 { get { return ""; } set { } }
+        public string CreateTime2 { get { return string.Empty; } set { } }
 
 
         [ExportContent(4, "当前节点代码", typeof(string))]
         public string CurNode { get; set; }
 
         [ExportAggregate(4, "当前节点代码", typeof(string), Enum_AggregateType.Normal)]
-        public string CurNode2 { get { return ""; } set { } }
+        public string CurNode2 { get { return string.Empty; } set { } }
 
 
         [ExportContent(5, "父级节点代码", typeof(string))]
         public string ParentNode { get; set; }
 
         [ExportAggregate(5, "父级节点代码", typeof(string), Enum_AggregateType.Normal)]
-        public string ParentNode2 { get { return ""; } set { } }
+        public string ParentNode2 { get { return string.Empty; } set { } }
 
 
         [ExportContent(6, "完整节点代码", typeof(string))]
         public string FullNode { get; set; }
 
         [ExportAggregate(6, "完整节点代码", typeof(string), Enum_AggregateType.Normal)]
-        public string FullNode2 { get { return ""; } set { } }
+        public string FullNode2 { get { return string.Empty; } set { } }
 
 
         [ExportContent(7, "当前节点排序", typeof(string))]
         public string CurSequence { get; set; }
 
         [ExportAggregate(7, "当前节点排序", typeof(string), Enum_AggregateType.Normal)]
-        public string CurSequence2 { get { return ""; } set { } }
+        public string CurSequence2 { get { return string.Empty; } set { } }
 
 
         [ExportContent(8, "完整节点排序", typeof(string))]
         public string FullSequence { get; set; }
 
         [ExportAggregate(8, "完整节点排序", typeof(string), Enum_AggregateType.Normal)]
-        public string FullSequence2 { get { return ""; } set { } }
+        public string FullSequence2 { get { return string.Empty; } set { } }
 
 
         [ExportContent(9, "节点状态", typeof(string))]

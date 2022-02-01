@@ -1,4 +1,6 @@
-﻿using Spear.Inf.Core.DBRef;
+﻿using System;
+
+using Spear.Inf.Core.DBRef;
 
 namespace Spear.Inf.Core.Interface
 {
@@ -7,6 +9,10 @@ namespace Spear.Inf.Core.Interface
         string ID { get; }
 
         int SaveChanges();
+
+        string GetTBName(Type dbType);
+
+        string GetTBName<TEntity>() where TEntity : DBEntity_Base, new();
 
         object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new();
     }

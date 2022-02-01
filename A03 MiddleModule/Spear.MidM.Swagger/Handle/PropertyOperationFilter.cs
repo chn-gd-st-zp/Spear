@@ -69,7 +69,7 @@ namespace Spear.MidM.Swagger
                 //获取字段类型
                 var propertyType = inputProperty.PropertyType;
 
-                if (propertyType.IsClass && propertyType.IsExtendType(typeof(IDTO_Input)))
+                if (propertyType.IsClass && propertyType.IsExtendOf(typeof(IDTO_Input)))
                 {
                     //如果是继承了IDTO_Input的类
 
@@ -85,7 +85,7 @@ namespace Spear.MidM.Swagger
                 }
                 else
                 {
-                    var inputPropertyKey = "";
+                    var inputPropertyKey = string.Empty;
                     var inputPropertySchema = default(OpenApiSchema);
 
                     //遍历所有字段名标识

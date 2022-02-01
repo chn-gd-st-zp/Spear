@@ -206,7 +206,7 @@ namespace Spear.MidM.Redis
         /// <returns></returns>
         public bool Del(int dbIndex, string key)
         {
-            return Set(dbIndex, key, "", DateTime.Now.AddSeconds(1));
+            return Set(dbIndex, key, string.Empty, DateTime.Now.AddSeconds(1));
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Spear.MidM.Redis
 
             var value = GetDB(dbIndex).StringGet(finalKey);
             if (!value.HasValue)
-                return "";
+                return string.Empty;
 
             return value.ToString();
         }

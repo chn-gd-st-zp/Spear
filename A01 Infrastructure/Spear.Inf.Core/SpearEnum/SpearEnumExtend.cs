@@ -40,7 +40,7 @@ namespace Spear.Inf.Core.CusEnum
             spearEnum = spearEnum == null ? new TSpearEnum() : spearEnum;
             foreach (var property in spearEnum.GetType().GetProperties())
             {
-                if (!property.PropertyType.IsExtendType(typeof(SpearEnumItem)))
+                if (!property.PropertyType.IsExtendOf(typeof(SpearEnumItem)))
                     continue;
 
                 var prop = property.GetValue(spearEnum);

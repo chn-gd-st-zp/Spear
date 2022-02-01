@@ -56,7 +56,7 @@ namespace Spear.GlobalSupport.Base.Filter
                 1 == 1
                 && paramDic != null
                 && paramDic.Count() != 0
-                && paramDic.Values.Select(o => o.IsExtendType<IDTO_Input>()).Any(o => o)
+                && paramDic.Values.Select(o => o.GetType().IsExtendOf<IDTO_Input>()).Any(o => o)
                 && realContext.ModelState.IsValid == false
             )
             {

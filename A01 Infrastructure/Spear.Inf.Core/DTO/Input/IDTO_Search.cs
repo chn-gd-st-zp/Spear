@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using MessagePack;
 
@@ -41,17 +40,5 @@ namespace Spear.Inf.Core.DTO
         /// 页条数
         /// </summary>
         public int PageSize { get; set; }
-    }
-
-    /// <summary>
-    /// 条件查询 - 懒加载专用
-    /// </summary>
-    [MessagePackObject(true)]
-    public class IDTO_LazyLoad : IDTO_Search
-    {
-        /// <summary>
-        /// 时间戳
-        /// </summary>
-        public DateTime TimeStamp { get; set; }
     }
 }

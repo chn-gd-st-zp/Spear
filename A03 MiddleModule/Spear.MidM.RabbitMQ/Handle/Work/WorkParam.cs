@@ -7,7 +7,7 @@ namespace Spear.MidM.RabbitMQ
         /// <summary>
         /// 队列名
         /// </summary>
-        public string Queue { get; set; } = "";
+        public string Queue { get; set; } = string.Empty;
 
         /// <summary>
         /// 优先级

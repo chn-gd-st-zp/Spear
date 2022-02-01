@@ -37,9 +37,9 @@ namespace Spear.MidM.MicoServ.MagicOnion
                 var exception = processResult.ExInfo;
 
                 SpearEnumItem errorCode = null;
-                string errorMsg = "";
+                string errorMsg = string.Empty;
 
-                if (exception.IsExtendType<Exception_Base>())
+                if (exception.GetType().IsExtendOf<Exception_Base>())
                 {
                     var e = processResult.ExInfo as Exception_Base;
 

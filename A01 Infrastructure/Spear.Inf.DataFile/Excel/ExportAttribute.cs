@@ -68,13 +68,13 @@ namespace Spear.Inf.DataFile.Excel
             Index = index;
             Title = title;
             DataType = dataType;
-            DataFormat = "";
-            Prefix = "";
-            Suffix = "";
+            DataFormat = string.Empty;
+            Prefix = string.Empty;
+            Suffix = string.Empty;
             Enlargement = 1;
         }
 
-        public ExportColAttribute(int index, string title, Type dataType, string dataFormat = "", string prefix = "", string suffix = "", int enlargement = 1)
+        public ExportColAttribute(int index, string title, Type dataType, string dataFormat = default, string prefix = default, string suffix = default, int enlargement = 1)
         {
             Index = index;
             Title = title;
@@ -151,9 +151,9 @@ namespace Spear.Inf.DataFile.Excel
         public string GetDataValue(object obj)
         {
             if (obj == null)
-                return "";
+                return string.Empty;
 
-            string result = "";
+            string result = string.Empty;
 
             switch (EDataType)
             {
@@ -215,7 +215,7 @@ namespace Spear.Inf.DataFile.Excel
             //
         }
 
-        public ExportContentAttribute(int index, string title, Type dataType, string dataFormat = "", string prefix = "", string suffix = "", int enlargement = 1)
+        public ExportContentAttribute(int index, string title, Type dataType, string dataFormat = default, string prefix = default, string suffix = default, int enlargement = 1)
             : base(index, title, dataType, dataFormat, prefix, suffix, enlargement)
         {
             //
@@ -230,7 +230,7 @@ namespace Spear.Inf.DataFile.Excel
             EAggregateType = Enum_AggregateType.None;
         }
 
-        public ExportAggregateAttribute(int index, string title, Type dataType, string dataFormat = "", string prefix = "", string suffix = "", int enlargement = 1)
+        public ExportAggregateAttribute(int index, string title, Type dataType, string dataFormat = default, string prefix = default, string suffix = default, int enlargement = 1)
             : base(index, title, dataType, dataFormat, prefix, suffix, enlargement)
         {
             EAggregateType = Enum_AggregateType.None;
@@ -242,7 +242,7 @@ namespace Spear.Inf.DataFile.Excel
             EAggregateType = eAggregateType;
         }
 
-        public ExportAggregateAttribute(int index, string title, Type dataType, Enum_AggregateType eAggregateType, string dataFormat = "", string prefix = "", string suffix = "", int enlargement = 1)
+        public ExportAggregateAttribute(int index, string title, Type dataType, Enum_AggregateType eAggregateType, string dataFormat = default, string prefix = default, string suffix = default, int enlargement = 1)
             : base(index, title, dataType, dataFormat, prefix, suffix, enlargement)
         {
             EAggregateType = eAggregateType;
@@ -299,7 +299,7 @@ namespace Spear.Inf.DataFile.Excel
 
             sheetAttr = type.GetCustomAttribute<ExportSheetAttribute>();
             if (sheetAttr == null)
-                sheetAttr = new ExportSheetAttribute("");
+                sheetAttr = new ExportSheetAttribute(string.Empty);
 
             PropertyInfo[] piArray = type.GetProperties();
             if (piArray == null)

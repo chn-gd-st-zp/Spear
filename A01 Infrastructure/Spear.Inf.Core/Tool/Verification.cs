@@ -28,7 +28,32 @@ namespace Spear.Inf.Core.Tool
 
         #region 类型判断
 
-        #region 接口
+        /// <summary>
+        /// 判断是否 实现 或 继承 某个泛型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="genericType"></param>
+        /// <returns></returns>
+        public static bool IsGenericOf(this Type type, Type genericType)
+        {
+            // 匹配接口。
+            var isTheRawGenericType = type.GetInterfaces().Any(o => genericType == (o.IsGenericType ? o.GetGenericTypeDefinition() : o));
+            if (isTheRawGenericType)
+                return true;
+
+            // 匹配类型。
+            while (type != typeof(object))
+            {
+                isTheRawGenericType = genericType == (type.IsGenericType ? type.GetGenericTypeDefinition() : type);
+                if (isTheRawGenericType)
+                    return true;
+
+                type = type.BaseType;
+            }
+
+            // 没有找到任何匹配的接口或类型。
+            return false;
+        }
 
         /// <summary>
         /// 判断是否 实现 某个类型
@@ -36,7 +61,7 @@ namespace Spear.Inf.Core.Tool
         /// <param name="type"></param>
         /// <param name="basicType"></param>
         /// <returns></returns>
-        public static bool IsImplementedType(this Type type, Type basicType)
+        public static bool IsImplementedOf(this Type type, Type basicType)
         {
             bool result = false;
 
@@ -64,157 +89,11 @@ namespace Spear.Inf.Core.Tool
         /// 判断是否 实现 某个类型
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static bool IsImplementedType<T>(this object obj)
-        {
-            Type objType = obj.GetType();
-            Type basicObjType = typeof(T);
-
-            return objType.IsImplementedType(basicObjType);
-        }
-
-        /// <summary>
-        /// 判断是否 实现 某个类型
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="objType"></param>
         /// <returns></returns>
-        public static bool IsImplementedType<T>(this Type objType)
+        public static bool IsImplementedOf<T>(this Type objType)
         {
-            Type basicObjType = typeof(T);
-
-            return objType.IsImplementedType(basicObjType);
-        }
-
-        /// <summary>
-        /// 判断是否 实现 某个类型
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="basicObj"></param>
-        /// <returns></returns>
-        public static bool IsImplementedType(this object obj, object basicObj)
-        {
-            Type objType = obj.GetType();
-            Type basicObjType = basicObj.GetType();
-
-            return objType.IsImplementedType(basicObjType);
-        }
-
-        /// <summary>
-        /// 判断是否 实现 某个类型
-        /// </summary>
-        /// <param name="objType"></param>
-        /// <param name="basicObj"></param>
-        /// <returns></returns>
-        public static bool IsImplementedType(this Type objType, object basicObj)
-        {
-            Type basicObjType = basicObj.GetType();
-
-            return objType.IsImplementedType(basicObjType);
-        }
-
-        /// <summary>
-        /// 判断是否 实现 某个类型
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
-        /// <param name="basicObjType"></param>
-        /// <returns></returns>
-        public static bool IsImplementedType(this object obj, Type basicObjType)
-        {
-            Type objType = obj.GetType();
-
-            return objType.IsImplementedType(basicObjType);
-        }
-
-        /// <summary>
-        /// 判断是否 实现 某个类型
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
-        /// <param name="classInterfaceArray"></param>
-        /// <returns></returns>
-        public static bool IsImplementedType<T>(this object obj, Type[] classInterfaceArray)
-        {
-            Type objType = obj.GetType();
-            Type basicObjType = typeof(T);
-
-            if (objType.IsImplementedType(basicObjType))
-                return true;
-
-            if (classInterfaceArray.Contains(basicObjType))
-                return true;
-
-            return false;
-        }
-
-        /// <summary>
-        /// 判断是否 实现 某个类型
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="classInterfaceArray"></param>
-        /// <param name="basicObj"></param>
-        /// <returns></returns>
-        public static bool IsImplementedType(this object obj, Type[] classInterfaceArray, object basicObj)
-        {
-            Type objType = obj.GetType();
-            Type basicObjType = basicObj.GetType();
-
-            if (objType.IsImplementedType(basicObjType))
-                return true;
-
-            if (classInterfaceArray.Contains(basicObjType))
-                return true;
-
-            return false;
-        }
-
-        /// <summary>
-        /// 判断是否 实现 某个类型
-        /// </summary>
-        /// <param name="objType"></param>
-        /// <param name="classInterfaceArray"></param>
-        /// <param name="basicObjType"></param>
-        /// <returns></returns>
-        public static bool IsImplementedType(this Type objType, Type[] classInterfaceArray, Type basicObjType)
-        {
-            if (objType.IsImplementedType(basicObjType))
-                return true;
-
-            if (classInterfaceArray.Contains(basicObjType))
-                return true;
-
-            return false;
-        }
-
-        #endregion
-
-        /// <summary>
-        /// 判断是否 实现 或 继承 某个泛型
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="genericType"></param>
-        /// <returns></returns>
-        public static bool IsImplementedNExtendGenericType(this Type type, Type genericType)
-        {
-            // 匹配接口。
-            var isTheRawGenericType = type.GetInterfaces().Any(o => genericType == (o.IsGenericType ? o.GetGenericTypeDefinition() : o));
-            if (isTheRawGenericType)
-                return true;
-
-            // 匹配类型。
-            while (type != typeof(object))
-            {
-                isTheRawGenericType = genericType == (type.IsGenericType ? type.GetGenericTypeDefinition() : type);
-                if (isTheRawGenericType)
-                    return true;
-
-                type = type.BaseType;
-            }
-
-            // 没有找到任何匹配的接口或类型。
-            return false;
+            return objType.IsImplementedOf(typeof(T));
         }
 
         /// <summary>
@@ -223,7 +102,7 @@ namespace Spear.Inf.Core.Tool
         /// <param name="type"></param>
         /// <param name="basicType"></param>
         /// <returns></returns>
-        public static bool IsExtendType(this Type type, Type basicType)
+        public static bool IsExtendOf(this Type type, Type basicType)
         {
             return type.IsSubclassOf(basicType);
         }
@@ -231,42 +110,12 @@ namespace Spear.Inf.Core.Tool
         /// <summary>
         /// 判断是否 实现 某个类型
         /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="basicObj"></param>
-        /// <returns></returns>
-        public static bool IsExtendType(this object obj, object basicObj)
-        {
-            Type type = obj.GetType();
-            Type basicType = basicObj.GetType();
-
-            return type.IsExtendType(basicType);
-        }
-
-        /// <summary>
-        /// 判断是否 实现 某个类型
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="basicType"></param>
-        /// <returns></returns>
-        public static bool IsExtendType(this object obj, Type basicType)
-        {
-            Type type = obj.GetType();
-
-            return type.IsExtendType(basicType);
-        }
-
-        /// <summary>
-        /// 判断是否 实现 某个类型
-        /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
+        /// <param name="objType"></param>
         /// <returns></returns>
-        public static bool IsExtendType<T>(this object obj)
+        public static bool IsExtendOf<T>(this Type objType)
         {
-            Type type = obj.GetType();
-            Type basicType = typeof(T);
-
-            return type.IsExtendType(basicType);
+            return objType.IsExtendOf(typeof(T));
         }
 
         #endregion

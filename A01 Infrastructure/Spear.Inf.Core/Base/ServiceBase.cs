@@ -52,7 +52,7 @@ namespace Spear.Inf.Core.Base
 
     public static class ServiceBaseExtend
     {
-        public static ProcessResult<TResult> ToServSuccess<TResult>(this TResult result, string msg = "")
+        public static ProcessResult<TResult> ToServSuccess<TResult>(this TResult result, string msg = default)
         {
             return new ProcessResult<TResult>(result, msg);
         }
@@ -67,7 +67,7 @@ namespace Spear.Inf.Core.Base
             return new ProcessResult<TResult>(msg);
         }
 
-        public static ProcessResult<TResult> ToServFail<TResult>(this TResult result, string msg = "")
+        public static ProcessResult<TResult> ToServFail<TResult>(this TResult result, string msg = default)
         {
             return new ProcessResult<TResult>(msg);
         }

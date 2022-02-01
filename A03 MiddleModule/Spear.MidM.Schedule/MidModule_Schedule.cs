@@ -31,7 +31,7 @@ namespace Spear.MidM.Schedule
 
             AppInitHelper
                 .GetAllType(startup.CurConfig.InjectionSettings.Patterns, startup.CurConfig.InjectionSettings.Dlls)
-                .Where(o => o.IsClass && o.IsImplementedType(hsType))
+                .Where(o => o.IsClass && o.IsImplementedOf(hsType))
                 .Select(o => o.GetCustomAttribute<DIModeForServiceAttribute>())
                 .Where(o => o != null)
                 .ToList()
@@ -72,7 +72,7 @@ namespace Spear.MidM.Schedule
 
             AppInitHelper
                 .GetAllType(startup.CurConfig.InjectionSettings.Patterns, startup.CurConfig.InjectionSettings.Dlls)
-                .Where(o => o.IsClass && o.IsImplementedType<IRunner4Timer>() && o.IsImplementedType<IJob>())
+                .Where(o => o.IsClass && o.IsImplementedOf<IRunner4Timer>() && o.IsImplementedOf<IJob>())
                 .ToList()
                 .ForEach(o =>
                 {

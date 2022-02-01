@@ -16,12 +16,12 @@ namespace Spear.Inf.Core.EncryptionNDecrypt
             System.Security.Cryptography.MD5 md5 = new MD5CryptoServiceProvider();
             byte[] res = md5.ComputeHash(Encoding.Default.GetBytes(text), 0, text.Length);
 
-            string result = "";
+            string result = string.Empty;
 
             for (int i = 0; i < res.Length; i++)
                 result += Uri.HexEscape((char)res[i]);
 
-            result = result.Replace("%", "");
+            result = result.Replace("%", string.Empty);
             result = result.ToLower();
 
             return result;

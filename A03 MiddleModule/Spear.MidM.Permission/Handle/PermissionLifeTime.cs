@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 using Spear.Inf.Core;
-using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.Injection;
 using Spear.Inf.Core.Tool;
@@ -13,12 +12,12 @@ namespace Spear.MidM.Permission
 {
     internal class PermissionLifeTime : ISpearAppLifeTime
     {
-        private IPermissionLifeTime _lifeTime;
+        private IPermissionInitialization _lifeTime;
         private IPermissionRepository _permissionRepository;
 
         internal PermissionLifeTime()
         {
-            _lifeTime = ServiceContext.Resolve<IPermissionLifeTime>();
+            _lifeTime = ServiceContext.Resolve<IPermissionInitialization>();
             _permissionRepository = ServiceContext.Resolve<IPermissionRepository>();
         }
 
@@ -31,26 +30,26 @@ namespace Spear.MidM.Permission
                 .Select(o => new
                 {
                     Current = o,
-                    PermissionAttrs = o.GetCustomAttributes().Where(oo => oo.IsExtendType<PermissionBaseAttribute>()).Select(oo => oo as PermissionBaseAttribute).ToList(),
+                    PermissionAttrs = o.GetCustomAttributes().Where(oo => oo.GetType().IsExtendOf<PermissionBaseAttribute>()).Select(oo => oo as PermissionBaseAttribute).ToList(),
                 })
                 .Where(o => o.PermissionAttrs != null && o.PermissionAttrs.Count() != 0)
                 .ToList()
-                .ForEach(cla =>
+                .ForEach(classObj =>
                 {
-                    foreach (var attr in cla.PermissionAttrs)
+                    foreach (var attr in classObj.PermissionAttrs)
                         attrs.Add(attr);
 
-                    cla.Current.GetMethods()
+                    classObj.Current.GetMethods()
                         .Select(o => new
                         {
                             Current = o,
-                            PermissionAttrs = o.GetCustomAttributes().Where(oo => oo.IsExtendType<PermissionBaseAttribute>()).Select(ooo => ooo as PermissionBaseAttribute).ToList()
+                            PermissionAttrs = o.GetCustomAttributes().Where(oo => oo.GetType().IsExtendOf<PermissionBaseAttribute>()).Select(ooo => ooo as PermissionBaseAttribute).ToList()
                         })
-                        .Where(o => o.PermissionAttrs != null && cla.PermissionAttrs.Count() != 0)
+                        .Where(o => o.PermissionAttrs != null && classObj.PermissionAttrs.Count() != 0)
                         .ToList()
-                        .ForEach(func =>
+                        .ForEach(methodObj =>
                         {
-                            foreach (var attr in func.PermissionAttrs)
+                            foreach (var attr in methodObj.PermissionAttrs)
                                 attrs.Add(attr);
                         });
                 });

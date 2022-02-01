@@ -7,12 +7,12 @@ namespace Spear.MidM.RabbitMQ
         /// <summary>
         /// 路由标识
         /// </summary>
-        public string RoutingKey { get; set; } = "";
+        public string RoutingKey { get; set; } = string.Empty;
 
         /// <summary>
         /// 交换机名
         /// </summary>
-        public string Exchange { get; set; } = "";
+        public string Exchange { get; set; } = string.Empty;
 
         /// <summary>
         /// 交换机类型
@@ -68,7 +68,7 @@ namespace Spear.MidM.RabbitMQ
         /// <summary>
         /// 队列名
         /// </summary>
-        public string Queue { get; set; } = "";
+        public string Queue { get; set; } = string.Empty;
 
         /// <summary>
         /// 读取数

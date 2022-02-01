@@ -74,15 +74,15 @@ namespace Spear.MidM.Swagger
                             Version = description.ApiVersion.ToString(),
 
                             //文档说明
-                            Description = description.IsDeprecated ? "此版本已放弃兼容" : "",
+                            Description = description.IsDeprecated ? "此版本已放弃兼容" : string.Empty,
 
-                            //TermsOfService = new Uri(""),
+                            //TermsOfService = new Uri(string.Empty),
 
                             //联系方式
-                            //Contact = new OpenApiContact() { Name = "", Email = "", Url = null },
+                            //Contact = new OpenApiContact() { Name = string.Empty, Email = string.Empty, Url = null },
 
                             //许可证
-                            //License = new OpenApiLicense() { Name = "", Url = new Uri("") }
+                            //License = new OpenApiLicense() { Name = string.Empty, Url = new Uri(string.Empty) }
                         };
 
                         options.SwaggerDoc(description.GroupName, oai);

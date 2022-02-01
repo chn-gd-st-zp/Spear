@@ -21,7 +21,7 @@ namespace Spear.Inf.Core.Tool
     {
         public static async Task<HttpResponseMessage> PostAsync(string url, string contentType = null, Dictionary<string, string> headers = null, string postData = null, CookieContainer cookieContainer = null)
         {
-            postData = postData ?? "";
+            postData = postData ?? string.Empty;
 
             HttpClientHandler handler = null;
             if (cookieContainer != null)

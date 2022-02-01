@@ -11,7 +11,7 @@ namespace Spear.Inf.Core.Tool
     /// </summary>
     public class NET
     {
-        public static string GetSimplifyOrigin => Origin?.Replace("http://", "").Replace("https://", "");
+        public static string GetSimplifyOrigin => Origin?.Replace("http://", string.Empty).Replace("https://", string.Empty);
 
         /// <summary>
         /// 获取客户UserAgent
@@ -138,7 +138,7 @@ namespace Spear.Inf.Core.Tool
                 return string.Empty;
             }
 
-            string res = "";
+            string res = string.Empty;
 
             try
             {
@@ -149,7 +149,7 @@ namespace Spear.Inf.Core.Tool
             }
             catch
             {
-                res = "";
+                res = string.Empty;
             }
 
             if (!res.IsEmptyString())
@@ -166,7 +166,7 @@ namespace Spear.Inf.Core.Tool
             }
             catch
             {
-                res = "";
+                res = string.Empty;
             }
 
             return res;

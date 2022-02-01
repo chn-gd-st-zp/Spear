@@ -57,7 +57,7 @@ namespace Spear.Inf.Core.SettingsGeneric
             {
                 try
                 {
-                    if (!classType.IsImplementedType<ISettings>())
+                    if (!classType.IsImplementedOf<ISettings>())
                         continue;
 
                     typeof(SettingsExtend).GetMethod("SettingsOnChange")
@@ -78,7 +78,7 @@ namespace Spear.Inf.Core.SettingsGeneric
         public static void SettingsOnChange<T>() where T : class
         {
             var objType = typeof(T);
-            if (!objType.IsImplementedType<ISettings>())
+            if (!objType.IsImplementedOf<ISettings>())
                 return;
 
             var optionsMonitor = ServiceContext.Resolve<IOptionsMonitor<T>>();
@@ -108,7 +108,7 @@ namespace Spear.Inf.Core.SettingsGeneric
                             Type interfaceType = null;
                             foreach (var interfaceItem in objType.GetInterfaces())
                             {
-                                if (interfaceItem is ISettings || interfaceItem.IsImplementedType<ISettings>())
+                                if (interfaceItem is ISettings || interfaceItem.IsImplementedOf<ISettings>())
                                 {
                                     interfaceType = interfaceItem;
                                     break;

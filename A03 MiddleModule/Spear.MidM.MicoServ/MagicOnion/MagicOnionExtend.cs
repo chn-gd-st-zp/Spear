@@ -69,9 +69,9 @@ namespace Spear.MidM.MicoServ.MagicOnion
             {
                 var mpType = methodParamArray[i].ParameterType;
 
-                if (mpType.IsImplementedNExtendGenericType(inputType1))
+                if (mpType.IsGenericOf(inputType1))
                     reqParamArray[i] = reqParamArray[i].ToJson().ToObject(mpType);
-                else if (mpType.IsExtendType(inputType2))
+                else if (mpType.IsExtendOf(inputType2))
                     reqParamArray[i] = reqParamArray[i].ToJson().ToObject(mpType);
             }
 

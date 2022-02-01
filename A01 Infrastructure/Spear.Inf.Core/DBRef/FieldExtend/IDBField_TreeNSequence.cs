@@ -9,17 +9,17 @@ namespace Spear.Inf.Core.DBRef
 
     public static class IDBField_TreeNSequence_Ext
     {
-        public static void SetFullSequence<TEntity, TKey>(this TEntity obj, string full = "") where TEntity : class, IDBField_TreeNSequence<TKey>
+        public static void SetFullSequence<TEntity, TKey>(this TEntity obj, string full = default) where TEntity : class, IDBField_TreeNSequence<TKey>
         {
             if (obj == null)
                 return;
 
             string cur_str = obj.CurSequence.ToString();
-            string full_str = full == null ? "" : full.ToString();
+            string full_str = full == null ? string.Empty : full.ToString();
 
             if (full_str.IsEmptyString() && cur_str.IsEmptyString())
             {
-                obj.FullSequence = "";
+                obj.FullSequence = string.Empty;
                 return;
             }
 
@@ -44,7 +44,7 @@ namespace Spear.Inf.Core.DBRef
 
             if ((fulls == null || fulls.Length == 0) && cur_str.IsEmptyString())
             {
-                obj.FullSequence = "";
+                obj.FullSequence = string.Empty;
                 return;
             }
 

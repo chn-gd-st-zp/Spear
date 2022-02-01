@@ -40,13 +40,13 @@ namespace Spear.MidM.Swagger
                         if (!doc.Components.Schemas.ContainsKey(inputProperty.PropertyType.Name))
                             continue;
 
-                        if (!inputProperty.PropertyType.IsExtendType(typeof(Enum)))
+                        if (!inputProperty.PropertyType.IsExtendOf(typeof(Enum)))
                             continue;
 
                         var prop = doc.Components.Schemas[inputProperty.PropertyType.Name];
 
                         prop.Enum = new List<IOpenApiAny>();
-                        prop.Description = "";
+                        prop.Description = string.Empty;
                         foreach (var item in inputProperty.PropertyType.ToDictionary())
                         {
                             prop.Enum.Add(new OpenApiString(item.Value[0]));

@@ -14,13 +14,13 @@ namespace Spear.Inf.Core.Tool
         public static string CombineUrl(this string root, string path, params string[] paths)
         {
             if (root.IsEmptyString())
-                return "";
+                return string.Empty;
 
             if (path.IsEmptyString())
                 return root;
 
-            root += !root.EndsWith("/") ? "/" : "";
-            path += !path.EndsWith("/") ? "/" : "";
+            root += !root.EndsWith("/") ? "/" : string.Empty;
+            path += !path.EndsWith("/") ? "/" : string.Empty;
 
             Uri baseUri = new Uri(root);
             Uri combinedPaths = new Uri(baseUri, path);
@@ -34,7 +34,7 @@ namespace Spear.Inf.Core.Tool
 
         public static byte[] ToByteArray(this string hexStr)
         {
-            hexStr = hexStr.Replace(" ", "");
+            hexStr = hexStr.Replace(" ", string.Empty);
             if ((hexStr.Length % 2) != 0)
                 hexStr += " ";
 
@@ -47,7 +47,7 @@ namespace Spear.Inf.Core.Tool
 
         public static string ToHexStr(this byte[] dataArray)
         {
-            string returnStr = "";
+            string returnStr = string.Empty;
             if (dataArray != null)
             {
                 for (int i = 0; i < dataArray.Length; i++)

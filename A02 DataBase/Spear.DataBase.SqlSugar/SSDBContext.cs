@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 using SqlSugar;
 
@@ -33,6 +34,20 @@ namespace Spear.Inf.SqlSugar
         public SSDBContext(SSDBContextOptionsBuilder optionsBuilder) : base(optionsBuilder.BulidAction(optionsBuilder)) { }
 
         public int SaveChanges() { return SaveQueues(); }
+
+        public string GetTBName<TEntity>() where TEntity : DBEntity_Base, new()
+        {
+            return GetTBName(typeof(TEntity));
+        }
+
+        public string GetTBName(Type dbType)
+        {
+            var attr = dbType.GetCustomAttribute<SugarTable>();
+            if (attr == default)
+                return dbType.Name;
+
+            return attr.TableName;
+        }
 
         public object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new()
         {

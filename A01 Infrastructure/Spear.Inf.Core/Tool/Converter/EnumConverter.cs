@@ -110,6 +110,7 @@ namespace Spear.Inf.Core.Tool
         /// <summary>
         /// 将枚举转为字典
         /// </summary>
+        /// <param name="type"></param>
         /// <returns></returns>
         public static Dictionary<int, string[]> ToDictionary(this Type type)
         {
@@ -134,18 +135,7 @@ namespace Spear.Inf.Core.Tool
         /// <returns></returns>
         public static Dictionary<int, string[]> ToDictionary<T>() where T : Enum
         {
-            var dic = new Dictionary<int, string[]>();
-
-            var eValueArray = Enum.GetValues(typeof(T));
-            foreach (var eValue in eValueArray)
-            {
-                var key = (int)eValue;
-                var value = new string[] { eValue.ToString(), eValue.ToString().ToEnum<T>().GetRemark() };
-
-                dic.Add(key, value);
-            }
-
-            return dic;
+            return typeof(T).ToDictionary();
         }
     }
 }

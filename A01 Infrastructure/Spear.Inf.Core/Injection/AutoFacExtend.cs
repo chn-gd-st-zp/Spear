@@ -26,7 +26,7 @@ namespace Spear.Inf.Core.Injection
         /// <param name="typeRegis"></param>
         public static void Register(this ContainerBuilder containerBuilder, IEnumerable<Type> typeList, IConfiguration configuration, List<string> typeIgnore, List<string> typeRegis)
         {
-            foreach (var classType in typeList.Where(o => o.IsClass && !o.IsAbstract && o.IsImplementedType<ISettings>()).ToList())
+            foreach (var classType in typeList.Where(o => o.IsClass && !o.IsAbstract && o.IsImplementedOf<ISettings>()).ToList())
             {
                 try
                 {
@@ -167,9 +167,7 @@ namespace Spear.Inf.Core.Injection
             if (typeIgnore.Contains(classType.FullName))
                 return;
 
-            var classInterfaceArray = classType.GetInterfaces();
-
-            if (classType.IsImplementedType(classInterfaceArray, typeof(IIOCIgnore)))
+            if (classType.IsImplementedOf(typeof(IIOCIgnore)))
             {
                 typeIgnore.Add(classType.FullName);
                 return;
@@ -180,7 +178,7 @@ namespace Spear.Inf.Core.Injection
                 case Enum_DIType.AsSelf:
                     #region AsSelf
 
-                    if (classType.IsImplementedType(classInterfaceArray, typeof(ITransient)))
+                    if (classType.IsImplementedOf(typeof(ITransient)))
                     {
                         if (classObj != null)
                         {
@@ -206,7 +204,7 @@ namespace Spear.Inf.Core.Injection
 
                         typeRegis.Add(classType.FullName + "_AsSelf_");
                     }
-                    else if (classType.IsImplementedType(classInterfaceArray, typeof(IScoped)))
+                    else if (classType.IsImplementedOf(typeof(IScoped)))
                     {
                         if (classObj != null)
                         {
@@ -232,7 +230,7 @@ namespace Spear.Inf.Core.Injection
 
                         typeRegis.Add(classType.FullName + "_AsSelf_");
                     }
-                    else if (classType.IsImplementedType(classInterfaceArray, typeof(ISingleton)))
+                    else if (classType.IsImplementedOf(typeof(ISingleton)))
                     {
                         if (classObj != null)
                         {
@@ -268,7 +266,7 @@ namespace Spear.Inf.Core.Injection
                 case Enum_DIType.AsImpl:
                     #region AsImpl
 
-                    if (classType.IsImplementedType(classInterfaceArray, typeof(ITransient)))
+                    if (classType.IsImplementedOf(typeof(ITransient)))
                     {
                         if (classObj != null)
                         {
@@ -294,7 +292,7 @@ namespace Spear.Inf.Core.Injection
 
                         typeRegis.Add(classType.FullName + "_AsImpl_");
                     }
-                    else if (classType.IsImplementedType(classInterfaceArray, typeof(IScoped)))
+                    else if (classType.IsImplementedOf(typeof(IScoped)))
                     {
                         if (classObj != null)
                         {
@@ -320,7 +318,7 @@ namespace Spear.Inf.Core.Injection
 
                         typeRegis.Add(classType.FullName + "_AsImpl_");
                     }
-                    else if (classType.IsImplementedType(classInterfaceArray, typeof(ISingleton)))
+                    else if (classType.IsImplementedOf(typeof(ISingleton)))
                     {
                         if (classObj != null)
                         {
@@ -356,7 +354,7 @@ namespace Spear.Inf.Core.Injection
                 case Enum_DIType.Exclusive:
                     #region Specific
 
-                    if (classType.IsImplementedType(classInterfaceArray, typeof(ITransient)))
+                    if (classType.IsImplementedOf(typeof(ITransient)))
                     {
                         if (classObj != null)
                         {
@@ -382,7 +380,7 @@ namespace Spear.Inf.Core.Injection
 
                         typeRegis.Add(classType.FullName + "_Exclusive_" + diMode.Type.FullName);
                     }
-                    else if (classType.IsImplementedType(classInterfaceArray, typeof(IScoped)))
+                    else if (classType.IsImplementedOf(typeof(IScoped)))
                     {
                         if (classObj != null)
                         {
@@ -408,7 +406,7 @@ namespace Spear.Inf.Core.Injection
 
                         typeRegis.Add(classType.FullName + "_Exclusive_" + diMode.Type.FullName);
                     }
-                    else if (classType.IsImplementedType(classInterfaceArray, typeof(ISingleton)))
+                    else if (classType.IsImplementedOf(typeof(ISingleton)))
                     {
                         if (classObj != null)
                         {
@@ -444,7 +442,7 @@ namespace Spear.Inf.Core.Injection
                 case Enum_DIType.ExclusiveByNamed:
                     #region ExclusiveByNamed
 
-                    if (classType.IsImplementedType(classInterfaceArray, typeof(ITransient)))
+                    if (classType.IsImplementedOf(typeof(ITransient)))
                     {
                         if (classObj != null)
                         {
@@ -470,7 +468,7 @@ namespace Spear.Inf.Core.Injection
 
                         typeRegis.Add(classType.FullName + "_ExclusiveByNamed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
                     }
-                    else if (classType.IsImplementedType(classInterfaceArray, typeof(IScoped)))
+                    else if (classType.IsImplementedOf(typeof(IScoped)))
                     {
                         if (classObj != null)
                         {
@@ -496,7 +494,7 @@ namespace Spear.Inf.Core.Injection
 
                         typeRegis.Add(classType.FullName + "_ExclusiveByNamed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
                     }
-                    else if (classType.IsImplementedType(classInterfaceArray, typeof(ISingleton)))
+                    else if (classType.IsImplementedOf(typeof(ISingleton)))
                     {
                         if (classObj != null)
                         {
@@ -532,7 +530,7 @@ namespace Spear.Inf.Core.Injection
                 case Enum_DIType.ExclusiveByKeyed:
                     #region ExclusiveByKeyed
 
-                    if (classType.IsImplementedType(classInterfaceArray, typeof(ITransient)))
+                    if (classType.IsImplementedOf(typeof(ITransient)))
                     {
                         if (classObj != null)
                         {
@@ -558,7 +556,7 @@ namespace Spear.Inf.Core.Injection
 
                         typeRegis.Add(classType.FullName + "_ExclusiveByKeyed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
                     }
-                    else if (classType.IsImplementedType(classInterfaceArray, typeof(IScoped)))
+                    else if (classType.IsImplementedOf(typeof(IScoped)))
                     {
                         if (classObj != null)
                         {
@@ -584,7 +582,7 @@ namespace Spear.Inf.Core.Injection
 
                         typeRegis.Add(classType.FullName + "_ExclusiveByKeyed_" + diMode.Type.FullName + "_" + diMode.Key.ToString());
                     }
-                    else if (classType.IsImplementedType(classInterfaceArray, typeof(ISingleton)))
+                    else if (classType.IsImplementedOf(typeof(ISingleton)))
                     {
                         if (classObj != null)
                         {

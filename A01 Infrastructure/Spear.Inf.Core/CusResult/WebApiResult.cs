@@ -37,9 +37,9 @@ namespace Spear.Inf.Core.CusResult
         internal static WebApiResult<TData> ResultWebApi_Exception<TData>(this TData data, Exception exception)
         {
             SpearEnumItem errorCode = null;
-            string errorMsg = "";
+            string errorMsg = string.Empty;
 
-            if (exception.IsExtendType<Exception_Base>())
+            if (exception.GetType().IsExtendOf<Exception_Base>())
             {
                 var e = exception as Exception_Base;
 

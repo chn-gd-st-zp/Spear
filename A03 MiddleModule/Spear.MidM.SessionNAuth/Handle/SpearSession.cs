@@ -41,8 +41,8 @@ namespace Spear.MidM.SessionNAuth
                     if (_currentToken.IsEmptyString())
                     {
                         var token1 = TokenProvider.CurrentToken;
-                        var token2 = token1.IsEmptyString() ? "" : token1;
-                        var token = token2.ToLower() == "null" ? "" : token2;
+                        var token2 = token1.IsEmptyString() ? string.Empty : token1;
+                        var token = token2.ToLower() == "null" ? string.Empty : token2;
                         _currentToken = token;
                     }
 

@@ -12,7 +12,7 @@ namespace Spear.Demo.Inf.DTO
 
         public override bool Validation(out string errorMsg)
         {
-            errorMsg = "";
+            errorMsg = string.Empty;
 
             if (FileBase64.IsEmptyString())
             {

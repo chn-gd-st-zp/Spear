@@ -51,7 +51,7 @@ namespace Spear.Inf.Core.Tool
 
         public static JObject ToJObject(this string jsonStr)
         {
-            return jsonStr == null ? JObject.Parse("{}") : JObject.Parse(jsonStr.Replace("&nbsp;", ""));
+            return jsonStr == null ? JObject.Parse("{}") : JObject.Parse(jsonStr.Replace("&nbsp;", string.Empty));
         }
 
         public static string[] ToStringArray(this object dataArray)
@@ -81,7 +81,7 @@ namespace Spear.Inf.Core.Tool
             string result = propertyName;
 
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            dic.Add(result, "");
+            dic.Add(result, string.Empty);
 
             var json = dic.ToJson();
 

@@ -20,20 +20,20 @@ namespace Spear.MidM.SessionNAuth
             {
                 var iContext = ServiceContext.Resolve<IHttpContextAccessor>();
                 if (iContext == null)
-                    return "";
+                    return string.Empty;
 
                 var context = iContext.HttpContext;
                 if (context == null)
-                    return "";
+                    return string.Empty;
 
                 var sessionNAuthSettings = ServiceContext.Resolve<SessionNAuthSettings>();
                 var token1 = context.Request.Headers[sessionNAuthSettings.AccessTokenKeyInHeader];
                 if (token1.IsEmptyString())
-                    return "";
+                    return string.Empty;
 
                 var token2 = token1.ToString();
                 if (token2.ToLower() == "null".ToLower())
-                    return "";
+                    return string.Empty;
 
                 return token2;
             }

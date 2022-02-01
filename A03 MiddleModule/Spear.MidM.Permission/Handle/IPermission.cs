@@ -19,7 +19,7 @@ namespace Spear.MidM.Permission
         IEnumerable<IPermission> AllPermission();
     }
 
-    public interface IPermissionLifeTime : ISingleton
+    public interface IPermissionInitialization : ISingleton
     {
         void Operation(IEnumerable<IPermission> permissionsFromService, IEnumerable<IPermission> permissionsFromDB);
     }

@@ -40,7 +40,7 @@ namespace Spear.MidM.RabbitMQ
             Channel.QueueBindNoWait(
                 queue: mqParam.Queue,
                 exchange: mqParam.Exchange,
-                routingKey: "",
+                routingKey: string.Empty,
                 arguments: arguments
             );
 
@@ -72,7 +72,7 @@ namespace Spear.MidM.RabbitMQ
             Channel.QueueUnbind(
                 queue: mqParam.Queue,
                 exchange: mqParam.Exchange,
-                routingKey: "",
+                routingKey: string.Empty,
                 arguments: arguments
             );
 

@@ -1,0 +1,145 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+
+using AspectInjector.Broker;
+
+using Spear.Inf.Core;
+using Spear.Inf.Core.Attr;
+using Spear.Inf.Core.CusEnum;
+using Spear.Inf.Core.DBRef;
+using Spear.Inf.Core.DTO;
+using Spear.Inf.Core.Interface;
+using Spear.Inf.Core.Tool;
+
+namespace Spear.MidM.Permission
+{
+    [Injection(typeof(AccessLoggerAspect))]
+    [AttributeUsage(AttributeTargets.Method)]
+    public abstract class AccessLoggerAttribute : Attribute
+    {
+        public Enum_OperationType EOperationType { get; }
+
+        public Type InputType { get; }
+
+        public Type DBDestinationType { get; }
+
+        public AccessLoggerAttribute(Enum_OperationType eOperationType, Type inputType, Type dbDestinationType)
+        {
+            EOperationType = eOperationType;
+            InputType = inputType;
+            DBDestinationType = dbDestinationType;
+        }
+    }
+
+    [Aspect(Scope.PerInstance)]
+    public class AccessLoggerAspect : AOPAspectBase
+    {
+        private ISpearLogger<AccessLoggerAspect> _logger;
+
+        public AccessLoggerAspect()
+        {
+            _logger = ServiceContext.Resolve<ISpearLogger<AccessLoggerAspect>>();
+        }
+
+        [Advice(Kind.Around)]
+        public new object HandleMethod(
+           [Argument(Source.Instance)] object source,
+           [Argument(Source.Target)] Func<object[], object> method,
+           [Argument(Source.Triggers)] Attribute[] triggers,
+           [Argument(Source.Name)] string actionName,
+           [Argument(Source.Arguments)] object[] actionParams
+        )
+        {
+            return base.HandleMethod(source, method, triggers, actionName, actionParams);
+        }
+
+        protected override void Before(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams)
+        {
+            //
+        }
+
+        protected override void Error(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, Exception error, out bool throwException)
+        {
+            throwException = false;
+        }
+
+        protected override object After(object source, MethodInfo methodInfo, Attribute[] triggers, string actionName, object[] actionParams, object actionResult)
+        {
+            if (AppInitHelper.IsTestMode)
+                return actionResult;
+
+            var permissionAttrs = triggers.Where(o => o.GetType().IsExtendOf<PermissionBaseAttribute>())
+                .Select(o => o as PermissionBaseAttribute)
+                .Where(o => o.EType == Enum_PermissionType.Action)
+                .ToList();
+            if (permissionAttrs == null || permissionAttrs.Count() == 0)
+                return actionResult;
+
+            var accessLoggerAttr = triggers.Where(o => o.GetType().IsExtendOf<AccessLoggerAttribute>())
+               .Select(o => o as AccessLoggerAttribute)
+               .SingleOrDefault();
+            if (accessLoggerAttr == null)
+                return actionResult;
+
+            if (accessLoggerAttr.EOperationType == Enum_OperationType.None)
+                return actionResult;
+
+            var type = source.GetType();
+            if (!type.IsImplementedOf(typeof(IServiceWithTokenProvider<>)))
+                return actionResult;
+
+            var tokenProvider = ServiceContext.Resolve(type.GetGenericArguments()[0]) as ITokenProvider;
+            if (tokenProvider == null)
+                return actionResult;
+
+            var session = ServiceContext.ResolveByKeyed<ISpearSession>(tokenProvider.Protocol);
+            if (session == null)
+                return actionResult;
+
+            var inputObj = actionParams.Where(o => o.GetType().IsExtendOf<IDTO_Input>()).SingleOrDefault();
+            if (inputObj == null)
+                return actionResult;
+
+            if (!accessLoggerAttr.DBDestinationType.IsExtendOf<DBEntity_Base>() || !accessLoggerAttr.DBDestinationType.IsGenericOf(typeof(IDBField_PrimeryKey<>)))
+                return actionResult;
+
+            var repository = ServiceContext.Resolve<IAccessLoggerRepository>();
+            if (repository == null)
+                return actionResult;
+
+            var primeryKey = inputObj.GetPrimeryKey();
+            var tbName = repository.DBContext.GetTBName(accessLoggerAttr.DBDestinationType);
+            var dbObj = primeryKey == null ? null : repository.GetDataObj(tbName, primeryKey);
+
+            var accessRecord = new AccessRecord();
+            accessRecord.ERoleType = session.CurrentAccount.AccountInfo.ERoleType;
+            accessRecord.AccountID = session.CurrentAccount.AccountInfo.AccountID;
+            accessRecord.UserName = session.CurrentAccount.UserName;
+            accessRecord.EOperationType = accessLoggerAttr.EOperationType;
+            accessRecord.ModuleName = accessLoggerAttr.InputType.GetRemark();
+            accessRecord.DBTableName =
+            accessRecord.DataPrimeryKey = primeryKey == null ? string.Empty : primeryKey.ToString();
+            accessRecord.Descriptions = new List<AccessRecordDescription>();
+            accessRecord.ExecResult = actionResult;
+
+            foreach (var inputProperty in accessLoggerAttr.InputType.GetProperties())
+            {
+                var record = new AccessRecordDescription
+                {
+                    FieldName = inputProperty.Name,
+                    FieldRemark = inputProperty.PropertyType.GetRemark(),
+                    InputValue = inputProperty.GetValue(inputObj),
+                    DBValue = dbObj.GetFieldValue(inputProperty.Name),
+                };
+
+                accessRecord.Descriptions.Add(record);
+            }
+
+            repository.Create(accessRecord);
+
+            return actionResult;
+        }
+    }
+}

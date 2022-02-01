@@ -23,10 +23,10 @@ namespace Spear.MidM.MicoServ
 
                 var settings = new MicoServDeploySettings()
                 {
-                    HostPublic = hostPublic.IsEmptyString() ? "" : hostPublic.Replace("hostpublic=", ""),
-                    HostInternal = hostInternal.IsEmptyString() ? "" : hostInternal.Replace("hostinternal=", ""),
-                    WebApiPort = webApiPort.IsEmptyString() ? 0 : int.Parse(webApiPort.Replace("webapiport=", "", StringComparison.OrdinalIgnoreCase)),
-                    GRPCPort = micoServPort.IsEmptyString() ? 0 : int.Parse(micoServPort.Replace("micoservport=", "", StringComparison.OrdinalIgnoreCase)),
+                    HostPublic = hostPublic.IsEmptyString() ? string.Empty : hostPublic.Replace("hostpublic=", string.Empty),
+                    HostInternal = hostInternal.IsEmptyString() ? string.Empty : hostInternal.Replace("hostinternal=", string.Empty),
+                    WebApiPort = webApiPort.IsEmptyString() ? 0 : int.Parse(webApiPort.Replace("webapiport=", string.Empty, StringComparison.OrdinalIgnoreCase)),
+                    GRPCPort = micoServPort.IsEmptyString() ? 0 : int.Parse(micoServPort.Replace("micoservport=", string.Empty, StringComparison.OrdinalIgnoreCase)),
                 };
 
                 var source = new Dictionary<string, string>

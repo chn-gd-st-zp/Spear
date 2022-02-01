@@ -5,7 +5,6 @@ using System.Reflection;
 using AspectInjector.Broker;
 
 using Spear.Inf.Core;
-using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
@@ -26,16 +25,16 @@ namespace Spear.MidM.Permission
 
         public Enum_Status EStatus { get; }
 
-        public PermissionBaseAttribute(Enum_PermissionType eType, string code, bool accessLogger = true, Enum_Status eStatus = Enum_Status.Normal)
+        public PermissionBaseAttribute(Enum_PermissionType eType, string code, bool accessLogger = false, Enum_Status eStatus = Enum_Status.Normal)
         {
             EType = eType;
             Code = code;
-            ParentCode = "";
+            ParentCode = string.Empty;
             AccessLogger = accessLogger;
             EStatus = eStatus;
         }
 
-        public PermissionBaseAttribute(Enum_PermissionType eType, string code, string parentCode, bool accessLogger = true, Enum_Status eStatus = Enum_Status.Normal)
+        public PermissionBaseAttribute(Enum_PermissionType eType, string code, string parentCode, bool accessLogger = false, Enum_Status eStatus = Enum_Status.Normal)
         {
             EType = eType;
             Code = code;
@@ -67,23 +66,26 @@ namespace Spear.MidM.Permission
             if (AppInitHelper.IsTestMode)
                 return;
 
-            var attrs = triggers.Where(o => o.IsExtendType<PermissionBaseAttribute>())
+            var permissionAttrs = triggers.Where(o => o.GetType().IsExtendOf<PermissionBaseAttribute>())
                 .Select(o => o as PermissionBaseAttribute)
                 .Where(o => o.EType == Enum_PermissionType.Action)
                 .ToList();
-            if (attrs == null || attrs.Count() == 0)
+            if (permissionAttrs == null || permissionAttrs.Count() == 0)
                 return;
 
             var type = source.GetType();
-            if (!type.IsImplementedType(typeof(IServiceWithTokenProvider<>)))
+            if (!type.IsImplementedOf(typeof(IServiceWithTokenProvider<>)))
                 return;
 
-            var tp = ServiceContext.Resolve(type.GetGenericArguments()[0]) as ITokenProvider;
-            var session = ServiceContext.ResolveByKeyed<ISpearSession>(tp.Protocol);
+            var tokenProvider = ServiceContext.Resolve(type.GetGenericArguments()[0]) as ITokenProvider;
+            if (tokenProvider == null)
+                return;
+
+            var session = ServiceContext.ResolveByKeyed<ISpearSession>(tokenProvider.Protocol);
             if (session == null)
                 return;
 
-            foreach (var attr in attrs)
+            foreach (var attr in permissionAttrs)
                 session.VerifyPermission(attr.Code);
         }
 

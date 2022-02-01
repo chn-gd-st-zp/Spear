@@ -15,12 +15,12 @@ namespace Spear.Inf.Core.Tool
         /// <returns></returns>
         public static string GetGUID(bool replaceSplitCode = true)
         {
-            string result = "";
+            string result = string.Empty;
 
             result = Guid.NewGuid().ToString();
 
             if (replaceSplitCode)
-                result = result.Replace("-", "");
+                result = result.Replace("-", string.Empty);
 
             return result;
         }

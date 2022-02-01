@@ -61,7 +61,7 @@ namespace Spear.Inf.Core.DTO
     {
         public static string GenericOrderBySql<T>(this IDTO_Search param) where T : DBEntity_Base
         {
-            string result = "";
+            string result = string.Empty;
 
             Type type = typeof(T);
             PropertyInfo[] propertyInfos = type.GetProperties();
@@ -73,7 +73,7 @@ namespace Spear.Inf.Core.DTO
                 var attr = type.GetDefaultSortField<T>();
                 if (attr != null)
                 {
-                    result += result.IsEmptyString() ? "" : ",";
+                    result += result.IsEmptyString() ? string.Empty : ",";
                     result += attr.RealName + " ";
 
                     switch (attr.EDirection)
@@ -100,7 +100,7 @@ namespace Spear.Inf.Core.DTO
                     if (sortFieldInfo == null)
                         continue;
 
-                    result += result.IsEmptyString() ? "" : ",";
+                    result += result.IsEmptyString() ? string.Empty : ",";
                     result += sortFieldInfo.Item2 + " ";
 
                     switch (idtoSort.EDirection)

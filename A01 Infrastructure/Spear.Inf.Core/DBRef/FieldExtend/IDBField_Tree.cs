@@ -41,17 +41,17 @@ namespace Spear.Inf.Core.DBRef
             return tree;
         }
 
-        public static void SetFullNode<TEntity, TKey>(this TEntity obj, string full = "") where TEntity : class, IDBField_Tree<TKey>
+        public static void SetFullNode<TEntity, TKey>(this TEntity obj, string full = default) where TEntity : class, IDBField_Tree<TKey>
         {
             if (obj == null)
                 return;
 
             string cur_str = obj.CurNode.ToString();
-            string full_str = full == null ? "" : full.ToString();
+            string full_str = full == default ? string.Empty : full.ToString();
 
             if (full_str.IsEmptyString() && cur_str.IsEmptyString())
             {
-                obj.FullNode = "";
+                obj.FullNode = string.Empty;
                 return;
             }
 
@@ -76,7 +76,7 @@ namespace Spear.Inf.Core.DBRef
 
             if ((fulls == null || fulls.Length == 0) && cur_str.IsEmptyString())
             {
-                obj.FullNode = "";
+                obj.FullNode = string.Empty;
                 return;
             }
 

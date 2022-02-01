@@ -51,7 +51,7 @@ namespace Spear.Demo4GRPC.Host.Server.Implement
         {
             var dataList = new List<ODTOTestDemo>();
 
-            return dataList.ToTree("").ToServSuccess();
+            return dataList.ToTree(string.Empty).ToServSuccess();
         }
 
         public async Task<ProcessResult<List<ODTOTestDemo>>> ImportExcel(IDTO_Import input)

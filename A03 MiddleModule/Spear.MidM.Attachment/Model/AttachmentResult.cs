@@ -4,6 +4,6 @@
     {
         public Enum_AttachmentResult State { get; set; } = Enum_AttachmentResult.None;
 
-        public string FilePath { get; set; } = "";
+        public string FilePath { get; set; } = string.Empty;
     }
 }

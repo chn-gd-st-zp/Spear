@@ -85,7 +85,7 @@ namespace Spear.MidM.Logger
             if (!settings.ToEmail.Triggers.Contains(triggerName))
                 return;
 
-            string realMsg = "";
+            string realMsg = string.Empty;
             string pattern = settings.Template;
             do
             {
@@ -123,7 +123,7 @@ namespace Spear.MidM.Logger
 
                 if (pattern.StartsWith("Exception", StringComparison.OrdinalIgnoreCase))
                 {
-                    realMsg += exception == null ? "" : exception.ToString();
+                    realMsg += exception == null ? string.Empty : exception.ToString();
                     pattern = pattern.Substring(pattern.IndexOf("}") + 1);
                     continue;
                 }

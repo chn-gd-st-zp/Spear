@@ -40,7 +40,7 @@ namespace Spear.Inf.Core.Attr
     {
         public static void Verify(this object[] paramObjs)
         {
-            string errorMsg = "";
+            string errorMsg = string.Empty;
 
             List<IDTO_Input> actionParams = new List<IDTO_Input>();
             foreach (var paramObj in paramObjs)
@@ -55,7 +55,7 @@ namespace Spear.Inf.Core.Attr
 
         private static void Verify(IDTO_Input input)
         {
-            string errorMsg = "";
+            string errorMsg = string.Empty;
 
             if (input == null)
                 return;
@@ -65,7 +65,7 @@ namespace Spear.Inf.Core.Attr
 
             foreach (var property in input.GetType().GetProperties())
             {
-                if (property.PropertyType.IsClass && property.PropertyType.IsExtendType(typeof(IDTO_Input)))
+                if (property.PropertyType.IsClass && property.PropertyType.IsExtendOf(typeof(IDTO_Input)))
                     Verify(property.GetValue(input) as IDTO_Input);
             }
         }
@@ -77,17 +77,17 @@ namespace Spear.Inf.Core.Attr
 
             Type paramType = paramObj.GetType();
 
-            if (paramType.IsImplementedType(inputType))
+            if (paramType.IsImplementedOf(inputType))
             {
                 paramList.Add((IDTO_Input)paramObj);
             }
             else
             {
-                if (paramType.IsImplementedType(typeof(ICollection)))
+                if (paramType.IsImplementedOf(typeof(ICollection)))
                 {
                     ICollection objs = null;
 
-                    if (paramType.IsImplementedType(typeof(IDictionary)))
+                    if (paramType.IsImplementedOf(typeof(IDictionary)))
                         objs = ((IDictionary)paramObj).Values;
                     else
                         objs = (ICollection)paramObj;
@@ -100,7 +100,7 @@ namespace Spear.Inf.Core.Attr
                     var piArray = paramType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
                     foreach (var pi in piArray)
                     {
-                        if (pi.PropertyType.IsImplementedType(inputType))
+                        if (pi.PropertyType.IsImplementedOf(inputType))
                         {
                             var value = pi.GetValue(paramObj);
                             paramList.Add((IDTO_Input)value);

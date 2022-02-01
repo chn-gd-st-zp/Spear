@@ -22,7 +22,7 @@ namespace Spear.MidM.Defend
             return containerBuilder;
         }
 
-        public static ContainerBuilder RegisMD5(this ContainerBuilder containerBuilder, string secretPrefix = "")
+        public static ContainerBuilder RegisMD5(this ContainerBuilder containerBuilder, string secretPrefix = default)
         {
             containerBuilder.RegisterType<MD5Handle>().Keyed<IEncryptionNDecrypt>(Enum_EncryptionNDecrypt.MD5).WithParameter("secretPrefix", secretPrefix).SingleInstance();
 

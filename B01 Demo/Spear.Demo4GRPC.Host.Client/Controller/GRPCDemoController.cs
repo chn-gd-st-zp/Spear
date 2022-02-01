@@ -25,7 +25,7 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
             var result = default(TContainer);
 
             var regisCenter = ServiceContext.Resolve<MicoServClientSettings>().RegisCenter;
-            var serverIdentity = "";
+            var serverIdentity = string.Empty;
 
             regisCenter = Enum_RegisCenter.Normal;
             serverIdentity = "http://localhost:1001";
@@ -50,7 +50,7 @@ namespace Spear.Demo4GRPC.Host.Client.Controller
                 .Test3(
                     new IDTO_GRPC<IDTO_ListParam>
                     {
-                        GRPCContext = new IDTO_GRPCContext() { Token = "" },
+                        GRPCContext = new IDTO_GRPCContext() { Token = string.Empty },
                         Param = new IDTO_ListParam()
                     }
                 )

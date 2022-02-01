@@ -152,7 +152,7 @@ namespace Spear.Inf.Core.Tool
             List<Assembly> result = new List<Assembly>();
 
             if (patterns != null && patterns.Length > 0)
-                patterns = patterns.Select(o => o.Replace("*", "")).ToArray();
+                patterns = patterns.Select(o => o.Replace("*", string.Empty)).ToArray();
 
             var assemblyNameList_source = DependencyContext.Default.RuntimeLibraries.Select(o => o.Name).ToList();
             var assemblyNameList_target = new List<string>();
@@ -174,7 +174,7 @@ namespace Spear.Inf.Core.Tool
             {
                 foreach (var pattern in patterns)
                 {
-                    var pat = pattern.Replace("*", "");
+                    var pat = pattern.Replace("*", string.Empty);
                     pat = pat.EndsWith(".") ? pat : pat + ".";
 
                     assemblyNameList_source
@@ -283,7 +283,7 @@ namespace Spear.Inf.Core.Tool
             {
                 try
                 {
-                    var types = o.GetTypes().Where(o => o.IsClass && !o.IsAbstract && o.IsImplementedType<IAutoMapperProfile>()).ToList();
+                    var types = o.GetTypes().Where(o => o.IsClass && !o.IsAbstract && o.IsImplementedOf<IAutoMapperProfile>()).ToList();
                     if (types.Count() > 0)
                         allTypeInApp.AddRange(types);
                 }

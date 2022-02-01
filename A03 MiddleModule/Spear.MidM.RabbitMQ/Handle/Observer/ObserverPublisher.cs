@@ -38,7 +38,7 @@ namespace Spear.MidM.RabbitMQ
                 //发布消息
                 Channel.BasicPublish(
                         exchange: mqParam.Exchange,
-                        routingKey: "",
+                        routingKey: string.Empty,
                         basicProperties: properties,
                         body: Encoding.UTF8.GetBytes(messageEntity.ToJson())
                     );

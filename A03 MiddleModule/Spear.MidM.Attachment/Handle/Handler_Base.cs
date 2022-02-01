@@ -115,8 +115,8 @@ namespace Spear.MidM.Attachment
             }
 
             var desc = base64Data.Substring(0, base64Data.IndexOf(","));
-            desc = desc.Replace("data:", "");
-            desc = desc.Replace(";base64", "");
+            desc = desc.Replace("data:", string.Empty);
+            desc = desc.Replace(";base64", string.Empty);
 
             var fileExt = desc.IndexOf("/") != -1 ? desc.Substring(desc.IndexOf("/") + 1) : desc;
             result = AttachmentHandlerHelper.VerifyExt(EHandler, fileExt);

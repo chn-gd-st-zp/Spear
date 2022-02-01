@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +38,20 @@ namespace Spear.Inf.EF
             InitDBSets();
         }
 
+        public string GetTBName<TEntity>() where TEntity : DBEntity_Base, new()
+        {
+            return GetTBName(typeof(TEntity));
+        }
+
+        public string GetTBName(Type dbType)
+        {
+            var attr = dbType.GetCustomAttribute<TableAttribute>();
+            if (attr == default)
+                return dbType.Name;
+
+            return attr.Name;
+        }
+
         public object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new()
         {
             return GetDBSet<TEntity>().AsQueryable();
@@ -58,18 +74,9 @@ namespace Spear.Inf.EF
 
         private readonly Dictionary<Type, object> DBSets;
 
-        protected void AddDBSet<TEntity>(DbSet<TEntity> obj) where TEntity : DBEntity_Base, new()
-        {
-            var key = typeof(TEntity);
-            var value = obj;
+        protected void AddDBSet<TEntity>(DbSet<TEntity> obj) where TEntity : DBEntity_Base, new() { DBSets.Add(typeof(TEntity), obj); }
 
-            DBSets.Add(key, value);
-        }
-
-        public DbSet<TEntity> GetDBSet<TEntity>() where TEntity : DBEntity_Base, new()
-        {
-            return DBSets[typeof(TEntity)] as DbSet<TEntity>;
-        }
+        public DbSet<TEntity> GetDBSet<TEntity>() where TEntity : DBEntity_Base, new() { return DBSets[typeof(TEntity)] as DbSet<TEntity>; }
 
         protected abstract void InitDBSets();
 

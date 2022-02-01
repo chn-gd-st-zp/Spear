@@ -24,7 +24,7 @@ namespace Spear.Inf.Core.CusResult
 
         public ProcessResult() { }
 
-        public ProcessResult(TData data, string msg = "")
+        public ProcessResult(TData data, string msg = default)
         {
             IsSuccess = true;
             Msg = msg;

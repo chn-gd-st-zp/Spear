@@ -23,22 +23,22 @@ namespace Spear.MidM.MicoServ.MagicOnion
             {
                 var context = ServiceContext.Current;
                 if (context == null)
-                    return "";
+                    return string.Empty;
 
                 var reqParamList = context.RestoreParams();
                 if (reqParamList == null || reqParamList.Count() == 0)
-                    return "";
+                    return string.Empty;
 
                 var baseType = typeof(IDTO_GRPC);
 
                 var reqParam = reqParamList
-                    .Where(o => o.IsExtendType(baseType))
+                    .Where(o => o.GetType().IsExtendOf(baseType))
                     .Select(o => o as IDTO_GRPC)
                     .Where(o => !o.GRPCContext.Token.IsEmptyString())
                     .FirstOrDefault();
 
                 if (reqParam == null)
-                    return "";
+                    return string.Empty;
 
                 return reqParam.GRPCContext.Token;
             }
