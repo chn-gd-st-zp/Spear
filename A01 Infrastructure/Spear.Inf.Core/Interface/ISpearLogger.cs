@@ -8,6 +8,8 @@ namespace Spear.Inf.Core.Interface
 
         void Info<T>(T obj);
 
+        void Error(Exception exception);
+
         void Error(string msg, Exception exception = null);
 
         void Error<T>(T obj, Exception exception = null);

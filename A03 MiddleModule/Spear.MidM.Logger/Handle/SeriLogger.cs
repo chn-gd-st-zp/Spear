@@ -8,7 +8,6 @@ using Serilog.Configuration;
 using Serilog.Events;
 
 using Spear.Inf.Core;
-using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.Interface;
@@ -445,6 +444,9 @@ namespace Spear.MidM.Logger
 
         public void Info<T>(T obj)
         { Logger.Write(LogEventLevel.Information, obj.ToJson()); }
+
+        public void Error(Exception exception)
+        { Logger.Write(LogEventLevel.Error, exception, exception.Message); }
 
         public void Error(string msg, Exception exception = null)
         { Logger.Write(LogEventLevel.Error, exception, msg); }

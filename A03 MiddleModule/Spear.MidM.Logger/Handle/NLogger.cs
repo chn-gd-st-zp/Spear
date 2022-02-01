@@ -33,6 +33,11 @@ namespace Spear.MidM.Logger
             Info(obj.ToJson());
         }
 
+        public void Error(Exception exception)
+        {
+            _logger.Error(exception);
+        }
+
         public void Error(string msg, Exception exception = null)
         {
             exception = exception != null ? exception : new Exception();
@@ -66,6 +71,11 @@ namespace Spear.MidM.Logger
         public void Info<T>(T obj)
         {
             Info(obj.ToJson());
+        }
+
+        public void Error(Exception exception)
+        {
+            _logger.LogError(exception, exception.Message);
         }
 
         public void Error(string msg, Exception exception = null)

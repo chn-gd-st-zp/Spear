@@ -41,6 +41,8 @@ namespace Spear.MidM.Logger
         {
             containerBuilder.RegisterType<NLogger>().As<ISpearLogger>().SingleInstance();
             containerBuilder.RegisterGeneric(typeof(NLogger<>)).As(typeof(ISpearLogger<>)).SingleInstance();
+            containerBuilder.RegisterType<NLogger>().As<INLogger>().SingleInstance();
+            containerBuilder.RegisterGeneric(typeof(NLogger<>)).As(typeof(INLogger<>)).SingleInstance();
 
             return containerBuilder;
         }
@@ -51,6 +53,8 @@ namespace Spear.MidM.Logger
 
             containerBuilder.RegisterType<SeriLogger>().As<ISpearLogger>().SingleInstance();
             containerBuilder.RegisterGeneric(typeof(SeriLogger<>)).As(typeof(ISpearLogger<>)).SingleInstance();
+            containerBuilder.RegisterType<SeriLogger>().As<ISeriLogger>().SingleInstance();
+            containerBuilder.RegisterGeneric(typeof(SeriLogger<>)).As(typeof(ISeriLogger<>)).SingleInstance();
 
             return containerBuilder;
         }
