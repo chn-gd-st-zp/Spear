@@ -126,6 +126,7 @@ namespace Spear.MidM.Permission
             catch (Exception ex)
             {
                 _logger.Error(ex);
+                throw ex;
             }
         }
 
