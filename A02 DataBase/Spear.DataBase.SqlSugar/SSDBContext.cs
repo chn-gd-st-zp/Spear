@@ -49,6 +49,34 @@ namespace Spear.Inf.SqlSugar
             return attr.TableName;
         }
 
+        public string GetPKName<TEntity>() where TEntity : DBEntity_Base, new()
+        {
+            return GetPKName(typeof(TEntity));
+        }
+
+        public string GetPKName(Type dbType)
+        {
+            if (dbType == null)
+                return string.Empty;
+
+            if (!dbType.IsImplementedOf(typeof(IDBField_PrimeryKey<>)))
+                return string.Empty;
+
+            var obj = InstanceCreator.Create(dbType) as IDBField_PrimeryKey;
+            if (obj == null)
+                return string.Empty;
+
+            var property = obj.GetPKPropertyInfo();
+            if (property == null)
+                return string.Empty;
+
+            var attr = property.GetCustomAttribute<SugarColumn>();
+            if (attr == null)
+                return property.Name;
+
+            return attr.ColumnName;
+        }
+
         public object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new()
         {
             return GetSimpleClient<TEntity>().AsQueryable();

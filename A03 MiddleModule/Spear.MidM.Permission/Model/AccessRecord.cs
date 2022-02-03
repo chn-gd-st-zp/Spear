@@ -14,11 +14,13 @@ namespace Spear.MidM.Permission
 
         public Enum_OperationType EOperationType { get; set; }
 
-        public string ModuleName { get; set; }
+        public string TBName { get; set; }
 
-        public string DBTableName { get; set; }
+        public string TBValue { get; set; }
 
-        public string DataPrimeryKey { get; set; }
+        public string PKName { get; set; }
+
+        public string PKValue { get; set; }
 
         public List<AccessRecordDescription> Descriptions { get; set; }
 

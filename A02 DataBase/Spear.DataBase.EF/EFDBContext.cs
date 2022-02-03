@@ -45,9 +45,40 @@ namespace Spear.Inf.EF
 
         public string GetTBName(Type dbType)
         {
+            if (dbType == null)
+                return string.Empty;
+
             var attr = dbType.GetCustomAttribute<TableAttribute>();
             if (attr == default)
                 return dbType.Name;
+
+            return attr.Name;
+        }
+
+        public string GetPKName<TEntity>() where TEntity : DBEntity_Base, new()
+        {
+            return GetPKName(typeof(TEntity));
+        }
+
+        public string GetPKName(Type dbType)
+        {
+            if (dbType == null)
+                return string.Empty;
+
+            if (!dbType.IsImplementedOf(typeof(IDBField_PrimeryKey<>)))
+                return string.Empty;
+
+            var obj = InstanceCreator.Create(dbType) as IDBField_PrimeryKey;
+            if(obj == null)
+                return string.Empty;
+
+            var property = obj.GetPKPropertyInfo();
+            if (property == null)
+                return string.Empty;
+
+            var attr = property.GetCustomAttribute<ColumnAttribute>();
+            if (attr == null)
+                return property.Name;
 
             return attr.Name;
         }

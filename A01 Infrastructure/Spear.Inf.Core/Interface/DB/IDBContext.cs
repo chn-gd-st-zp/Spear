@@ -14,6 +14,10 @@ namespace Spear.Inf.Core.Interface
 
         string GetTBName<TEntity>() where TEntity : DBEntity_Base, new();
 
+        string GetPKName(Type dbType);
+
+        string GetPKName<TEntity>() where TEntity : DBEntity_Base, new();
+
         object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new();
     }
 }

@@ -119,20 +119,20 @@ namespace Spear.MidM.Permission
                     return;
 
                 var primeryKey = inputObj.GetPrimeryKey();
-                var tbName = repository.DBContext.GetTBName(accessLoggerAttr.DBDestinationType);
-                var dbObj = primeryKey == null ? null : repository.GetDataObj(tbName, primeryKey);
 
                 var accessRecord = new AccessRecord();
                 accessRecord.ERoleType = session.CurrentAccount.AccountInfo.ERoleType;
                 accessRecord.AccountID = session.CurrentAccount.AccountInfo.AccountID;
                 accessRecord.UserName = session.CurrentAccount.UserName;
                 accessRecord.EOperationType = accessLoggerAttr.EOperationType;
-                accessRecord.ModuleName = accessLoggerAttr.InputType.GetRemark();
-                accessRecord.DBTableName =
-                accessRecord.DataPrimeryKey = primeryKey == null ? string.Empty : primeryKey.ToString();
+                accessRecord.TBName = repository.DBContext.GetTBName(accessLoggerAttr.DBDestinationType);
+                accessRecord.TBValue = accessLoggerAttr.DBDestinationType.GetRemark();
+                accessRecord.PKName = repository.DBContext.GetPKName(accessLoggerAttr.DBDestinationType);
+                accessRecord.PKValue = primeryKey == null ? string.Empty : primeryKey.ToString();
                 accessRecord.Descriptions = new List<AccessRecordDescription>();
                 accessRecord.ExecResult = actionResult;
 
+                var dbObj = accessRecord.PKValue.IsEmptyString() ? null : repository.GetDataObj(accessRecord.TBName, accessRecord.PKName, accessRecord.PKValue);
                 foreach (var inputProperty in accessLoggerAttr.InputType.GetProperties())
                 {
                     var record = new AccessRecordDescription
