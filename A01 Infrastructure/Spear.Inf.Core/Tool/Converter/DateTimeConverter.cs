@@ -77,28 +77,6 @@ namespace Spear.Inf.Core.Tool
         #region 格式化
 
         /// <summary>
-        /// 是否已经过去
-        /// </summary>
-        /// <param name="date"></param>
-        /// <returns></returns>
-        public static bool IsPast(this string date)
-        {
-            return date.ToDateTime().IsPast();
-        }
-
-        /// <summary>
-        /// 是否已经过去
-        /// </summary>
-        /// <param name="dateTime"></param>
-        /// <returns></returns>
-        public static bool IsPast(this DateTime dateTime)
-        {
-            DateTime now = DateTime.Now;
-
-            return now > dateTime;
-        }
-
-        /// <summary>
         /// 转换日期时间
         /// </summary>
         /// <param name="date"></param>

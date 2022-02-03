@@ -162,10 +162,10 @@ namespace Spear.Inf.Core.Tool
                 foreach (var dll in dlls)
                 {
                     var sourceName = assemblyNameList_source
-                        .Where(sourceName => string.Compare(dll, sourceName, true) == 0)
+                        .Where(sourceName => dll.IsEqual(sourceName))
                         .FirstOrDefault();
 
-                    if (!sourceName.IsEmptyString() && !assemblyNameList_target.Any(targetName => string.Compare(targetName, sourceName, true) == 0))
+                    if (!sourceName.IsEmptyString() && !assemblyNameList_target.Any(targetName => targetName.IsEqual(sourceName)))
                         assemblyNameList_target.Add(sourceName);
                 }
             }
@@ -182,7 +182,7 @@ namespace Spear.Inf.Core.Tool
                         .ToList()
                         .ForEach(sourceName =>
                         {
-                            if (!assemblyNameList_target.Any(targetName => string.Compare(targetName, sourceName, true) == 0))
+                            if (!assemblyNameList_target.Any(targetName => targetName.IsEqual(sourceName)))
                                 assemblyNameList_target.Add(sourceName);
                         });
                 }

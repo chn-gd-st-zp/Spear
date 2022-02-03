@@ -8,6 +8,11 @@ using Spear.Inf.Core.Injection;
 
 namespace Spear.MidM.Permission
 {
+    public interface IPermissionEnum
+    {
+        Type EnumType { get; }
+    }
+
     public interface IPermission : IDBField_Status
     {
         bool AccessLogger { get; set; }

@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 
+using Spear.Inf.Core.Tool;
+
 namespace Spear.Inf.Core.DBRef
 {
     public abstract class DBEntity_Base
@@ -15,7 +17,7 @@ namespace Spear.Inf.Core.DBRef
                 return null;
 
             var type = dbEntity.GetType();
-            var property = type.GetProperties().Where(o => string.Compare(o.Name, fieldName, true) == 0).SingleOrDefault();
+            var property = type.GetProperties().Where(o => o.Name.IsEqual(fieldName)).SingleOrDefault();
             if (property == null)
                 return null;
 

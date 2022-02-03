@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 
 using Spear.Inf.Core;
-using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.Injection;
 using Spear.Inf.Core.Tool;
 
@@ -15,7 +14,7 @@ namespace Spear.MidM.Attachment
         public static AttachmentOperationSetting GetOperation(string key)
         {
             var setting = ServiceContext.Resolve<AttachmentSettings>();
-            return setting.Operations.Where(o => string.Compare(o.Key, key, true) == 0).SingleOrDefault();
+            return setting.Operations.Where(o => o.Key.IsEqual(key)).SingleOrDefault();
         }
 
         public static Tuple<Enum_AttachmentResult, IHandler> GetHandler(string key)
@@ -46,7 +45,7 @@ namespace Spear.MidM.Attachment
 
             foreach (var ext in handler.Exts)
             {
-                if (string.Compare(fileExt, ext, true) == 0)
+                if (fileExt.IsEqual(ext))
                 {
                     result.State = Enum_AttachmentResult.Success;
                     return result;
