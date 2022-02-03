@@ -13,10 +13,8 @@ namespace Spear.MidM.Permission
             return containerBuilder;
         }
 
-        public static IHostApplicationLifetime RegisPermission<TPermissionEnum>(this IHostApplicationLifetime lifetime)
+        public static IHostApplicationLifetime RegisPermission(this IHostApplicationLifetime lifetime)
         {
-
-
             var lifeTime = new PermissionLifeTime();
 
             lifetime.ApplicationStarted.Register(() => lifeTime.Started());

@@ -10,7 +10,7 @@ namespace Spear.Inf.Core.Attr
         //
     }
 
-    [AttributeUsage(AttributeTargets.Enum)]
+    [AttributeUsage(AttributeTargets.Enum | AttributeTargets.Field)]
     public class OperationTypeAttribute : Attribute
     {
         public Enum_OperationType EOperationType { get; private set; }

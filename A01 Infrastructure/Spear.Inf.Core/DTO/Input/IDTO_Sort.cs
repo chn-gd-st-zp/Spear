@@ -142,7 +142,7 @@ namespace Spear.Inf.Core.DTO
             bool firstAdd = true;
             foreach (var sortItem in idtoSorts)
             {
-                if (Verification.IsEmptyString(sortItem.FieldName))
+                if (sortItem.FieldName.IsEmptyString())
                     continue;
 
                 var sortFieldInfo = sourcePropertyInfos.GetSortField<T>(sortItem);
