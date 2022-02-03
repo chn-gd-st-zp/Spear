@@ -1,4 +1,9 @@
-﻿using MessagePack;
+﻿using System;
+
+using MessagePack;
+
+using Spear.Inf.Core.Attr;
+using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core.DTO
 {
@@ -8,7 +13,8 @@ namespace Spear.Inf.Core.DTO
         /// <summary>
         /// 时间戳
         /// </summary>
-        public long? Timestamp { get; set; }
+        [Remark("时间戳")]
+        public virtual long? Timestamp { get; set; } = DateTime.Now.ToTimeStamp();
 
         /// <summary>
         /// 参数校验

@@ -240,6 +240,13 @@ namespace Spear.Inf.SqlSugar
             return Ado.ExecuteCommand(sql, paramArray.Parse());
         }
 
+        public List<DBEntity_Base> SelectFromSql(Type dbType, string sql, params DBParameter[] paramArray)
+        {
+            return Ado.SqlQuery<dynamic>(sql, paramArray.Parse())
+                .Select(o => o as DBEntity_Base)
+                .ToList();
+        }
+
         public List<TEntity> SelectFromSql<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : DBEntity_Base, new()
         {
             return Ado.SqlQuery<TEntity>(sql, paramArray.Parse());

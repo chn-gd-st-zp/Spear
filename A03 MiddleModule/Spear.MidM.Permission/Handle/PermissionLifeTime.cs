@@ -30,7 +30,7 @@ namespace Spear.MidM.Permission
                 .Select(o => new
                 {
                     Current = o,
-                    PermissionAttrs = o.GetCustomAttributes().Where(oo => oo.GetType().IsExtendOf<PermissionBaseAttribute>()).Select(oo => oo as PermissionBaseAttribute).ToList(),
+                    PermissionAttrs = o.GetCustomAttributes().Where(oo => oo.GetType().IsExtendOf<ClassPermissionBaseAttribute>()).Select(oo => oo as ClassPermissionBaseAttribute).ToList(),
                 })
                 .Where(o => o.PermissionAttrs != null && o.PermissionAttrs.Count() != 0)
                 .ToList()
@@ -43,7 +43,7 @@ namespace Spear.MidM.Permission
                         .Select(o => new
                         {
                             Current = o,
-                            PermissionAttrs = o.GetCustomAttributes().Where(oo => oo.GetType().IsExtendOf<PermissionBaseAttribute>()).Select(ooo => ooo as PermissionBaseAttribute).ToList()
+                            PermissionAttrs = o.GetCustomAttributes().Where(oo => oo.GetType().IsExtendOf<MethodPermissionBaseAttribute>()).Select(ooo => ooo as MethodPermissionBaseAttribute).ToList()
                         })
                         .Where(o => o.PermissionAttrs != null && classObj.PermissionAttrs.Count() != 0)
                         .ToList()

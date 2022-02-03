@@ -44,6 +44,7 @@ namespace Spear.Inf.Core.DTO
         /// <summary>
         /// 字段名
         /// </summary>
+        [Remark("字段名")]
         public string FieldName { get; set; }
 
         /// <summary>
@@ -51,6 +52,7 @@ namespace Spear.Inf.Core.DTO
         /// 0、2: AES、正序
         /// 1、3: DESC、倒序
         /// </summary>
+        [Remark("排序方式")]
         public Enum_SortDirection EDirection { get; set; }
     }
 

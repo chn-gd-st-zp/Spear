@@ -69,7 +69,7 @@ namespace Spear.Inf.EF
                 return string.Empty;
 
             var obj = InstanceCreator.Create(dbType) as IDBField_PrimeryKey;
-            if(obj == null)
+            if (obj == null)
                 return string.Empty;
 
             var property = obj.GetPKPropertyInfo();
@@ -298,6 +298,11 @@ namespace Spear.Inf.EF
             return Database.ExecuteSqlRaw(sql, paramArray.Parse());
         }
 
+        public List<DBEntity_Base> SelectFromSql(Type dbType, string sql, params DBParameter[] paramArray)
+        {
+            return this.Query(dbType, CommandType.Text, sql, paramArray.Parse());
+        }
+
         public List<TEntity> SelectFromSql<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : DBEntity_Base, new()
         {
             return this.Query<TEntity>(CommandType.Text, sql, paramArray.Parse());
@@ -352,13 +357,16 @@ namespace Spear.Inf.EF
             return dbContext.GetDBSet<T>().AsQueryable<T>();
         }
 
-        public static List<T> Query<T>(this EFDBContext dbContext, CommandType eCommandType, string sql, List<SqlParameter> paramList) where T : DBEntity_Base, new()
+        public static List<DBEntity_Base> Query(this EFDBContext dbContext, Type dbType, CommandType eCommandType, string sql, List<SqlParameter> paramList)
         {
-            var result = new List<T>();
+            var result = new List<DBEntity_Base>();
 
-            var type = typeof(T);
+            if (!dbType.IsExtendOf<DBEntity_Base>())
+                return result;
 
-            using (var connection = dbContext.Database.GetDbConnection())
+            var type = dbType;
+
+            using (var connection = new SqlConnection(dbContext.Database.GetDbConnection().ConnectionString))
             using (var cmd = connection.CreateCommand())
             {
                 cmd.CommandType = eCommandType;
@@ -385,15 +393,21 @@ namespace Spear.Inf.EF
 
                         while (reader.Read())
                         {
-                            T item = new T();
+                            var item = InstanceCreator.Create(dbType);
 
                             foreach (var pi in type.GetProperties())
                             {
+                                if (pi.GetCustomAttribute<NotMappedAttribute>() != null)
+                                    continue;
+
                                 object value = null;
 
-                                if (reader.IsColumnExist(pi.Name))
+                                var attr = pi.GetCustomAttribute<ColumnAttribute>();
+                                var colName = attr != null? attr.Name: pi.Name;
+
+                                if (reader.IsColumnExist(colName))
                                 {
-                                    object obj_regular = reader[pi.Name];
+                                    object obj_regular = reader[colName];
                                     object obj_finnal = obj_regular == DBNull.Value ? null : obj_regular.TypeTo(pi.PropertyType);
                                     value = obj_finnal;
                                 }
@@ -401,7 +415,7 @@ namespace Spear.Inf.EF
                                 pi.SetValue(item, value);
                             }
 
-                            result.Add(item);
+                            result.Add(item as DBEntity_Base);
                         }
                     }
                 }
@@ -414,6 +428,15 @@ namespace Spear.Inf.EF
                     connection.Close();
                 }
             }
+
+            return result;
+        }
+
+        public static List<T> Query<T>(this EFDBContext dbContext, CommandType eCommandType, string sql, List<SqlParameter> paramList) where T : DBEntity_Base, new()
+        {
+            var result = dbContext.Query(typeof(T), eCommandType, sql, paramList)
+                .Select(o => o as T)
+                .ToList();
 
             return result;
         }

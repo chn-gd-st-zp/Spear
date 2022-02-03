@@ -55,6 +55,24 @@ namespace Spear.Inf.Core.Attr
         /// 获取枚举的备注信息
         /// </summary>
         /// <param name="type"></param>
+        /// <returns></returns>
+        public static string GetRemark(this PropertyInfo property)
+        {
+            string result = string.Empty;
+
+            var attr = property.GetCustomAttributes<RemarkAttribute>().FirstOrDefault();
+            if (attr == null)
+                return result;
+
+            result = attr.Remark;
+
+            return result;
+        }
+
+        /// <summary>
+        /// 获取枚举的备注信息
+        /// </summary>
+        /// <param name="type"></param>
         /// <param name="value"></param>
         /// <returns></returns>
         public static string GetRemark(this Type type, string value)

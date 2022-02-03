@@ -104,7 +104,7 @@ namespace Spear.Inf.Core.Tool
         /// <returns></returns>
         public static bool IsExtendOf(this Type type, Type basicType)
         {
-            return type.IsSubclassOf(basicType);
+            return type == basicType || type.IsSubclassOf(basicType);
         }
 
         /// <summary>

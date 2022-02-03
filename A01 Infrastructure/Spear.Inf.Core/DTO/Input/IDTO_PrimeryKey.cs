@@ -1,4 +1,5 @@
-﻿using Spear.Inf.Core.Tool;
+﻿using Spear.Inf.Core.Attr;
+using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core.DTO
 {
@@ -21,6 +22,7 @@ namespace Spear.Inf.Core.DTO
         /// <summary>
         /// 主键
         /// </summary>
+        [Remark("主键")]
         public virtual TKey PrimeryKey { get; set; }
     }
 
@@ -33,7 +35,7 @@ namespace Spear.Inf.Core.DTO
             if (!type.IsGenericOf(typeof(IIDTO_PrimeryKey<>)))
                 return null;
 
-            var field = type.GetField("PrimeryKey");
+            var field = type.GetProperty("PrimeryKey");
             if (field == null)
                 return null;
 

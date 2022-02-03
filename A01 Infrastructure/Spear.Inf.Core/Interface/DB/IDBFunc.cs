@@ -75,6 +75,8 @@ namespace Spear.Inf.Core.Interface
 
         int ExecuteSql(string sql, params DBParameter[] paramArray);
 
+        List<DBEntity_Base> SelectFromSql(Type dbType, string sql, params DBParameter[] paramArray);
+
         List<TEntity> SelectFromSql<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : DBEntity_Base, new();
 
         int ExecuteStoredProcedure(string sql, params DBParameter[] paramArray);
