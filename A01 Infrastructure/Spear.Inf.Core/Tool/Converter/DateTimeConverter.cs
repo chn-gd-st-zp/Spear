@@ -7,10 +7,33 @@ namespace Spear.Inf.Core.Tool
         #region 时间戳
 
         /// <summary>
-        /// 时间戳计时开始时间
+        /// 获取当前Unix时间
         /// </summary>
-        private static DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
-        private static DateTimeOffset dto = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        private static TimeSpan ToUnixTime(this DateTime dateTime)
+        {
+            var dt = TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local), TimeZoneInfo.Local);
+            return dateTime - dt;
+        }
+
+        /// <summary>
+        /// 把Unix时间转换成DateTime
+        /// </summary>
+        /// <param name="timeStamp">Unix时间</param>
+        /// <returns>DateTime</returns>
+        private static DateTime ToDateTimeFromUnixTime(this long timeStamp)
+        {
+            var dt = TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local), TimeZoneInfo.Local);
+
+            if (timeStamp.ToString().Length == DateTime.Now.ToTimeStamp().ToString().Length)
+                return dt.AddSeconds(timeStamp);
+
+            if (timeStamp.ToString().Length == DateTime.Now.ToLongTimeStamp().ToString().Length)
+                return dt.AddMilliseconds(timeStamp);
+
+            return dt;
+        }
 
         /// <summary>
         /// DateTime转换为10位时间戳（单位：秒）
@@ -19,17 +42,7 @@ namespace Spear.Inf.Core.Tool
         /// <returns>10位时间戳（单位：秒）</returns>
         public static long ToTimeStamp(this DateTime dateTime)
         {
-            return (long)(dateTime.ToUniversalTime() - dt).TotalSeconds;
-        }
-
-        /// <summary>
-        /// 10位时间戳（单位：秒）转换为DateTime
-        /// </summary>
-        /// <param name="timeStamp">10位时间戳（单位：秒）</param>
-        /// <returns>DateTime</returns>
-        public static DateTime ToDateTimeFromTimeStamp(this long timeStamp)
-        {
-            return dt.AddSeconds(timeStamp).ToLocalTime();
+            return (long)dateTime.ToUnixTime().TotalSeconds;
         }
 
         /// <summary>
@@ -39,37 +52,17 @@ namespace Spear.Inf.Core.Tool
         /// <returns>13位时间戳（单位：毫秒）</returns>
         public static long ToLongTimeStamp(this DateTime dateTime)
         {
-            return (long)(dateTime.ToUniversalTime() - dt).TotalMilliseconds;
+            return (long)dateTime.ToUnixTime().TotalMilliseconds;
         }
 
         /// <summary>
-        /// 13位时间戳（单位：毫秒）转换为DateTime
+        /// 10位时间戳（单位：秒）转换为DateTime
         /// </summary>
-        /// <param name="longTimeStamp">13位时间戳（单位：毫秒）</param>
+        /// <param name="timeStamp">10位时间戳（单位：秒）</param>
         /// <returns>DateTime</returns>
-        public static DateTime ToDateTimeFromLongTimeStamp(this long longTimeStamp)
+        public static DateTime ToDateTimeFromTimeStamp(this long timeStamp)
         {
-            return dt.AddMilliseconds(longTimeStamp).ToLocalTime();
-        }
-
-        /// <summary>
-        /// 获取当前Unix时间
-        /// </summary>
-        /// <param name="dateTime"></param>
-        /// <returns></returns>
-        public static double ToUnixTime(this DateTime dateTime)
-        {
-            return dateTime.ToUniversalTime().Subtract(dt).TotalMilliseconds;
-        }
-
-        /// <summary>
-        /// 把Unix时间转换成DateTime
-        /// </summary>
-        /// <param name="unixTime">Unix时间</param>
-        /// <returns>DateTime</returns>
-        public static DateTime ToDateTimeFromUnixTime(long unixTime)
-        {
-            return dto.AddTicks(unixTime * 10).DateTime;
+            return timeStamp.ToDateTimeFromUnixTime();
         }
 
         #endregion
