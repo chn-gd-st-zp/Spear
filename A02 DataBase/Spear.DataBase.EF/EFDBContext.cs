@@ -358,7 +358,7 @@ namespace Spear.Inf.EF
         {
             var result = new List<IDBEntity>();
 
-            if (!dbType.IsExtendOf<IDBEntity>())
+            if (!dbType.IsImplementedOf<IDBEntity>())
                 return result;
 
             var type = dbType;

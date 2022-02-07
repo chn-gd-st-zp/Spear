@@ -86,7 +86,7 @@ namespace Spear.MidM.Permission
                 if (inputObj == null)
                     return;
 
-                if (!attr.MappingType.DBDestinationType.IsExtendOf<IDBEntity>() || !attr.MappingType.DBDestinationType.IsGenericOf(typeof(IDBField_PrimeryKey<>)))
+                if (!attr.MappingType.DBDestinationType.IsImplementedOf<IDBEntity>() || !attr.MappingType.DBDestinationType.IsGenericOf(typeof(IDBField_PrimeryKey<>)))
                     return;
 
                 var otAttr = _permissionEnum.EnumType.GetEnumAttr<OperationTypeAttribute>(attr.Code);
@@ -100,7 +100,7 @@ namespace Spear.MidM.Permission
                 var pk = inputObj.GetPrimeryKey();
 
                 var primeryKey = pk == null ? string.Empty : pk.ToString();
-                var dbObj = primeryKey.IsEmptyString() ? null : repo_AccessRecordTrigger.GetTriggerObj(_accessRecord.PKValue);
+                var dbObj = primeryKey.IsEmptyString() ? null : repo_AccessRecordTrigger.GetTriggerObj(primeryKey);
 
                 _accessRecord = new AccessRecord();
                 _accessRecord.ERoleType = session.CurrentAccount.AccountInfo.ERoleType;
@@ -111,7 +111,7 @@ namespace Spear.MidM.Permission
                 _accessRecord.TBValue = attr.MappingType.DBDestinationType.GetRemark();
                 _accessRecord.PKName = _repo_AccessRecord.DBContext.GetPKName(attr.MappingType.DBDestinationType);
                 _accessRecord.PKValue = primeryKey;
-                _accessRecord.TriggerName = dbObj.GetTriggerObjName();
+                _accessRecord.TriggerName = dbObj == null ? string.Empty : dbObj.GetTriggerObjName();
                 _accessRecord.Descriptions = new List<AccessRecordDescription>();
 
                 foreach (var inputProperty in attr.MappingType.InputType.GetProperties())
