@@ -93,14 +93,14 @@ namespace Spear.MidM.Permission
                 if (otAttr == null || otAttr.EOperationType == Enum_OperationType.None)
                     return;
 
-                var repo_AccessRecordDestination = ServiceContext.ResolveByKeyed<IAccessRecordTriggerRepository>(attr.MappingType.DBDestinationType);
-                if (repo_AccessRecordDestination == null)
+                var repo_AccessRecordTrigger = ServiceContext.ResolveByKeyed<IAccessRecordTriggerRepository>(attr.MappingType.DBDestinationType);
+                if (repo_AccessRecordTrigger == null)
                     return;
 
                 var pk = inputObj.GetPrimeryKey();
 
                 var primeryKey = pk == null ? string.Empty : pk.ToString();
-                var dbObj = primeryKey.IsEmptyString() ? null : repo_AccessRecordDestination.Single(_accessRecord.PKValue);
+                var dbObj = primeryKey.IsEmptyString() ? null : repo_AccessRecordTrigger.GetTriggerObj(_accessRecord.PKValue);
 
                 _accessRecord = new AccessRecord();
                 _accessRecord.ERoleType = session.CurrentAccount.AccountInfo.ERoleType;
@@ -111,7 +111,7 @@ namespace Spear.MidM.Permission
                 _accessRecord.TBValue = attr.MappingType.DBDestinationType.GetRemark();
                 _accessRecord.PKName = _repo_AccessRecord.DBContext.GetPKName(attr.MappingType.DBDestinationType);
                 _accessRecord.PKValue = primeryKey;
-                _accessRecord.ObjName = dbObj.GetName();
+                _accessRecord.TriggerName = dbObj.GetTriggerObjName();
                 _accessRecord.Descriptions = new List<AccessRecordDescription>();
 
                 foreach (var inputProperty in attr.MappingType.InputType.GetProperties())

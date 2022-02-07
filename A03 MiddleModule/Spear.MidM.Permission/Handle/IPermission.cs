@@ -41,11 +41,11 @@ namespace Spear.MidM.Permission
 
     public interface IAccessRecordTrigger : IDBEntity
     {
-        public abstract string GetName();
+        public abstract string GetTriggerObjName();
     }
 
     public interface IAccessRecordTriggerRepository : IDBRepository
     {
-        IAccessRecordTrigger Single(object primeryKey);
+        IAccessRecordTrigger GetTriggerObj(object primeryKey);
     }
 }
