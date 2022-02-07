@@ -22,7 +22,7 @@ namespace Spear.MidM.Permission
         private ISpearLogger<PermissionAspect> _logger;
         private IPermissionEnum _permissionEnum;
         private IPermissionRepository _repo_Permission;
-        private IAccessLoggerRepository _repo_AccessLogger;
+        private IAccessRecordRepository _repo_AccessRecord;
         private AccessRecord _accessRecord;
 
         public PermissionAspect()
@@ -30,7 +30,7 @@ namespace Spear.MidM.Permission
             _logger = ServiceContext.Resolve<ISpearLogger<PermissionAspect>>();
             _permissionEnum = ServiceContext.Resolve<IPermissionEnum>();
             _repo_Permission = ServiceContext.Resolve<IPermissionRepository>();
-            _repo_AccessLogger = ServiceContext.Resolve<IAccessLoggerRepository>();
+            _repo_AccessRecord = ServiceContext.Resolve<IAccessRecordRepository>();
         }
 
         [Advice(Kind.Around)]
@@ -52,7 +52,7 @@ namespace Spear.MidM.Permission
                 if (AppInitHelper.IsTestMode)
                     return;
 
-                if (_permissionEnum == null || _repo_Permission == null || _repo_AccessLogger == null)
+                if (_permissionEnum == null || _repo_Permission == null || _repo_AccessRecord == null)
                     return;
 
                 var attr = triggers.Where(o => o.GetType().IsExtendOf<MethodPermissionBaseAttribute>())
@@ -93,20 +93,27 @@ namespace Spear.MidM.Permission
                 if (otAttr == null || otAttr.EOperationType == Enum_OperationType.None)
                     return;
 
-                var primeryKey = inputObj.GetPrimeryKey();
+                var repo_AccessRecordDestination = ServiceContext.ResolveByKeyed<IAccessRecordTriggerRepository>(attr.MappingType.DBDestinationType);
+                if (repo_AccessRecordDestination == null)
+                    return;
+
+                var pk = inputObj.GetPrimeryKey();
+
+                var primeryKey = pk == null ? string.Empty : pk.ToString();
+                var dbObj = primeryKey.IsEmptyString() ? null : repo_AccessRecordDestination.Single(_accessRecord.PKValue);
 
                 _accessRecord = new AccessRecord();
                 _accessRecord.ERoleType = session.CurrentAccount.AccountInfo.ERoleType;
                 _accessRecord.AccountID = session.CurrentAccount.AccountInfo.AccountID;
                 _accessRecord.UserName = session.CurrentAccount.UserName;
                 _accessRecord.EOperationType = otAttr.EOperationType;
-                _accessRecord.TBName = _repo_AccessLogger.DBContext.GetTBName(attr.MappingType.DBDestinationType);
+                _accessRecord.TBName = _repo_AccessRecord.DBContext.GetTBName(attr.MappingType.DBDestinationType);
                 _accessRecord.TBValue = attr.MappingType.DBDestinationType.GetRemark();
-                _accessRecord.PKName = _repo_AccessLogger.DBContext.GetPKName(attr.MappingType.DBDestinationType);
-                _accessRecord.PKValue = primeryKey == null ? string.Empty : primeryKey.ToString();
+                _accessRecord.PKName = _repo_AccessRecord.DBContext.GetPKName(attr.MappingType.DBDestinationType);
+                _accessRecord.PKValue = primeryKey;
+                _accessRecord.ObjName = dbObj.GetName();
                 _accessRecord.Descriptions = new List<AccessRecordDescription>();
 
-                var dbObj = _accessRecord.PKValue.IsEmptyString() ? null : _repo_AccessLogger.GetDataObj(attr.MappingType.DBDestinationType, _accessRecord.TBName, _accessRecord.PKName, _accessRecord.PKValue);
                 foreach (var inputProperty in attr.MappingType.InputType.GetProperties())
                 {
                     if (inputProperty.GetCustomAttribute<LogIgnoreAttribute>() != null)
@@ -144,7 +151,7 @@ namespace Spear.MidM.Permission
 
                 _accessRecord.ExecResult = actionResult;
 
-                _repo_AccessLogger.Create(_accessRecord);
+                _repo_AccessRecord.Create(_accessRecord);
             }
             catch (Exception ex)
             {

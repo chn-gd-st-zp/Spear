@@ -22,6 +22,8 @@ namespace Spear.MidM.Permission
 
         public string PKValue { get; set; }
 
+        public string ObjName { get; set; }
+
         public List<AccessRecordDescription> Descriptions { get; set; }
 
         public object ExecResult { get; set; }

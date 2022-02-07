@@ -4,14 +4,19 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.Inf.Core.DBRef
 {
-    public abstract class DBEntity_Base
+    public interface IDBEntity
+    {
+        //
+    }
+
+    public abstract class DBEntity_Base : IDBEntity
     {
         //
     }
 
     public static class DBEntityExtend
     {
-        public static object GetFieldValue(this DBEntity_Base dbEntity, string fieldName)
+        public static object GetFieldValue(this IDBEntity dbEntity, string fieldName)
         {
             if (dbEntity == null)
                 return null;

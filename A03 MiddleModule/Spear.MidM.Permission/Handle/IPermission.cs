@@ -29,15 +29,23 @@ namespace Spear.MidM.Permission
         IEnumerable<IPermission> AllPermission();
     }
 
-    public interface IAccessLoggerRepository : IDBRepository
-    {
-        bool Create(AccessRecord accessRecord);
-
-        DBEntity_Base GetDataObj(Type dbType, string tbName, string primeryKeyName, object primeryKeyValue);
-    }
-
     public interface IPermissionInitialization : ISingleton
     {
         void Operation(IEnumerable<IPermission> permissionsFromService, IEnumerable<IPermission> permissionsFromDB);
+    }
+
+    public interface IAccessRecordRepository : IDBRepository
+    {
+        bool Create(AccessRecord accessRecord);
+    }
+
+    public interface IAccessRecordTrigger : IDBEntity
+    {
+        public abstract string GetName();
+    }
+
+    public interface IAccessRecordTriggerRepository : IDBRepository
+    {
+        IAccessRecordTrigger Single(object primeryKey);
     }
 }

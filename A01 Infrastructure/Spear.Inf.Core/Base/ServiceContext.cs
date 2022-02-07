@@ -187,7 +187,7 @@ namespace Spear.Inf.Core
         }
 
 
-        public static object ResolveByKeyed(Type type, string named)
+        public static object ResolveByKeyed(Type type, object keyed)
         {
             try
             {
@@ -195,7 +195,7 @@ namespace Spear.Inf.Core
                 if (context == null)
                     return default;
 
-                return context.ResolveKeyed(named, type);
+                return context.ResolveKeyed(keyed, type);
             }
             catch
             {
