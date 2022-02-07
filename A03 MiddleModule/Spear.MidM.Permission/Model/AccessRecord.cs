@@ -31,12 +31,12 @@ namespace Spear.MidM.Permission
 
     public class AccessRecordDescription
     {
-        public string FieldName { get; set; }
+        public virtual string FieldName { get; set; }
 
-        public string FieldRemark { get; set; }
+        public virtual string FieldRemark { get; set; }
 
-        public object InputValue { get; set; }
+        public virtual object InputValue { get; set; }
 
-        public object DBValue { get; set; }
+        public virtual object DBValue { get; set; }
     }
 }
