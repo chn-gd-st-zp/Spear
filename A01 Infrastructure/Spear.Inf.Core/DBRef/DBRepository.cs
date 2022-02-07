@@ -22,18 +22,18 @@ namespace Spear.Inf.Core.DBRef
 
         #region 查 - 列表
 
-        public virtual List<T> ListByQueryable<T>(object queryObj, IDTO_List param = null) where T : DBEntity_Base, new()
+        public virtual List<TEntity> ListByQueryable<TEntity>(object queryObj, IDTO_List param = null) where TEntity : class, IDBEntity, new()
         {
-            return DBContext.ListByQueryable<T>(queryObj, param);
+            return DBContext.ListByQueryable<TEntity>(queryObj, param);
         }
 
         #endregion
 
         #region 查 - 分页
 
-        public virtual Tuple<List<T>, int> PageByQueryable<T>(object queryObj, IDTO_Page param = null) where T : DBEntity_Base, new()
+        public virtual Tuple<List<TEntity>, int> PageByQueryable<TEntity>(object queryObj, IDTO_Page param = null) where TEntity : class, IDBEntity, new()
         {
-            return DBContext.PageByQueryable<T>(queryObj, param);
+            return DBContext.PageByQueryable<TEntity>(queryObj, param);
         }
 
         #endregion
@@ -45,9 +45,9 @@ namespace Spear.Inf.Core.DBRef
             return DBContext.ExecuteSql(sql, paramArray);
         }
 
-        public virtual List<T> SelectFromSql<T>(string sql, params DBParameter[] paramArray) where T : DBEntity_Base, new()
+        public virtual List<TEntity> SelectFromSql<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : class, IDBEntity, new()
         {
-            return DBContext.SelectFromSql<T>(sql, paramArray);
+            return DBContext.SelectFromSql<TEntity>(sql, paramArray);
         }
 
         public virtual int ExecuteStoredProcedure(string sql, params DBParameter[] paramArray)
@@ -55,16 +55,16 @@ namespace Spear.Inf.Core.DBRef
             return DBContext.ExecuteStoredProcedure(sql, paramArray);
         }
 
-        public virtual List<T> SelectFromStoredProcedure<T>(string sql, params DBParameter[] paramArray) where T : DBEntity_Base, new()
+        public virtual List<TEntity> SelectFromStoredProcedure<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : class, IDBEntity, new()
         {
-            return DBContext.SelectFromStoredProcedure<T>(sql, paramArray);
+            return DBContext.SelectFromStoredProcedure<TEntity>(sql, paramArray);
         }
 
         #endregion
     }
 
     public class DBRepository<TEntity> : DBRepository, IDBRepository<TEntity>
-        where TEntity : DBEntity_Base, new()
+        where TEntity : class, IDBEntity, new()
     {
         #region 增
 
@@ -152,7 +152,7 @@ namespace Spear.Inf.Core.DBRef
     }
 
     public class DBRepository<TEntity, TKey> : DBRepository<TEntity>, IDBRepository<TEntity, TKey>
-        where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
+        where TEntity : class, IDBEntity, IDBField_PrimeryKey<TKey>, new()
     {
         #region 删
 
@@ -184,7 +184,7 @@ namespace Spear.Inf.Core.DBRef
 
     public class DBRepository<TDBContext, TEntity, TKey> : DBRepository<TEntity, TKey>, IDBRepository<TDBContext, TEntity, TKey>
         where TDBContext : IDBContext
-        where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
+        where TEntity : class, IDBEntity, IDBField_PrimeryKey<TKey>, new()
     {
         private TDBContext _dbContext;
         public new TDBContext DBContext { get { return _dbContext; } protected set { _dbContext = value; base.DBContext = value; } }

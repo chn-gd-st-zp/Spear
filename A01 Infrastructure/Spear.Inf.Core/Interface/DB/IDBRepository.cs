@@ -8,20 +8,20 @@ namespace Spear.Inf.Core.Interface
     }
 
     public interface IDBRepository<TEntity> : IDBFunc4Repository<TEntity>, IDBRepository
-        where TEntity : DBEntity_Base, new()
+        where TEntity : class, IDBEntity, new()
     {
         //
     }
 
     public interface IDBRepository<TEntity, TKey> : IDBFunc4Repository<TEntity, TKey>, IDBRepository<TEntity>
-        where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
+        where TEntity : class, IDBEntity, IDBField_PrimeryKey<TKey>, new()
     {
         //
     }
 
     public interface IDBRepository<TDBContext, TEntity, TKey> : IDBRepository<TEntity, TKey>
         where TDBContext : IDBContext
-        where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
+        where TEntity : class, IDBEntity, IDBField_PrimeryKey<TKey>, new()
     {
         new TDBContext DBContext { get; }
     }

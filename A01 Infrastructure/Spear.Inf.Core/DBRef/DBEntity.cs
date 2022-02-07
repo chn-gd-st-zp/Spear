@@ -9,11 +9,6 @@ namespace Spear.Inf.Core.DBRef
         //
     }
 
-    public abstract class DBEntity_Base : IDBEntity
-    {
-        //
-    }
-
     public static class DBEntityExtend
     {
         public static object GetFieldValue(this IDBEntity dbEntity, string fieldName)

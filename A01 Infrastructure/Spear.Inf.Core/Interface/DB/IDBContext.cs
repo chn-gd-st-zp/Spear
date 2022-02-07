@@ -8,16 +8,16 @@ namespace Spear.Inf.Core.Interface
     {
         string ID { get; }
 
-        int SaveChanges();
-
         string GetTBName(Type dbType);
 
-        string GetTBName<TEntity>() where TEntity : DBEntity_Base, new();
+        string GetTBName<TEntity>() where TEntity : class, IDBEntity, new();
 
         string GetPKName(Type dbType);
 
-        string GetPKName<TEntity>() where TEntity : DBEntity_Base, new();
+        string GetPKName<TEntity>() where TEntity : class, IDBEntity, new();
 
-        object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new();
+        int SaveChanges();
+
+        object GetQueryable<TEntity>() where TEntity : class, IDBEntity, new();
     }
 }

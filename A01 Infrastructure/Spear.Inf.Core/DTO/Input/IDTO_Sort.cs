@@ -61,7 +61,7 @@ namespace Spear.Inf.Core.DTO
     /// </summary>
     public static class IDTO_Sort_Ext
     {
-        public static string GenericOrderBySql<T>(this IDTO_Search param) where T : DBEntity_Base
+        public static string GenericOrderBySql<T>(this IDTO_Search param) where T : IDBEntity
         {
             string result = string.Empty;
 
@@ -122,7 +122,7 @@ namespace Spear.Inf.Core.DTO
             return result;
         }
 
-        public static IQueryable<T> OrderBy<T>(this IQueryable<T> query, IDTO_Search param) where T : DBEntity_Base
+        public static IQueryable<T> OrderBy<T>(this IQueryable<T> query, IDTO_Search param) where T : IDBEntity
         {
             Type sourceType = typeof(T);
             PropertyInfo[] sourcePropertyInfos = sourceType.GetProperties();

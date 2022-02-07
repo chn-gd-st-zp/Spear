@@ -11,20 +11,20 @@ namespace Spear.Inf.EF
     }
 
     public class EFRepository<TEntity> : DBRepository<TEntity>
-        where TEntity : DBEntity_Base, new()
+        where TEntity : class, IDBEntity, new()
     {
         protected override IDBContext GetDBContext() { return ServiceContext.ResolveByKeyed<IDBContext>(Enum_ORMType.EF); }
     }
 
     public class EFRepository<TEntity, TKey> : DBRepository<TEntity, TKey>
-        where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
+        where TEntity : class, IDBEntity, IDBField_PrimeryKey<TKey>, new()
     {
         protected override IDBContext GetDBContext() { return ServiceContext.ResolveByKeyed<IDBContext>(Enum_ORMType.EF); }
     }
 
     public class EFRepository<TDBContext, TEntity, TKey> : DBRepository<TDBContext, TEntity, TKey>
         where TDBContext : EFDBContext, IDBContext
-        where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
+        where TEntity : class, IDBEntity, IDBField_PrimeryKey<TKey>, new()
     {
         protected override IDBContext GetDBContext() { return ServiceContext.ResolveByKeyed<TDBContext>(Enum_ORMType.EF); }
     }

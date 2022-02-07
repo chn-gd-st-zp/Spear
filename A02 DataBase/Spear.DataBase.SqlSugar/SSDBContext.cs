@@ -35,7 +35,7 @@ namespace Spear.Inf.SqlSugar
 
         public int SaveChanges() { return SaveQueues(); }
 
-        public string GetTBName<TEntity>() where TEntity : DBEntity_Base, new()
+        public string GetTBName<TEntity>() where TEntity : class, IDBEntity, new()
         {
             return GetTBName(typeof(TEntity));
         }
@@ -49,7 +49,7 @@ namespace Spear.Inf.SqlSugar
             return attr.TableName;
         }
 
-        public string GetPKName<TEntity>() where TEntity : DBEntity_Base, new()
+        public string GetPKName<TEntity>() where TEntity : class, IDBEntity, new()
         {
             return GetPKName(typeof(TEntity));
         }
@@ -77,19 +77,19 @@ namespace Spear.Inf.SqlSugar
             return attr.ColumnName;
         }
 
-        public object GetQueryable<TEntity>() where TEntity : DBEntity_Base, new()
+        public object GetQueryable<TEntity>() where TEntity : class, IDBEntity, new()
         {
             return GetSimpleClient<TEntity>().AsQueryable();
         }
 
         #region 增
 
-        public bool Create<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Base, new()
+        public bool Create<TEntity>(TEntity obj, bool save = true) where TEntity : class, IDBEntity, new()
         {
             return GetSimpleClient<TEntity>().Insert(obj);
         }
 
-        public bool Create<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Base, new()
+        public bool Create<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : class, IDBEntity, new()
         {
             return GetSimpleClient<TEntity>().InsertRange(objs.ToList());
         }
@@ -98,22 +98,22 @@ namespace Spear.Inf.SqlSugar
 
         #region 删
 
-        public bool Delete<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
-        {
-            return GetSimpleClient<TEntity>().DeleteById(key);
-        }
-
-        public bool Delete<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Base, new()
+        public bool Delete<TEntity>(TEntity obj, bool save = true) where TEntity : class, IDBEntity, new()
         {
             return GetSimpleClient<TEntity>().Delete(obj);
         }
 
-        public bool Delete<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Base, new()
+        public bool Delete<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : class, IDBEntity, new()
         {
             return Deleteable(objs.ToList()).ExecuteCommand() > 0;
         }
 
-        public bool Delete<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : DBEntity_Base, new()
+        public bool Delete<TEntity, TKey>(TKey key) where TEntity : class, IDBEntity, IDBField_PrimeryKey<TKey>, new()
+        {
+            return GetSimpleClient<TEntity>().DeleteById(key);
+        }
+
+        public bool Delete<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : class, IDBEntity, new()
         {
             return GetSimpleClient<TEntity>().Delete(expression);
         }
@@ -122,12 +122,12 @@ namespace Spear.Inf.SqlSugar
 
         #region 改
 
-        public bool Update<TEntity>(TEntity obj, bool save = true) where TEntity : DBEntity_Base, new()
+        public bool Update<TEntity>(TEntity obj, bool save = true) where TEntity : class, IDBEntity, new()
         {
             return GetSimpleClient<TEntity>().Update(obj);
         }
 
-        public bool Update<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : DBEntity_Base, new()
+        public bool Update<TEntity>(IEnumerable<TEntity> objs, bool save = true) where TEntity : class, IDBEntity, new()
         {
             return GetSimpleClient<TEntity>().UpdateRange(objs.ToList());
         }
@@ -136,17 +136,17 @@ namespace Spear.Inf.SqlSugar
 
         #region 查 - 单个
 
-        public TEntity Single<TEntity>(object key) where TEntity : DBEntity_Base, new()
+        public TEntity Single<TEntity>(object key) where TEntity : class, IDBEntity, new()
         {
             return GetSimpleClient<TEntity>().GetById(key);
         }
 
-        public TEntity Single<TEntity, TKey>(TKey key) where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
+        public TEntity Single<TEntity, TKey>(TKey key) where TEntity : class, IDBEntity, IDBField_PrimeryKey<TKey>, new()
         {
             return GetSimpleClient<TEntity>().GetById(key);
         }
 
-        public TEntity Single<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : DBEntity_Base, new()
+        public TEntity Single<TEntity>(Expression<Func<TEntity, bool>> expression) where TEntity : class, IDBEntity, new()
         {
             return GetSimpleClient<TEntity>().GetSingle(expression);
         }
@@ -155,7 +155,7 @@ namespace Spear.Inf.SqlSugar
 
         #region 查 - 列表
 
-        public List<TEntity> List<TEntity, TKey>(params TKey[] keys) where TEntity : DBEntity_Base, IDBField_PrimeryKey<TKey>, new()
+        public List<TEntity> List<TEntity, TKey>(params TKey[] keys) where TEntity : class, IDBEntity, IDBField_PrimeryKey<TKey>, new()
         {
             var query = GetSimpleClient<TEntity>().AsQueryable();
 
@@ -165,7 +165,7 @@ namespace Spear.Inf.SqlSugar
             return query.ToList();
         }
 
-        public List<TEntity> List<TEntity>(Expression<Func<TEntity, bool>> expression = null, IDTO_List param = null) where TEntity : DBEntity_Base, new()
+        public List<TEntity> List<TEntity>(Expression<Func<TEntity, bool>> expression = null, IDTO_List param = null) where TEntity : class, IDBEntity, new()
         {
             var query = GetSimpleClient<TEntity>().AsQueryable();
 
@@ -178,7 +178,7 @@ namespace Spear.Inf.SqlSugar
             return query.ToList();
         }
 
-        public List<TEntity> ListByQueryable<TEntity>(object queryObj, IDTO_List param = null) where TEntity : DBEntity_Base, new()
+        public List<TEntity> ListByQueryable<TEntity>(object queryObj, IDTO_List param = null) where TEntity : class, IDBEntity, new()
         {
             string orderBy = param.GenericOrderBySql<TEntity>();
 
@@ -189,7 +189,7 @@ namespace Spear.Inf.SqlSugar
 
         #region 查 - 分页
 
-        public Tuple<List<TEntity>, int> Page<TEntity>(Expression<Func<TEntity, bool>> expression, IDTO_Page param = null) where TEntity : DBEntity_Base, new()
+        public Tuple<List<TEntity>, int> Page<TEntity>(Expression<Func<TEntity, bool>> expression, IDTO_Page param = null) where TEntity : class, IDBEntity, new()
         {
             var query = GetSimpleClient<TEntity>().AsQueryable();
             if (expression != null)
@@ -198,7 +198,7 @@ namespace Spear.Inf.SqlSugar
             return PageByQueryable<TEntity>(query, param);
         }
 
-        public Tuple<List<TEntity>, int> PageByQueryable<TEntity>(object queryObj, IDTO_Page param = null) where TEntity : DBEntity_Base, new()
+        public Tuple<List<TEntity>, int> PageByQueryable<TEntity>(object queryObj, IDTO_Page param = null) where TEntity : class, IDBEntity, new()
         {
             string orderBy = param.GenericOrderBySql<TEntity>();
 
@@ -220,7 +220,7 @@ namespace Spear.Inf.SqlSugar
 
         #region 查 - 序号
 
-        public string GetNextSequence<TEntity>() where TEntity : DBEntity_Base, IDBField_Sequence, new()
+        public string GetNextSequence<TEntity>() where TEntity : class, IDBEntity, IDBField_Sequence, new()
         {
             var query = GetSimpleClient<TEntity>().AsQueryable();
 
@@ -240,14 +240,14 @@ namespace Spear.Inf.SqlSugar
             return Ado.ExecuteCommand(sql, paramArray.Parse());
         }
 
-        public List<DBEntity_Base> SelectFromSql(Type dbType, string sql, params DBParameter[] paramArray)
+        public List<IDBEntity> SelectFromSql(Type dbType, string sql, params DBParameter[] paramArray)
         {
             return Ado.SqlQuery<dynamic>(sql, paramArray.Parse())
-                .Select(o => o as DBEntity_Base)
+                .Select(o => o as IDBEntity)
                 .ToList();
         }
 
-        public List<TEntity> SelectFromSql<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : DBEntity_Base, new()
+        public List<TEntity> SelectFromSql<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : class, IDBEntity, new()
         {
             return Ado.SqlQuery<TEntity>(sql, paramArray.Parse());
         }
@@ -257,7 +257,7 @@ namespace Spear.Inf.SqlSugar
             return Ado.UseStoredProcedure().ExecuteCommand(sql, paramArray.Parse());
         }
 
-        public List<TEntity> SelectFromStoredProcedure<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : DBEntity_Base, new()
+        public List<TEntity> SelectFromStoredProcedure<TEntity>(string sql, params DBParameter[] paramArray) where TEntity : class, IDBEntity, new()
         {
             DataTable dt = Ado.UseStoredProcedure().GetDataTable(sql, paramArray.Parse());
 
