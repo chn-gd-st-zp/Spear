@@ -49,7 +49,7 @@ namespace Spear.MidM.Logger
 
             return configuration
                 .WriteTo.File(
-                    path: $"{AppInitHelper.GenericPath(settings.PathMode, settings.PathAddr)}{triggerName}/{level}-.log",
+                    path: $"{AppInitHelper.GenericPath(settings.PathMode, settings.PathAddr)}/{triggerName}/{level}-.log",
                     restrictedToMinimumLevel: level,
                     outputTemplate: settings.Template,
                     rollingInterval: settings.RollingInterval,

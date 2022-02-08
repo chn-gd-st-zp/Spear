@@ -35,7 +35,7 @@ namespace Spear.MidM.Attachment
         /// <param name="key"></param>
         /// <param name="base64Data">
         /// StartWith => "data:ext;base64," or "data:type/ext;base64,"
-        /// Sample => "data:png;base64," or "data:image/png;base64,"
+        /// Example => "data:png;base64," or "data:image/png;base64,"
         /// </param>
         /// <returns></returns>
         public AttachmentResult Opration(string key, string base64Data)
@@ -60,7 +60,12 @@ namespace Spear.MidM.Attachment
             if (result.State != Enum_AttachmentResult.Success)
                 return result;
 
-            var basePath = AppInitHelper.GenericPath(Setting.Basic.PathMode, Setting.Basic.PathAddr) + key;
+            var datas = base64Data.Substring(base64Data.IndexOf(",") + 1);
+            result = AttachmentHandlerHelper.VerifySize(datas, operation.MaxKB);
+            if (result.State != Enum_AttachmentResult.Success)
+                return result;
+
+            var basePath = AppInitHelper.GenericPath(Setting.Basic.PathMode, Setting.Basic.PathAddr) + "/" + key;
             var fileName = Unique.GetGUID();
 
             basePath = basePath.ToLower();
@@ -69,12 +74,6 @@ namespace Spear.MidM.Attachment
 
             if (!Directory.Exists(basePath))
                 Directory.CreateDirectory(basePath);
-
-            var datas = base64Data.Substring(base64Data.IndexOf(",") + 1);
-
-            result = AttachmentHandlerHelper.VerifySize(datas, operation.MaxKB);
-            if (result.State != Enum_AttachmentResult.Success)
-                return result;
 
             using (var stream = datas.ToStream())
             {

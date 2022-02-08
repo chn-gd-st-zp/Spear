@@ -77,7 +77,7 @@ namespace Spear.Inf.Core.Tool
             get
             {
                 string rootPath = AppDomain.CurrentDomain.BaseDirectory.Replace("\\", "/");
-                return rootPath.EndsWith("/") ? rootPath : rootPath + "/";
+                return rootPath.EndsWith("/") ? rootPath.Substring(1) : rootPath;
             }
         }
 
@@ -92,17 +92,10 @@ namespace Spear.Inf.Core.Tool
             var rootPath = ePathMode == Enum_PathMode.ABS ?
                 path
                 :
-                (
-                    RootPath +
-                    (
-                        path.StartsWith("/") ?
-                        path.Substring(1)
-                        :
-                        path
-                    )
-                );
+                (RootPath + "/" + (path.StartsWith("/") ? path.Substring(1) : path))
+                ;
 
-            return rootPath.EndsWith("/") ? rootPath : rootPath + "/";
+            return rootPath.EndsWith("/") ? rootPath.Substring(1) : rootPath;
         }
 
         /// <summary>
@@ -190,7 +183,7 @@ namespace Spear.Inf.Core.Tool
 
             foreach (var assemblyName in assemblyNameList_target)
             {
-                if (!File.Exists(RootPath + assemblyName + ".dll"))
+                if (!File.Exists(RootPath + "/" + assemblyName + ".dll"))
                     continue;
 
                 result.Add(Assembly.Load(new AssemblyName(assemblyName)));
