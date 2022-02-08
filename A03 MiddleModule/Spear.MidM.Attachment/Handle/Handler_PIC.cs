@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using System.IO;
-using System.Linq;
 
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
@@ -12,7 +11,7 @@ namespace Spear.MidM.Attachment
     [DIModeForService(Enum_DIType.ExclusiveByKeyed, typeof(IHandler), Enum_AttachmentHandler.PIC)]
     public class Handler_PIC : Handler_Base
     {
-        public Handler_PIC() { EHandler = Enum_AttachmentHandler.PIC; }
+        protected override Enum_AttachmentHandler EHandler { get { return Enum_AttachmentHandler.PIC; } }
 
         protected override AttachmentResult Do(AttachmentOperationSetting operation, Stream stream, string path, string fileName, string fileExt)
         {
