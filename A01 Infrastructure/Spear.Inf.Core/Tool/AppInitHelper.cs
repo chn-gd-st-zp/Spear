@@ -77,7 +77,7 @@ namespace Spear.Inf.Core.Tool
             get
             {
                 string rootPath = AppDomain.CurrentDomain.BaseDirectory.Replace("\\", "/");
-                return rootPath.EndsWith("/") ? rootPath.Substring(1) : rootPath;
+                return rootPath.EndsWith("/") ? rootPath.Remove(rootPath.Length - 1) : rootPath;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Spear.Inf.Core.Tool
                 (RootPath + "/" + (path.StartsWith("/") ? path.Substring(1) : path))
                 ;
 
-            return rootPath.EndsWith("/") ? rootPath.Substring(1) : rootPath;
+            return rootPath.EndsWith("/") ? rootPath.Remove(rootPath.Length - 1) : rootPath;
         }
 
         /// <summary>

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
@@ -29,13 +31,33 @@ namespace Spear.MidM.Swagger
                 if (actionRoute.Contains("?"))
                     actionRoute = actionRoute.Substring(0, actionRoute.IndexOf("?", StringComparison.Ordinal));
 
-                foreach (var input in method.GetParameters())
+                var paramsList = new List<ParameterInfo>();
+
+                //添加输入参数
+                paramsList.AddRange(method.GetParameters());
+
+                //添加输出参数
+                paramsList.Add(method.ReturnParameter);
+
+                foreach (var paramsItem in paramsList)
                 {
-                    if (!doc.Components.Schemas.ContainsKey(input.ParameterType.Name))
+                    string propertyName = GetFullPropertyName(paramsItem.ParameterType);
+
+                    if (propertyName.Contains("ODTO_AccessRecordDetail"))
+                    {
+                        string aa = "";
+                    }
+
+                    if (!doc.Components.Schemas.ContainsKey(propertyName))
                         continue;
 
-                    var inputSchema = doc.Components.Schemas[input.ParameterType.Name];
-                    var inputProperties = input.ParameterType.GetProperties();
+                    if (propertyName.Contains("ODTO_AccessRecordDetail"))
+                    {
+                        string aa = "";
+                    }
+
+                    var inputSchema = doc.Components.Schemas[propertyName];
+                    var inputProperties = paramsItem.ParameterType.GetProperties();
 
                     PropertyOperation(doc, inputSchema, inputProperties);
 
@@ -61,6 +83,24 @@ namespace Spear.MidM.Swagger
             }
         }
 
+        private string GetFullPropertyName(Type type)
+        {
+            var name = type.IsExtendOf<Task>() ? "" : type.Name;
+
+            if (type.IsGenericType)
+            {
+                name = name.IndexOf("`") != -1 ? name.Remove(name.IndexOf("`")) : name;
+
+                var name_tmp = "";
+                foreach (var gType in type.GetGenericArguments())
+                    name_tmp += GetFullPropertyName(gType);
+
+                name = name_tmp + name;
+            }
+
+            return name;
+        }
+
         private void PropertyOperation(OpenApiDocument doc, OpenApiSchema classSchema, PropertyInfo[] inputProperties)
         {
             //遍历字段
@@ -69,7 +109,22 @@ namespace Spear.MidM.Swagger
                 //获取字段类型
                 var propertyType = inputProperty.PropertyType;
 
-                if (propertyType.IsClass && propertyType.IsExtendOf(typeof(IDTO_Input)))
+                if (propertyType.IsGenericType)
+                {
+                    foreach (var gType in propertyType.GetGenericArguments())
+                    {
+                        //从文档中判断是否存在该类型的结构说明
+                        if (!doc.Components.Schemas.ContainsKey(gType.Name))
+                            continue;
+
+                        //获取该字段的结构说明
+                        var classSchema_Property = doc.Components.Schemas[gType.Name];
+
+                        //递归调用
+                        PropertyOperation(doc, classSchema_Property, gType.GetProperties());
+                    }
+                }
+                else if (propertyType.IsClass && propertyType.IsExtendOf(typeof(IDTO_Input)))
                 {
                     //如果是继承了IDTO_Input的类
 
