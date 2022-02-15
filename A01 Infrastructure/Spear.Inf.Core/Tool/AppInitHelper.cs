@@ -70,6 +70,30 @@ namespace Spear.Inf.Core.Tool
         }
 
         /// <summary>
+        /// 环境变量 - 时区
+        /// </summary>
+        public static int TimeZone
+        {
+            get
+            {
+                int result = 0;
+
+                try
+                {
+                    var value = Environment.GetEnvironmentVariable("ASPNETCORE_TIMEZONE");
+                    if (!value.IsEmptyString())
+                        result = int.Parse(value);
+                }
+                catch (Exception)
+                {
+                    throw new Exception("无效的环境变量[TimeZone]");
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 程序根目录
         /// </summary>
         public static string RootPath

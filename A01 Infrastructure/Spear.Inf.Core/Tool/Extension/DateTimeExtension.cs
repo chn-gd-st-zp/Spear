@@ -25,5 +25,15 @@ namespace Spear.Inf.Core.Tool
 
             return now > dateTime;
         }
+
+        /// <summary>
+        /// 获取当前时间
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static DateTime Now(this DateTime dateTime)
+        {
+            return DateTime.Now.AddHours(AppInitHelper.TimeZone);
+        }
     }
 }

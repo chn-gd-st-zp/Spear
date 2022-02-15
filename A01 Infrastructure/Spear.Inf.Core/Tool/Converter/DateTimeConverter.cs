@@ -6,63 +6,72 @@ namespace Spear.Inf.Core.Tool
     {
         #region 时间戳
 
+        private static int ShortTimeStampLength
+        {
+            get
+            {
+                return Math.Round((DateTime.Now - BaseTime).TotalSeconds).ToString().Length;
+            }
+        }
+
+        private static int LongTimeStampLength
+        {
+            get
+            {
+                return Math.Round((DateTime.Now - BaseTime).TotalMilliseconds).ToString().Length;
+            }
+        }
+
+        private static DateTime BaseTime
+        {
+            get
+            {
+                return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).ToUtc();
+            }
+        }
+
+        private static DateTime ToUtc(this DateTime dateTime)
+        {
+            return TimeZoneInfo.ConvertTime(dateTime, TimeZoneInfo.Utc);
+        }
+
         /// <summary>
-        /// 获取当前Unix时间
+        /// DateTime转换为时间戳
         /// </summary>
         /// <param name="dateTime"></param>
+        /// <param name="digit">位数，默认10</param>
         /// <returns></returns>
-        private static TimeSpan ToUnixTime(this DateTime dateTime)
+        public static long ToTimeStamp(this DateTime dateTime, int digit = 10)
         {
-            var dt = TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local), TimeZoneInfo.Local);
-            return dateTime - dt;
+            var result = 0d;
+
+            var dt = dateTime.ToUtc().AddHours(AppInitHelper.TimeZone) - BaseTime;
+
+            if (digit == ShortTimeStampLength)
+                result = dt.TotalSeconds;
+
+            if (digit == LongTimeStampLength)
+                result = dt.TotalMilliseconds;
+
+            return (long)result;
         }
 
         /// <summary>
-        /// 把Unix时间转换成DateTime
+        /// 时间戳转换为DateTime
         /// </summary>
-        /// <param name="timeStamp">Unix时间</param>
-        /// <returns>DateTime</returns>
-        private static DateTime ToDateTimeFromUnixTime(this long timeStamp)
-        {
-            var dt = TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local), TimeZoneInfo.Local);
-
-            if (timeStamp.ToString().Length == DateTime.Now.ToTimeStamp().ToString().Length)
-                return dt.AddSeconds(timeStamp);
-
-            if (timeStamp.ToString().Length == DateTime.Now.ToLongTimeStamp().ToString().Length)
-                return dt.AddMilliseconds(timeStamp);
-
-            return dt;
-        }
-
-        /// <summary>
-        /// DateTime转换为10位时间戳（单位：秒）
-        /// </summary>
-        /// <param name="dateTime"> DateTime</param>
-        /// <returns>10位时间戳（单位：秒）</returns>
-        public static long ToTimeStamp(this DateTime dateTime)
-        {
-            return (long)dateTime.ToUnixTime().TotalSeconds;
-        }
-
-        /// <summary>
-        /// DateTime转换为13位时间戳（单位：毫秒）
-        /// </summary>
-        /// <param name="dateTime"> DateTime</param>
-        /// <returns>13位时间戳（单位：毫秒）</returns>
-        public static long ToLongTimeStamp(this DateTime dateTime)
-        {
-            return (long)dateTime.ToUnixTime().TotalMilliseconds;
-        }
-
-        /// <summary>
-        /// 10位时间戳（单位：秒）转换为DateTime
-        /// </summary>
-        /// <param name="timeStamp">10位时间戳（单位：秒）</param>
+        /// <param name="timeStamp">时间戳</param>
         /// <returns>DateTime</returns>
         public static DateTime ToDateTimeFromTimeStamp(this long timeStamp)
         {
-            return timeStamp.ToDateTimeFromUnixTime();
+            var result = BaseTime;
+
+            if (timeStamp.ToString().Length == ShortTimeStampLength)
+                result = result.AddSeconds(timeStamp);
+
+            if (timeStamp.ToString().Length == LongTimeStampLength)
+                result = result.AddMilliseconds(timeStamp);
+
+            return result;
         }
 
         #endregion
