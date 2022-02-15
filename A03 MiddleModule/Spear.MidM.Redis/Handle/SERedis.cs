@@ -73,7 +73,6 @@ namespace Spear.MidM.Redis
         /// 设置缓存数据
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="dbIndex"></param>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="ts"></param>
