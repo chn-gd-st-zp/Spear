@@ -43,15 +43,18 @@ namespace Spear.MidM.Attachment
 
         public string[] Args { get; set; }
 
-        public List<AttachmentPictureOperationArgSetting> ParseArgs()
+        public List<TSettings> ParseArgs<TSettings>() where TSettings : class, AttachmentOperationArgSettings, new()
         {
-            List<AttachmentPictureOperationArgSetting> result = new List<AttachmentPictureOperationArgSetting>();
+            List<TSettings> result = new List<TSettings>();
 
-            var props = typeof(AttachmentPictureOperationArgSetting).GetProperties();
+            var props = typeof(TSettings).GetProperties();
+
+            if (Args == null || Args.Count() == 0)
+                return result;
 
             foreach (var arg in Args)
             {
-                AttachmentPictureOperationArgSetting resultItem = new AttachmentPictureOperationArgSetting();
+                TSettings resultItem = new TSettings();
 
                 var paramArray = arg.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var param in paramArray)
@@ -74,7 +77,9 @@ namespace Spear.MidM.Attachment
         }
     }
 
-    public class AttachmentPictureOperationArgSetting
+    public interface AttachmentOperationArgSettings { }
+
+    public class AttachmentPictureOperationArgSettings : AttachmentOperationArgSettings
     {
         public string Type { get; set; }
 

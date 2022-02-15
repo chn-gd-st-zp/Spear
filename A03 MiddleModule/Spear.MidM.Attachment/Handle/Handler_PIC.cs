@@ -19,7 +19,7 @@ namespace Spear.MidM.Attachment
 
             var thumbnail = new Thumbnail(stream);
 
-            foreach (var arg in operation.ParseArgs())
+            foreach (var arg in operation.ParseArgs<AttachmentPictureOperationArgSettings>())
             {
                 Image image = null;
 
