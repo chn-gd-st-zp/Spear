@@ -76,7 +76,7 @@ namespace Spear.Inf.Core.Tool
         {
             get
             {
-                int result = 0;
+                int result = 8;
 
                 try
                 {
