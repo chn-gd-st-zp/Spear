@@ -15,7 +15,7 @@ namespace Spear.MidM.Schedule
             foreach (var bgWorker in settings.BGWorkers)
             {
                 var runner = ServiceContext.ResolveByNamed<IRunner4BGWorker>(bgWorker.Type);
-                runner.Run(bgWorker.Type, bgWorker.Args);
+                runner.Run(bgWorker.Name, bgWorker.Args);
             }
         }
     }

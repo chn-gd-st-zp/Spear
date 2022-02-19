@@ -54,6 +54,8 @@ namespace Spear.MidM.Schedule
 
     public class BGWorkerSettings : ScheduleItemBase
     {
+        public string Name { get; set; }
+
         public string[] Args { get; set; }
     }
 
