@@ -35,7 +35,7 @@ namespace Spear.MidM.Schedule
     {
         public Task Regis(IRunner4Timer runner, string cron, TimerParam param)
         {
-            RecurringJob.AddOrUpdate(param.Name, () => runner.Run(param.Args), cron, TimeZoneInfo.Local);
+            RecurringJob.AddOrUpdate(param.Name, () => runner.Run(param.Name, param.Args), cron, TimeZoneInfo.Local);
             return Task.CompletedTask;
         }
     }

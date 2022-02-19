@@ -4,7 +4,7 @@ namespace Spear.MidM.Schedule
 {
     public interface IRunner
     {
-        Task Run(params string[] args);
+        Task Run(string runnerName, params string[] args);
     }
 
     public interface IRunner4Timer : IRunner { }
