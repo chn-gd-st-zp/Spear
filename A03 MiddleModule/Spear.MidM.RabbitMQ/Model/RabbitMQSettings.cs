@@ -12,6 +12,11 @@ namespace Spear.MidM.RabbitMQ
         public virtual string HostName { get; set; }
 
         /// <summary>
+        /// 端口
+        /// </summary>
+        public virtual string Port { get; set; }
+
+        /// <summary>
         /// 用户名
         /// </summary>
         public virtual string UserName { get; set; }

@@ -58,6 +58,7 @@ namespace Spear.MidM.RabbitMQ
                 UserName = config.UserName,
                 Password = config.Password,
                 HostName = config.HostName,
+                Port = int.Parse(config.Port),
                 VirtualHost = config.VirtualHost,
                 RequestedHeartbeat = TimeSpan.FromSeconds(config.Heartbeat),
                 AutomaticRecoveryEnabled = true
