@@ -34,7 +34,10 @@ namespace Spear.Inf.Core.Tool
 
                 try
                 {
-                    eEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").ToEnum<Enum_Environment>();
+                    string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+                    if(!env.IsEmptyString())
+                        eEnvironment = env.ToEnum<Enum_Environment>();
                 }
                 catch (Exception)
                 {
