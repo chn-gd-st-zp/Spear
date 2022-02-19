@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
+
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 using Spear.Inf.Core.DTO;
@@ -42,19 +43,8 @@ namespace Spear.MidM.Swagger
                 foreach (var paramsItem in paramsList)
                 {
                     string propertyName = GetFullPropertyName(paramsItem.ParameterType);
-
-                    if (propertyName.Contains("ODTO_AccessRecordDetail"))
-                    {
-                        string aa = "";
-                    }
-
                     if (!doc.Components.Schemas.ContainsKey(propertyName))
                         continue;
-
-                    if (propertyName.Contains("ODTO_AccessRecordDetail"))
-                    {
-                        string aa = "";
-                    }
 
                     var inputSchema = doc.Components.Schemas[propertyName];
                     var inputProperties = paramsItem.ParameterType.GetProperties();
