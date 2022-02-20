@@ -33,11 +33,11 @@ namespace Spear.Inf.Core.CusEnum
         [Remark("重新处理中")]
         ReProcessing,
 
-        [Remark("完成")]
-        Finished,
-
         [Remark("待确认")]
         Confirming,
+
+        [Remark("完成")]
+        Finished,
 
         [Remark("成功")]
         Success,
