@@ -14,7 +14,7 @@ namespace Spear.Inf.Core.DTO
         /// 时间戳
         /// </summary>
         [Remark("时间戳")]
-        public virtual long? Timestamp { get; set; } = DateTime.Now.ToTimeStamp();
+        public long? Timestamp { get; set; };
 
         /// <summary>
         /// 参数校验
