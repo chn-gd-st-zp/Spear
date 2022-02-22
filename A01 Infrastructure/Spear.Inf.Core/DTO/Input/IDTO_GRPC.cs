@@ -3,13 +3,13 @@
 namespace Spear.Inf.Core.DTO
 {
     [MessagePackObject(true)]
-    public class IDTO_GRPCContext
+    public class IDTO_GRPCContext : IDTO
     {
         public string Token { get; set; }
     }
 
     [MessagePackObject(true)]
-    public class IDTO_GRPC
+    public class IDTO_GRPC : IDTO
     {
         public IDTO_GRPCContext GRPCContext { get; set; }
     }

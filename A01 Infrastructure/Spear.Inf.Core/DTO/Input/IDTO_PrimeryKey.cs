@@ -6,7 +6,7 @@ namespace Spear.Inf.Core.DTO
     /// <summary>
     /// 主键
     /// </summary>
-    public interface IIDTO_PrimeryKey<TKey>
+    public interface IIDTO_PrimeryKey<TKey> : IDTO
     {
         /// <summary>
         /// 主键

@@ -28,10 +28,6 @@ namespace Spear.MidM.Swagger
                 if (!apiDescription.TryGetMethodInfo(out method))
                     continue;
 
-                string actionRoute = "/" + apiDescription.RelativePath;
-                if (actionRoute.Contains("?"))
-                    actionRoute = actionRoute.Substring(0, actionRoute.IndexOf("?", StringComparison.Ordinal));
-
                 var paramsList = new List<ParameterInfo>();
 
                 //添加输入参数
@@ -42,17 +38,20 @@ namespace Spear.MidM.Swagger
 
                 foreach (var paramsItem in paramsList)
                 {
-                    string propertyName = GetFullPropertyName(paramsItem.ParameterType);
+                    PropertyOperation(doc, paramsItem.ParameterType);
+
+                    #region 隐藏字段 特殊处理
+
+                    //string actionRoute = "/" + apiDescription.RelativePath;
+                    //if (actionRoute.Contains("?"))
+                    //    actionRoute = actionRoute.Substring(0, actionRoute.IndexOf("?", StringComparison.Ordinal));
+
+                    string propertyName = GetFullTypeName(paramsItem.ParameterType);
                     if (!doc.Components.Schemas.ContainsKey(propertyName))
                         continue;
 
                     var inputSchema = doc.Components.Schemas[propertyName];
                     var inputProperties = paramsItem.ParameterType.GetProperties();
-
-                    PropertyOperation(doc, inputSchema, inputProperties);
-
-                    #region 隐藏字段 特殊处理
-
                     foreach (var inputProperty in inputProperties)
                     {
                         var attr_hid = inputProperty.GetCustomAttribute<PropertyHiddenAttribute>();
@@ -73,7 +72,7 @@ namespace Spear.MidM.Swagger
             }
         }
 
-        private string GetFullPropertyName(Type type)
+        private string GetFullTypeName(Type type)
         {
             var name = type.IsExtendOf<Task>() ? "" : type.Name;
 
@@ -83,7 +82,7 @@ namespace Spear.MidM.Swagger
 
                 var name_tmp = "";
                 foreach (var gType in type.GetGenericArguments())
-                    name_tmp += GetFullPropertyName(gType);
+                    name_tmp += GetFullTypeName(gType);
 
                 name = name_tmp + name;
             }
@@ -91,42 +90,31 @@ namespace Spear.MidM.Swagger
             return name;
         }
 
-        private void PropertyOperation(OpenApiDocument doc, OpenApiSchema classSchema, PropertyInfo[] inputProperties)
+        private void PropertyOperation(OpenApiDocument doc, Type inputType)
         {
-            //遍历字段
-            foreach (var inputProperty in inputProperties)
+            if (inputType.IsGenericType)
             {
-                //获取字段类型
-                var propertyType = inputProperty.PropertyType;
+                foreach (var gType in inputType.GetGenericArguments())
+                    PropertyOperation(doc, gType);
+            }
 
-                if (propertyType.IsGenericType)
+            if (inputType.Name == "ODTO_TransactionMyRecord")
+            {
+                string a = "";
+            }
+
+            var inputTypeName = GetFullTypeName(inputType);
+            if (!doc.Components.Schemas.ContainsKey(inputTypeName))
+                return;
+
+            var inputTypeSchema = doc.Components.Schemas[inputTypeName];
+
+            //遍历字段
+            foreach (var inputProperty in inputType.GetProperties())
+            {
+                if (inputProperty.PropertyType.IsImplementedOf(typeof(IDTO)))
                 {
-                    foreach (var gType in propertyType.GetGenericArguments())
-                    {
-                        //从文档中判断是否存在该类型的结构说明
-                        if (!doc.Components.Schemas.ContainsKey(gType.Name))
-                            continue;
-
-                        //获取该字段的结构说明
-                        var classSchema_Property = doc.Components.Schemas[gType.Name];
-
-                        //递归调用
-                        PropertyOperation(doc, classSchema_Property, gType.GetProperties());
-                    }
-                }
-                else if (propertyType.IsClass && propertyType.IsExtendOf(typeof(IDTO_Input)))
-                {
-                    //如果是继承了IDTO_Input的类
-
-                    //从文档中判断是否存在该类型的结构说明
-                    if (!doc.Components.Schemas.ContainsKey(propertyType.Name))
-                        continue;
-
-                    //获取该字段的结构说明
-                    var classSchema_Property = doc.Components.Schemas[propertyType.Name];
-
-                    //递归调用
-                    PropertyOperation(doc, classSchema_Property, inputProperty.PropertyType.GetProperties());
+                    PropertyOperation(doc, inputProperty.PropertyType);
                 }
                 else
                 {
@@ -134,14 +122,14 @@ namespace Spear.MidM.Swagger
                     var inputPropertySchema = default(OpenApiSchema);
 
                     //遍历所有字段名标识
-                    foreach (var key in classSchema.Properties.Keys)
+                    foreach (var key in inputTypeSchema.Properties.Keys)
                     {
                         //找出与字段匹配的字段名标识
                         if (!inputProperty.Name.Equals(key, StringComparison.OrdinalIgnoreCase))
                             continue;
 
                         inputPropertyKey = key;
-                        inputPropertySchema = classSchema.Properties[inputPropertyKey];
+                        inputPropertySchema = inputTypeSchema.Properties[inputPropertyKey];
 
                         //找到立刻跳出循环
                         break;
@@ -154,16 +142,16 @@ namespace Spear.MidM.Swagger
                     var attr_hid = inputProperty.GetCustomAttribute<PropertyHiddenAttribute>();
                     if (attr_hid != null)
                     {
-                        classSchema.Properties.Remove(inputPropertyKey);
+                        inputTypeSchema.Properties.Remove(inputPropertyKey);
                         continue;
                     }
 
                     //如果不存在重命名的标签就进入下个匹配
                     var attr_ren = inputProperty.GetCustomAttribute<PropertyRenameAttribute>();
-                    if (attr_ren != null)
+                    if (attr_ren != null && !inputTypeSchema.Properties.ContainsKey(attr_ren.Name.FormatPropertyName()))
                     {
-                        classSchema.Properties.Remove(inputPropertyKey);
-                        classSchema.Properties.Add(attr_ren.Name.FormatPropertyName(), inputPropertySchema);
+                        inputTypeSchema.Properties.Remove(inputPropertyKey);
+                        inputTypeSchema.Properties.Add(attr_ren.Name.FormatPropertyName(), inputPropertySchema);
                         continue;
                     }
                 }

@@ -8,7 +8,7 @@ using MessagePack;
 namespace Spear.Inf.Core.DTO
 {
     [MessagePackObject(true)]
-    public class ODTO_Page<T>
+    public class ODTO_Page<T> : IDTO
     {
         public ODTO_Page() { }
 

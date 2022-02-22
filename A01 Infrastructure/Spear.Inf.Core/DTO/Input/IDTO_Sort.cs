@@ -39,7 +39,7 @@ namespace Spear.Inf.Core.DTO
     /// 排序子对象
     /// </summary>
     [MessagePackObject(true)]
-    public class IDTO_Sort
+    public class IDTO_Sort : IDTO
     {
         /// <summary>
         /// 字段名

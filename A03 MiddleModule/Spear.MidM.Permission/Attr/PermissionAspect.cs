@@ -86,7 +86,7 @@ namespace Spear.MidM.Permission
                 if (inputObj == null)
                     return;
 
-                if (!attr.MappingType.DBDestinationType.IsImplementedOf<IDBEntity>() || !attr.MappingType.DBDestinationType.IsGenericOf(typeof(IDBField_PrimeryKey<>)))
+                if (!attr.MappingType.DBDestinationType.IsImplementedOf<IAccessRecordTrigger>() || !attr.MappingType.DBDestinationType.IsGenericOf(typeof(IDBField_PrimeryKey<>)))
                     return;
 
                 var otAttr = _permissionEnum.EnumType.GetEnumAttr<OperationTypeAttribute>(attr.Code);
