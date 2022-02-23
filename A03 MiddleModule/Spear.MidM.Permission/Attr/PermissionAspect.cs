@@ -79,14 +79,17 @@ namespace Spear.MidM.Permission
 
                 session.VerifyPermission(attr.Code);
 
-                if (!permission.AccessLogger)
+                if (!permission.AccessLogger || attr.MappingType == null)
+                    return;
+
+                if (!attr.MappingType.DBDestinationType.IsImplementedOf<IAccessRecordTrigger>() || !attr.MappingType.DBDestinationType.IsGenericOf(typeof(IDBField_PrimeryKey<>)))
+                    return;
+
+                if (!attr.MappingType.InputType.IsExtendOf<IDTO_Input>())
                     return;
 
                 var inputObj = actionParams.Where(o => o.GetType().IsExtendOf<IDTO_Input>()).FirstOrDefault();
                 if (inputObj == null)
-                    return;
-
-                if (!attr.MappingType.DBDestinationType.IsImplementedOf<IAccessRecordTrigger>() || !attr.MappingType.DBDestinationType.IsGenericOf(typeof(IDBField_PrimeryKey<>)))
                     return;
 
                 var otAttr = _permissionEnum.EnumType.GetEnumAttr<OperationTypeAttribute>(attr.Code);

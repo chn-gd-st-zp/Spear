@@ -4,6 +4,7 @@ using System.Linq;
 using Spear.Inf.Core;
 using Spear.Inf.Core.Attr;
 using Spear.Inf.Core.CusEnum;
+using Spear.Inf.Core.Injection;
 using Spear.Inf.Core.Interface;
 using Spear.Inf.Core.Tool;
 
@@ -51,9 +52,10 @@ namespace Spear.MidM.Permission
         {
             var result = new Dictionary<string, string>();
 
+            var injectionSettings = ServiceContext.Resolve<InjectionSettings>();
             var dbContext = ServiceContext.Resolve<IDBContext>();
 
-            AppInitHelper.GetAllType()
+            AppInitHelper.GetAllType(injectionSettings.Patterns, injectionSettings.Dlls)
                 .Where(o => o.IsClass && o.IsImplementedOf<IAccessRecordTrigger>())
                 .ToList()
                 .ForEach(o =>
