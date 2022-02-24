@@ -12,7 +12,7 @@ namespace Spear.Demo4WinApp.Host.Runner
     [DIModeForService(Enum_DIType.ExclusiveByNamed, typeof(IRunner4BGWorker), "Listener")]
     public class RListener : IRunner4BGWorker, ITransient
     {
-        public async Task Run(params string[] args)
+        public async Task Run(string runnerName, params string[] args)
         {
             while (true)
             {

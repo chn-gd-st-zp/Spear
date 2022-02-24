@@ -20,10 +20,10 @@ namespace Spear.Demo4WinApp.Host.Runner
     {
         public async Task Execute(IJobExecutionContext context)
         {
-            Run();
+            Run(context.JobDetail.Description);
         }
 
-        public async Task Run(params string[] args)
+        public async Task Run(string runnerName, params string[] args)
         {
             Console.WriteLine($"AutoDel:{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}");
 
