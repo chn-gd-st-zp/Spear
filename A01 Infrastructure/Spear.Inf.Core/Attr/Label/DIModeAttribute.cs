@@ -71,7 +71,7 @@ namespace Spear.Inf.Core.Attr
         {
             ConfigRootName = configRootName;
             Type = type;
-            EDIType = Enum_DIType.Exclusive;
+            EDIType = Enum_DIType.ExclusiveByKeyed;
             Key = key;
             KNFrom = knFrom;
         }
