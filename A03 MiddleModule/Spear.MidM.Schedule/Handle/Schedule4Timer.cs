@@ -57,10 +57,10 @@ namespace Spear.MidM.Schedule
             var type = runner.GetType();
 
             var job = JobBuilder
-                            .Create(type)
-                            .WithIdentity(type.FullName)
-                            .WithDescription(param.Name)
-                            .Build();
+                .Create(type)
+                .WithIdentity(type.FullName)
+                .WithDescription(param.Name)
+                .Build();
 
             var trigger = TriggerBuilder
                 .Create()
