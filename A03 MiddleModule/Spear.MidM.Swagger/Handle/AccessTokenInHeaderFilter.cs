@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OpenApi.Models;
 
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -17,7 +20,15 @@ namespace Spear.MidM.Swagger
             if (swaggerSettings == null)
                 return;
 
-            if(swaggerSettings.AccessTokenKeyInHeader.IsEmptyString())
+            if (swaggerSettings.AccessTokenKeyInHeader.IsEmptyString())
+                return;
+
+            var descriptor = context.ApiDescription.ActionDescriptor as ControllerActionDescriptor;
+            if (descriptor == null)
+                return;
+
+            var attr = descriptor.MethodInfo.GetCustomAttribute<AllowAnonymousAttribute>();
+            if (attr != null)
                 return;
 
             if (operation.Parameters == null)
