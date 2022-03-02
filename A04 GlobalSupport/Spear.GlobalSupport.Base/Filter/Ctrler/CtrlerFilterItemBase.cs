@@ -132,7 +132,8 @@ namespace Spear.GlobalSupport.Base.Filter
             while (Exception != null && Exception.InnerException != null)
                 Exception = Exception.InnerException;
 
-            Result = new ProcessResult<bool> { IsSuccess = false, ExInfo = Exception }.ToAPIResult();
+            var result = new ProcessResult<bool> { IsSuccess = false, ExInfo = Exception }.ToAPIResult();
+            var evenCode = Unique.GetRandomCode4(8);
 
             //是否标注了 志记录忽略 的标签，无标注 则需进行 日志记录
             if (Exception.GetType().GetCustomAttribute<LogIgnoreAttribute>() == null)
@@ -140,16 +141,25 @@ namespace Spear.GlobalSupport.Base.Filter
                 //记录错误日志
                 Logger.Error(new
                 {
+                    EvenCode = evenCode,
                     Entrance,
                     Action,
                     Header,
                     ReqParams,
                     FuncParams,
-                    Result,
+                    result,
                     RequestTime,
                     ResponseTime,
                 }, Exception);
             }
+
+#if DEBUG
+            result.Msg = result.Msg;
+#else
+            result.Msg = AppInitHelper.IsTestMode ? result.Msg : $"程序出现错误，请联系管理员。[{evenCode}]";
+#endif
+
+            Result = result;
 
             realContext.ExceptionHandled = true;
         }

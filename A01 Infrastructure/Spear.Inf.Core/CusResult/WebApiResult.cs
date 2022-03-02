@@ -49,12 +49,7 @@ namespace Spear.Inf.Core.CusResult
             else
             {
                 errorCode = ISpearEnum.Restore<IStateCode>().SysError;
-
-#if DEBUG
                 errorMsg = exception.Message;
-#else
-                errorMsg = AppInitHelper.IsTestMode ? exception.Message : "程序出现错误，请联系管理员";
-#endif
             }
 
             WebApiResult<TData> result = ToResultWebApi(default(TData), errorCode, errorMsg);

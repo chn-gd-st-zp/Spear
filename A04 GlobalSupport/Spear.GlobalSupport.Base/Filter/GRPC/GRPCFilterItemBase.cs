@@ -105,24 +105,34 @@ namespace Spear.GlobalSupport.Base.Filter
             Type dataGenericType = dataType.GenericTypeArguments[0];
             var processResult = ProcessResult.FromException<bool>(dataGenericType, Exception);
 
-            Result = processResult.ToMagicOnionResult();
+            var result = processResult.ToMagicOnionResult();
+            var evenCode = Unique.GetRandomCode4(8);
 
-            //是否标注了 志记录忽略 的标签，无标注 则需进行 日志记录
+            //如果标记[LogIgnore]，则不做日志记录
             if (Exception.GetType().GetCustomAttribute<LogIgnoreAttribute>() == null)
             {
                 //记录错误日志
                 Logger.Error(new
                 {
+                    EvenCode = evenCode,
                     Entrance,
                     Action,
                     Header,
                     ReqParams,
                     FuncParams,
-                    Result,
+                    result,
                     RequestTime,
                     ResponseTime
                 }, Exception);
             }
+
+#if DEBUG
+            result.Msg = result.Msg;
+#else
+            result.Msg = AppInitHelper.IsTestMode ? result.Msg : $"程序出现错误，请联系管理员。[{evenCode}]";
+#endif
+
+            Result = result;
         }
     }
 }

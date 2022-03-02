@@ -1,7 +1,6 @@
 ﻿using MagicOnion;
 using MessagePack;
 
-using Spear.Inf.Core.AppEntrance;
 using Spear.Inf.Core.CusEnum;
 using Spear.Inf.Core.CusException;
 using Spear.Inf.Core.CusResult;
@@ -49,18 +48,12 @@ namespace Spear.MidM.MicoServ.MagicOnion
                 else
                 {
                     errorCode = stateCode.SysError;
-
-#if DEBUG
                     errorMsg = exception.Message;
-#else
-                    errorMsg = AppInitHelper.IsTestMode ? exception.Message : "程序出现错误，请联系管理员";
-#endif
                 }
 
-                var cusEx = processResult.ExInfo as Exception_Base;
                 result.Code = errorCode;
                 result.Msg = errorMsg;
-                result.ErrorStackTrace += "\r\n" + processResult.ExInfo.StackTrace;
+                result.ErrorStackTrace = processResult.ExInfo.StackTrace;
             }
 
             return result;
