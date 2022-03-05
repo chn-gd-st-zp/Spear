@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
@@ -15,11 +14,6 @@ namespace Spear.MidM.Swagger
 {
     public class PropertyOperationFilter : IDocumentFilter
     {
-        /// <summary>
-        /// 过滤器
-        /// </summary>
-        /// <param name="doc"></param>
-        /// <param name="context"></param>
         public void Apply(OpenApiDocument doc, DocumentFilterContext context)
         {
             foreach (ApiDescription apiDescription in context.ApiDescriptions)
@@ -46,7 +40,7 @@ namespace Spear.MidM.Swagger
                     //if (actionRoute.Contains("?"))
                     //    actionRoute = actionRoute.Substring(0, actionRoute.IndexOf("?", StringComparison.Ordinal));
 
-                    string propertyName = GetFullTypeName(paramsItem.ParameterType);
+                    string propertyName = paramsItem.ParameterType.GetFullTypeName();
                     if (!doc.Components.Schemas.ContainsKey(propertyName))
                         continue;
 
@@ -72,24 +66,6 @@ namespace Spear.MidM.Swagger
             }
         }
 
-        private string GetFullTypeName(Type type)
-        {
-            var name = type.IsExtendOf<Task>() ? "" : type.Name;
-
-            if (type.IsGenericType)
-            {
-                name = name.IndexOf("`") != -1 ? name.Remove(name.IndexOf("`")) : name;
-
-                var name_tmp = "";
-                foreach (var gType in type.GetGenericArguments())
-                    name_tmp += GetFullTypeName(gType);
-
-                name = name_tmp + name;
-            }
-
-            return name;
-        }
-
         private void PropertyOperation(OpenApiDocument doc, Type inputType)
         {
             if (inputType.IsGenericType)
@@ -98,12 +74,7 @@ namespace Spear.MidM.Swagger
                     PropertyOperation(doc, gType);
             }
 
-            if (inputType.Name == "ODTO_TransactionMyRecord")
-            {
-                string a = "";
-            }
-
-            var inputTypeName = GetFullTypeName(inputType);
+            var inputTypeName = inputType.GetFullTypeName();
             if (!doc.Components.Schemas.ContainsKey(inputTypeName))
                 return;
 
@@ -112,37 +83,27 @@ namespace Spear.MidM.Swagger
             //遍历字段
             foreach (var inputProperty in inputType.GetProperties())
             {
-                if (inputProperty.PropertyType.IsImplementedOf(typeof(IDTO)))
+                if (inputProperty.PropertyType.IsGenericType)
+                {
+                    foreach (var gType in inputProperty.PropertyType.GetGenericArguments())
+                        PropertyOperation(doc, gType);
+                }
+                else if (inputProperty.PropertyType.IsImplementedOf(typeof(IDTO)))
                 {
                     PropertyOperation(doc, inputProperty.PropertyType);
                 }
                 else
                 {
-                    var inputPropertyKey = string.Empty;
-                    var inputPropertySchema = default(OpenApiSchema);
-
-                    //遍历所有字段名标识
-                    foreach (var key in inputTypeSchema.Properties.Keys)
-                    {
-                        //找出与字段匹配的字段名标识
-                        if (!inputProperty.Name.Equals(key, StringComparison.OrdinalIgnoreCase))
-                            continue;
-
-                        inputPropertyKey = key;
-                        inputPropertySchema = inputTypeSchema.Properties[inputPropertyKey];
-
-                        //找到立刻跳出循环
-                        break;
-                    }
+                    var swaggerProperty = inputTypeSchema.GetSwaggerProperty(inputProperty.Name);
 
                     //找不到字段信息
-                    if (inputPropertyKey.IsEmptyString() || inputPropertySchema == default)
+                    if (swaggerProperty == null)
                         continue;
 
                     var attr_hid = inputProperty.GetCustomAttribute<PropertyHiddenAttribute>();
                     if (attr_hid != null)
                     {
-                        inputTypeSchema.Properties.Remove(inputPropertyKey);
+                        inputTypeSchema.Properties.Remove(swaggerProperty.Item1);
                         continue;
                     }
 
@@ -150,8 +111,8 @@ namespace Spear.MidM.Swagger
                     var attr_ren = inputProperty.GetCustomAttribute<PropertyRenameAttribute>();
                     if (attr_ren != null && !inputTypeSchema.Properties.ContainsKey(attr_ren.Name.FormatPropertyName()))
                     {
-                        inputTypeSchema.Properties.Remove(inputPropertyKey);
-                        inputTypeSchema.Properties.Add(attr_ren.Name.FormatPropertyName(), inputPropertySchema);
+                        inputTypeSchema.Properties.Remove(swaggerProperty.Item1);
+                        inputTypeSchema.Properties.Add(attr_ren.Name.FormatPropertyName(), swaggerProperty.Item2);
                         continue;
                     }
                 }

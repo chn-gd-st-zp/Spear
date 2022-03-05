@@ -12,7 +12,7 @@ using Spear.Inf.Core.Tool;
 
 namespace Spear.MidM.Swagger
 {
-    public class AccessTokenInHeaderFilter : IOperationFilter
+    public class AccessTokenFilter : IOperationFilter
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {

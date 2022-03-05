@@ -92,7 +92,7 @@ namespace Spear.MidM.Swagger
                     options.DocumentFilter<ApiHiddenFilter>();
                     options.DocumentFilter<PropertyOperationFilter>();
                     options.DocumentFilter<EnumDescriptionFilter>();
-                    options.OperationFilter<AccessTokenInHeaderFilter>();
+                    options.OperationFilter<AccessTokenFilter>();
 
                     List<string> xmls = AppInitHelper.GetPaths(Enum_InitFile.XML, swaggerSettings.Patterns, swaggerSettings.Xmls);
                     foreach (string xml in xmls)
