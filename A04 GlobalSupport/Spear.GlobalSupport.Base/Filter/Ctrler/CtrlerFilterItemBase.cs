@@ -79,7 +79,7 @@ namespace Spear.GlobalSupport.Base.Filter
             //没有异常才处理Result，如果有异常Result会被异常代替
             if (realContext.Exception == null)
             {
-                //如果标记[LogIgnore]，则不做日志记录
+                //如果没有标记[LogIgnore]，则做日志记录
                 if (((ControllerActionDescriptor)realContext.ActionDescriptor).MethodInfo.GetCustomAttribute<LogIgnoreAttribute>() == null)
                 {
                     Result = realContext.Result;
@@ -135,7 +135,7 @@ namespace Spear.GlobalSupport.Base.Filter
             var result = new ProcessResult<bool> { IsSuccess = false, ExInfo = Exception }.ToAPIResult();
             var evenCode = Unique.GetRandomCode4(8);
 
-            //是否标注了 志记录忽略 的标签，无标注 则需进行 日志记录
+            //如果没有标记[LogIgnore]，则做日志记录
             if (Exception.GetType().GetCustomAttribute<LogIgnoreAttribute>() == null)
             {
                 //记录错误日志
@@ -153,11 +153,15 @@ namespace Spear.GlobalSupport.Base.Filter
                 }, Exception);
             }
 
+            //如果不是自定义错误，就需要对错误消息做处理
+            if (!Exception.GetType().IsExtendOf<Exception_Base>())
+            {
 #if DEBUG
-            result.Msg = result.Msg;
+                result.Msg = result.Msg;
 #else
-            result.Msg = AppInitHelper.IsTestMode ? result.Msg : $"程序出现错误，请联系管理员。[{evenCode}]";
+                result.Msg = AppInitHelper.IsTestMode ? result.Msg : $"程序出现错误，请联系管理员。[{evenCode}]";
 #endif
+            }
 
             Result = result;
 
