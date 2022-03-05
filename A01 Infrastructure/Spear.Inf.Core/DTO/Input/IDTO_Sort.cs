@@ -20,19 +20,19 @@ namespace Spear.Inf.Core.DTO
     public enum Enum_SortDirection
     {
         [Remark("默认、无")]
-        None = -1,
+        None = 0,
 
         [Remark("正序")]
-        ASC = 0,
-
-        [Remark("倒序")]
-        DESC = 1,
+        ASC = 1,
 
         [Remark("正序")]
         Ascending = 2,
 
         [Remark("倒序")]
-        Descending = 3,
+        DESC = 3,
+
+        [Remark("倒序")]
+        Descending = 4,
     }
 
     /// <summary>
