@@ -30,6 +30,7 @@ namespace Spear.Inf.Core.Tool
         /// 文件流 转换成 Base64字符串
         /// </summary>
         /// <param name="stream"></param>
+        /// <param name="closeStream"></param>
         /// <returns></returns>
         public static string ToBase64(this Stream stream, bool closeStream = false)
         {
