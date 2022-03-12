@@ -17,8 +17,9 @@ namespace Spear.MidM.Attachment
         {
             var result = new AttachmentResult();
 
-            var thumbnail = new Thumbnail(stream);
+            #region operation
 
+            var thumbnail = new Thumbnail(stream);
             foreach (var arg in operation.ParseArgs<AttachmentPictureOperationArgSettings>())
             {
                 Image image = null;
@@ -34,6 +35,8 @@ namespace Spear.MidM.Attachment
                 image.Save($"{path}/{fileName}_{arg.Suffix}.{fileExt}");
                 image.Dispose();
             }
+
+            #endregion
 
             result.State = Enum_AttachmentResult.Success;
             return result;

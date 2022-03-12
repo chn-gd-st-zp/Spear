@@ -18,7 +18,7 @@ namespace Spear.MidM.Attachment
         /// Sample => "data:png;base64," or "data:image/png;base64,"
         /// </param>
         /// <returns></returns>
-        AttachmentResult Opration(string key, string base64Data);
+        AttachmentResult Operation(string key, string base64Data);
     }
 
     public abstract class Handler_Base : IHandler
@@ -38,7 +38,7 @@ namespace Spear.MidM.Attachment
         /// Example => "data:png;base64," or "data:image/png;base64,"
         /// </param>
         /// <returns></returns>
-        public AttachmentResult Opration(string key, string base64Data)
+        public AttachmentResult Operation(string key, string base64Data)
         {
             var result = new AttachmentResult();
 

@@ -11,7 +11,10 @@ namespace Spear.MidM.Attachment
         PIC,
 
         [Remark("文件")]
-        DOC
+        DOC,
+
+        [Remark("媒体")]
+        Media,
     }
 
     public enum Enum_AttachmentPictureSize
