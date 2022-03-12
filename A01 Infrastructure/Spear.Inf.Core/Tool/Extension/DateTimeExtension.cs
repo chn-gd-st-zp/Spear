@@ -31,9 +31,9 @@ namespace Spear.Inf.Core.Tool
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
-        public static DateTime Now(this DateTime dateTime)
+        public static DateTime NowByTimeZone(this DateTime dateTime)
         {
-            return DateTime.Now.AddHours(AppInitHelper.TimeZone);
+            return dateTime.AddHours(AppInitHelper.TimeZone);
         }
     }
 }
