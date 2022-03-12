@@ -113,7 +113,10 @@ namespace Spear.MidM.Swagger
                 }
                 else
                 {
-                    var swaggerProperty = inputTypeSchema.GetSwaggerProperty(inputProperty.Name);
+                    var attr_rename = inputProperty.GetCustomAttribute<PropertyRenameAttribute>();
+                    var propertyName = attr_rename != null ? attr_rename.Name : inputProperty.Name;
+
+                    var swaggerProperty = inputTypeSchema.GetSwaggerProperty(propertyName);
 
                     //找不到字段信息
                     if (swaggerProperty == null)
@@ -132,9 +135,9 @@ namespace Spear.MidM.Swagger
                         prop.Description += $"<br>{item.Key}:{item.Value[0]}-{item.Value[1]}";
                     }
 
-                    var attr = inputProperty.GetCustomAttribute<RemarkAttribute>();
-                    if (attr != null)
-                        prop.Description = attr.Remark + prop.Description;
+                    var attr_remark = inputProperty.GetCustomAttribute<RemarkAttribute>();
+                    if (attr_remark != null)
+                        prop.Description = attr_remark.Remark + prop.Description;
                 }
             }
         }
