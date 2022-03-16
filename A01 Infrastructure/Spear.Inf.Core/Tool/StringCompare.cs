@@ -27,6 +27,28 @@ namespace Spear.Inf.Core.Tool
             //} while (true);
         }
 
+        /// <summary>
+        /// 计算相似度
+        /// </summary>
+        /// <param name="str1">字符串1</param>
+        /// <param name="str2">字符串2</param>
+        public StringComputeResult Compute(string str1, string str2)
+        {
+            StringComputeInit(str1, str2);
+            return Compute();
+        }
+
+        /// <summary>
+        /// 计算相似度
+        /// </summary>
+        /// <param name="str1">字符串1</param>
+        /// <param name="str2">字符串2</param>
+        public StringComputeResult SpeedyCompute(string str1, string str2)
+        {
+            StringComputeInit(str1, str2);
+            return SpeedyCompute();
+        }
+
         #region 私有变量
 
         /// <summary>
@@ -230,28 +252,6 @@ namespace Spear.Inf.Core.Tool
             result.ComputeTimes = _computeTimes.ToString();
             result.Difference = _matrix[_row - 1, _column - 1];
             return result;
-        }
-
-        /// <summary>
-        /// 计算相似度
-        /// </summary>
-        /// <param name="str1">字符串1</param>
-        /// <param name="str2">字符串2</param>
-        public StringComputeResult Compute(string str1, string str2)
-        {
-            StringComputeInit(str1, str2);
-            return Compute();
-        }
-
-        /// <summary>
-        /// 计算相似度
-        /// </summary>
-        /// <param name="str1">字符串1</param>
-        /// <param name="str2">字符串2</param>
-        public StringComputeResult SpeedyCompute(string str1, string str2)
-        {
-            StringComputeInit(str1, str2);
-            return SpeedyCompute();
         }
 
         #endregion
